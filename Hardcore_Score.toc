@@ -1,0 +1,17 @@
+## Interface: 11403
+## Title: Hardcore Score
+## Notes: Your Hardcore score for your character
+## Author: Avenroot
+## Version: 0.0.0.1
+## DefaultState: enabled
+## SavedVariables: Hardcore_Score_Settings
+
+embeds.xml
+
+Core/Playerinfo.lua
+Core/PlayerCoreScore.lua
+Core/PlayerLevelingScore.lua
+
+UI/Scoreboard.lua
+HardcoreScoreDB.lua
+Hardcore_Score.lua
