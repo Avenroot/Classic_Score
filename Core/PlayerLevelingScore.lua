@@ -46,6 +46,6 @@ function PlayerLevelingScore:GetLevelScore()
     end
 
 --    print("level score = "..score)
-    return score
+    CharacterInfo.scores.levelingScore = score
 
 end

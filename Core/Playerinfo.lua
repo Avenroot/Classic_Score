@@ -1,13 +1,80 @@
+-- Load AceDB-3.0
+local AceDB = LibStub("AceDB-3.0")
+
 PlayerInfo = {}
 
+--[[
+CharacterInfo = {
+        name = "",
+        class = "",
+        level = 0,
+        scores = {
+                coreScore = 0,
+                gearbonusScore = 0,
+                hcAchievementScore = 0,
+                levelingScore = 0,
+                timeBonusScore = 0,
+                questingScore = 0,       
+
+        },
+}
+]]
+
+function PlayerInfo:LoadCharacterData()
+
+    -- Create a new database for your addon
+--[[
+    CharacterInfo = AceDB:New("CharacterInfo", {
+        data = {
+                info = {
+                        name = "",
+                        class = "",       
+                        level = 0,
+                },
+                scores = {
+                        coreScore = 0,
+                        gearbonusScore = 0,
+                        hcAchievementScore = 0,
+                        levelingScore = 0,
+                        timeBonusScore = 0,
+                        questingScore = 0,       
+                },
+        },
+
+    })    
+]]
+
+    CharacterInfo = AceDB:New("CharacterInfo", nil, true)
+    CharacterInfo.name = ""
+    CharacterInfo.class = ""
+    CharacterInfo.level = 0
+    CharacterInfo.scores = {
+        coreScore = 0,
+        gearbonusScore = 0,
+        hcAchievementScore = 0,
+        levelingScore = 0,
+        timeBonusScore = 0,
+        questingScore = 0,       
+    }
+    
+    print("Created CharacterInfo database")
+    
+    PlayerInfo:GetPlayerInfo()
+    print("Got Player Info")
+
+    PlayerLevelingScore:GetLevelScore()
+    print("Got Level Score")
+
+    PlayerCoreScore:GetCoreScore()
+    print("Got Core Score")
+
+ --   PlayerInfo.SaveDataToSV(self)
+end
+
 function PlayerInfo:GetPlayerInfo()
-
-
-        local name = UnitName("player")
-        local class = UnitClass("player")
-        local info =  name.. " (".. class..")"  --.." Score"
-
-        return info
+        CharacterInfo.name = UnitName("player")
+        CharacterInfo.class = UnitClass("player")
+        CharacterInfo.level = UnitLevel("player")      
 end
 
 function PlayerInfo:GetTotalScore()        
@@ -30,22 +97,17 @@ function PlayerInfo:GetGearBonus()
         return score
 end
 
---[[
-local function PlayerData(name, guild, source_id, race_id, class_id, level, instance_id, map_id, map_pos, date, last_words, rank, score)
-        return {
-          ["name"] = name,
-          ["guild"] = guild,
-          ["source_id"] = source_id,
-          ["race_id"] = race_id,
-          ["class_id"] = class_id,
-          ["level"] = level,
-          ["instance_id"] = instance_id,
-          ["map_id"] = map_id,
-          ["map_pos"] = map_pos,
-          ["date"] = date,
-          ["last_words"] = last_words,
-          ["rank"] = rank,
-          ["score"] = score,
-        }
-    end
-]]    
+function PlayerInfo:SaveDataToSV()
+        CharacterInfo.profile.name = CharacterInfo.name
+        CharacterInfo.profile.class = CharacterInfo.class
+        CharacterInfo.profile.level = CharacterInfo.level
+        CharacterInfo.profile.scores = CharacterInfo.scores
+--        CharacterInfo.profile.scores.coreScore = CharacterInfo.scores.coreScore
+--        CharacterInfo.profile.scores.gearbonusScore = CharacterInfo.scores.gearbonusScore
+--        CharacterInfo.profile.scores.hcAchievementScore = CharacterInfo.scores.hcAchievementScore
+--        CharacterInfo.profile.scores.levelingScore = CharacterInfo.scores.levelingScore
+--        CharacterInfo.profile.scores.timeBonusScore = CharacterInfo.scores.timeBonusScore
+--        CharacterInfo.profile.scores.questingScore = CharacterInfo.scores.questingScore       
+end
+
+

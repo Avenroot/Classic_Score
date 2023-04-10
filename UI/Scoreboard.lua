@@ -66,8 +66,8 @@ function Scoreboard:CreateUI()
     Scoreboard:CreateDB()
     UIScoreboard = AceGUI:Create("HardcoreScoreboard")
 
-    local pinfo = PlayerInfo:GetPlayerInfo()
-    UIScoreboard:SetTitle(pinfo)
+    --local pinfo = PlayerInfo:GetPlayerInfo()
+    UIScoreboard:SetTitle(CharacterInfo.name)
     UIScoreboard:SetHeight(200)
     UIScoreboard:SetWidth(200)
 
@@ -119,34 +119,40 @@ function Scoreboard:CreateUI()
     text:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(text)
 
-    local pscore = PlayerCoreScore:GetCoreScore()
-    local text2 = AceGUI:Create("Label")
-    text2:SetText("Core - "..pscore)
-    text2:SetColor(0, 255, 128)
-    text2:SetFontObject(GameFontNormal)
-    UIScoreboard:AddChild(text2)
+    local pscore = CharacterInfo.scores.coreScore
+    local txtCoreScore = AceGUI:Create("Label")
+    txtCoreScore:SetText("Core - "..pscore)
+    txtCoreScore:SetColor(0, 255, 128)
+    txtCoreScore:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txtCoreScore)
 
-    local phcAchievementscore = PlayerInfo:GetHCAchievementScore()
+    local phcAchievementscore = CharacterInfo.scores.hcAchievementScore
     local txtHCAchievementScore = AceGUI:Create("Label")
     txtHCAchievementScore:SetText("HC Achievements - "..phcAchievementscore)
     txtHCAchievementScore:SetColor(0, 255, 128)
     txtHCAchievementScore:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txtHCAchievementScore)
 
-    local ptimebonus = PlayerInfo:GetTimeBonusScore()
+    local ptimebonus = CharacterInfo.scores.timeBonusScore
     local txt_timebonus_score = AceGUI:Create("Label")
     txt_timebonus_score:SetText("Time Bonus - "..ptimebonus)
     txt_timebonus_score:SetColor(0, 255, 128)
     txt_timebonus_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_timebonus_score)
 
-    local pgearbonus = PlayerInfo:GetGearBonus()
+    local pgearbonus = CharacterInfo.scores.gearbonusScore
     local txt_gearbonus_score = AceGUI:Create("Label")
     txt_gearbonus_score:SetText("Gear Bonus - "..pgearbonus)
     txt_gearbonus_score:SetColor(0, 255, 128)
     txt_gearbonus_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_gearbonus_score)
 
+    local plevelingscore = CharacterInfo.scores.levelingScore
+    local txt_leveling_score = AceGUI:Create("Label")
+    txt_leveling_score:SetText("Leveling - "..plevelingscore)
+    txt_leveling_score:SetColor(0, 255, 128)
+    txt_leveling_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_leveling_score)
 
     -- CharacterFrame button with score
     local button = CreateFrame("Button", "HCScore", CharacterFrame, "UIPanelButtonTemplate")
@@ -160,7 +166,7 @@ function Scoreboard:CreateUI()
      
      local text = CharacterFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
      text:SetPoint("TOPLEFT", CharacterFrame, "TOPLEFT", 235, -59)
-     text:SetText(PlayerInfo.GetTotalScore(nil))
+     text:SetText(CharacterInfo.scores.coreScore)
      text:SetTextColor(0, 255, 128) -- Blue
 
 end

@@ -90,13 +90,22 @@ function core:init(event, name)
 
     SLASH_Scoreboard1 = "/lb";
     SlashCmdList.Scoreboard = HandleSlashCommands;
- 
-    core:Print("Psst, ", UnitName("player").. "! "..  PlayerInfo:GetTotalScore().. " is a great Hardcore score!");
+
+    PlayerInfo.LoadCharacterData()
     Scoreboard.CreateUI()
+
+    core:Print("Psst, ", UnitName("player").. "! "..  CharacterInfo.scores.coreScore.. " is a great Hardcore score!");
+end
+
+function OnFinalized()
+
+    
 end
 
 local events = CreateFrame("Frame");
 events:RegisterEvent("ADDON_LOADED");
 events:SetScript("OnEvent", core.init);
+
+
 
 

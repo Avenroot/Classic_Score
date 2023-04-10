@@ -5,12 +5,17 @@
 ## Version: 0.0.0.1
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
+## SavedVariablesPerCharacter: CharacterInfo
 
 embeds.xml
 
 Core/Playerinfo.lua
 Core/PlayerCoreScore.lua
 Core/PlayerLevelingScore.lua
+Core/PlayerGearBonusScore.lua
+Core/PlayerHCAchievementScore.lua
+Core/PlayerQuestingScore.lua
+Core/PlayerTimeBonusScore.lua
 
 UI/Scoreboard.lua
 HardcoreScoreDB.lua
