@@ -17,6 +17,9 @@ Core/PlayerHCAchievementScore.lua
 Core/PlayerQuestingScore.lua
 Core/PlayerTimeBonusScore.lua
 
+Events/PlayerLevelingUp.lua
+Events/PlayerEquippingItem.lua
+
 UI/Scoreboard.lua
 HardcoreScoreDB.lua
 Hardcore_Score.lua
