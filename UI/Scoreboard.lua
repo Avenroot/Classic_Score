@@ -73,7 +73,8 @@ function Scoreboard:CreateUI()
     UIScoreboard = AceGUI:Create("HardcoreScoreboard")
 
     --local pinfo = PlayerInfo:GetPlayerInfo()
-    UIScoreboard:SetTitle(CharacterInfo.name)
+    --UIScoreboard:SetTitle(CharacterInfo.name)
+    UIScoreboard:SetTitle("Hardcore Score")
     UIScoreboard:SetHeight(200)
     UIScoreboard:SetWidth(200)
 
@@ -113,40 +114,77 @@ function Scoreboard:CreateUI()
     spacetext:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(spacetext)
 
-    local pscore = CharacterInfo.scores.coreScore
-    txtCoreScore = AceGUI:Create("Label")
-    txtCoreScore:SetText("Core - "..pscore)
-    txtCoreScore:SetColor(0, 255, 128)
-    txtCoreScore:SetFontObject(GameFontNormal)
-    UIScoreboard:AddChild(txtCoreScore)
+    -- Total Hardcore Score
+    local cscore = CharacterInfo.scores.coreScore
+    txt_core_score = AceGUI:Create("Label")
+    txt_core_score:SetText("Score- "..cscore)
+    txt_core_score:SetColor(0, 255, 128)
+    txt_core_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_core_score)
 
-    local phcAchievementscore = CharacterInfo.scores.hcAchievementScore
-    txtHCAchievementScore = AceGUI:Create("Label")
-    txtHCAchievementScore:SetText("HC Achievements - "..phcAchievementscore)
-    txtHCAchievementScore:SetColor(0, 255, 128)
-    txtHCAchievementScore:SetFontObject(GameFontNormal)
-    UIScoreboard:AddChild(txtHCAchievementScore)
+    -- Equipped Gear Score
+    local cgearbonus = CharacterInfo.scores.equippedGearScore
+    txt_equippedgear_score = AceGUI:Create("Label")
+    txt_equippedgear_score:SetText("Equipped Gear - "..cgearbonus)
+    txt_equippedgear_score:SetColor(0, 255, 128)
+    txt_equippedgear_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_equippedgear_score)
 
-    local ptimebonus = CharacterInfo.scores.timeBonusScore
+    -- Leveling Score
+    local clevelingscore = CharacterInfo.scores.levelingScore
+    txt_leveling_score = AceGUI:Create("Label")
+    txt_leveling_score:SetText("Leveling - "..clevelingscore)
+    txt_leveling_score:SetColor(0, 255, 128)
+    txt_leveling_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_leveling_score)
+
+    -- Leveling Time Bonus Score
+    local ctimebonus = CharacterInfo.scores.timeBonusScore
     txt_timebonus_score = AceGUI:Create("Label")
-    txt_timebonus_score:SetText("Time Bonus - "..ptimebonus)
+    txt_timebonus_score:SetText("Time Bonus - "..ctimebonus)
     txt_timebonus_score:SetColor(0, 255, 128)
     txt_timebonus_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_timebonus_score)
 
-    local pgearbonus = CharacterInfo.scores.gearbonusScore
-    txt_gearbonus_score = AceGUI:Create("Label")
-    txt_gearbonus_score:SetText("Gear Bonus - "..pgearbonus)
-    txt_gearbonus_score:SetColor(0, 255, 128)
-    txt_gearbonus_score:SetFontObject(GameFontNormal)
-    UIScoreboard:AddChild(txt_gearbonus_score)
+    -- Questing Score
+    local cquestingScore = CharacterInfo.scores.questingScore
+    txt_questing_score = AceGUI:Create("Label")
+    txt_questing_score:SetText("Questing - "..cquestingScore)
+    txt_questing_score:SetColor(0, 255, 128)
+    txt_questing_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_questing_score)
+    
+    -- Mobs Killed Score
+    local ckilledmobsScore = CharacterInfo.scores.mobsKilledScore
+    txt_mobskilled_score = AceGUI:Create("Label")
+    txt_mobskilled_score:SetText("Mobs Killed - "..ckilledmobsScore)
+    txt_mobskilled_score:SetColor(0, 255, 128)
+    txt_mobskilled_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_mobskilled_score)
+    
+    -- Professions Score 
+    local cprofessionsScore = CharacterInfo.scores.professionsScore
+    txt_professions_score = AceGUI:Create("Label")
+    txt_professions_score:SetText("Professions - "..cprofessionsScore)
+    txt_professions_score:SetColor(0, 255, 128)
+    txt_professions_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_professions_score)
 
-    local plevelingscore = CharacterInfo.scores.levelingScore
-    txt_leveling_score = AceGUI:Create("Label")
-    txt_leveling_score:SetText("Leveling - "..plevelingscore)
-    txt_leveling_score:SetColor(0, 255, 128)
-    txt_leveling_score:SetFontObject(GameFontNormal)
-    UIScoreboard:AddChild(txt_leveling_score)
+    -- Hardcore Achievements Score
+    local phcAchievementscore = CharacterInfo.scores.hcAchievementScore
+    txt_hcachievement_score = AceGUI:Create("Label")
+    txt_hcachievement_score:SetText("HC Achievements - "..phcAchievementscore)
+    txt_hcachievement_score:SetColor(0, 255, 128)
+    txt_hcachievement_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_hcachievement_score)
+
+    -- Dungeons Score 
+    local cdungeonsScore = CharacterInfo.scores.dungeonsScore
+    txt_dungeons_score = AceGUI:Create("Label")
+    txt_dungeons_score:SetText("Dungeons - "..cdungeonsScore)
+    txt_dungeons_score:SetColor(0, 255, 128)
+    txt_dungeons_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_dungeons_score)
 
     -- CharacterFrame button with score
     local charframebutton = CreateFrame("Button", "HCScore", CharacterFrame, "UIPanelButtonTemplate")
@@ -167,11 +205,15 @@ end
 function Scoreboard:UpdateUI()
 
     PlayerInfo.LoadCharacterData(self)
-    txtCoreScore:SetText("Core - "..CharacterInfo.scores.coreScore)
-    txtHCAchievementScore:SetText("HC Achievements - "..CharacterInfo.scores.hcAchievementScore)    
-    txt_timebonus_score:SetText("Time Bonus - "..CharacterInfo.scores.timeBonusScore)
-    txt_gearbonus_score:SetText("Gear Bonus - "..CharacterInfo.scores.gearbonusScore)    
+    txt_core_score:SetText("Score - "..CharacterInfo.scores.coreScore)
+    txt_equippedgear_score:SetText("Equipped Gear - "..CharacterInfo.scores.equippedGearScore)    
     txt_leveling_score:SetText("Leveling - "..CharacterInfo.scores.levelingScore)
+    txt_timebonus_score:SetText("Time Bonus - "..CharacterInfo.scores.timeBonusScore)
+    txt_questing_score:SetText("Questing - "..CharacterInfo.scores.questingScore)
+    txt_mobskilled_score:SetText("Mobs Killed - "..CharacterInfo.scores.mobsKilledScore)
+    txt_professions_score:SetText("Professions - "..CharacterInfo.scores.professionsScore)
+    txt_hcachievement_score:SetText("HC Achievements - "..CharacterInfo.scores.hcAchievementScore)    
+    txt_dungeons_score:SetText("Dungeons - "..CharacterInfo.scores.dungeonsScore)
 
     charframetext:SetText(CharacterInfo.scores.coreScore)
 

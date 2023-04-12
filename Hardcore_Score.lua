@@ -82,6 +82,10 @@ function core:init(event, name)
     SLASH_RELOADUI1 = "/rl"; -- new slash command for reloading UI
     SlashCmdList.RELOADUI = ReloadUI;
 
+    -- Register Slash Commands!
+    SLASH_GETGEARINFO1 = "/gearinfo"; -- new slash command for getting gearinfo
+    SlashCmdList.SLASH_GETGEARINFO = PlayerEquippedGearScore:GetEquippedGearScore()
+    
     SLASH_FRAMESTK1 = "/fs"; -- new slash command for showing framestack tool
     SlashCmdList.FRAMESTK = function ()
         LoadAddOn("Blizzard_DebugTools");
@@ -91,8 +95,8 @@ function core:init(event, name)
     SLASH_Scoreboard1 = "/lb";
     SlashCmdList.Scoreboard = HandleSlashCommands;
 
-    PlayerInfo.LoadCharacterData()
-    Scoreboard.CreateUI()
+    PlayerInfo:LoadCharacterData()
+    Scoreboard:CreateUI()
 
     core:Print("Psst, ", UnitName("player").. "! "..  CharacterInfo.scores.coreScore.. " is a great Hardcore score!");
 end

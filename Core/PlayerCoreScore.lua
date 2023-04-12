@@ -17,9 +17,11 @@ end
 
 function PlayerCoreScore:GetCoreScore()
     local levelscore = CharacterInfo.scores.levelingScore
-    local attackPower = PlayerCoreScore.GetAttackPower(self)
-    local armorValue = PlayerCoreScore.GetArmorValue(self)
-    local score =  levelscore + attackPower + armorValue
+--    local attackPower = PlayerCoreScore.GetAttackPower(self)
+--    local armorValue = PlayerCoreScore.GetArmorValue(self)
+    local equippedGearScore = CharacterInfo.scores.equippedGearScore
+    local score =  levelscore + equippedGearScore
+    
 
     print("score = "..score)
     CharacterInfo.scores.coreScore = score

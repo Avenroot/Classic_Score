@@ -6,14 +6,17 @@ function PlayerInfo:LoadCharacterData()
     CharacterInfo = {
             name = "",
             class = "",
-            playerlevel = 0,
+            level = 0,
             scores = {
                     coreScore = 0,
-                    gearbonusScore = 0,
+                    equippedGearScore = 0,
                     hcAchievementScore = 0,
                     levelingScore = 0,
                     timeBonusScore = 0,
-                    questingScore = 0,       
+                    questingScore = 0,
+                    mobsKilledScore = 0,
+                    professionsScore = 0,
+                    dungeonsScore = 0,       
             },
     }
    
@@ -22,6 +25,9 @@ function PlayerInfo:LoadCharacterData()
 
     PlayerLevelingScore:GetLevelScore()
     print("Got Level Score")
+
+    PlayerEquippedGearScore:GetEquippedGearScore()
+    print("Got Player GetEquippedGearScore")
 
     PlayerCoreScore:GetCoreScore()
     print("Got Core Score")

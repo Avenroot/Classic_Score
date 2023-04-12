@@ -12,7 +12,7 @@ embeds.xml
 Core/Playerinfo.lua
 Core/PlayerCoreScore.lua
 Core/PlayerLevelingScore.lua
-Core/PlayerGearBonusScore.lua
+Core/PlayerEquippedGearScore.lua
 Core/PlayerHCAchievementScore.lua
 Core/PlayerQuestingScore.lua
 Core/PlayerTimeBonusScore.lua
