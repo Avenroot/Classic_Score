@@ -1,28 +1,12 @@
 PlayerCoreScore = {}
 
-function PlayerCoreScore:GetAttackPower()
-    local value = UnitAttackPower("player")
- --   print("attackPower = "..value)
-
-    return value
-end
-
-function PlayerCoreScore.GetArmorValue()
-
-    local value = UnitArmor("player")
---    print("armor = "..value)
-
-    return value
-end
-
 function PlayerCoreScore:GetCoreScore()
-    local levelscore = CharacterInfo.scores.levelingScore
---    local attackPower = PlayerCoreScore.GetAttackPower(self)
---    local armorValue = PlayerCoreScore.GetArmorValue(self)
-    local equippedGearScore = CharacterInfo.scores.equippedGearScore
-    local score =  levelscore + equippedGearScore
+    local levelscore = HCScore_Character.scores.levelingScore
+    local equippedGearScore = HCScore_Character.scores.equippedGearScore
+    local questingScore = HCScore_Character.scores.questingScore
+    local score =  levelscore + equippedGearScore + questingScore
     
 
     print("score = "..score)
-    CharacterInfo.scores.coreScore = score
+    return score
 end

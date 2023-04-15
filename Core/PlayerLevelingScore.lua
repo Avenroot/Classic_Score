@@ -1,22 +1,6 @@
 PlayerLevelingScore = {}
 
 function PlayerLevelingScore:GetLevelScore()
-
-    --[[
-            Points for each level
-
-            1-10 - 1 point for each level (10 max)
-
-            11-20 - 2 points for each level (20 max)
-
-            21-30 - 3 points for each level (30 max)
-
-            31-40 - 4 points for each level (40 max)
-
-            41-50 - 5 points for each level (50 max)
-
-            51-60 - 6 points for each level (60 max)
-    ]]
     
     local score = 0
     local lvlTenBonus = 10
@@ -55,7 +39,7 @@ function PlayerLevelingScore:GetLevelScore()
         score = (10 * 6) + 150 + lvlSixtyBonus
     end
 
---    print("level score = "..score)
-    CharacterInfo.scores.levelingScore = score
+    print("level score = "..score)
+    return score
 
 end

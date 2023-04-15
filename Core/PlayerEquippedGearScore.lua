@@ -62,7 +62,8 @@ function PlayerEquippedGearScore:GetEquippedGearScore()
     end
       print("equipped gear score is ".. itemScore)
       --PrintGearInfo()
-      CharacterInfo.scores.equippedGearScore = itemScore    
+      return itemScore
+        
 end
 
   
