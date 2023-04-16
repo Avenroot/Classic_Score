@@ -36,7 +36,7 @@ function PlayerEquippedGearScore:GetEquippedGearScore()
               itemScore = (itemLevel * 1.0) + itemScore --grey
             end,
             [1] = function() 
-                itemScore = (itemLevel * 1.2) + itemScore --white
+                itemScore = (itemLevel * 1.2) + itemScore --white           
             end,
             [2] = function() 
                 itemScore = (itemLevel * 2.0) + itemScore --green

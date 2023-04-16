@@ -35,7 +35,7 @@ function Scoreboard:CreateDB()
                 yOfs = 0,
             },
         },
-        print("DB Created")
+--        print("DB Created")
     })    
 
 --    print("x "..Hardcore_Score_Settings.profile.framePosition.xOfs)
