@@ -16,9 +16,9 @@ function PlayerQuestingScore:UpdateQuestingScore(score, questId, xpReward, level
     -- define the new quest
     local newQuest = {
         id = questId,
-        difficulty = levelMod,
+        points = score,
         xp = xpReward,
-        point = score
+        difficulty = levelMod,               
     }
 
     table.insert(HCScore_Character.quests, newQuest)

@@ -9,5 +9,5 @@ local _playerequippingitem = CreateFrame("Frame")
 
   Scoreboard.UpdateUI(nil)
 
-  print("executed _playerequippingitem code")
+  --print("executed _playerequippingitem code")
 end)

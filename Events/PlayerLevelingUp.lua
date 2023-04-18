@@ -8,7 +8,7 @@ _playerlevelingup:RegisterEvent("PLAYER_LEVEL_UP")
 
 local function OnPlayerLevelUp(event, arg1, arg2, arg3, arg4)
   Scoreboard.UpdateUI(nil)
-  print("executed _playerlevelingup code")
+  --print("executed _playerlevelingup code")
 end
 
 -- set the event handler function for the myFrame

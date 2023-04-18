@@ -16,10 +16,12 @@ Core/PlayerEquippedGearScore.lua
 Core/PlayerHCAchievementScore.lua
 Core/PlayerQuestingScore.lua
 Core/PlayerTimeBonusScore.lua
+Core/HCS_KillingMobsScore.lua
 
 Events/PlayerLevelingUp.lua
 Events/PlayerEquippingItem.lua
 Events/PlayerCompletingQuest.lua
+Events/HCS_KillingMobsEvent.lua
 
 UI/Scoreboard.lua
 Hardcore_Score.lua

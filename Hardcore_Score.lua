@@ -19,14 +19,7 @@ HCScore_Character = {
         professionsScore = 0,
         dungeonsScore = 0,
     },
-    quests = {
-        quest = {
-            id = 0,
-            difficulty = 0,
-            xp = 0,
-            points = 0,
-        },
-    },
+    quests = {},
 }    
 
 

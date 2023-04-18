@@ -210,19 +210,19 @@ end
 function Scoreboard:UpdateUI()        
     PlayerInfo:LoadCharacterData()
     
-    txt_core_score:SetText("Score - "..HCScore_Character.scores.coreScore)
+    txt_core_score:SetText("Score - "..string.format("%.2f", HCScore_Character.scores.coreScore))
     txt_equippedgear_score:SetText("Equipped Gear - "..HCScore_Character.scores.equippedGearScore)    
     txt_leveling_score:SetText("Leveling - "..HCScore_Character.scores.levelingScore)
     txt_timebonus_score:SetText("Time Bonus - "..HCScore_Character.scores.timeBonusScore)
     txt_questing_score:SetText("Questing - "..HCScore_Character.scores.questingScore)
-    txt_mobskilled_score:SetText("Mobs Killed - "..HCScore_Character.scores.mobsKilledScore)
+    txt_mobskilled_score:SetText("Mobs Killed - "..string.format("%.2f", HCScore_Character.scores.mobsKilledScore))
     txt_professions_score:SetText("Professions - "..HCScore_Character.scores.professionsScore)
     txt_hcachievement_score:SetText("HC Achievements - "..HCScore_Character.scores.hcAchievementScore)    
     txt_dungeons_score:SetText("Dungeons - "..HCScore_Character.scores.dungeonsScore)
 
     charframetext:SetText(HCScore_Character.scores.coreScore)
 
-    print("executed Scoreboard:UpdateUI()")
+    --print("executed Scoreboard:UpdateUI()")
 end
 
 

@@ -39,7 +39,7 @@ function PlayerLevelingScore:GetLevelScore()
         score = (10 * 6) + 150 + lvlSixtyBonus
     end
 
-    print("level score = "..score)
+    --print("level score = "..score)
     return score
 
 end
