@@ -4,6 +4,9 @@ local targetInfo = {}
 function GetXPGain()
     local newXP = UnitXP("player")
     local xpGain = newXP - CurrentXP
+    if xpGain < 0 then
+        xpGain = (CurrentMaxXP - CurrentXP) + newXP 
+    end
     CurrentXP = newXP
     print("xp gained: "..xpGain)
     return xpGain

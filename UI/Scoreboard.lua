@@ -17,6 +17,8 @@ local txt_professions_score
 local txt_hcachievement_score
 local txt_questing_score
 local txt_dungeons_score
+local txt_reputation_score
+local txt_discovery_score
 
 -----------------------
 
@@ -80,8 +82,8 @@ function Scoreboard:CreateUI()
     --local pinfo = PlayerInfo:GetPlayerInfo()
     --UIScoreboard:SetTitle(CharacterInfo.name)
     UIScoreboard:SetTitle("Hardcore Score")
-    UIScoreboard:SetHeight(200)
-    UIScoreboard:SetWidth(200)
+    UIScoreboard:SetHeight(225)
+    UIScoreboard:SetWidth(210)
 
     -- Use the HardcoreScoreDB database to load and save the frame's position
     UIScoreboard.OnAcquire = function(self)
@@ -191,6 +193,22 @@ function Scoreboard:CreateUI()
     txt_dungeons_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_dungeons_score)
 
+    -- Reputation Score 
+    local creputationScore = HCScore_Character.scores.reputationScore
+    txt_reputation_score = AceGUI:Create("Label")
+    txt_reputation_score:SetText("Reputation - "..creputationScore)
+    txt_reputation_score:SetColor(0, 255, 128)
+    txt_reputation_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_reputation_score)
+
+    -- Discovery Score 
+    local cdiscoveryScore = HCScore_Character.scores.reputationScore
+    txt_discovery_score = AceGUI:Create("Label")
+    txt_discovery_score:SetText("Discovery - "..cdiscoveryScore)
+    txt_discovery_score:SetColor(0, 255, 128)
+    txt_discovery_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_discovery_score)
+
     -- CharacterFrame button with score
     local charframebutton = CreateFrame("Button", "HCScore", CharacterFrame, "UIPanelButtonTemplate")
     charframebutton:SetPoint("TOPLEFT", CharacterFrame, "TOPLEFT", 150, -56)
@@ -202,7 +220,7 @@ function Scoreboard:CreateUI()
      
      charframetext = CharacterFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
      charframetext:SetPoint("TOPLEFT", CharacterFrame, "TOPLEFT", 235, -59)
-     charframetext:SetText(HCScore_Character.scores.coreScore)
+     charframetext:SetText(string.format("%.2f", HCScore_Character.scores.coreScore))
      charframetext:SetTextColor(0, 255, 128) -- Blue
 
 end
@@ -210,15 +228,17 @@ end
 function Scoreboard:UpdateUI()        
     PlayerInfo:LoadCharacterData()
     
-    txt_core_score:SetText("Score - "..string.format("%.2f", HCScore_Character.scores.coreScore))
-    txt_equippedgear_score:SetText("Equipped Gear - "..string.format("%.2f", HCScore_Character.scores.equippedGearScore))    
-    txt_leveling_score:SetText("Leveling - "..string.format("%.2f", HCScore_Character.scores.levelingScore))
-    txt_timebonus_score:SetText("Time Bonus - "..string.format("%.2f", HCScore_Character.scores.timeBonusScore))
-    txt_questing_score:SetText("Questing - "..string.format("%.2f", HCScore_Character.scores.questingScore))
-    txt_mobskilled_score:SetText("Mobs Killed - "..string.format("%.2f", HCScore_Character.scores.mobsKilledScore))
-    txt_professions_score:SetText("Professions - "..string.format("%.2f", HCScore_Character.scores.professionsScore))
-    txt_hcachievement_score:SetText("HC Achievements - "..string.format("%.2f",HCScore_Character.scores.hcAchievementScore))
-    txt_dungeons_score:SetText("Dungeons - "..string.format("%.2f", HCScore_Character.scores.dungeonsScore))
+    txt_core_score:SetText("Score: "..string.format("%.2f", HCScore_Character.scores.coreScore))
+    txt_equippedgear_score:SetText("Equipped Gear: "..string.format("%.2f", HCScore_Character.scores.equippedGearScore))    
+    txt_leveling_score:SetText("Leveling: "..string.format("%.2f", HCScore_Character.scores.levelingScore))
+    txt_timebonus_score:SetText("Time Bonus: "..string.format("%.2f", HCScore_Character.scores.timeBonusScore))
+    txt_questing_score:SetText("Questing: "..string.format("%.2f", HCScore_Character.scores.questingScore))
+    txt_mobskilled_score:SetText("Mobs Killed: "..string.format("%.2f", HCScore_Character.scores.mobsKilledScore))
+    txt_professions_score:SetText("Professions: "..string.format("%.2f", HCScore_Character.scores.professionsScore))
+    txt_hcachievement_score:SetText("HC Achievements: "..string.format("%.2f",HCScore_Character.scores.hcAchievementScore))
+    txt_dungeons_score:SetText("Reputation: "..string.format("%.2f", HCScore_Character.scores.reputationScore))
+    txt_dungeons_score:SetText("Discovery: "..string.format("%.2f", HCScore_Character.scores.discoveryScore))
+    txt_dungeons_score:SetText("Dungeons: "..string.format("%.2f", HCScore_Character.scores.dungeonsScore))
 
     charframetext:SetText(HCScore_Character.scores.coreScore)
 

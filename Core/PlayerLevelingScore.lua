@@ -1,5 +1,20 @@
 PlayerLevelingScore = {}
 
+function PlayerLevelingScore:CalculateTimeBonus()
+  -- Start time
+    local startTime = GetTime()
+
+    -- End time (example: when player levels up)        
+    local endTime = GetTime()
+    local timeElapsed = endTime - startTime
+    local levelTime = (UnitXPMax("player") - UnitXP("player")) / (UnitXPPerMinute("player") * 60) -- Calculate estimated time to level up based on current XP rate
+    local timeRatio = timeElapsed / levelTime -- Calculate percentage of level time completed
+    local timeBonus = math.floor((1 - timeRatio) * 100) -- Calculate time bonus as a percentage of 100
+    print("Level up time:", timeElapsed, "Level time:", levelTime, "Time bonus:", timeBonus)
+    
+        
+end
+
 function PlayerLevelingScore:GetLevelScore()
     
     local score = 0

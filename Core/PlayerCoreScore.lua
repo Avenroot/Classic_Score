@@ -5,7 +5,10 @@ function PlayerCoreScore:GetCoreScore()
     local equippedGearScore = HCScore_Character.scores.equippedGearScore
     local questingScore = HCScore_Character.scores.questingScore
     local mobsKilledScore = HCScore_Character.scores.mobsKilledScore
-    local score =  levelscore + equippedGearScore + questingScore + mobsKilledScore
+    local reputationScore = HCScore_Character.scores.reputationScore
+    local discoveryScore = HCScore_Character.scores.discoveryScore
+    local score =  levelscore + equippedGearScore + questingScore + 
+                mobsKilledScore + reputationScore + discoveryScore
     
 
     --print("score = "..score)

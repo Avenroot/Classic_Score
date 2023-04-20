@@ -18,6 +18,8 @@ HCScore_Character = {
         mobsKilledScore = 0,
         professionsScore = 0,
         dungeonsScore = 0,
+        reputationScore = 0,
+        discoveryScore = 0,
     },
     quests = {},
 }    
@@ -127,17 +129,34 @@ function Hardcore_Score:init(event, name)
 --    _G[ADDON_NAMESPACE] = HCScore_StoredVariables
  --   CharacterInfo = HCScore_StoredVariables.CharacterInfo
 
+    -- initialization HCScore_Character
+    if HCScore_Character.name == nil then HCScore_Character.name = "" end
+    if HCScore_Character.class == nil then HCScore_Character.class = "" end
+    if HCScore_Character.level == nil then HCScore_Character.level = 0 end
+    if HCScore_Character.quests == nil then HCScore_Character.quests = {} end
+    if HCScore_Character.scores.coreScore == nil then HCScore_Character.scores.coreScore = 0 end
+    if HCScore_Character.scores.discoveryScore == nil then HCScore_Character.scores.discoveryScore = 0 end
+    if HCScore_Character.scores.dungeonsScore == nil then HCScore_Character.scores.dungeonsScore = 0 end
+    if HCScore_Character.scores.equippedGearScore == nil then HCScore_Character.scores.equippedGearScore = 0 end
+    if HCScore_Character.scores.hcAchievementScore == nil then HCScore_Character.scores.hcAchievementScore = 0 end
+    if HCScore_Character.scores.levelingScore == nil then HCScore_Character.scores.levelingScore = 0 end
+    if HCScore_Character.scores.mobsKilledScore == nil then HCScore_Character.scores.mobsKilledScore = 0 end
+    if HCScore_Character.scores.professionsScore == nil then HCScore_Character.scores.professionsScore = 0 end
+    if HCScore_Character.scores.questingScore == nil then HCScore_Character.scores.questingScore = 0 end
+    if HCScore_Character.scores.reputationScore == nil then HCScore_Character.scores.reputationScore = 0 end
+    if HCScore_Character.scores.timeBonusScore == nil then HCScore_Character.scores.timeBonusScore = 0 end
+ 
     if HCScore_Character.name == "" then
         PlayerInfo:LoadCharacterData()
     end
 
-    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great Hardcore score!");
+--    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great Hardcore score!");
 
     Scoreboard:CreateUI()
-    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great Hardcore score!");
+    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great score! LET'S GO!");
     
 --    Scoreboard:UpdateUI()
-    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great Hardcore score!");
+--    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great Hardcore score!");
 end
 
 local events = CreateFrame("Frame");

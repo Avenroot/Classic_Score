@@ -51,7 +51,7 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
     score =  xpReward * VERYHARD
   end
   
-  print("score: "..score.. " levelmod: "..levelMod.. " player level: "..playerLevel.. " quest level: - "..questLevel)
+  print("score: "..score.. " levelmod: "..levelMod.. " player level: "..playerLevel.. " quest level: "..questLevel)
 
   PlayerQuestingScore:UpdateQuestingScore(score, questID, xpReward, levelMod)
   Scoreboard.UpdateUI(nil)
