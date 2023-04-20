@@ -1,10 +1,10 @@
 PlayerCompletingQuest = {}
 
 local TRIVAL = 0 -- grey
-local EASY = 0.05 -- green
-local MODERATE = 0.075 -- yellow
-local HARD = 0.125 -- orange
-local VERYHARD = 0.25 -- red
+local EASY = 0.025 -- green
+local MODERATE = 0.0375 -- yellow
+local HARD = 0.075 -- orange
+local VERYHARD = 0.125 -- red
 local score = 0
 local questLevel
 local playerLevel
@@ -51,7 +51,7 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
     score =  xpReward * VERYHARD
   end
   
-  print("score - "..score.. " levelmod - "..levelMod.. " player level - "..playerLevel.. " quest level - "..questLevel)
+  print("score: "..score.. " levelmod: "..levelMod.. " player level: "..playerLevel.. " quest level: - "..questLevel)
 
   PlayerQuestingScore:UpdateQuestingScore(score, questID, xpReward, levelMod)
   Scoreboard.UpdateUI(nil)

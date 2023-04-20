@@ -37,7 +37,7 @@ end
 -- Register the OnTargetChanged function to be called when the player targets a new unit
 local frame = CreateFrame("FRAME")
 frame:RegisterEvent("PLAYER_TARGET_CHANGED")
-frame:SetScript("OnEvent", OnTargetChanged)
+--frame:SetScript("OnEvent", OnTargetChanged)
 
 -- This function will be called when a combat event is triggered
 function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, _, _, _, _, spellID)
@@ -89,8 +89,6 @@ frame3:SetScript("OnEvent", function(event, ...)
 
     Scoreboard.UpdateUI(nil)
     
---    local xpGain = GetXPGain()
---    print("You gained " .. xpGain .. " experience.")
 end)
 
 --if eventType == "PARTY_KILL" and sourceGUID == UnitGUID("player") and bit.band(destFlags, COMBATLOG_OBJECT_TYPE_NPC) ~= 0 then
