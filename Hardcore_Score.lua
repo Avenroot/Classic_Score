@@ -22,6 +22,33 @@ HCScore_Character = {
         discoveryScore = 0,
     },
     quests = {},
+    professions = {
+        alchemy = 0,
+        alchemyElixirmaster = 0,
+        alchemyPotionmaster = 0,
+        alchemyTransmutationmaster = 0,
+        blacksmithing = 0,
+        blacksmithingArmorsmith = 0,
+        blacksmithingWeaponsmith = 0,
+        enchanting = 0,
+        engineering = 0,
+        engineeringGnomish = 0,
+        engineeringGoblin = 0,
+        herbalism = 0,
+        leatherworking = 0,
+        leatherworkingDragonscale = 0,
+        leatherworkingElemental = 0,
+        leatherworkingTribal = 0,
+        mining = 0,
+        skinning = 0,
+        tailoring = 0,
+        tailoringMooncloth = 0,
+        tailoringShadoweave = 0,
+        tailoringSpellfire = 0,
+        fishing = 0,
+        cooking = 0,
+        firstaid = 0,
+    }
 }    
 
 
@@ -134,6 +161,7 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.class == nil then HCScore_Character.class = "" end
     if HCScore_Character.level == nil then HCScore_Character.level = 0 end
     if HCScore_Character.quests == nil then HCScore_Character.quests = {} end
+    if HCScore_Character.scores == nil then HCScore_Character.scores = {} end
     if HCScore_Character.scores.coreScore == nil then HCScore_Character.scores.coreScore = 0 end
     if HCScore_Character.scores.discoveryScore == nil then HCScore_Character.scores.discoveryScore = 0 end
     if HCScore_Character.scores.dungeonsScore == nil then HCScore_Character.scores.dungeonsScore = 0 end
@@ -145,7 +173,33 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.scores.questingScore == nil then HCScore_Character.scores.questingScore = 0 end
     if HCScore_Character.scores.reputationScore == nil then HCScore_Character.scores.reputationScore = 0 end
     if HCScore_Character.scores.timeBonusScore == nil then HCScore_Character.scores.timeBonusScore = 0 end
- 
+    if HCScore_Character.professions == nil then HCScore_Character.professions = {} end
+    if HCScore_Character.professions.alchemy == nil then HCScore_Character.professions.alchemy = 0 end
+    if HCScore_Character.professions.alchemyElixirmaster == nil then HCScore_Character.professions.alchemyElixirmaster = 0 end
+    if HCScore_Character.professions.alchemyPotionmaster == nil then HCScore_Character.professions.alchemyPotionmaster = 0 end
+    if HCScore_Character.professions.alchemyTransmutationmaster == nil then HCScore_Character.professions.alchemyTransmutationmaster = 0 end
+    if HCScore_Character.professions.blacksmithing == nil then HCScore_Character.professions.blacksmithing = 0 end
+    if HCScore_Character.professions.blacksmithingArmorsmith == nil then HCScore_Character.professions.blacksmithingArmorsmith = 0 end
+    if HCScore_Character.professions.blacksmithingWeaponsmith == nil then HCScore_Character.professions.blacksmithingWeaponsmith = 0 end
+    if HCScore_Character.professions.enchanting == nil then HCScore_Character.professions.enchanting = 0 end
+    if HCScore_Character.professions.engineering == nil then HCScore_Character.professions.engineering = 0 end
+    if HCScore_Character.professions.engineeringGnomish == nil then HCScore_Character.professions.engineeringGnomish = 0 end
+    if HCScore_Character.professions.engineeringGoblin == nil then HCScore_Character.professions.engineeringGoblin = 0 end
+    if HCScore_Character.professions.herbalism == nil then HCScore_Character.professions.herbalism = 0 end
+    if HCScore_Character.professions.leatherworking == nil then HCScore_Character.professions.leatherworking = 0 end
+    if HCScore_Character.professions.leatherworkingDragonscale == nil then HCScore_Character.professions.leatherworkingDragonscale = 0 end
+    if HCScore_Character.professions.leatherworkingElemental == nil then HCScore_Character.professions.leatherworkingElemental = 0 end
+    if HCScore_Character.professions.leatherworkingTribal == nil then HCScore_Character.professions.leatherworkingTribal = 0 end
+    if HCScore_Character.professions.mining == nil then HCScore_Character.professions.mining = 0 end
+    if HCScore_Character.professions.skinning == nil then HCScore_Character.professions.skinning = 0 end
+    if HCScore_Character.professions.tailoring == nil then HCScore_Character.professions.tailoring = 0 end
+    if HCScore_Character.professions.tailoringMooncloth == nil then HCScore_Character.professions.tailoringMooncloth = 0 end
+    if HCScore_Character.professions.tailoringShadoweave == nil then HCScore_Character.professions.tailoringShadoweave = 0 end
+    if HCScore_Character.professions.tailoringSpellfire == nil then HCScore_Character.professions.tailoringSpellfire = 0 end
+    if HCScore_Character.professions.fishing == nil then HCScore_Character.professions.fishing = 0 end
+    if HCScore_Character.professions.cooking == nil then HCScore_Character.professions.cooking = 0 end
+    if HCScore_Character.professions.firstaid == nil then HCScore_Character.professions.firstaid = 0 end
+
     if HCScore_Character.name == "" then
         PlayerInfo:LoadCharacterData()
     end
