@@ -9,6 +9,7 @@ local UIScoreboard
 local Hardcore_Score_Settings
 local charframetext
 local txt_core_score
+local txt_core_seperator
 local txt_equippedgear_score
 local txt_leveling_score
 local txt_mobskilled_score
@@ -124,15 +125,22 @@ function Scoreboard:CreateUI()
     -- Total Hardcore Score
     local cscore = HCScore_Character.scores.coreScore
     txt_core_score = AceGUI:Create("Label")
-    txt_core_score:SetText("Score: "..string.format("%.2f", cscore))
-    txt_core_score:SetColor(0, 255, 128)
+    txt_core_score:SetText(string.format("%-10s %.2f","Score:  ", cscore))
+    txt_core_score:SetColor(0, 255, 0)
     txt_core_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_core_score)
+
+    -- line seperator
+    txt_core_seperator = AceGUI:Create("Label")
+    txt_core_seperator:SetText("-----")
+    txt_core_seperator:SetColor(0, 255, 0)
+    txt_core_seperator:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_core_seperator)
 
     -- Equipped Gear Score
     local cgearbonus = HCScore_Character.scores.equippedGearScore
     txt_equippedgear_score = AceGUI:Create("Label")
-    txt_equippedgear_score:SetText("Equipped Gear: "..string.format("%.2f", cgearbonus))
+    txt_equippedgear_score:SetText(string.format("%-10s %.2f","Equipped Gear:  ", cgearbonus))
     txt_equippedgear_score:SetColor(0, 255, 128)
     txt_equippedgear_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_equippedgear_score)
@@ -140,7 +148,7 @@ function Scoreboard:CreateUI()
     -- Leveling Score
     local clevelingscore = HCScore_Character.scores.levelingScore
     txt_leveling_score = AceGUI:Create("Label")
-    txt_leveling_score:SetText("Leveling: "..string.format("%.2f", clevelingscore))
+    txt_leveling_score:SetText(string.format("%-10s %.2f","Leveling:  ", clevelingscore))
     txt_leveling_score:SetColor(0, 255, 128)
     txt_leveling_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_leveling_score)
@@ -148,7 +156,7 @@ function Scoreboard:CreateUI()
     -- Leveling Time Bonus Score
     local ctimebonus = HCScore_Character.scores.timeBonusScore
     txt_timebonus_score = AceGUI:Create("Label")
-    txt_timebonus_score:SetText("Time Bonus: "..string.format("%.2f", ctimebonus))
+    txt_timebonus_score:SetText(string.format("%-10s %.2f","Time Bonus:  ", ctimebonus))
     txt_timebonus_score:SetColor(0, 255, 128)
     txt_timebonus_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_timebonus_score)
@@ -156,7 +164,7 @@ function Scoreboard:CreateUI()
     -- Questing Score
     local cquestingScore = HCScore_Character.scores.questingScore
     txt_questing_score = AceGUI:Create("Label")
-    txt_questing_score:SetText("Questing: "..string.format("%.2f", cquestingScore))
+    txt_questing_score:SetText(string.format("%-10s %.2f","Questing:  ", cquestingScore))
     txt_questing_score:SetColor(0, 255, 128)
     txt_questing_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_questing_score)
@@ -164,7 +172,7 @@ function Scoreboard:CreateUI()
     -- Mobs Killed Score
     local ckilledmobsScore = HCScore_Character.scores.mobsKilledScore
     txt_mobskilled_score = AceGUI:Create("Label")
-    txt_mobskilled_score:SetText("Mobs Killed: "..string.format("%.2f", ckilledmobsScore))
+    txt_mobskilled_score:SetText(string.format("%-10s %.2f","Mobs Killed:  ", ckilledmobsScore))
     txt_mobskilled_score:SetColor(0, 255, 128)
     txt_mobskilled_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_mobskilled_score)
@@ -173,40 +181,40 @@ function Scoreboard:CreateUI()
     local cprofessionsScore = HCScore_Character.scores.professionsScore
     local cnumprofessions = HCS_ProfessionsScore:GetNumberOfProfessions()
     txt_professions_score = AceGUI:Create("Label")
-    txt_professions_score:SetText("Professions ("..cnumprofessions.."): "..string.format("%.2f", cprofessionsScore))
+    txt_professions_score:SetText(string.format("%-10s %.2f","Professions ("..cnumprofessions.."):  ", cprofessionsScore))
     txt_professions_score:SetColor(0, 255, 128)
     txt_professions_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_professions_score)
 
+    -- Reputation Score 
+    local creputationScore = HCScore_Character.scores.reputationScore
+    txt_reputation_score = AceGUI:Create("Label")
+    txt_reputation_score:SetText(string.format("%-10s %.2f","Reputation:  ", creputationScore))
+    txt_reputation_score:SetColor(0, 255, 128)
+    txt_reputation_score:SetFontObject(GameFontNormal)
+    UIScoreboard:AddChild(txt_reputation_score)
+
     -- Hardcore Achievements Score
     local phcAchievementscore = HCScore_Character.scores.hcAchievementScore
     txt_hcachievement_score = AceGUI:Create("Label")
-    txt_hcachievement_score:SetText("HC Achievements: "..string.format("%.2f", phcAchievementscore))
-    txt_hcachievement_score:SetColor(0, 255, 128)
+    txt_hcachievement_score:SetText(string.format("%-10s %.2f","HC Achievements:  ", phcAchievementscore))
+    txt_hcachievement_score:SetColor(0.5, 0.5, 0.5)
     txt_hcachievement_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_hcachievement_score)
 
     -- Dungeons Score 
     local cdungeonsScore = HCScore_Character.scores.dungeonsScore
     txt_dungeons_score = AceGUI:Create("Label")
-    txt_dungeons_score:SetText("Dungeons: "..string.format("%.2f", cdungeonsScore))
-    txt_dungeons_score:SetColor(0, 255, 128)
+    txt_dungeons_score:SetText(string.format("%-10s %.2f","Dungeons:  ", cdungeonsScore))
+    txt_dungeons_score:SetColor(0.5, 0.5, 0.5)
     txt_dungeons_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_dungeons_score)
 
-    -- Reputation Score 
-    local creputationScore = HCScore_Character.scores.reputationScore
-    txt_reputation_score = AceGUI:Create("Label")
-    txt_reputation_score:SetText("Reputation: "..string.format("%.2f", creputationScore))
-    txt_reputation_score:SetColor(0, 255, 128)
-    txt_reputation_score:SetFontObject(GameFontNormal)
-    UIScoreboard:AddChild(txt_reputation_score)
-
     -- Discovery Score 
-    local cdiscoveryScore = HCScore_Character.scores.reputationScore
+    local cdiscoveryScore = HCScore_Character.scores.discoveryScore
     txt_discovery_score = AceGUI:Create("Label")
-    txt_discovery_score:SetText("Discovery: "..string.format("%.2f", cdiscoveryScore))
-    txt_discovery_score:SetColor(0, 255, 128)
+    txt_discovery_score:SetText(string.format("%-10s %.2f","Discovery:  ", cdiscoveryScore))
+    txt_discovery_score:SetColor(0.5, 0.5, 0.5)
     txt_discovery_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_discovery_score)
 
@@ -222,7 +230,7 @@ function Scoreboard:CreateUI()
      charframetext = CharacterFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
      charframetext:SetPoint("TOPLEFT", CharacterFrame, "TOPLEFT", 235, -59)
      charframetext:SetText(string.format("%.2f", HCScore_Character.scores.coreScore))
-     charframetext:SetTextColor(0, 255, 128) -- Blue
+     charframetext:SetTextColor(0, 255, 0) -- Green
 
 end
 
@@ -230,7 +238,6 @@ function Scoreboard:UpdateUI()
     PlayerInfo:LoadCharacterData()
     
     local totProfessions = HCS_ProfessionsScore:GetNumberOfProfessions()
-    print("totProfessions: "..totProfessions)
 
     txt_core_score:SetText("Score: "..string.format("%.2f", HCScore_Character.scores.coreScore))
     txt_equippedgear_score:SetText("Equipped Gear: "..string.format("%.2f", HCScore_Character.scores.equippedGearScore))    

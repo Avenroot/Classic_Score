@@ -1,32 +1,20 @@
 HCS_ProfessionsScore = {}
 
-local ALCHEMY = 171
-local ALCHEMY_ELIXIR_MASTER = 286
-local ALCHEMY_POTION_MASTER = 285
-local ALCHEMY_TRANSMUTATION_MASTER = 287
-local BLACKSMITHING = 164
-local BLACKSMITHING_ARMORSMITH = 9788
-local BLACKSMITHING_WEAPONSMITH = 9787
-local ENCHANTING = 333
-local ENGINEERING = 202
-local ENGINEERING_GNOMISH = 20219
-local ENGINEERING_GOBLIN = 20222
-local HERBALISM = 182
-local LEATHERWORKING = 165
-local LEATHERWORKING_DRAGONSCALE = 10656
-local LEATHERWORKING_ELEMENTAL = 10658
-local LEATHERWORKING_TRIBAL = 10660
-local MINING = 186
-local SKINNING = 393
-local TAILORING = 197
-local TAILORING_MOONCLOTH = 26798
-local TAILORING_SHADOWEAVE = 26801
-local TAILORING_SPELLFIRE = 26797
-local FISHING = 356
-local COOKING = 185
-local FISTAID = 129
+local ALCHEMY = "Alchemy"
+local BLACKSMITHING = "Blacksmithing"
+local ENCHANTING = "Enchanting"
+local ENGINEERING = "Engineering"
+local HERBALISM = "Herbalism"
+local LEATHERWORKING = "Leatherworking"
+local LOCKPICKING = "Lockpicking"
+local MINING = "Mining"
+local SKINNING = "Skinning"
+local TAILORING = "Tailoring"
+local FISHING = "Fishing"
+local COOKING = "Cooking"
+local FISTAID = "First Aid"
 
-local LEVEL1 = 10
+local LEVEL1 = 0
 local LEVEL2 = 25
 local LEVEL3 = 50
 local LEVEL4 = 75
@@ -37,7 +25,7 @@ local function between(x, a, b)
     return x >= a and x <= b
 end
 
-local function CalcScore(skilllevel, special)
+local function CalcScore(skilllevel)
     local score
 
     if between(skilllevel, 0, 50) then score = LEVEL1 end
@@ -47,63 +35,38 @@ local function CalcScore(skilllevel, special)
     if between(skilllevel, 201, 250) then score = LEVEL5 end
     if between(skilllevel, 251, 300) then score = LEVEL6 end
     if between(skilllevel, 2, 300) then score = score + skilllevel end
-    if special then score = score * 2 end
 
     return score
 end
 
-function HCS_ProfessionsScore:UpdateProfessionScore(professionid, skilllevel)
+function UpdateProfessionScore(professionid, skilllevel)
 
     if professionid == ALCHEMY then 
-        HCScore_Character.professions.alchemy = CalcScore(skilllevel, false)
-    elseif professionid == ALCHEMY_ELIXIR_MASTER then 
-        HCScore_Character.professions.alchemyElixirmaster = CalcScore(skilllevel, true) 
-    elseif professionid == ALCHEMY_POTION_MASTER then 
-        HCScore_Character.professions.alchemyPotionmaster = CalcScore(skilllevel, true)
-    elseif professionid == ALCHEMY_TRANSMUTATION_MASTER then 
-        HCScore_Character.professions.alchemy = CalcScore(skilllevel, true)
+        HCScore_Character.professions.alchemy = CalcScore(skilllevel)
     elseif professionid == BLACKSMITHING then 
-        HCScore_Character.professions.blacksmithing = CalcScore(skilllevel, false)
-    elseif professionid == BLACKSMITHING_ARMORSMITH then 
-        HCScore_Character.professions.blacksmithingArmorsmith = CalcScore(skilllevel, true)
-    elseif professionid == BLACKSMITHING_WEAPONSMITH then 
-        HCScore_Character.professions.blacksmithingWeaponsmith = CalcScore(skilllevel, true)
+        HCScore_Character.professions.blacksmithing = CalcScore(skilllevel)
     elseif professionid == ENCHANTING then 
-        HCScore_Character.professions.enchanting = CalcScore(skilllevel, false)
+        HCScore_Character.professions.enchanting = CalcScore(skilllevel)
     elseif professionid == ENGINEERING then 
-        HCScore_Character.professions.engineering = CalcScore(skilllevel, false)
-    elseif professionid == ENGINEERING_GNOMISH then 
-        HCScore_Character.professions.engineeringGnomish = CalcScore(skilllevel, true)
-    elseif professionid == ENGINEERING_GOBLIN then 
-        HCScore_Character.professions.engineeringGoblin = CalcScore(skilllevel, true)
+        HCScore_Character.professions.engineering = CalcScore(skilllevel)
     elseif professionid == HERBALISM then 
-        HCScore_Character.professions.herbalism = CalcScore(skilllevel, false)
+        HCScore_Character.professions.herbalism = CalcScore(skilllevel)
     elseif professionid == LEATHERWORKING then 
-        HCScore_Character.professions.leatherworking = CalcScore(skilllevel, false)
-    elseif professionid == LEATHERWORKING_DRAGONSCALE then 
-        HCScore_Character.professions.leatherworkingDragonscale = CalcScore(skilllevel, true)
-    elseif professionid == LEATHERWORKING_ELEMENTAL then 
-        HCScore_Character.professions.leatherworkingElemental = CalcScore(skilllevel, true)
-    elseif professionid == LEATHERWORKING_TRIBAL then 
-        HCScore_Character.professions.leatherworkingTribal = CalcScore(skilllevel, true)
+        HCScore_Character.professions.leatherworking = CalcScore(skilllevel)
+    elseif professionid == LOCKPICKING then 
+        HCScore_Character.professions.lockpicking = CalcScore(skilllevel)
     elseif professionid == MINING then 
-        HCScore_Character.professions.mining = CalcScore(skilllevel, false)
+        HCScore_Character.professions.mining = CalcScore(skilllevel)
     elseif professionid == SKINNING then 
-        HCScore_Character.professions.skinning = CalcScore(skilllevel, false)
+        HCScore_Character.professions.skinning = CalcScore(skilllevel)
     elseif professionid == TAILORING then 
-        HCScore_Character.professions.tailoring = CalcScore(skilllevel, false)
-    elseif professionid == TAILORING_MOONCLOTH then 
-        HCScore_Character.professions.tailoringMooncloth = CalcScore(skilllevel, true)
-    elseif professionid == TAILORING_SHADOWEAVE then 
-        HCScore_Character.professions.tailoringShadoweave = CalcScore(skilllevel, true)
-    elseif professionid == TAILORING_SPELLFIRE then 
-        HCScore_Character.professions.tailoringSpellfire = CalcScore(skilllevel, true)
+        HCScore_Character.professions.tailoring = CalcScore(skilllevel)
     elseif professionid == FISHING then 
-        HCScore_Character.professions.fishing = CalcScore(skilllevel, false)
+        HCScore_Character.professions.fishing = CalcScore(skilllevel)
     elseif professionid == COOKING then 
-        HCScore_Character.professions.cooking = CalcScore(skilllevel, false)
+        HCScore_Character.professions.cooking = CalcScore(skilllevel)
     elseif professionid == FISTAID then 
-        HCScore_Character.professions.firstaid = CalcScore(skilllevel, false)
+        HCScore_Character.professions.firstaid = CalcScore(skilllevel)
     end    
 end
 
@@ -112,52 +75,44 @@ function HCS_ProfessionsScore:GetScore()
     local score = 0
   
     score = char.alchemy +
-            char.alchemyElixirmaster +
-            char.alchemyPotionmaster +
-            char.alchemyTransmutationmaster +
             char.blacksmithing +
-            char.blacksmithingArmorsmith +
-            char.blacksmithingWeaponsmith +
             char.cooking +
             char.enchanting +
             char.engineering +
-            char.engineeringGnomish +
-            char.engineeringGoblin +
             char.firstaid +
             char.fishing +
             char.herbalism +
             char.leatherworking +
-            char.leatherworkingDragonscale +
-            char.leatherworkingElemental +
-            char.leatherworkingTribal +
+            char.lockpicking +
             char.mining +
             char.skinning +
-            char.tailoring +
-            char.tailoringMooncloth +
-            char.tailoringShadoweave +
-            char.tailoringSpellfire
+            char.tailoring
 
     HCScore_Character.scores.professionsScore = score
 end
 
 function HCS_ProfessionsScore:GetNumberOfProfessions()
     local numskills = 0
+    local professions = HCScore_Character.professions
+
     for i = 1, GetNumSkillLines() do
         local skillName, isHeader, _, skillRank, _, _, skillMaxRank, _, _, skillLineID = GetSkillLineInfo(i)
         
-        print("skillName: "..skillName)        
-        
         if not isHeader then
-            if skillLineID ~= nil then
-                print("skillLineID: "..skillLineID)
-                local _, _, _, _, _, _, skillID = GetProfessionInfo(skillLineID)
-                
-                if skillID then
-                    numskills = numskills + 1
-                end
-            end
+            --print(i, GetSkillLineInfo(i))
+
+            UpdateProfessionScore(skillName, skillRank)
+
+            --print("skillName: "..skillName.."skillRank: "..skillRank)        
+
         end
     end
-    
+
+    self:GetScore()
+
+    for k, v in pairs(professions) do
+        if v > 0 then numskills = numskills + 1 end
+    end
+
     return numskills
 end

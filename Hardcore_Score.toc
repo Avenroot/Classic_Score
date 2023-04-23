@@ -18,12 +18,14 @@ Core/PlayerQuestingScore.lua
 Core/PlayerTimeBonusScore.lua
 Core/HCS_KillingMobsScore.lua
 Core/HCS_ProfessionsScore.lua
+Core/HCS_ReputationScore.lua
 
 Events/PlayerLevelingUp.lua
 Events/PlayerEquippingItem.lua
 Events/PlayerCompletingQuest.lua
 Events/HCS_KillingMobsEvent.lua
 Events/HCS_ProfessionsEvent.lua
+Events/HCS_ReputationEvent.lua
 
 UI/Scoreboard.lua
 Hardcore_Score.lua

@@ -21,6 +21,7 @@ function PlayerInfo:LoadCharacterData()
     HCScore_Character.scores.coreScore = PlayerCoreScore:GetCoreScore()
 --    print("Got Core Score")
 
+    HCS_ReputationScore:UpdateRepScore()
     --SaveHCScoreData:SaveVariables()
     --  SaveVariables("HCScore_StoredVariables")
     -- Scoreboard:UpdateUI()
