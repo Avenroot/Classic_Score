@@ -40,7 +40,7 @@ function HCS_ReputationScore:UpdateRepScore()
             isHeader, isCollapsed, hasRep, isWatched, isChild, factionID = GetFactionInfo(factionIndex)
         if hasRep or not isHeader then
             repscore = repscore + CalcScore(earnedValue, factionID)
-            DEFAULT_CHAT_FRAME:AddMessage("Faction: " .. name .. " - " .. earnedValue.."FactionID: "..factionID)
+          --  DEFAULT_CHAT_FRAME:AddMessage("Faction: " .. name .. " - " .. earnedValue.."FactionID: "..factionID)
         end        
     end
     HCScore_Character.scores.reputationScore = repscore
