@@ -204,6 +204,7 @@ local function Constructor()
 	closebutton:SetHeight(20)
 	closebutton:SetWidth(100)
 	closebutton:SetText(CLOSE)
+	closebutton:Hide()
 
 	local statusbg = CreateFrame("Button", nil, frame, "BackdropTemplate")
 	statusbg:SetPoint("BOTTOMLEFT", 15, 15)
