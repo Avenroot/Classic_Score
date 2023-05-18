@@ -28,20 +28,68 @@ local function CalcScore(repEarned, standing)
         score = score + EXALTED_BONUS        
     end
 
-    return score
+    -- Scales based the level of the player
+    local levelPercentage = (UnitLevel("player")  / 60) --* 100
 
+    return score * levelPercentage
 end
 
 function HCS_ReputationScore:UpdateRepScore()
-    local repscore = 0
+    local repScore = 0
+    local calcScore = 0
 
     for factionIndex = 1, GetNumFactions() do
         local name, description, standingId, bottomValue, topValue, earnedValue, atWarWith, canToggleAtWar,
             isHeader, isCollapsed, hasRep, isWatched, isChild, factionID = GetFactionInfo(factionIndex)
         if hasRep or not isHeader then
-            repscore = repscore + CalcScore(earnedValue, factionID)
-          --  DEFAULT_CHAT_FRAME:AddMessage("Faction: " .. name .. " - " .. earnedValue.."FactionID: "..factionID)
+
+            calcScore = CalcScore(earnedValue, standingId)
+            repScore = repScore + calcScore
+            print(repScore)
+
+            if not HCScore_Character.reputations then
+                HCScore_Character.reputations = {}  -- Create an empty table
+            end
+
+            local found = false
+
+            for _, faction in pairs(HCScore_Character.reputations) do
+                if faction.id == factionID then
+                    faction.score = calcScore
+                    found = true
+                    break
+                end
+            end
+
+            if not found then
+                -- add faction details
+                local newFaction = {
+                    id = factionID,
+                    points = earnedValue,
+                    standing = standingId,
+                    fname = name,
+                    desc = description,
+                    score = calcScore
+                }
+                table.insert(HCScore_Character.reputations, newFaction)
+            end
+
+            --  DEFAULT_CHAT_FRAME:AddMessage("Faction: " .. name .. " - " .. earnedValue.." StandingID: "..standingId .. " Score: ".. CalcScore(earnedValue, standingId))
         end        
     end
-    HCScore_Character.scores.reputationScore = repscore
+    HCScore_Character.scores.reputationScore = repScore
+end
+
+function HCS_ReputationScore:GetNumFactions()
+    local factions = 0
+
+    for factionIndex = 1, GetNumFactions() do
+        local name, description, standingId, bottomValue, topValue, earnedValue, atWarWith, canToggleAtWar,
+        isHeader, isCollapsed, hasRep, isWatched, isChild, factionID = GetFactionInfo(factionIndex)
+        if hasRep or not isHeader then
+            factions = factions + 1
+        end
+    end
+
+    return factions
 end
