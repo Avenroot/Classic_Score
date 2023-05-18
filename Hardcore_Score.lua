@@ -1,7 +1,8 @@
+local AceDB = LibStub("AceDB-3.0")
+local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 
 -- Namespaces
-local _, Hardcore_Score = ...; 
--- Define your addon's namespace
+local _, Hardcore_Score = ...;
 
 -- Globals
 HCScore_Character = {
@@ -37,7 +38,7 @@ HCScore_Character = {
         cooking = 0,
         firstaid = 0,
     },
-    Reputations = {},
+    reputations = {},
 }    
 
 
@@ -59,7 +60,6 @@ Hardcore_Score.commands = {
         end
     }
 };
-
 
 function Hardcore_Score.HandleSlashCommands(str)
     if (#str == 0) then
@@ -109,6 +109,61 @@ function Hardcore_Score:Print(...)
     DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, tostringall(...)));    
 end
 
+function Hardcore_Score:CreateDB()
+
+    -- Create a new database for your addon
+    Hardcore_Score_Settings = AceDB:New("Hardcore_Score_Settings", {
+        profile = {
+            framePosition = {
+                point = "CENTER",  --"CENTER",
+                relativeTo = "UIParent",
+                relativePoint = "CENTER", -- "CENTER",
+                xOfs = 0,
+                yOfs = 0,
+            },
+        },
+        --        print("DB Created")
+    })
+
+
+    --    print("x "..Hardcore_Score_Settings.profile.framePosition.xOfs)
+    --    print("y "..Hardcore_Score_Settings.profile.framePosition.yOfs)
+
+end
+
+function Hardcore_Score:CreateMiniMapButton()
+    local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("HCScoreMinimapButton", {
+        type = "launcher",
+        icon = "Interface\\Icons\\XP_ICON",  -- XP_ICON, Spell_Nature_Polymorph
+        OnClick = function(self, button)
+            Scoreboard:Toggle()
+        end,
+        OnTooltipShow = function(tooltip)
+            tooltip:SetText("Hardcore Score - ".. string.format("%.2f", HCScore_Character.scores.coreScore))
+        end,
+    })
+
+    local icon = LibStub("LibDBIcon-1.0")
+    icon:Register("Hardcore_Score", LDB, AceDB.minimap) -- Replace "MyAddon" with your addon's name
+
+    -- Optional: Uncomment the following line to hide the icon by default
+    -- icon:Hide("MyAddon")
+
+    -- Optional: Uncomment the following line to show the icon
+    -- icon:Show("Hardcore_Score")
+end
+
+-- Load Saved Frame Position
+function Hardcore_Score:LoadSavedFramePosition()
+    local framePosition = Hardcore_Score_Settings.profile.framePosition
+    if framePosition then
+        local relativeTo = _G[framePosition.relativeTo]
+        if relativeTo then
+            UIScoreboard:SetPoint(framePosition.point, relativeTo, framePosition.relativePoint, framePosition.xOfs, framePosition.yOfs)
+        end
+    end
+end
+
 -- WARNING: self automatically becomes events frame!
 function Hardcore_Score:init(event, name)
     if (name ~= "Hardcore_Score") then return end
@@ -145,7 +200,9 @@ function Hardcore_Score:init(event, name)
 --    _G[ADDON_NAMESPACE] = HCScore_StoredVariables
  --   CharacterInfo = HCScore_StoredVariables.CharacterInfo
 
-    -- initialization HCScore_Character
+    Hardcore_Score:CreateDB()
+
+     -- initialization HCScore_Character
     if HCScore_Character.name == nil then HCScore_Character.name = "" end
     if HCScore_Character.class == nil then HCScore_Character.class = "" end
     if HCScore_Character.level == nil then HCScore_Character.level = 0 end
@@ -182,9 +239,15 @@ function Hardcore_Score:init(event, name)
         PlayerInfo:LoadCharacterData()
     end
 
---    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great Hardcore score!");
-
     Scoreboard:CreateUI()
+
+    -- Create minimap button
+    Hardcore_Score:CreateMiniMapButton()
+
+    -- Get frame saved position
+    Hardcore_Score:LoadSavedFramePosition()
+
+    -- Print fun stuff for the player
     Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great score! LET'S GO!");
     
 --    Scoreboard:UpdateUI()
@@ -194,82 +257,4 @@ end
 local events = CreateFrame("Frame");
 events:RegisterEvent("ADDON_LOADED");
 events:SetScript("OnEvent", Hardcore_Score.init);
-
-
-
---[[
-events:SetScript("OnEvent", function(self, event, addonName)
-    if addonName == ADDON_NAME then
-        print(addonName)
-        core.init(addonName)
-        -- Access the saved variable data and update your UI here
-        local characterInfo = Backup_CharacterInfo
-        print(characterInfo.name)
-        print(characterInfo.class)
-        print(characterInfo.level)
-        print(characterInfo.scores.coreScore)
-        print(characterInfo.quests.quest.questId)
-        CharacterInfo = characterInfo       
-        events:UnregisterEvent("ADDON_LOADED")
-    end
-end)
-]]
-
---[[
--- Define your addon's namespace
-local ADDON_NAME = "Hardcore_Score"
-local ADDON_NAMESPACE = "Hardcore_ScoreNamespace"
-
--- Create a table to store your addon's saved variables
-local Hardcore_Score_SavedVariables = {}
-
--- Define a function to initialize your addon's saved variables
-local function InitSavedVariables()
-    -- Load the saved variables data for your addon
-    Hardcore_Score_SavedVariables = _G[ADDON_NAMESPACE] or {}
-
-    -- Set the default values for your addon's saved variables
-    Hardcore_Score_SavedVariables.CharacterInfo = Hardcore_Score_SavedVariables.CharacterInfo or {
-        name = "",
-        class = "",
-        level = 0,
-        scores = {
-            coreScore = 0,
-            equippedGearScore = 0,
-            hcAchievementScore = 0,
-            levelingScore = 0,
-            timeBonusScore = 0,
-            questingScore = 0,
-            mobsKilledScore = 0,
-            professionsScore = 0,
-            dungeonsScore = 0,
-        },
-        quests = {
-            quest = {
-                questId = 0,
-            },
-        },
-    }
-
-    -- Save the updated values back to the store variables file
-    _G[ADDON_NAMESPACE] = Hardcore_Score_SavedVariables
-end
-
--- Register an event handler to initialize your addon's saved variables when the addon is loaded
-local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:SetScript("OnEvent", function(self, event, addonName)
-    if addonName == ADDON_NAME then
-        InitSavedVariables()
-        -- Access the saved variable data and update your UI here
-        local characterInfo = Hardcore_Score_SavedVariables.CharacterInfo
-        print(characterInfo.name)
-        print(characterInfo.class)
-        print(characterInfo.level)
-        print(characterInfo.scores.coreScore)
-        print(characterInfo.quests.quest.questId)
-        eventFrame:UnregisterEvent("ADDON_LOADED")
-    end
-end)
-]]
 
