@@ -43,17 +43,55 @@ frame:RegisterEvent("PLAYER_TARGET_CHANGED")
 --frame:SetScript("OnEvent", OnTargetChanged)
 
 -- This function will be called when a combat event is triggered
-function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, _, _, _, _, spellID)
-    local   _, event, _, sourceGUID, _, _, _, destGUID, _, _, _, _, spellID = CombatLogGetCurrentEventInfo()
+function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, _, _, spellID)
+    	local timestamp, subEvent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName,
+            destFlags, destRaidFlags, damage_spellid, overkill_spellname, school_spellSchool, resisted_amount, blocked_overkill = CombatLogGetCurrentEventInfo()
+   -- local   _, event, _, sourceGUID, _, _, _, destGUID, destName, _, _, _, spellID = CombatLogGetCurrentEventInfo()
 
-    if event == "PARTY_KILL" and sourceGUID == UnitGUID("player") then
+    if destGUID ~= nil
+    then
+        local guidType = select(1,strsplit("-", destGUID))
+        if (guidType ~= "Player" and guidType ~= "Pet")
+        then
+            -- When any damage is done by player or player's pet, record the mob
+            if (subEvent == "SWING_DAMAGE" or subEvent == "SPELL_DAMAGE")
+            then
+                MobCombatKill = false
+                MobName = ""
+            elseif (subEvent=="PARTY_KILL")
+            then
+                MobCombatKill = true
+                MobName = destName
+
+                print(MobCombatKill)
+                print(destName)
+
+            elseif (subEvent=="UNIT_DIED" and destGUID ~= nil)
+            then
+                --MobCombatKill = true
+                --MobName = destName
+                --print(MobCombatKill)
+                --print(destName)
+
+            end
+        end
+    end
+end
+--[[
+    if event == "PARTY_KILL" and (sourceGUID == UnitGUID("player") or sourceGUID == UnitGUID("pet")) then
 
 --        local xpGain = GetXPGain()
 --        print("You gained " .. xpGain .. " experience.")
 --        local xp = UnitXP("player")
 --        print("current xp: "..xp)
-        
+
+
+        local mobName = destName
+
+        print("mobName="..mobName)
+
         MobCombatKill = true
+
 
         -- Loop through the targetInfo table to find a matching ID
         for id, info in pairs(targetInfo) do
@@ -70,24 +108,25 @@ function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, _, _, _, _, s
             end
         end
     end
-end
-
+]]
 -- Register the OnCombatEvent function to be called when a combat event is triggered
-local frame2 = CreateFrame("FRAME")
+local frame2 = CreateFrame("Frame")
 frame2:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 frame2:SetScript("OnEvent", OnCombatEvent)
 
 local frame3 = CreateFrame("Frame")
 frame3:RegisterEvent("PLAYER_XP_UPDATE")
 frame3:SetScript("OnEvent", function(event, ...)
-    
-    local type, amount, total = ...
+
+    print("In XP Update")
+    print(MobCombatKill)
 
     if MobCombatKill == true then
         local mobScore = GetMobKillHCScore()
-        HCS_KillingMobsScore:UpdateMobsKilled(mobScore)
+        HCS_KillingMobsScore:UpdateMobsKilled(mobScore, MobName)
         print("Points for killing mob:", mobScore)
         MobCombatKill = false
+        MobName = ""
     end    
 
     Scoreboard.UpdateUI(nil)
