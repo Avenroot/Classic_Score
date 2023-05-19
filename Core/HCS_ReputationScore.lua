@@ -45,7 +45,6 @@ function HCS_ReputationScore:UpdateRepScore()
 
             calcScore = CalcScore(earnedValue, standingId)
             repScore = repScore + calcScore
-            print(repScore)
 
             if not HCScore_Character.reputations then
                 HCScore_Character.reputations = {}  -- Create an empty table
@@ -81,6 +80,7 @@ function HCS_ReputationScore:UpdateRepScore()
 end
 
 function HCS_ReputationScore:GetNumFactions()
+--[[
     local factions = 0
 
     for factionIndex = 1, GetNumFactions() do
@@ -90,6 +90,6 @@ function HCS_ReputationScore:GetNumFactions()
             factions = factions + 1
         end
     end
-
-    return factions
+]]
+    return #HCScore_Character.reputations
 end

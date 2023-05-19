@@ -1,11 +1,11 @@
 HCS_ProfessionsEvent = {}
 
 local function OnSkillLinesChanged(event)
-    if event == "SKILL_LINES_CHANGED" then
-      HCS_ProfessionsScore:GetNumberOfProfessions()
-      Scoreboard.UpdateUI(nil)
-      print("A profession have been updated")
-    end
+
+    HCS_ProfessionsScore:GetNumberOfProfessions()
+    Scoreboard.UpdateUI()
+    print("A profession have been updated")
+
 end
   
   local _HCS_ProfessionsEvent = CreateFrame("FRAME")
