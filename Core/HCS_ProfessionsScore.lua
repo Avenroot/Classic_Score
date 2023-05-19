@@ -100,11 +100,8 @@ function HCS_ProfessionsScore:GetNumberOfProfessions()
         
         if not isHeader then
             --print(i, GetSkillLineInfo(i))
-
             UpdateProfessionScore(skillName, skillRank)
-
-            --print("skillName: "..skillName.."skillRank: "..skillRank)        
-
+            --print("skillName: "..skillName.."skillRank: "..skillRank)
         end
     end
 

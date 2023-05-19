@@ -1,13 +1,5 @@
 PlayerQuestingScore = {}
 
---[[
-function PlayerQuestingScore:GetQuestingScore ()
-
-    return 150
-    
-end
-]]
-
 function PlayerQuestingScore:UpdateQuestingScore(score, questId, xpReward, levelMod)
     local currentscore = HCScore_Character.scores.questingScore
     
