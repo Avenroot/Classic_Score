@@ -1,5 +1,5 @@
 local AceDB = LibStub("AceDB-3.0")
-local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+--local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 
 -- Namespaces
 local _, Hardcore_Score = ...;
@@ -9,6 +9,7 @@ HCScore_Character = {
     name = "",
     class = "",
     level = 0,
+    faction = "",
     scores = {
         coreScore = 0,
         equippedGearScore = 0,
@@ -39,6 +40,7 @@ HCScore_Character = {
         firstaid = 0,
     },
     reputations = {},
+    mobsKilled = {},
 }    
 
 
@@ -206,6 +208,7 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.name == nil then HCScore_Character.name = "" end
     if HCScore_Character.class == nil then HCScore_Character.class = "" end
     if HCScore_Character.level == nil then HCScore_Character.level = 0 end
+    if HCScore_Character.faction == nil then HCScore_Character.faction = "" end
     if HCScore_Character.quests == nil then HCScore_Character.quests = {} end
     if HCScore_Character.scores == nil then HCScore_Character.scores = {} end
     if HCScore_Character.scores.coreScore == nil then HCScore_Character.scores.coreScore = 0 end
@@ -233,13 +236,15 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.professions.fishing == nil then HCScore_Character.professions.fishing = 0 end
     if HCScore_Character.professions.cooking == nil then HCScore_Character.professions.cooking = 0 end
     if HCScore_Character.professions.firstaid == nil then HCScore_Character.professions.firstaid = 0 end
-    if HCScore_Character.Reputations == nil then HCScore_Character.Reputations = {} end
+    if HCScore_Character.reputations == nil then HCScore_Character.reputations = {} end
+    if HCScore_Character.mobsKilled == nil then HCScore_Character.mobsKilled = {} end
 
     if HCScore_Character.name == "" then
         PlayerInfo:LoadCharacterData()
     end
 
     Scoreboard:CreateUI()
+    Scoreboard:UpdateUI()
 
     -- Create minimap button
     Hardcore_Score:CreateMiniMapButton()

@@ -3,6 +3,7 @@ PlayerInfo = {}
 CurrentXP = 0
 CurrentMaxXP = 0
 MobCombatKill = false
+MobName = ""
 
 function PlayerInfo:LoadCharacterData()  
     
@@ -31,7 +32,8 @@ end
 function PlayerInfo:GetPlayerInfo()
     HCScore_Character.name = UnitName("player")
     HCScore_Character.class = UnitClass("player")
-    HCScore_Character.level = UnitLevel("player")      
+    HCScore_Character.level = UnitLevel("player")
+    HCScore_Character.faction = UnitFactionGroup("player")
     CurrentXP = UnitXP("player")
     CurrentMaxXP = UnitXPMax("player")
 
