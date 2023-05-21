@@ -286,11 +286,9 @@ function Hardcore_Score:init(event, name)
     -- Get frame saved position
     Hardcore_Score:LoadSavedFramePosition()
 
-    -- Print fun stuff for the player
-    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great score! LET'S GO!");
-    
---    Scoreboard:UpdateUI()
---    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  HCScore_Character.scores.coreScore.. " is a great Hardcore score!");
+    -- Print fun stuff for the player    
+    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
+   
 end
 
 local events = CreateFrame("Frame");

@@ -13,7 +13,6 @@ local txt_core_separator
 local txt_equippedgear_score
 local txt_leveling_score
 local txt_mobskilled_score
-local txt_timebonus_score
 local txt_professions_score
 local txt_hcachievement_score
 local txt_questing_score
@@ -22,7 +21,6 @@ local txt_reputation_score
 local txt_discovery_score
 
 -----------------------
-
 
 -- Defaults (usually a database!)
 local defaults = {
@@ -137,16 +135,6 @@ function Scoreboard:CreateUI()
     txt_leveling_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_leveling_score)
 
---[[    
-    -- Leveling Time Bonus Score
-    --local ctimebonus = HCScore_Character.scores.timeBonusScore
-    txt_timebonus_score = AceGUI:Create("Label")
-    --txt_timebonus_score:SetText(string.format("%-10s %.2f","Time Bonus:  ", ctimebonus))
-    txt_timebonus_score:SetColor(0, 255, 128)
-    txt_timebonus_score:SetFontObject(GameFontNormal)
-    UIScoreboard:AddChild(txt_timebonus_score)
-]]
-
     -- Questing Score
     --local cquestingScore = HCScore_Character.scores.questingScore
     txt_questing_score = AceGUI:Create("Label")
@@ -205,21 +193,6 @@ function Scoreboard:CreateUI()
     txt_discovery_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_discovery_score)
 
-    -- CharacterFrame button with score
---[[
-    local charframebutton = CreateFrame("Button", "HCScore", CharacterFrame, "UIPanelButtonTemplate")
-    charframebutton:SetPoint("TOPLEFT", CharacterFrame, "TOPLEFT", 150, -56)
-    charframebutton:SetSize(80, 17)
-    charframebutton:SetText("HC Score")
-    charframebutton:SetScript("OnClick", function() 
-        Scoreboard:Toggle()
-     end)        
-     
-     charframetext = CharacterFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-     charframetext:SetPoint("TOPLEFT", CharacterFrame, "TOPLEFT", 235, -59)
-     charframetext:SetText(string.format("%.2f", HCScore_Character.scores.coreScore))
-     charframetext:SetTextColor(0, 255, 0) -- Green
-]]
 end
 
 function Scoreboard:UpdateUI()        

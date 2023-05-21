@@ -15,7 +15,6 @@ Core/PlayerLevelingScore.lua
 Core/PlayerEquippedGearScore.lua
 Core/PlayerHCAchievementScore.lua
 Core/PlayerQuestingScore.lua
-Core/PlayerTimeBonusScore.lua
 Core/HCS_KillingMobsScore.lua
 Core/HCS_ProfessionsScore.lua
 Core/HCS_ReputationScore.lua
