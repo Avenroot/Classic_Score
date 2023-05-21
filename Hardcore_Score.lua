@@ -2,9 +2,25 @@ local AceDB = LibStub("AceDB-3.0")
 --local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 
 -- Namespaces
-local _, Hardcore_Score = ...;
+local _;  
+Hardcore_Score = {}
 
 -- Globals
+--[[
+Hardcore_Score_Settings = {
+    profile = {
+        framePosition = {
+            point = "CENTER",  --"CENTER",
+            relativeTo = "UIParent",
+            relativePoint = "CENTER", -- "CENTER",
+            xOfs = 0,
+            yOfs = 0,
+        },
+        minimap = true
+    },
+}
+]]
+
 HCScore_Character = {
     name = "",
     class = "",
@@ -113,8 +129,25 @@ end
 
 function Hardcore_Score:CreateDB()
 
+--[[
     -- Create a new database for your addon
-    Hardcore_Score_Settings = AceDB:New("Hardcore_Score_Settings", {
+    Hardcore_Score_Settings = {
+                                    profile = {
+                                        framePosition = {
+                                            point = "CENTER",  --"CENTER",
+                                            relativeTo = "UIParent",
+                                            relativePoint = "CENTER", -- "CENTER",
+                                            xOfs = 0,
+                                            yOfs = 0,
+                                        },
+                                        minimap = true
+                                    },
+                                }
+]]
+
+
+    -- Create a new database for your addon    
+    self.db = AceDB:New("Hardcore_Score_Settings", {
         profile = {
             framePosition = {
                 point = "CENTER",  --"CENTER",
@@ -123,13 +156,9 @@ function Hardcore_Score:CreateDB()
                 xOfs = 0,
                 yOfs = 0,
             },
+            minimapbutton = true,
         },
-        --        print("DB Created")
     })
-
-
-    --    print("x "..Hardcore_Score_Settings.profile.framePosition.xOfs)
-    --    print("y "..Hardcore_Score_Settings.profile.framePosition.yOfs)
 
 end
 
@@ -157,11 +186,13 @@ end
 
 -- Load Saved Frame Position
 function Hardcore_Score:LoadSavedFramePosition()
-    local framePosition = Hardcore_Score_Settings.profile.framePosition
+    local framePosition = Hardcore_Score.db.profile.framePosition
     if framePosition then
         local relativeTo = _G[framePosition.relativeTo]
         if relativeTo then
             UIScoreboard:SetPoint(framePosition.point, relativeTo, framePosition.relativePoint, framePosition.xOfs, framePosition.yOfs)
+            print(framePosition.xOfs)
+            print(framePosition.yOfs)
         end
     end
 end
@@ -201,10 +232,11 @@ function Hardcore_Score:init(event, name)
     -- Save the updated values back to the store variables file
 --    _G[ADDON_NAMESPACE] = HCScore_StoredVariables
  --   CharacterInfo = HCScore_StoredVariables.CharacterInfo
-
-    Hardcore_Score:CreateDB()
-
-     -- initialization HCScore_Character
+    
+    -- initalization Hardcore_Score_Settings
+    if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
+    
+    -- initialization HCScore_Character
     if HCScore_Character.name == nil then HCScore_Character.name = "" end
     if HCScore_Character.class == nil then HCScore_Character.class = "" end
     if HCScore_Character.level == nil then HCScore_Character.level = 0 end
@@ -245,6 +277,8 @@ function Hardcore_Score:init(event, name)
 
     Scoreboard:CreateUI()
     Scoreboard:UpdateUI()
+
+    Hardcore_Score:CreateDB()
 
     -- Create minimap button
     Hardcore_Score:CreateMiniMapButton()

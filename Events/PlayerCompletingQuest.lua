@@ -1,10 +1,10 @@
 PlayerCompletingQuest = {}
 
 local TRIVAL = 0 -- grey
-local EASY = 0.025 -- green
-local MODERATE = 0.0375 -- yellow
-local HARD = 0.075 -- orange
-local VERYHARD = 0.125 -- red
+local EASY = 0.0005 -- green
+local MODERATE = 0.00075 -- yellow
+local HARD = 0.001 -- orange
+local VERYHARD = 0.00125 -- red
 local score = 0
 local questLevel
 local playerLevel
