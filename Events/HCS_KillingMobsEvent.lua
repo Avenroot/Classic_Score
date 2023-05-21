@@ -1,5 +1,11 @@
 HCS_KillingMobsEvent = {}
-local targetInfo = {}
+
+local TRIVAL = 0 -- grey
+local EASY = 0.0005 -- green
+local MODERATE = 0.00075 -- yellow
+local HARD = 0.001 -- orange
+local VERYHARD = 0.00125 -- red
+
 
 function GetXPGain()
     local newXP = UnitXP("player")
@@ -12,35 +18,52 @@ function GetXPGain()
     return xpGain
 end
 
-function GetMobKillHCScore()
+local function between(x, a, b)
+    return x >= a and x <= b
+  end
+  
+function GetMobKillHCScore(mobLevel)
     local xpGain = GetXPGain()
-    local score = xpGain * 0.00075
+    local score = 0
+
+    local playerLevel = UnitLevel("player")
+    local levelMod = mobLevel - playerLevel
+  
+    -- grey
+    if levelMod <= -6 then
+        score = 0
+        print("Mob is grey")
+    end
+    -- green
+    if between(levelMod, -5, -1) then
+        score =  xpGain * EASY         
+        print("Mob is green")
+    end 
+    -- yellow
+    if between(levelMod, 0, 4) then
+        score = xpGain * MODERATE    
+        print("Mob is yellow")
+    end
+    -- orange
+    if between(levelMod, 5, 9) then
+        score = xpGain * HARD
+        print("Mob is orange")
+    end
+    -- red
+    if levelMod > 9 then
+        score =  xpGain * VERYHARD
+        print("Mob is red")
+    end
+    
+    -- overrides all the other calculations above.  if mobLevel is 0 it means the mob could not be determined so 
+    -- the player get a default multiplier of EASY
+    if mobLevel == 0 then
+        score = xpGain * EASY
+        print("Mob level is 0")
+    end
+
     return score    
 end
-
--- This function will be called when the player targets a new mob
-function OnTargetChanged()
-    if UnitExists("target") then
-        -- Save the target's information to the targetInfo table
-        targetInfo.name = UnitName("target")
-        targetInfo.level = UnitLevel("target")
-        targetInfo.id = UnitGUID("target")
-        targetInfo.rarity = UnitClassification("target")
-        print("Saved target")
-        print("targetInfo.name: ".. targetInfo.name)
-        print("targetInfo.level: ".. targetInfo.level)
-        print("targetInfo.id: ".. targetInfo.id)
-        print("targetInfo.rarity: ".. targetInfo.rarity)
-    else
-        -- Clear the targetInfo table if the player has no target
-        wipe(targetInfo)
-    end
-end
-
--- Register the OnTargetChanged function to be called when the player targets a new unit
-local frame = CreateFrame("FRAME")
-frame:RegisterEvent("PLAYER_TARGET_CHANGED")
---frame:SetScript("OnEvent", OnTargetChanged)
 
 -- This function will be called when a combat event is triggered
 function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, _, _, spellID)
@@ -56,81 +79,65 @@ function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, 
             -- When any damage is done by player or player's pet, record the mob
             if (subEvent == "SWING_DAMAGE" or subEvent == "SPELL_DAMAGE")
             then
-                MobCombatKill = false
-                MobName = ""
+                MobCombatKill = true
+                MobName = destName
+                MobLevel = UnitLevel("target")
+
             elseif (subEvent=="PARTY_KILL")
             then
                 MobCombatKill = true
                 MobName = destName
+                MobLevel = UnitLevel("target")
+
+--[[
+                local targetname = UnitName("target")
+                local targetlevel = UnitLevel("target")
+                local targetid = UnitGUID("target")
+                local targetrarity = UnitClassification("target")
+                
+                print("targetname: ".. targetname)
+                print("targetlevel: ".. targetlevel)
+                print("targetid: ".. targetid)
+                print("targetrarity: ".. targetrarity)
+ ]]       
 
                 print(MobCombatKill)
-                print(destName)
+                print(destName.. " - level ".. MobLevel.. " ("..guidType..")")
 
             elseif (subEvent=="UNIT_DIED" and destGUID ~= nil)
             then
-                --MobCombatKill = true
-                --MobName = destName
-                --print(MobCombatKill)
-                --print(destName)
-
+                MobCombatKill = true
+                MobName = destName
+                MobLevel = UnitLevel("target")
             end
         end
     end
 end
---[[
-    if event == "PARTY_KILL" and (sourceGUID == UnitGUID("player") or sourceGUID == UnitGUID("pet")) then
 
---        local xpGain = GetXPGain()
---        print("You gained " .. xpGain .. " experience.")
---        local xp = UnitXP("player")
---        print("current xp: "..xp)
-
-
-        local mobName = destName
-
-        print("mobName="..mobName)
-
-        MobCombatKill = true
-
-
-        -- Loop through the targetInfo table to find a matching ID
-        for id, info in pairs(targetInfo) do
-            print("id: "..id.."destGUID: "..destGUID)
-            if id == destGUID then
-                -- We found a matching ID, so we can use the saved targetInfo to get its information
-                local name = info.name
-                local level = info.level
-                local rarity = info.rarity
-
-                -- Do something with the mob info here
-               -- print(name .. " (level " .. level .. ", " .. rarity .. ") was killed.")
-                break
-            end
-        end
-    end
-]]
 -- Register the OnCombatEvent function to be called when a combat event is triggered
-local frame2 = CreateFrame("Frame")
-frame2:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-frame2:SetScript("OnEvent", OnCombatEvent)
+local frame = CreateFrame("Frame")
+frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+frame:SetScript("OnEvent", OnCombatEvent)
 
-local frame3 = CreateFrame("Frame")
-frame3:RegisterEvent("PLAYER_XP_UPDATE")
-frame3:SetScript("OnEvent", function(event, ...)
+local frame2 = CreateFrame("Frame")
+frame2:RegisterEvent("PLAYER_XP_UPDATE")
+frame2:SetScript("OnEvent", function(event, ...)
 
     print("In XP Update")
     print(MobCombatKill)
 
     if MobCombatKill == true then
-        local mobScore = GetMobKillHCScore()
+        local mobScore = GetMobKillHCScore(MobLevel)
         HCS_KillingMobsScore:UpdateMobsKilled(mobScore, MobName)
         print("Points for killing mob:", mobScore)
         MobCombatKill = false
         MobName = ""
+        MobLevel = 0
     end    
 
     Scoreboard.UpdateUI(nil)
+
+    print(MobCombatKill)
+    print("Out XP Update")
     
 end)
-
---if eventType == "PARTY_KILL" and sourceGUID == UnitGUID("player") and bit.band(destFlags, COMBATLOG_OBJECT_TYPE_NPC) ~= 0 then

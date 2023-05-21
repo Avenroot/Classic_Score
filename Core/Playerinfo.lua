@@ -4,6 +4,7 @@ CurrentXP = 0
 CurrentMaxXP = 0
 MobCombatKill = false
 MobName = ""
+MobLevel = 0
 
 function PlayerInfo:LoadCharacterData()  
     
