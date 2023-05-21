@@ -14,7 +14,7 @@ end
 
 function GetMobKillHCScore()
     local xpGain = GetXPGain()
-    local score = xpGain * 0.005
+    local score = xpGain * 0.00075
     return score    
 end
 

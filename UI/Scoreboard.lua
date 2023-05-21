@@ -32,29 +32,25 @@ local defaults = {
         b = 1,
         hex = "00ccff"
     },
-    
-    minimap = true
 
 }
 
 -- Leaderboard functions
 -- Save the frame position to the database
 local function SavePositionToDatabase()
-
     local point, relativeTo, relativePoint, xOfs, yOfs = UIScoreboard:GetPoint()
-    Hardcore_Score_Settings.profile.framePosition = {
+    Hardcore_Score.db.profile.framePosition = {
         point = point,
-        --  relativeTo = relativeTo:GetName(),
+        relativeTo = relativeTo, --"UIParent",
         relativePoint = relativePoint,
         xOfs = xOfs,
         yOfs = yOfs,
     }
-
 end
 
 -- Load Saved Frame Position
 local function LoadSavedFramePosition()
-    local framePosition = Hardcore_Score_Settings.profile.framePosition
+    local framePosition = Hardcore_Score.db.profile.framePosition
     if framePosition then
         local relativeTo = _G[framePosition.relativeTo]
         if relativeTo then
@@ -141,6 +137,7 @@ function Scoreboard:CreateUI()
     txt_leveling_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_leveling_score)
 
+--[[    
     -- Leveling Time Bonus Score
     --local ctimebonus = HCScore_Character.scores.timeBonusScore
     txt_timebonus_score = AceGUI:Create("Label")
@@ -148,6 +145,7 @@ function Scoreboard:CreateUI()
     txt_timebonus_score:SetColor(0, 255, 128)
     txt_timebonus_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_timebonus_score)
+]]
 
     -- Questing Score
     --local cquestingScore = HCScore_Character.scores.questingScore
@@ -234,7 +232,7 @@ function Scoreboard:UpdateUI()
     txt_core_score:SetText("Score: "..string.format("%.2f", HCScore_Character.scores.coreScore))
     txt_equippedgear_score:SetText("Equipped Gear: "..string.format("%.2f", HCScore_Character.scores.equippedGearScore))    
     txt_leveling_score:SetText("Leveling: "..string.format("%.2f", HCScore_Character.scores.levelingScore))
-    txt_timebonus_score:SetText("Time Bonus: "..string.format("%.2f", HCScore_Character.scores.timeBonusScore))
+    --txt_timebonus_score:SetText("Time Bonus: "..string.format("%.2f", HCScore_Character.scores.timeBonusScore))
     txt_questing_score:SetText("Questing: "..string.format("%.2f", HCScore_Character.scores.questingScore))
     txt_mobskilled_score:SetText("Mobs Killed ("..totMobTypesKilled.."): "..string.format("%.2f", HCScore_Character.scores.mobsKilledScore))
     txt_professions_score:SetText("Professions ("..totProfessions.."): "..string.format("%.2f", HCScore_Character.scores.professionsScore))
