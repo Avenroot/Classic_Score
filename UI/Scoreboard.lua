@@ -189,7 +189,7 @@ function Scoreboard:CreateUI()
     --local cdiscoveryScore = HCScore_Character.scores.discoveryScore
     txt_discovery_score = AceGUI:Create("Label")
     --txt_discovery_score:SetText(string.format("%-10s %.2f","Discovery:  ", cdiscoveryScore))
-    txt_discovery_score:SetColor(0.5, 0.5, 0.5)
+    txt_discovery_score:SetColor(0, 255, 128)
     txt_discovery_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_discovery_score)
 

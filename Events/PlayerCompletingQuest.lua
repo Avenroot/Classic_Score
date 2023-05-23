@@ -21,9 +21,9 @@ local function between(x, a, b)
 end
 
 local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward)
---  print("questID "..questID)
---  print("xpReward "..xpReward)
---  print("moneyReward "..moneyReward)
+
+-- a hack for Discovery until I can figure out how to detect if any xp is gained by entering a new zone.
+  _G["ZoneChanged"] = false 
 
   questLevel = select(2, GetQuestLogTitle(GetQuestLogIndexByID(questID)))
   playerLevel = UnitLevel("player")
