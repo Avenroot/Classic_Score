@@ -18,6 +18,7 @@ Core/PlayerQuestingScore.lua
 Core/HCS_KillingMobsScore.lua
 Core/HCS_ProfessionsScore.lua
 Core/HCS_ReputationScore.lua
+Core/HCS_DiscoveryScore.lua
 
 Events/PlayerLevelingUp.lua
 Events/PlayerEquippingItem.lua
@@ -25,6 +26,8 @@ Events/PlayerCompletingQuest.lua
 Events/HCS_KillingMobsEvent.lua
 Events/HCS_ProfessionsEvent.lua
 Events/HCS_ReputationEvent.lua
+Events/HCS_PlayerDiscoveryEvent.lua
+Events/HCS_XPUpdateEvent.lua
 
 UI/Scoreboard.lua
 Hardcore_Score.lua

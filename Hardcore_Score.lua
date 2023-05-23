@@ -31,7 +31,6 @@ HCScore_Character = {
         equippedGearScore = 0,
         hcAchievementScore = 0,
         levelingScore = 0,
-        timeBonusScore = 0,
         questingScore = 0,
         mobsKilledScore = 0,
         professionsScore = 0,
@@ -57,6 +56,7 @@ HCScore_Character = {
     },
     reputations = {},
     mobsKilled = {},
+    discovery = {},
 }    
 
 
@@ -129,23 +129,6 @@ end
 
 function Hardcore_Score:CreateDB()
 
---[[
-    -- Create a new database for your addon
-    Hardcore_Score_Settings = {
-                                    profile = {
-                                        framePosition = {
-                                            point = "CENTER",  --"CENTER",
-                                            relativeTo = "UIParent",
-                                            relativePoint = "CENTER", -- "CENTER",
-                                            xOfs = 0,
-                                            yOfs = 0,
-                                        },
-                                        minimap = true
-                                    },
-                                }
-]]
-
-
     -- Create a new database for your addon    
     self.db = AceDB:New("Hardcore_Score_Settings", {
         profile = {
@@ -162,15 +145,27 @@ function Hardcore_Score:CreateDB()
 
 end
 
-function Hardcore_Score:CreateMiniMapButton()
+function Hardcore_Score:CreateMiniMapButton()   
+ 
     local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("HCScoreMinimapButton", {
         type = "launcher",
         icon = "Interface\\Icons\\XP_ICON",  -- XP_ICON, Spell_Nature_Polymorph
         OnClick = function(self, button)
             Scoreboard:Toggle()
         end,
+
+
         OnTooltipShow = function(tooltip)
-            tooltip:SetText("Hardcore Score - ".. string.format("%.2f", HCScore_Character.scores.coreScore))
+            tooltip:SetText(string.format("Score - %.2f\n-------\nEquipped Gear:  %.2f\nLeveling:              %.2f\nQuesting:              %.2f\n"..
+                "Mobs Killed:          %.2f\nProfessions:          %.2f\nReputations:         %.2f\nDiscovery:             %.2f\n",
+                HCScore_Character.scores.coreScore,
+                HCScore_Character.scores.equippedGearScore,
+                HCScore_Character.scores.levelingScore,
+                HCScore_Character.scores.questingScore,
+                HCScore_Character.scores.mobsKilledScore,
+                HCScore_Character.scores.professionsScore,
+                HCScore_Character.scores.reputationScore,
+                HCScore_Character.scores.discoveryScore))
         end,
     })
 
@@ -252,8 +247,7 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.scores.mobsKilledScore == nil then HCScore_Character.scores.mobsKilledScore = 0 end
     if HCScore_Character.scores.professionsScore == nil then HCScore_Character.scores.professionsScore = 0 end
     if HCScore_Character.scores.questingScore == nil then HCScore_Character.scores.questingScore = 0 end
-    if HCScore_Character.scores.reputationScore == nil then HCScore_Character.scores.reputationScore = 0 end
-    if HCScore_Character.scores.timeBonusScore == nil then HCScore_Character.scores.timeBonusScore = 0 end
+    if HCScore_Character.scores.reputationScore == nil then HCScore_Character.scores.reputationScore = 0 end    
     if HCScore_Character.professions == nil then HCScore_Character.professions = {} end
     if HCScore_Character.professions.alchemy == nil then HCScore_Character.professions.alchemy = 0 end
     if HCScore_Character.professions.blacksmithing == nil then HCScore_Character.professions.blacksmithing = 0 end
