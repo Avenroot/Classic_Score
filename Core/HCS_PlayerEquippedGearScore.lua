@@ -1,4 +1,4 @@
-PlayerEquippedGearScore = {}
+HCS_PlayerEquippedGearScore = {}
 
 local function PrintGearInfo()
     for slotID = 1, 19 do
@@ -16,7 +16,7 @@ local function PrintGearInfo()
     end
 end
 
-function PlayerEquippedGearScore:GetEquippedGearScore()
+function HCS_PlayerEquippedGearScore:GetEquippedGearScore()
     local itemScore = 0
 
     for slotID = 1, 19 do

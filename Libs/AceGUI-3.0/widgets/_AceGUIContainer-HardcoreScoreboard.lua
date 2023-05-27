@@ -1,7 +1,7 @@
 --[[-----------------------------------------------------------------------------
-HardcoreScoreboard Container
+HardcoreHCS_ScoreboardUI Container
 -------------------------------------------------------------------------------]]
-local Type, Version = "HardcoreScoreboard", 30
+local Type, Version = "HardcoreHCS_ScoreboardUI", 30
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 

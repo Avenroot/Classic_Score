@@ -1,4 +1,4 @@
-PlayerInfo = {}
+HCS_Playerinfo = {}
 
 CurrentXP = 0
 CurrentMaxXP = 0
@@ -7,31 +7,31 @@ MobName = ""
 MobLevel = 0
 ZoneChanged = false
 
-function PlayerInfo:LoadCharacterData()  
+function HCS_Playerinfo:LoadCharacterData()  
     
-    PlayerInfo:GetPlayerInfo()
+    HCS_Playerinfo:GetHCS_Playerinfo()
 --    print("Got Player Info")
 
-    HCScore_Character.scores.levelingScore = PlayerLevelingScore:GetLevelScore()
+    HCScore_Character.scores.levelingScore = HCS_PlayerLevelingScore:GetLevelScore()
 --    print("Got Level Score")
 
-    HCScore_Character.scores.equippedGearScore = PlayerEquippedGearScore:GetEquippedGearScore()
+    HCScore_Character.scores.equippedGearScore = HCS_PlayerEquippedGearScore:GetEquippedGearScore()
 --    print("Got Player GetEquippedGearScore")
 
-    --HCScore_Character.scores.questingScore = PlayerQuestingScore:GetQuestingScore();
+    --HCScore_Character.scores.questingScore = HCS_PlayerQuestingScore:GetQuestingScore();
     --print("Got Questing Score")
 
-    HCScore_Character.scores.coreScore = PlayerCoreScore:GetCoreScore()
+    HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
 --    print("Got Core Score")
 
     HCS_ReputationScore:UpdateRepScore()
     --SaveHCScoreData:SaveVariables()
     --  SaveVariables("HCScore_StoredVariables")
-    -- Scoreboard:UpdateUI()
+    -- HCS_ScoreboardUI:UpdateUI()
 
 end
 
-function PlayerInfo:GetPlayerInfo()
+function HCS_Playerinfo:GetHCS_Playerinfo()
     HCScore_Character.name = UnitName("player")
     HCScore_Character.class = UnitClass("player")
     HCScore_Character.level = UnitLevel("player")

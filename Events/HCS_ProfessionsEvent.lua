@@ -3,7 +3,7 @@ HCS_ProfessionsEvent = {}
 local function OnSkillLinesChanged(event)
 
     HCS_ProfessionsScore:GetNumberOfProfessions()
-    Scoreboard.UpdateUI()
+    HCS_ScoreboardUI:UpdateUI()
     print("A profession have been updated")
 
 end
