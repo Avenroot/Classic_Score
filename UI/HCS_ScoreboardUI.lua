@@ -2,12 +2,8 @@ local AceGUI = LibStub("AceGUI-3.0")
 local debug = false
 
 -- Namespaces
---local _, Scoreboard = ...;
-Scoreboard = {};
+HCS_ScoreboardUI = {};
 
---local UIScoreboard
---local Hardcore_Score_Settings
---local charframetext
 local txt_core_score
 local txt_core_separator
 local txt_equippedgear_score
@@ -21,17 +17,6 @@ local txt_reputation_score
 local txt_discovery_score
 
 -----------------------
-
--- Defaults (usually a database!)
-local defaults = {
-    theme = {
-        r = 0,
-        g = 0.8,
-        b = 1,
-        hex = "00ccff"
-    },
-
-}
 
 -- Leaderboard functions
 -- Save the frame position to the database
@@ -57,8 +42,8 @@ local function LoadSavedFramePosition()
     end
 end
 
- function Scoreboard:Toggle()
-    local SB = UIScoreboard or Scoreboard:CreateUI()
+ function HCS_ScoreboardUI:Toggle()
+    local SB = UIScoreboard or HCS_ScoreboardUI:CreateUI()
 
     if SB then
         if SB:IsShown() then
@@ -67,24 +52,18 @@ end
         else
             LoadSavedFramePosition()
             SB:Show()
-         --   Scoreboard:CreateUI()
+         --   HCS_ScoreboardUI:CreateUI()
         end
     end
 end
 
-function Scoreboard:GetThemeColor()
-    local c = defaults.theme;
-    return c.r, c.g, c.b, c.hex;
-end
-
-
--- Setup Scoreboard and get data
-function Scoreboard:CreateUI()
+-- Setup HCS_ScoreboardUI and get data
+function HCS_ScoreboardUI:CreateUI()
  
     UIScoreboard = AceGUI:Create("HardcoreScoreboard")
 
-    --local pinfo = PlayerInfo:GetPlayerInfo()
-    --UIScoreboard:SetTitle(CharacterInfo.name)
+    --local pinfo = HCS_Playerinfo:GetHCS_Playerinfo()
+    --HCS_ScoreboardUI:SetTitle(CharacterInfo.name)
     UIScoreboard:SetTitle("Hardcore Score")
     UIScoreboard:SetHeight(225)
     UIScoreboard:SetWidth(210)
@@ -193,10 +172,12 @@ function Scoreboard:CreateUI()
     txt_discovery_score:SetFontObject(GameFontNormal)
     UIScoreboard:AddChild(txt_discovery_score)
 
+    UIScoreboard:Hide()
+
 end
 
-function Scoreboard:UpdateUI()        
-    PlayerInfo:LoadCharacterData()
+function HCS_ScoreboardUI:UpdateUI()
+    HCS_Playerinfo:LoadCharacterData()
     
     local totProfessions = HCS_ProfessionsScore:GetNumberOfProfessions()
     local totReputations = HCS_ReputationScore:GetNumFactions()
@@ -205,7 +186,6 @@ function Scoreboard:UpdateUI()
     txt_core_score:SetText("Score: "..string.format("%.2f", HCScore_Character.scores.coreScore))
     txt_equippedgear_score:SetText("Equipped Gear: "..string.format("%.2f", HCScore_Character.scores.equippedGearScore))    
     txt_leveling_score:SetText("Leveling: "..string.format("%.2f", HCScore_Character.scores.levelingScore))
-    --txt_timebonus_score:SetText("Time Bonus: "..string.format("%.2f", HCScore_Character.scores.timeBonusScore))
     txt_questing_score:SetText("Questing: "..string.format("%.2f", HCScore_Character.scores.questingScore))
     txt_mobskilled_score:SetText("Mobs Killed ("..totMobTypesKilled.."): "..string.format("%.2f", HCScore_Character.scores.mobsKilledScore))
     txt_professions_score:SetText("Professions ("..totProfessions.."): "..string.format("%.2f", HCScore_Character.scores.professionsScore))
@@ -214,9 +194,8 @@ function Scoreboard:UpdateUI()
     txt_discovery_score:SetText("Discovery: "..string.format("%.2f", HCScore_Character.scores.discoveryScore))
     txt_dungeons_score:SetText("Dungeons: "..string.format("%.2f", HCScore_Character.scores.dungeonsScore))
 
-  --  charframetext:SetText(string.format("%.2f", HCScore_Character.scores.coreScore))
+    HCS_ScoreboardSummaryUI:UpdateUI()
 
-    --print("executed Scoreboard:UpdateUI()")
 end
 
 

@@ -5,7 +5,7 @@ frame:RegisterEvent("UPDATE_FACTION")
 
 local function eventHandler(self, event, ...)
     HCS_ReputationScore:UpdateRepScore()
-    Scoreboard.UpdateUI()
+    HCS_ScoreboardUI:UpdateUI()
   --  print("Reputation has been updated")
 end
 

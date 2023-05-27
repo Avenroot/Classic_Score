@@ -2,32 +2,35 @@
 ## Title: Hardcore Score
 ## Notes: Your Hardcore score for your character
 ## Author: Avenroot
-## Version: 0.0.0.1
+## Version: 0.0.0.2
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character
 
 embeds.xml
 
-Core/Playerinfo.lua
-Core/PlayerCoreScore.lua
-Core/PlayerLevelingScore.lua
-Core/PlayerEquippedGearScore.lua
-Core/PlayerHCAchievementScore.lua
-Core/PlayerQuestingScore.lua
+Core/HCS_Playerinfo.lua
+Core/HCS_PlayerCoreScore.lua
+Core/HCS_PlayerLevelingScore.lua
+Core/HCS_PlayerEquippedGearScore.lua
+Core/HCS_PlayerHCAchievementScore.lua
+Core/HCS_PlayerQuestingScore.lua
 Core/HCS_KillingMobsScore.lua
 Core/HCS_ProfessionsScore.lua
 Core/HCS_ReputationScore.lua
 Core/HCS_DiscoveryScore.lua
 
-Events/PlayerLevelingUp.lua
-Events/PlayerEquippingItem.lua
-Events/PlayerCompletingQuest.lua
+Events/HCS_PlayerLevelingUpEvent.lua
+Events/HCS_PlayerEquippingItemEvent.lua
+Events/HCS_PlayerCompletingQuestEvent.lua
 Events/HCS_KillingMobsEvent.lua
 Events/HCS_ProfessionsEvent.lua
 Events/HCS_ReputationEvent.lua
 Events/HCS_PlayerDiscoveryEvent.lua
 Events/HCS_XPUpdateEvent.lua
 
-UI/Scoreboard.lua
+UI/HCS_ScoreboardUI.lua
+UI/HCS_ScoreboardSummaryUI.lua
 Hardcore_Score.lua
+
+

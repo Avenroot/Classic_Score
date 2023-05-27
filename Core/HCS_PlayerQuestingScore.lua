@@ -1,6 +1,6 @@
-PlayerQuestingScore = {}
+HCS_PlayerQuestingScore = {}
 
-function PlayerQuestingScore:UpdateQuestingScore(score, questId, xpReward, levelMod)
+function HCS_PlayerQuestingScore:UpdateQuestingScore(score, questId, xpReward, levelMod)
     local currentscore = HCScore_Character.scores.questingScore
     
     HCScore_Character.scores.questingScore = currentscore + score

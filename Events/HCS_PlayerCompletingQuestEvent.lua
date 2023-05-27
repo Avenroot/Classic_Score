@@ -1,4 +1,4 @@
-PlayerCompletingQuest = {}
+HCS_PlayerCompletingQuestEvent = {}
 
 local TRIVAL = 0 -- grey
 local EASY = 0.0005 -- green
@@ -11,10 +11,10 @@ local playerLevel
 local levelMod
 
 -- create a frame to handle events
-local _playercompletingquest = CreateFrame("Frame")
+local _HCS_PlayerCompletingQuestEvent = CreateFrame("Frame")
 
 -- register for the QUEST_TURNED_IN event
-_playercompletingquest:RegisterEvent("QUEST_TURNED_IN")
+_HCS_PlayerCompletingQuestEvent:RegisterEvent("QUEST_TURNED_IN")
 
 local function between(x, a, b)
   return x >= a and x <= b
@@ -53,12 +53,12 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
   
   print("score: "..score.. " levelmod: "..levelMod.. " player level: "..playerLevel.. " quest level: "..questLevel)
 
-  PlayerQuestingScore:UpdateQuestingScore(score, questID, xpReward, levelMod)
-  Scoreboard.UpdateUI(nil)
+  HCS_PlayerQuestingScore:UpdateQuestingScore(score, questID, xpReward, levelMod)
+  HCS_ScoreboardUI:UpdateUI()
 
 end
 
 -- set the event handler function for the myFrame
-_playercompletingquest:SetScript("OnEvent", OnQuestTurnedIn)
+_HCS_PlayerCompletingQuestEvent:SetScript("OnEvent", OnQuestTurnedIn)
 --------------------------------------------------------------
 

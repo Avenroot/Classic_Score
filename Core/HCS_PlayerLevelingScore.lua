@@ -1,4 +1,4 @@
-PlayerLevelingScore = {}
+HCS_PlayerLevelingScore = {}
 
 local data = {
         {Level = 1, Bonus = 0.01, LevelTotal = 1.01, Total = 1.01},
@@ -63,7 +63,7 @@ local data = {
         {Level = 60, Bonus = 36.00, LevelTotal = 96.00, Total = 2568.10},
     }
             
-function PlayerLevelingScore:GetLevelScore()
+function HCS_PlayerLevelingScore:GetLevelScore()
     
     local score = 0
     local level = UnitLevel("player")

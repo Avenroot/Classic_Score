@@ -12,6 +12,9 @@ function CheckZoneStatus()
 
     local found = false
 
+    if HCScore_Character.discovery == nil then
+        HCScore_Character.discovery = {}
+    end
     for _, map in pairs(HCScore_Character.discovery) do
         if map.zone == newZone and map.subzone == newSubzone then
             found = true

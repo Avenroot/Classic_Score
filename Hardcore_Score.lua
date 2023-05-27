@@ -6,21 +6,6 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
---[[
-Hardcore_Score_Settings = {
-    profile = {
-        framePosition = {
-            point = "CENTER",  --"CENTER",
-            relativeTo = "UIParent",
-            relativePoint = "CENTER", -- "CENTER",
-            xOfs = 0,
-            yOfs = 0,
-        },
-        minimap = true
-    },
-}
-]]
-
 HCScore_Character = {
     name = "",
     class = "",
@@ -59,10 +44,9 @@ HCScore_Character = {
     discovery = {},
 }    
 
-
 -- Custom Slash Command
 Hardcore_Score.commands = {
- --   ["show"] = Hardcore_Score.Scoreboard.Toggle, -- this is a function (no knowledge of Config object)
+ --   ["show"] = Hardcore_Score.HCS_ScoreboardUI.Toggle, -- this is a function (no knowledge of Config object)
 
     ["help"] = function ()
         print(" ");
@@ -122,9 +106,9 @@ function Hardcore_Score.HandleSlashCommands(str)
 end
 
 function Hardcore_Score:Print(...)
-    local hex = select(4, Scoreboard:GetThemeColor());
-    local prefix = string.format("|cff%s%s|r", hex:upper(), "Hardcore Scoreboard:");
-    DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, tostringall(...)));    
+--    local hex = select(4, HCS_ScoreboardUI:GetThemeColor());
+--    local prefix = string.format("|cff%s%s|r", hex:upper(), "Hardcore HCS_ScoreboardUI:");
+--    DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, tostringall(...)));    
 end
 
 function Hardcore_Score:CreateDB()
@@ -139,21 +123,19 @@ function Hardcore_Score:CreateDB()
                 xOfs = 0,
                 yOfs = 0,
             },
-            minimapbutton = true,
+            minimap = {},
         },
     })
-
 end
 
 function Hardcore_Score:CreateMiniMapButton()   
  
     local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("HCScoreMinimapButton", {
         type = "launcher",
-        icon = "Interface\\Icons\\XP_ICON",  -- XP_ICON, Spell_Nature_Polymorph
+        icon = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-minimap-16.blp",  -- XP_ICON, Spell_Nature_Polymorph
         OnClick = function(self, button)
-            Scoreboard:Toggle()
+            HCS_ScoreboardUI:Toggle()
         end,
-
 
         OnTooltipShow = function(tooltip)
             tooltip:SetText(string.format("Score - %.2f\n-------\nEquipped Gear:  %.2f\nLeveling:              %.2f\nQuesting:              %.2f\n"..
@@ -170,13 +152,7 @@ function Hardcore_Score:CreateMiniMapButton()
     })
 
     local icon = LibStub("LibDBIcon-1.0")
-    icon:Register("Hardcore_Score", LDB, AceDB.minimap) -- Replace "MyAddon" with your addon's name
-
-    -- Optional: Uncomment the following line to hide the icon by default
-    -- icon:Hide("MyAddon")
-
-    -- Optional: Uncomment the following line to show the icon
-    -- icon:Show("Hardcore_Score")
+    icon:Register("Hardcore_Score", LDB, Hardcore_Score.db.profile.minimap) 
 end
 
 -- Load Saved Frame Position
@@ -186,10 +162,9 @@ function Hardcore_Score:LoadSavedFramePosition()
         local relativeTo = _G[framePosition.relativeTo]
         if relativeTo then
             UIScoreboard:SetPoint(framePosition.point, relativeTo, framePosition.relativePoint, framePosition.xOfs, framePosition.yOfs)
-            print(framePosition.xOfs)
-            print(framePosition.yOfs)
         end
     end
+    print("saving location of frame")
 end
 
 -- WARNING: self automatically becomes events frame!
@@ -207,7 +182,7 @@ function Hardcore_Score:init(event, name)
 
     -- Register Slash Commands!
 --    SLASH_GETGEARINFO1 = "/gearinfo"; -- new slash command for getting gearinfo
---    SlashCmdList.SLASH_GETGEARINFO = PlayerEquippedGearScore:GetEquippedGearScore()
+--    SlashCmdList.SLASH_GETGEARINFO = HCS_PlayerEquippedGearScore:GetEquippedGearScore()
     
     SLASH_FRAMESTK1 = "/fs"; -- new slash command for showing framestack tool
     SlashCmdList.FRAMESTK = function ()
@@ -215,8 +190,8 @@ function Hardcore_Score:init(event, name)
         FrameStackTooltip_Toggle();        
     end
 
---    SLASH_Scoreboard1 = "/lb";
---    SlashCmdList.Scoreboard = HandleSlashCommands;
+--    SLASH_HCS_ScoreboardUI1 = "/lb";
+--    SlashCmdList.HCS_ScoreboardUI = HandleSlashCommands;
 
     -- Load the saved variables data for your addon
  --   HCScore_Character = _G[ADDON_NAMESPACE] or {}
@@ -264,13 +239,15 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.professions.firstaid == nil then HCScore_Character.professions.firstaid = 0 end
     if HCScore_Character.reputations == nil then HCScore_Character.reputations = {} end
     if HCScore_Character.mobsKilled == nil then HCScore_Character.mobsKilled = {} end
+    if HCScore_Character.discovery == nil then HCScore_Character.discovery = {} end
 
     if HCScore_Character.name == "" then
-        PlayerInfo:LoadCharacterData()
+        HCS_Playerinfo:LoadCharacterData()
     end
 
-    Scoreboard:CreateUI()
-    Scoreboard:UpdateUI()
+    HCS_ScoreboardSummaryUI:CreateFrame()
+    HCS_ScoreboardUI:CreateUI()
+    HCS_ScoreboardUI:UpdateUI()
 
     Hardcore_Score:CreateDB()
 
@@ -278,7 +255,7 @@ function Hardcore_Score:init(event, name)
     Hardcore_Score:CreateMiniMapButton()
 
     -- Get frame saved position
-    Hardcore_Score:LoadSavedFramePosition()
+    Hardcore_Score:LoadSavedFramePosition()    
 
     -- Print fun stuff for the player    
     Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
