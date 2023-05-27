@@ -6,6 +6,7 @@ MobCombatKill = false
 MobName = ""
 MobLevel = 0
 ZoneChanged = false
+LevelScalePercentage = (UnitLevel("player")  / 60) --* 100
 
 function HCS_Playerinfo:LoadCharacterData()  
     

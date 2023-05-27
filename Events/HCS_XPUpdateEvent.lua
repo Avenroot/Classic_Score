@@ -40,7 +40,7 @@ _xpupdate_event:SetScript("OnEvent", function(event, ...)
     print("ZoneChanged = "..tostring(zoneChanged))
     if zoneChanged == true then       
         print("----- PLAYER_XP_UPDATE - ZONE CHANGED -----")
-        HCS_DiscoverScore:UpdateDiscoveryScore()
+        HCS_DiscoveryScore:UpdateDiscoveryScore()
         zoneChanged = false
     end
    
