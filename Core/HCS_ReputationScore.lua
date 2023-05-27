@@ -28,10 +28,7 @@ local function CalcScore(repEarned, standing)
         score = score + EXALTED_BONUS        
     end
 
-    -- Scales based the level of the player
-    local levelPercentage = (UnitLevel("player")  / 60) --* 100
-
-    return score * levelPercentage
+    return score * LevelScalePercentage 
 end
 
 function HCS_ReputationScore:UpdateRepScore()

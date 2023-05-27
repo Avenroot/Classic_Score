@@ -17,3 +17,7 @@ function HCS_PlayerQuestingScore:UpdateQuestingScore(score, questId, xpReward, l
 
 end
 
+function HCS_PlayerQuestingScore:GetNumberOfQuests()
+    return #HCScore_Character.quests
+end
+

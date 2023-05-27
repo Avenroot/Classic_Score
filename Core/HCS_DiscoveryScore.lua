@@ -1,6 +1,6 @@
-HCS_DiscoverScore = {}
+HCS_DiscoveryScore = {}
 
-function HCS_DiscoverScore:UpdateDiscoveryScore()
+function HCS_DiscoveryScore:UpdateDiscoveryScore()
     local mapID = C_Map.GetBestMapForUnit("player")
     local newZone = GetZoneText()
     local newSubzone = GetSubZoneText()
@@ -26,4 +26,9 @@ function HCS_DiscoverScore:UpdateDiscoveryScore()
             HCScore_Character.scores.discoveryScore = HCScore_Character.scores.discoveryScore + newxp
         end 
     end
+end
+
+function HCS_DiscoveryScore:GetNumberOfDiscovery()
+--    if HCScore_Character.discovery == nil then HCScore_Character.discovery = {} end
+    return #HCScore_Character.discovery
 end

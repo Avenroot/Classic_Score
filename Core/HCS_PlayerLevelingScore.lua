@@ -68,6 +68,7 @@ function HCS_PlayerLevelingScore:GetLevelScore()
     local score = 0
     local level = UnitLevel("player")
 
+    
     score = data[level].Total
 
     return score

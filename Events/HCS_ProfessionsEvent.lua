@@ -4,7 +4,7 @@ local function OnSkillLinesChanged(event)
 
     HCS_ProfessionsScore:GetNumberOfProfessions()
     HCS_ScoreboardUI:UpdateUI()
-    print("A profession have been updated")
+--    print("A profession have been updated")
 
 end
   

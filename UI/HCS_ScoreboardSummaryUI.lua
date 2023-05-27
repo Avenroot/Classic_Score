@@ -104,7 +104,6 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     -- Leveling
     txt_leveling = frame2:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     txt_leveling:SetPoint("TOPLEFT", txt_equippedgear, "BOTTOMLEFT", 0, -5)
-    txt_leveling:SetText("Leveling")
     txt_leveling:SetJustifyH("LEFT")
     txt_leveling:SetWidth(labelwidth)
 
@@ -117,7 +116,6 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     -- Questing
     txt_questing = frame2:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     txt_questing:SetPoint("TOPLEFT", txt_leveling, "BOTTOMLEFT", 0, -5)
-    txt_questing:SetText("Questing")
     txt_questing:SetJustifyH("LEFT")
     txt_questing:SetWidth(labelwidth)
 
@@ -192,21 +190,37 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     local totProfessions = HCS_ProfessionsScore:GetNumberOfProfessions()
     local totReputations = HCS_ReputationScore:GetNumFactions()
     local totMobTypesKilled = HCS_KillingMobsScore:GetNumMobTypes()
+    local totQuests = HCS_PlayerQuestingScore:GetNumberOfQuests()
+    local totDiscovery = HCS_DiscoveryScore:GetNumberOfDiscovery()
+    local leveling = UnitLevel("player")
+    
+    local equippedgearScore = HCScore_Character.scores.equippedGearScore * LevelScalePercentage
+    local levelingScore = HCScore_Character.scores.levelingScore * LevelScalePercentage
+    local questingScore = HCScore_Character.scores.questingScore -- * LevelScalePercentage
+    local mobskilledScore = HCScore_Character.scores.mobsKilledScore -- * LevelScalePercentage
+    local professionsScore = HCScore_Character.scores.professionsScore * LevelScalePercentage
+    local reputationScore = HCScore_Character.scores.reputationScore * LevelScalePercentage  -- scaled twice
+    local discoveryScore = HCScore_Character.scores.discoveryScore -- * LevelScalePercentage
+
+    local coreScore = (equippedgearScore + levelingScore + questingScore + mobskilledScore + 
+                        professionsScore + reputationScore + discoveryScore)
 
     --Frame 1
-    txtCoreScore1:SetText("Your Hardcore Score - ".. string.format("%.2f", HCScore_Character.scores.coreScore))
+    txtCoreScore1:SetText("Your Hardcore Score - ".. string.format("%.2f", coreScore))
     --Frame 2
-    txt_equippedgear_score:SetText(string.format("%.2f", HCScore_Character.scores.equippedGearScore))    
-    txt_leveling_score:SetText(string.format("%.2f", HCScore_Character.scores.levelingScore))
-    txt_questing_score:SetText(string.format("%.2f", HCScore_Character.scores.questingScore))
+    txt_equippedgear_score:SetText(string.format("%.2f", equippedgearScore))    
+    txt_leveling:SetText("Leveling ("..leveling..")")
+    txt_leveling_score:SetText(string.format("%.2f",levelingScore))
+    txt_questing:SetText("Questing ("..totQuests..")")
+    txt_questing_score:SetText(string.format("%.2f", questingScore))
     txt_mobskilled:SetText("Mobs Killed ("..totMobTypesKilled..")")
-    txt_mobskilled_score:SetText(string.format("%.2f", HCScore_Character.scores.mobsKilledScore))
+    txt_mobskilled_score:SetText(string.format("%.2f", mobskilledScore))
     txt_professions:SetText("Professions ("..totProfessions..")")
-    txt_professions_score:SetText(string.format("%.2f", HCScore_Character.scores.professionsScore))
+    txt_professions_score:SetText(string.format("%.2f", professionsScore))
     txt_reputation:SetText("Reputation ("..totReputations..")")
-    txt_reputation_score:SetText(string.format("%.2f", HCScore_Character.scores.reputationScore))
-    txt_discovery:SetText("Discovery")
-    txt_discovery_score:SetText(string.format("%.2f", HCScore_Character.scores.discoveryScore))
+    txt_reputation_score:SetText(string.format("%.2f", reputationScore))
+    txt_discovery:SetText("Discovery ("..totDiscovery..")")
+    txt_discovery_score:SetText(string.format("%.2f", discoveryScore))
 
 end
 
