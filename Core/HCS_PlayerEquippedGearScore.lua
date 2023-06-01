@@ -63,8 +63,6 @@ function HCS_PlayerEquippedGearScore:GetEquippedGearScore()
       --print("equipped gear score is ".. itemScore)
       --PrintGearInfo()
 
-      return itemScore
-        
+      return itemScore  
 end
 
-  

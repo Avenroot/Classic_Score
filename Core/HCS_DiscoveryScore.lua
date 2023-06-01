@@ -24,6 +24,7 @@ function HCS_DiscoveryScore:UpdateDiscoveryScore()
 
             table.insert(HCScore_Character.discovery, newDiscovery)
             HCScore_Character.scores.discoveryScore = HCScore_Character.scores.discoveryScore + newxp
+            HCS_CalculateScore:RefreshScores()
         end 
     end
 end
@@ -31,4 +32,8 @@ end
 function HCS_DiscoveryScore:GetNumberOfDiscovery()
 --    if HCScore_Character.discovery == nil then HCScore_Character.discovery = {} end
     return #HCScore_Character.discovery
+end
+
+function  HCS_DiscoveryScore:GetDiscoveryScore()
+    return HCScore_Character.scores.discoveryScore
 end

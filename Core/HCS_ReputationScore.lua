@@ -77,16 +77,10 @@ function HCS_ReputationScore:UpdateRepScore()
 end
 
 function HCS_ReputationScore:GetNumFactions()
---[[
-    local factions = 0
+  return #HCScore_Character.reputations
+end
 
-    for factionIndex = 1, GetNumFactions() do
-        local name, description, standingId, bottomValue, topValue, earnedValue, atWarWith, canToggleAtWar,
-        isHeader, isCollapsed, hasRep, isWatched, isChild, factionID = GetFactionInfo(factionIndex)
-        if hasRep or not isHeader then
-            factions = factions + 1
-        end
-    end
-]]
-    return #HCScore_Character.reputations
+function HCS_ReputationScore:GetReputationScore()
+    HCS_ReputationScore:UpdateRepScore()
+    return HCScore_Character.scores.reputationScore
 end

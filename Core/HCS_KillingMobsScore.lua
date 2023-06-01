@@ -104,9 +104,15 @@ function HCS_KillingMobsScore:UpdateMobsKilled()
         table.insert(HCScore_Character.mobsKilled, newMob)
     end
 
+    HCS_CalculateScore:RefreshScores()
+    
     print("Points for killing mob ".. mobName.. ": ".. mobScore[1].. " Difficulty:".. mobScore[2])
 end
 
 function HCS_KillingMobsScore:GetNumMobTypes()
     return #HCScore_Character.mobsKilled
+end
+
+function HCS_KillingMobsScore:GetMobsKilledScore()
+    return HCScore_Character.scores.mobsKilledScore
 end

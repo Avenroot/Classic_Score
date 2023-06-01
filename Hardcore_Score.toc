@@ -19,6 +19,7 @@ Core/HCS_KillingMobsScore.lua
 Core/HCS_ProfessionsScore.lua
 Core/HCS_ReputationScore.lua
 Core/HCS_DiscoveryScore.lua
+Core/HCS_CalculateScore.lua
 
 Events/HCS_PlayerLevelingUpEvent.lua
 Events/HCS_PlayerEquippingItemEvent.lua

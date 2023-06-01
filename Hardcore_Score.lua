@@ -134,20 +134,11 @@ function Hardcore_Score:CreateMiniMapButton()
         type = "launcher",
         icon = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-minimap-16.blp",  -- XP_ICON, Spell_Nature_Polymorph
         OnClick = function(self, button)
-            HCS_ScoreboardUI:Toggle()
+            -- Add OnClick code here
         end,
 
         OnTooltipShow = function(tooltip)
-            tooltip:SetText(string.format("Score - %.2f\n-------\nEquipped Gear:  %.2f\nLeveling:              %.2f\nQuesting:              %.2f\n"..
-                "Mobs Killed:          %.2f\nProfessions:          %.2f\nReputations:         %.2f\nDiscovery:             %.2f\n",
-                HCScore_Character.scores.coreScore,
-                HCScore_Character.scores.equippedGearScore,
-                HCScore_Character.scores.levelingScore,
-                HCScore_Character.scores.questingScore,
-                HCScore_Character.scores.mobsKilledScore,
-                HCScore_Character.scores.professionsScore,
-                HCScore_Character.scores.reputationScore,
-                HCScore_Character.scores.discoveryScore))
+            tooltip:SetText("Hardcore Score")
         end,
     })
 
@@ -161,7 +152,7 @@ function Hardcore_Score:LoadSavedFramePosition()
     if framePosition then
         local relativeTo = _G[framePosition.relativeTo]
         if relativeTo then
-            UIScoreboard:SetPoint(framePosition.point, relativeTo, framePosition.relativePoint, framePosition.xOfs, framePosition.yOfs)
+            ScoreboardSummaryFrame:SetPoint(framePosition.point, relativeTo, framePosition.relativePoint, framePosition.xOfs, framePosition.yOfs)
         end
     end
     print("saving location of frame")
@@ -241,14 +232,13 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.mobsKilled == nil then HCScore_Character.mobsKilled = {} end
     if HCScore_Character.discovery == nil then HCScore_Character.discovery = {} end
 
-    if HCScore_Character.name == "" then
-        HCS_Playerinfo:LoadCharacterData()
-    end
+
+    HCS_Playerinfo:LoadCharacterData()
+
 
     HCS_ScoreboardSummaryUI:CreateFrame()
-    HCS_ScoreboardUI:CreateUI()
-    HCS_ScoreboardUI:UpdateUI()
 
+    HCS_CalculateScore:RefreshScores()
     Hardcore_Score:CreateDB()
 
     -- Create minimap button
@@ -258,8 +248,8 @@ function Hardcore_Score:init(event, name)
     Hardcore_Score:LoadSavedFramePosition()    
 
     -- Print fun stuff for the player    
-    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
-   
+--    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
+    print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");   
 end
 
 local events = CreateFrame("Frame");

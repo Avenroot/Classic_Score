@@ -7,7 +7,6 @@ local _HCS_PlayerEquippingItemEvent = CreateFrame("Frame")
 
   _HCS_PlayerEquippingItemEvent:SetScript("OnEvent", function(self, event, unit)
 
-  HCS_ScoreboardUI:UpdateUI()
-
+    HCS_CalculateScore:RefreshScores()
   --print("executed _HCS_PlayerEquippingItemEvent code")
 end)
