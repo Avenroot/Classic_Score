@@ -44,7 +44,7 @@ _xpupdate_event:SetScript("OnEvent", function(event, ...)
         zoneChanged = false
     end
    
-    HCS_ScoreboardUI:UpdateUI()
+    HCS_CalculateScore:RefreshScores()
 
     print("MobCombatKill = "..tostring(mobCombatKill))
     print("ZoneChanged = "..tostring(zoneChanged))

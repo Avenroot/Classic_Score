@@ -91,9 +91,7 @@ function HCS_ProfessionsScore:GetScore()
     HCScore_Character.scores.professionsScore = score
 end
 
-function HCS_ProfessionsScore:GetNumberOfProfessions()
-    local numskills = 0
-    local professions = HCScore_Character.professions
+function HCS_ProfessionsScore:GetProfessionsScore()
 
     for i = 1, GetNumSkillLines() do
         local skillName, isHeader, _, skillRank, _, _, skillMaxRank, _, _, skillLineID = GetSkillLineInfo(i)
@@ -107,6 +105,13 @@ function HCS_ProfessionsScore:GetNumberOfProfessions()
 
     self:GetScore()
 
+    return HCScore_Character.scores.professionsScore
+end
+
+function HCS_ProfessionsScore:GetNumberOfProfessions()
+    local numskills = 0
+    local professions = HCScore_Character.professions
+  
     for k, v in pairs(professions) do
         if v > 0 then numskills = numskills + 1 end
     end

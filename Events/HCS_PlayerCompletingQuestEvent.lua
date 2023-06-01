@@ -54,7 +54,6 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
   print("score: "..score.. " levelmod: "..levelMod.. " player level: "..playerLevel.. " quest level: "..questLevel)
 
   HCS_PlayerQuestingScore:UpdateQuestingScore(score, questID, xpReward, levelMod)
-  HCS_ScoreboardUI:UpdateUI()
 
 end
 

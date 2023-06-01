@@ -7,7 +7,7 @@ local _HCS_PlayerLevelingUpEvent = CreateFrame("Frame")
 _HCS_PlayerLevelingUpEvent:RegisterEvent("PLAYER_LEVEL_UP")
 
 local function OnPlayerLevelUp(event, arg1, arg2, arg3, arg4)
-  HCS_ScoreboardUI:UpdateUI()
+  HCS_CalculateScore:RefreshScores()  
   --print("executed _HCS_PlayerLevelingUpEvent code")
 end
 

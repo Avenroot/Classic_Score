@@ -28,13 +28,13 @@ local labelwidthscore = 75
 -- Create the frame
 function HCS_ScoreboardSummaryUI:CreateFrame()
 
-    local frame1 = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
-    frame1:SetWidth(250)
-    frame1:SetHeight(50)
-    frame1:SetPoint("CENTER")
+    ScoreboardSummaryFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+    ScoreboardSummaryFrame:SetWidth(250)
+    ScoreboardSummaryFrame:SetHeight(50)
+    ScoreboardSummaryFrame:SetPoint("CENTER")
     
     -- Set backdrop with gradient background and border
-    frame1:SetBackdrop({
+    ScoreboardSummaryFrame:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
         edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
         tile = true,
@@ -42,32 +42,47 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
         edgeSize = 16,
         insets = { left = 4, right = 4, top = 4, bottom = 4 },
     })
-    frame1:SetBackdropColor(0, 0, 0, 1)
-    frame1:SetBackdropBorderColor(1, 1, 1)
+    ScoreboardSummaryFrame:SetBackdropColor(0, 0, 0, 1)
+    ScoreboardSummaryFrame:SetBackdropBorderColor(1, 1, 1)
     
-    frame1:SetMovable(true)
-    frame1:EnableMouse(true)
-    frame1:RegisterForDrag("LeftButton")
-    frame1:SetScript("OnDragStart", frame1.StartMoving)
-    frame1:SetScript("OnDragStop", frame1.StopMovingOrSizing)
+    ScoreboardSummaryFrame:SetMovable(true)
+    ScoreboardSummaryFrame:EnableMouse(true)
+    ScoreboardSummaryFrame:RegisterForDrag("LeftButton")
+    ScoreboardSummaryFrame:SetScript("OnDragStart", ScoreboardSummaryFrame.StartMoving)
+--    frame1:SetScript("OnDragStop", frame1.StopMovingOrSizing)
+    ScoreboardSummaryFrame:SetScript("OnDragStart", ScoreboardSummaryFrame.StartMoving)
+
+    ScoreboardSummaryFrame:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+        -- Save the new position
+        local point, relativeTo, relativePoint, xOfs, yOfs = self:GetPoint()
+
+        Hardcore_Score.db.profile.framePosition = {
+            point = point,
+            relativeTo = relativeTo, --"UIParent",
+            relativePoint = relativePoint,
+            xOfs = xOfs,
+            yOfs = yOfs,
+        }        
+    end)
     
     -- Create the round image
-    local image1 = frame1:CreateTexture(nil, "OVERLAY")
+    local image1 = ScoreboardSummaryFrame:CreateTexture(nil, "OVERLAY")
     image1:SetSize(32, 32)
     image1:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcs-logo-32.blp")  -- Replace with your image texture path
     image1:SetPoint("LEFT", 10, 0)
     
     -- Create the label
-    txtCoreScore1 = frame1:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    txtCoreScore1 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     txtCoreScore1:SetPoint("LEFT", image1, "RIGHT", 10, 0)
     txtCoreScore1:SetText("Your Hardcore Score - " .. string.format("%.2f", HCScore_Character.scores.coreScore))
    
-    frame1:Show()
+    ScoreboardSummaryFrame:Show()
   
     local frame2 = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
     frame2:SetWidth(250)
     frame2:SetHeight(140)
-    frame2:SetPoint("TOP", frame1, "BOTTOM", 0, -10)
+    frame2:SetPoint("TOP", ScoreboardSummaryFrame, "BOTTOM", 0, -10)
     
     -- Set backdrop with gradient background and border
     frame2:SetBackdrop({
@@ -176,11 +191,11 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     frame2:Hide()
 
     -- mouseover show/hide frame2
-    frame1:SetScript("OnEnter", function()
+    ScoreboardSummaryFrame:SetScript("OnEnter", function()
         frame2:Show()
     end)
 
-    frame1:SetScript("OnLeave", function()
+    ScoreboardSummaryFrame:SetScript("OnLeave", function()
         frame2:Hide()
     end)
 
@@ -194,18 +209,17 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     local totDiscovery = HCS_DiscoveryScore:GetNumberOfDiscovery()
     local leveling = UnitLevel("player")
     
-    local equippedgearScore = HCScore_Character.scores.equippedGearScore * LevelScalePercentage
-    local levelingScore = HCScore_Character.scores.levelingScore * LevelScalePercentage
-    local questingScore = HCScore_Character.scores.questingScore -- * LevelScalePercentage
-    local mobskilledScore = HCScore_Character.scores.mobsKilledScore -- * LevelScalePercentage
-    local professionsScore = HCScore_Character.scores.professionsScore * LevelScalePercentage
-    local reputationScore = HCScore_Character.scores.reputationScore * LevelScalePercentage  -- scaled twice
-    local discoveryScore = HCScore_Character.scores.discoveryScore -- * LevelScalePercentage
+    local equippedgearScore = HCScore_Character.scores.equippedGearScore
+    local levelingScore = HCScore_Character.scores.levelingScore
+    local questingScore = HCScore_Character.scores.questingScore
+    local mobskilledScore = HCScore_Character.scores.mobsKilledScore
+    local professionsScore = HCScore_Character.scores.professionsScore
+    local reputationScore = HCScore_Character.scores.reputationScore
+    local discoveryScore = HCScore_Character.scores.discoveryScore
 
-    local coreScore = (equippedgearScore + levelingScore + questingScore + mobskilledScore + 
-                        professionsScore + reputationScore + discoveryScore)
+    local coreScore = HCScore_Character.scores.coreScore
 
-    --Frame 1
+    --ScoreboardSummaryFrame
     txtCoreScore1:SetText("Your Hardcore Score - ".. string.format("%.2f", coreScore))
     --Frame 2
     txt_equippedgear_score:SetText(string.format("%.2f", equippedgearScore))    

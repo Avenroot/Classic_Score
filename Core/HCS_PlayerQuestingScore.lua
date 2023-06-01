@@ -15,9 +15,13 @@ function HCS_PlayerQuestingScore:UpdateQuestingScore(score, questId, xpReward, l
 
     table.insert(HCScore_Character.quests, newQuest)
 
+    HCS_CalculateScore:RefreshScores()
 end
 
 function HCS_PlayerQuestingScore:GetNumberOfQuests()
     return #HCScore_Character.quests
 end
 
+function HCS_PlayerQuestingScore:GetQuestingScore()
+    return HCScore_Character.scores.questingScore
+end
