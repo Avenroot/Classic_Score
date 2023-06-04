@@ -21,4 +21,5 @@ end
 
 function RefreshUI()
     HCS_ScoreboardSummaryUI:UpdateUI()
+    HCS_PlayerCom:SendScore(HCScore_Character.scores)
 end

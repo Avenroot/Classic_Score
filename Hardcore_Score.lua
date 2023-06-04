@@ -247,6 +247,27 @@ function Hardcore_Score:init(event, name)
     -- Get frame saved position
     Hardcore_Score:LoadSavedFramePosition()    
 
+--[[    
+    -- Load Tooltip to see other players scores
+    local playerScores = _G["HCScore_Character"] or {}
+
+    -- Hook the tooltip after the saved variables have been loaded
+
+    GameTooltip:HookScript("OnTooltipSetUnit", function(self)
+        -- Get the unit's information
+        print("Trying to setup tooltip..")
+        local name, unit = self:GetUnit()
+       
+        print(UnitIsPlayer(unit))
+        print(playerScores.coreScore)
+        -- If this unit is a player, and you have a score stored for them, then display it
+        if UnitIsPlayer(unit) and playerScores then
+            self:AddLine("Hardcore Score: " .. string.format("%.2f", playerScores.scores.coreScore) )
+            print('Setup tooltip')
+        end
+    end)    
+]]
+
     -- Print fun stuff for the player    
 --    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
     print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");   

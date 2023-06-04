@@ -20,6 +20,7 @@ Core/HCS_ProfessionsScore.lua
 Core/HCS_ReputationScore.lua
 Core/HCS_DiscoveryScore.lua
 Core/HCS_CalculateScore.lua
+Core/HCS_PlayerCom.lua
 
 Events/HCS_PlayerLevelingUpEvent.lua
 Events/HCS_PlayerEquippingItemEvent.lua
