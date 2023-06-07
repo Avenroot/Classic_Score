@@ -8,9 +8,10 @@ function HCS_PlayerCoreScore:GetCoreScore()
     local reputationScore = HCScore_Character.scores.reputationScore
     local discoveryScore = HCScore_Character.scores.discoveryScore
     local professionsScore = HCScore_Character.scores.professionsScore
+    local milestonesScore = HCScore_Character.scores.milestonesScore
     local score =  levelscore + equippedGearScore + questingScore + 
                 mobsKilledScore + reputationScore + discoveryScore +
-                professionsScore
+                professionsScore + milestonesScore
 
     return score
 end

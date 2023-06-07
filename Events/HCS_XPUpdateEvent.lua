@@ -1,6 +1,11 @@
 HCS_XPUpdateEvent = {}
 
 function HCS_XPUpdateEvent:GetXPGain()
+    print(_G["CurrentXP"])
+    print(CurrentXP)
+    print(_G["CurrentMaxXP"])
+    print(CurrentMaxXP)
+    
     local currentXP = _G["CurrentXP"]
     local newXP = UnitXP("player")
     local xpGain = newXP - currentXP
@@ -11,7 +16,6 @@ function HCS_XPUpdateEvent:GetXPGain()
     print("xp gained: "..xpGain)
     return xpGain
 end
-
 
 local _xpupdate_event = CreateFrame("Frame")
 _xpupdate_event:RegisterEvent("PLAYER_XP_UPDATE")

@@ -12,6 +12,7 @@ local scoresComm = {
     dungeonsScore = '',
     reputationScore = '',
     discoveryScore = '',
+    milestoneScore = '',
 }
 
 
@@ -35,10 +36,8 @@ local function PrintTable(tbl)
     if tbl then 
         for key, value in pairs(tbl) do
             print(key, value)
-        end
-    
+        end   
     end
-
 end
 
 
@@ -53,11 +52,11 @@ end
 
 -- Function to send a player's score.
 function HCS_PlayerCom:SendScore(score)
-    print("SendScore")
+--    print("SendScore")
     --PrintTable(score)
-    for key, value in pairs(score) do
-        print(key, value)
-    end
+--    for key, value in pairs(score) do
+--        print(key, value)
+--    end
 
     scoresComm.coreScore = string.format("%.2f", HCScore_Character.scores.coreScore)
     scoresComm.equippedGearScore = string.format("%.2f", HCScore_Character.scores.equippedGearScore)
@@ -69,12 +68,13 @@ function HCS_PlayerCom:SendScore(score)
     scoresComm.dungeonsScore = string.format("%.2f", HCScore_Character.scores.dungeonsScore)
     scoresComm.reputationScore = string.format("%.2f", HCScore_Character.scores.reputationScore)
     scoresComm.discoveryScore = string.format("%.2f", HCScore_Character.scores.discoveryScore)
+    scoresComm.milestoneScore = string.format("%.2f", HCScore_Character.scores.milestonesScore)
 
 
     local serializedScore = AceSerializer:Serialize(scoresComm)
 
     if IsInGroup() then
-        print("In a group")
+ --       print("In a group")
         local channel = IsInRaid() and "RAID" or "PARTY"
         print(channel)
         
@@ -84,46 +84,45 @@ function HCS_PlayerCom:SendScore(score)
     end
 end
 
--- Frame to handle events.
 local f = CreateFrame("Frame")
 f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
-    print("Comm frame event")
-    HCS_PlayerCom:SendScore(HCScore_Character.scores)
-    print(event)
+--    print("Comm frame event")
+--    HCS_PlayerCom:SendScore(HCScore_Character.scores)
+--    print(event)
 --    print(message)
-    print(prefix)
-    print(PREFIX)
-    print(sender)
-    if event == "CHAT_MSG_ADDON" and prefix == PREFIX then
-        print("updating playerScores")
+--    print(prefix)
+--    print(PREFIX)
+--    print(sender)
+    if event == "PLAYER_ENTERING_WORLD" or event == "GROUP_ROSTER_UPDATE" or event == "GROUP_JOINED" then
+        -- Player has entered the world or group roster has been updated, send our score
+        HCS_PlayerCom:SendScore(HCScore_Character.scores)
+
+    elseif event == "CHAT_MSG_ADDON" and prefix == PREFIX then
+       -- print("updating playerScores")
+     --   HCS_PlayerCom:SendScore(HCScore_Character.scores)
     
             local success, scoreReveived = AceSerializer:Deserialize(message)
     
-            --print(message)
-           -- print(tonumber(message))
-            --print(sender)
             if success then     
-                print("Adding Score to playerScore table")
-                PrintTable(scoreReveived)    
+                --print("Adding Score to playerScore table")
+                --PrintTable(scoreReveived)    
                 playerScores[sender] = scoreReveived --tonumber(message)
             
             else
-                print("Deserialization failed:", scoreReveived)
-            end
-            
-
-
-        --PrintTable(playerScores)
-
+                --print("Deserialization failed:", scoreReveived)
+            end                 
     end
 end)
+f:RegisterEvent("PLAYER_ENTERING_WORLD")
+f:RegisterEvent("GROUP_ROSTER_UPDATE")
+f:RegisterEvent("GROUP_JOINED")
 f:RegisterEvent("CHAT_MSG_ADDON")
 
 -- Function to add a player's score to their tooltip.
 local function ModifyTooltip(self)
-    print("ModifyTooltip")
+--    print("ModifyTooltip")
     local unit = select(2, self:GetUnit())
-    print(unit)
+--    print(unit)
     if not unit then
         return
     end
@@ -136,17 +135,15 @@ local function ModifyTooltip(self)
     local fullname = name..'-'..server
     local score = playerScores[fullname]
 
-    print(fullname)
+--    print(fullname)
 --    print("PRINTING TABLE")
-    PrintTable(score) 
+--    PrintTable(score) 
 --    print(score)
 
     if score then
         print(score)
         self:AddLine(padString("Hardcore Score", 15) .. string.format("%.2f", score.coreScore))
 
-        -- I'm assuming the rest of these values are properties of the score.
-        -- Replace these with the actual values.
         local equippedGear = score.equippedGearScore
         local leveling = score.levelingScore
         local questing = score.questingScore
@@ -154,19 +151,19 @@ local function ModifyTooltip(self)
         local professions = score.professionsScore
         local reputation = score.reputationScore
         local discovery = score.discoveryScore
+        local milestones = score.milestoneScore
 
         self:AddLine(padString("Equipped Gear", 15) .. string.format("%.2f", equippedGear))
-        self:AddLine(padString("Leveling", 15) .. string.format("%.2f", leveling))
-        self:AddLine(padString("Questing", 15) .. string.format("%.2f", questing))
-        self:AddLine(padString("Mobs Killed", 15) .. string.format("%.2f", mobsKilled))
-        self:AddLine(padString("Professions", 15) .. string.format("%.2f", professions))
-        self:AddLine(padString("Reputation", 15) .. string.format("%.2f", reputation))
-        self:AddLine(padString("Discovery", 15) .. string.format("%.2f", discovery))
+        self:AddLine(padString("Leveling     ", 15) .. string.format("%.2f", leveling))
+        self:AddLine(padString("Questing     ", 15) .. string.format("%.2f", questing))
+        self:AddLine(padString("Mobs Killed  ", 15) .. string.format("%.2f", mobsKilled))
+        self:AddLine(padString("Professions  ", 15) .. string.format("%.2f", professions))
+        self:AddLine(padString("Reputation   ", 15) .. string.format("%.2f", reputation))
+        self:AddLine(padString("Discovery    ", 15) .. string.format("%.2f", discovery))
+        self:AddLine(padString("Milestones   ", 15) .. string.format("%.2f", milestones))
     else
         print("No score found for player " .. fullname)
     end
-
-
        -- self:AddLine("Hardcore Score: " .. string.format("%.2f", score))
     --end
 end
