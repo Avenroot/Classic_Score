@@ -5,6 +5,10 @@ LevelScalePercentage = 0
 function HCS_CalculateScore:RefreshScores()
 
     LevelScalePercentage = (UnitLevel("player")  / 60) --* 100
+    _G["CurrentXP"] = UnitXP("player")  -- CurrentXP
+    _G["CurrentMaxXP"] = UnitXPMax("player") -- CurrentMaxXP
+
+    HCS_MilestonesScore:CheckMilestones()
 
     HCScore_Character.scores.equippedGearScore = HCS_PlayerEquippedGearScore:GetEquippedGearScore() * LevelScalePercentage
     HCScore_Character.scores.levelingScore = HCS_PlayerLevelingScore:GetLevelScore() * LevelScalePercentage
@@ -13,8 +17,9 @@ function HCS_CalculateScore:RefreshScores()
     HCScore_Character.scores.questingScore = HCS_PlayerQuestingScore:GetQuestingScore()
     HCScore_Character.scores.mobsKilledScore = HCS_KillingMobsScore:GetMobsKilledScore()
     HCScore_Character.scores.discoveryScore = HCS_DiscoveryScore:GetDiscoveryScore()
+    HCScore_Character.scores.milestonesScore = HCS_MilestonesScore:GetMilestonesScore()
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
-
+    
     RefreshUI()
     
 end

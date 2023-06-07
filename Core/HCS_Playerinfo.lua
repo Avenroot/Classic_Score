@@ -36,8 +36,8 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     HCScore_Character.class = UnitClass("player")
     HCScore_Character.level = UnitLevel("player")
     HCScore_Character.faction = UnitFactionGroup("player")
-    CurrentXP = UnitXP("player")
-    CurrentMaxXP = UnitXPMax("player")
+   -- _G["CurrentXP"] = UnitXP("player")  -- CurrentXP
+   -- _G["CurrentMaxXP"] = UnitXPMax("player") -- CurrentMaxXP
 
     --print("CurrentXP: "..CurrentXP)
 

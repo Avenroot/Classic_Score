@@ -6,11 +6,13 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
+HCS_Version = "0.0.0.2" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
     level = 0,
     faction = "",
+    version = 0,
     scores = {
         coreScore = 0,
         equippedGearScore = 0,
@@ -22,6 +24,7 @@ HCScore_Character = {
         dungeonsScore = 0,
         reputationScore = 0,
         discoveryScore = 0,
+        milestonesScore = 0,
     },
     quests = {},
     professions = {
@@ -42,6 +45,7 @@ HCScore_Character = {
     reputations = {},
     mobsKilled = {},
     discovery = {},
+    milestones = {},
 }    
 
 -- Custom Slash Command
@@ -109,6 +113,12 @@ function Hardcore_Score:Print(...)
 --    local hex = select(4, HCS_ScoreboardUI:GetThemeColor());
 --    local prefix = string.format("|cff%s%s|r", hex:upper(), "Hardcore HCS_ScoreboardUI:");
 --    DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, tostringall(...)));    
+    local debugging = true
+    
+    if debugging then
+        print(...)        
+    end
+
 end
 
 function Hardcore_Score:CreateDB()
@@ -124,6 +134,7 @@ function Hardcore_Score:CreateDB()
                 yOfs = 0,
             },
             minimap = {},
+            showDetails = false,
         },
     })
 end
@@ -135,10 +146,10 @@ function Hardcore_Score:CreateMiniMapButton()
         icon = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-minimap-16.blp",  -- XP_ICON, Spell_Nature_Polymorph
         OnClick = function(self, button)
             -- Add OnClick code here
-        end,
+        end,        
 
         OnTooltipShow = function(tooltip)
-            tooltip:SetText("Hardcore Score")
+            tooltip:SetText("Hardcore Score BETA v."..tostring(HCS_Version))
         end,
     })
 
@@ -149,13 +160,17 @@ end
 -- Load Saved Frame Position
 function Hardcore_Score:LoadSavedFramePosition()
     local framePosition = Hardcore_Score.db.profile.framePosition
+    local showDetails = Hardcore_Score.db.profile.showDetails
     if framePosition then
         local relativeTo = _G[framePosition.relativeTo]
         if relativeTo then
             ScoreboardSummaryFrame:SetPoint(framePosition.point, relativeTo, framePosition.relativePoint, framePosition.xOfs, framePosition.yOfs)
         end
+        if showDetails then
+            ScoreboardSummaryDetailsFrame:Show()
+        end
     end
-    print("saving location of frame")
+    --print("saving location of frame")
 end
 
 -- WARNING: self automatically becomes events frame!
@@ -202,6 +217,7 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.class == nil then HCScore_Character.class = "" end
     if HCScore_Character.level == nil then HCScore_Character.level = 0 end
     if HCScore_Character.faction == nil then HCScore_Character.faction = "" end
+    if HCScore_Character.version == nil then HCScore_Character.version = HCS_Version end
     if HCScore_Character.quests == nil then HCScore_Character.quests = {} end
     if HCScore_Character.scores == nil then HCScore_Character.scores = {} end
     if HCScore_Character.scores.coreScore == nil then HCScore_Character.scores.coreScore = 0 end
@@ -213,7 +229,8 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.scores.mobsKilledScore == nil then HCScore_Character.scores.mobsKilledScore = 0 end
     if HCScore_Character.scores.professionsScore == nil then HCScore_Character.scores.professionsScore = 0 end
     if HCScore_Character.scores.questingScore == nil then HCScore_Character.scores.questingScore = 0 end
-    if HCScore_Character.scores.reputationScore == nil then HCScore_Character.scores.reputationScore = 0 end    
+    if HCScore_Character.scores.reputationScore == nil then HCScore_Character.scores.reputationScore = 0 end
+    if HCScore_Character.scores.milestonesScore == nil then HCScore_Character.scores.milestonesScore = 0 end        
     if HCScore_Character.professions == nil then HCScore_Character.professions = {} end
     if HCScore_Character.professions.alchemy == nil then HCScore_Character.professions.alchemy = 0 end
     if HCScore_Character.professions.blacksmithing == nil then HCScore_Character.professions.blacksmithing = 0 end
@@ -231,6 +248,7 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.reputations == nil then HCScore_Character.reputations = {} end
     if HCScore_Character.mobsKilled == nil then HCScore_Character.mobsKilled = {} end
     if HCScore_Character.discovery == nil then HCScore_Character.discovery = {} end
+    if HCScore_Character.milestones == nil then HCScore_Character.milestones = {} end
 
 
     HCS_Playerinfo:LoadCharacterData()
