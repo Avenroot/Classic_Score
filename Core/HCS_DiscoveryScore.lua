@@ -5,6 +5,7 @@ function HCS_DiscoveryScore:UpdateDiscoveryScore()
     local newZone = GetZoneText()
     local newSubzone = GetSubZoneText()
     local zoneChanged = _G["ZoneChanged"]
+    local found = false
 
     if zoneChanged == true then
         
@@ -13,16 +14,29 @@ function HCS_DiscoveryScore:UpdateDiscoveryScore()
         if xpGained > 0 then
   
             print("Experience gained in", newZone, ":", xpGained)
-            local newxp = xpGained * 0.01
-            
-            local newDiscovery = {
-                mapID = mapID,
-                zone = newZone,
-                subzone = newSubzone,
-                xp = newxp,
-            }
+            local newxp = xpGained * 0.012
 
-            table.insert(HCScore_Character.discovery, newDiscovery)
+            for _, map in pairs(HCScore_Character.discovery) do
+                if map.zone == newZone and map.subzone == newSubzone then
+                    found = true
+                    map.xp = map.xp + newxp
+                    map.xpZone = true
+                    break
+                end
+            end            
+           
+            if not found then
+                local newDiscovery = {
+                    mapID = mapID,
+                    zone = newZone,
+                    subzone = newSubzone,
+                    xp = newxp,
+                    xpZone = true,
+                }
+    
+                table.insert(HCScore_Character.discovery, newDiscovery)                    
+            end
+
             HCScore_Character.scores.discoveryScore = HCScore_Character.scores.discoveryScore + newxp
             HCS_CalculateScore:RefreshScores()
         end 
@@ -35,5 +49,11 @@ function HCS_DiscoveryScore:GetNumberOfDiscovery()
 end
 
 function  HCS_DiscoveryScore:GetDiscoveryScore()
-    return HCScore_Character.scores.discoveryScore
+    local score = 0
+    
+    for _, map in pairs(HCScore_Character.discovery) do
+        score = score + map.xp
+    end
+    
+    return score
 end
