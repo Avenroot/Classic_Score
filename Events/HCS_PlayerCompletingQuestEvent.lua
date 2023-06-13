@@ -1,10 +1,10 @@
 HCS_PlayerCompletingQuestEvent = {}
 
 local TRIVAL = 0 -- grey
-local EASY = 0.0005 -- green
-local MODERATE = 0.00075 -- yellow
-local HARD = 0.001 -- orange
-local VERYHARD = 0.00125 -- red
+local EASY = 0.00055 -- green
+local MODERATE = 0.000825 -- yellow
+local HARD = 0.0011 -- orange
+local VERYHARD = 0.001375 -- red
 local score = 0
 local questLevel
 local playerLevel

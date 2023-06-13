@@ -79,7 +79,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     -- Create the label
     txtCoreScore1 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     txtCoreScore1:SetPoint("LEFT", image1, "RIGHT", 10, 0)
-    txtCoreScore1:SetText("Your Hardcore Score - " .. string.format("%.2f", HCScore_Character.scores.coreScore))
+    txtCoreScore1:SetText("Hardcore Score - " .. string.format("%.2f", HCScore_Character.scores.coreScore))
     -- Set larger font size
     local font, _, flags = txtCoreScore1:GetFont()
     txtCoreScore1:SetFont(font, 14, flags) -- Set the desired font size (16 in this example)    
@@ -279,7 +279,7 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     local coreScore = HCScore_Character.scores.coreScore
 
     --ScoreboardSummaryFrame
-    txtCoreScore1:SetText("Your Hardcore Score - ".. string.format("%.2f", coreScore))
+    txtCoreScore1:SetText("Hardcore Score - ".. string.format("%.2f", coreScore))
     --Frame 2
     txt_equippedgear_score:SetText(string.format("%.2f", equippedgearScore))    
     txt_leveling:SetText("Leveling ("..leveling..")")

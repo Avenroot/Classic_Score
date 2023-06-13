@@ -162,7 +162,7 @@ local function ModifyTooltip(self)
         self:AddLine(padString("Discovery    ", 15) .. string.format("%.2f", discovery))
         self:AddLine(padString("Milestones   ", 15) .. string.format("%.2f", milestones))
     else
-        print("No score found for player " .. fullname)
+      --  print("No score found for player " .. fullname)
     end
        -- self:AddLine("Hardcore Score: " .. string.format("%.2f", score))
     --end

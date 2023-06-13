@@ -6,6 +6,7 @@ function CheckZoneStatus()
     print("Subzone - ".. GetSubZoneText())
     print("Map id -".. C_Map.GetBestMapForUnit("player"))
 
+    local mapID = C_Map.GetBestMapForUnit("player")
     local newZone = GetZoneText()
     local newSubzone = GetSubZoneText()
     local zoneChanged = _G["ZoneChanged"]
@@ -19,6 +20,26 @@ function CheckZoneStatus()
         if map.zone == newZone and map.subzone == newSubzone then
             found = true
             break
+        end
+    end
+
+    if not found then
+        local xpGained = HCS_XPUpdateEvent:GetXPGain()
+        if xpGained == 0 then
+            
+            local newxp = 1.2
+            
+            local newDiscovery = {
+                mapID = mapID,
+                zone = newZone,
+                subzone = newSubzone,
+                xp = newxp,
+                xpZone = false,
+            }
+
+            table.insert(HCScore_Character.discovery, newDiscovery)
+            HCScore_Character.scores.discoveryScore = HCScore_Character.scores.discoveryScore + newxp
+            HCS_CalculateScore:RefreshScores()     
         end
     end
 
