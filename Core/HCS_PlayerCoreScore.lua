@@ -13,5 +13,6 @@ function HCS_PlayerCoreScore:GetCoreScore()
                 mobsKilledScore + reputationScore + discoveryScore +
                 professionsScore + milestonesScore
 
+    HCScore_Character.scores.coreScore = score
     return score
 end

@@ -1,5 +1,6 @@
 local AceDB = LibStub("AceDB-3.0")
---local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+local AceConfig = LibStub("AceConfig-3.0")
+local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 
 -- Namespaces
 local _;  
@@ -11,6 +12,7 @@ HCScore_Character = {
     name = "",
     class = "",
     level = 0,
+    race = "",
     faction = "",
     version = 0,
     deaths = 0,
@@ -48,6 +50,21 @@ HCScore_Character = {
     discovery = {},
     milestones = {},
 }    
+
+-- Define your options table
+local options = {
+    name = "Hardcore Score",
+    type = "group",
+    args = {
+        enable = {
+            name = "Share your score",
+            desc = "Enables / disables sharing your score with others",
+            type = "toggle",
+            set = function(info,val) Hardcore_Score.db.profile.shareDetails = val end,  -- update your set function
+            get = function(info) return Hardcore_Score.db.profile.shareDetails end  -- update your get function
+        },
+    },
+}
 
 -- Custom Slash Command
 Hardcore_Score.commands = {
@@ -136,8 +153,10 @@ function Hardcore_Score:CreateDB()
             },
             minimap = {},
             showDetails = false,
+            shareDetails = true,
         },
     })
+
 end
 
 function Hardcore_Score:CreateMiniMapButton()   
@@ -213,49 +232,8 @@ function Hardcore_Score:init(event, name)
     
     -- initalization Hardcore_Score_Settings
     if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
-    
-    -- initialization HCScore_Character
-    if HCScore_Character.name == nil then HCScore_Character.name = "" end
-    if HCScore_Character.class == nil then HCScore_Character.class = "" end
-    if HCScore_Character.level == nil then HCScore_Character.level = 0 end
-    if HCScore_Character.faction == nil then HCScore_Character.faction = "" end
-    if HCScore_Character.version == nil then HCScore_Character.version = HCS_Version end
-    if HCScore_Character.deaths == nil then HCScore_Character.version = 0 end
-    if HCScore_Character.quests == nil then HCScore_Character.quests = {} end
-    if HCScore_Character.scores == nil then HCScore_Character.scores = {} end
-    if HCScore_Character.scores.coreScore == nil then HCScore_Character.scores.coreScore = 0 end
-    if HCScore_Character.scores.discoveryScore == nil then HCScore_Character.scores.discoveryScore = 0 end
-    if HCScore_Character.scores.dungeonsScore == nil then HCScore_Character.scores.dungeonsScore = 0 end
-    if HCScore_Character.scores.equippedGearScore == nil then HCScore_Character.scores.equippedGearScore = 0 end
-    if HCScore_Character.scores.hcAchievementScore == nil then HCScore_Character.scores.hcAchievementScore = 0 end
-    if HCScore_Character.scores.levelingScore == nil then HCScore_Character.scores.levelingScore = 0 end
-    if HCScore_Character.scores.mobsKilledScore == nil then HCScore_Character.scores.mobsKilledScore = 0 end
-    if HCScore_Character.scores.professionsScore == nil then HCScore_Character.scores.professionsScore = 0 end
-    if HCScore_Character.scores.questingScore == nil then HCScore_Character.scores.questingScore = 0 end
-    if HCScore_Character.scores.reputationScore == nil then HCScore_Character.scores.reputationScore = 0 end
-    if HCScore_Character.scores.milestonesScore == nil then HCScore_Character.scores.milestonesScore = 0 end        
-    if HCScore_Character.professions == nil then HCScore_Character.professions = {} end
-    if HCScore_Character.professions.alchemy == nil then HCScore_Character.professions.alchemy = 0 end
-    if HCScore_Character.professions.blacksmithing == nil then HCScore_Character.professions.blacksmithing = 0 end
-    if HCScore_Character.professions.enchanting == nil then HCScore_Character.professions.enchanting = 0 end
-    if HCScore_Character.professions.engineering == nil then HCScore_Character.professions.engineering = 0 end
-    if HCScore_Character.professions.herbalism == nil then HCScore_Character.professions.herbalism = 0 end
-    if HCScore_Character.professions.leatherworking == nil then HCScore_Character.professions.leatherworking = 0 end
-    if HCScore_Character.professions.lockpicking == nil then HCScore_Character.professions.lockpicking = 0 end
-    if HCScore_Character.professions.mining == nil then HCScore_Character.professions.mining = 0 end
-    if HCScore_Character.professions.skinning == nil then HCScore_Character.professions.skinning = 0 end
-    if HCScore_Character.professions.tailoring == nil then HCScore_Character.professions.tailoring = 0 end
-    if HCScore_Character.professions.fishing == nil then HCScore_Character.professions.fishing = 0 end
-    if HCScore_Character.professions.cooking == nil then HCScore_Character.professions.cooking = 0 end
-    if HCScore_Character.professions.firstaid == nil then HCScore_Character.professions.firstaid = 0 end
-    if HCScore_Character.reputations == nil then HCScore_Character.reputations = {} end
-    if HCScore_Character.mobsKilled == nil then HCScore_Character.mobsKilled = {} end
-    if HCScore_Character.discovery == nil then HCScore_Character.discovery = {} end
-    if HCScore_Character.milestones == nil then HCScore_Character.milestones = {} end
-
 
     HCS_Playerinfo:LoadCharacterData()
-
 
     HCS_ScoreboardSummaryUI:CreateFrame()
 
@@ -267,6 +245,13 @@ function Hardcore_Score:init(event, name)
 
     -- Get frame saved position
     Hardcore_Score:LoadSavedFramePosition()    
+
+    -- Register the options table
+    AceConfig:RegisterOptionsTable("Hardcore_Score", options)
+
+    -- Add the options table to the Blizzard interface options
+    AceConfigDialog:AddToBlizOptions("Hardcore_Score", "Hardcore Score")
+
 
 --[[    
     -- Load Tooltip to see other players scores
@@ -291,7 +276,7 @@ function Hardcore_Score:init(event, name)
 
     -- Print fun stuff for the player    
 --    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
-    print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");   
+    print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score! LET'S GO!");   
 end
 
 local events = CreateFrame("Frame");
