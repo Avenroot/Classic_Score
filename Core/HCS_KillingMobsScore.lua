@@ -114,5 +114,12 @@ function HCS_KillingMobsScore:GetNumMobTypes()
 end
 
 function HCS_KillingMobsScore:GetMobsKilledScore()
-    return HCScore_Character.scores.mobsKilledScore
+    local score = 0
+
+    for _, mob in pairs(HCScore_Character.mobsKilled) do
+        score = score + mob.score
+    end   
+    
+    return score
+
 end

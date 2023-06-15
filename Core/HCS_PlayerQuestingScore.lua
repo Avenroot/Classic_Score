@@ -23,5 +23,11 @@ function HCS_PlayerQuestingScore:GetNumberOfQuests()
 end
 
 function HCS_PlayerQuestingScore:GetQuestingScore()
-    return HCScore_Character.scores.questingScore
+    local score = 0
+
+    for _, quest in pairs(HCScore_Character.quests) do
+        score = score + quest.points
+    end   
+    
+    return score
 end

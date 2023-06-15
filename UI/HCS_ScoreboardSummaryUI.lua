@@ -4,6 +4,8 @@ HCS_ScoreboardSummaryUI = {};
 
 -- Frame 1
 local txtCoreScore1
+local txtCoreScore2
+local txtCoreScore3
 -- Frame 2
 local txt_equippedgear
 local txt_equippedgear_score
@@ -69,6 +71,44 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
             yOfs = yOfs,
         }        
     end)
+
+    -- Create the round image
+    local image1 = ScoreboardSummaryFrame:CreateTexture(nil, "OVERLAY")
+    image1:SetSize(32, 32)
+   -- image1:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcs-logo-32.blp")  -- Replace with your image texture path
+    image1:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcsimagewithframe32x32.blp")
+    image1:SetPoint("TOPLEFT", ScoreboardSummaryFrame, "TOPLEFT", -12, 10)
+    
+    -- Create the first label
+    txtCoreScore1 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    txtCoreScore1:SetPoint("LEFT", ScoreboardSummaryFrame, "TOPLEFT", 15, -15)
+    txtCoreScore1:SetText("Hardcore Score")
+    txtCoreScore1:SetWidth(120)
+    -- Set larger font size
+    local font, _, flags = txtCoreScore1:GetFont()
+    txtCoreScore1:SetFont(font, 14, flags) -- Set the desired font size (16 in this example)
+
+    -- Create the second label
+    txtCoreScore2 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    txtCoreScore2:SetPoint("LEFT", txtCoreScore1, "RIGHT", 50, 0)
+   -- txtCoreScore2:SetText( string.format("%.2f", HCScore_Character.scores.coreScore)) -- replace with your text
+    txtCoreScore2:SetJustifyH("RIGHT")
+    txtCoreScore2:SetWidth(80)
+    txtCoreScore2:SetFont(font, 14, flags) -- Set the desired font size (16 in this example)
+
+    -- Create the third label
+    txtCoreScore3 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    txtCoreScore3:SetPoint("TOPLEFT", txtCoreScore1, "BOTTOMLEFT", 0, -5)
+ --   txtCoreScore3:SetText("Third Label - " .. "Your text here") -- replace with your text
+    txtCoreScore3:SetFont(font, 12, flags) -- Set a smaller font size (12 in this example)
+   -- txtCoreScore3:SetTextColor(129/255, 183/255, 233/255) -- Set the text color to blue
+
+    txtCoreScore3:SetJustifyH("LEFT")
+    txtCoreScore3:SetWidth(200)    
+    
+
+
+--[[
     
     -- Create the round image
     local image1 = ScoreboardSummaryFrame:CreateTexture(nil, "OVERLAY")
@@ -85,7 +125,13 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txtCoreScore1:SetFont(font, 14, flags) -- Set the desired font size (16 in this example)    
    
     ScoreboardSummaryFrame:Show()
-  
+]]
+ 
+ 
+ 
+ 
+ 
+ 
     ScoreboardSummaryDetailsFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
     ScoreboardSummaryDetailsFrame:SetWidth(275)
     ScoreboardSummaryDetailsFrame:SetHeight(150)
@@ -257,6 +303,40 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
 ]]
 end
 
+local function GetPlayerInfoText()
+    local playerInfoText = ""
+    local factionText = ""
+    
+    if HCScore_Character.faction == "Horde" then
+        factionText = "|cFFFF0000Horde|r"
+    else
+        factionText = "|cFF0000FFAlliance|r"
+    end
+    
+    playerInfoText = HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class--..factionText 
+    
+    if HCScore_Character.class == "Druid" then 
+        playerInfoText = "|cFFFF7C0A"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
+    elseif HCScore_Character.class == "Hunter" then
+        playerInfoText = "|cFFAAD372"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
+    elseif HCScore_Character.class == "Mage" then
+        playerInfoText = "|cFF3FC7EB"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
+    elseif HCScore_Character.class == "Paladin" then
+        playerInfoText = "|cFFF48CBA"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
+    elseif HCScore_Character.class == "Priest" then
+        playerInfoText = "|cFFFFFFFF"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
+    elseif HCScore_Character.class == "Rouge" then
+        playerInfoText = "|cFFFFF468"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
+    elseif HCScore_Character.class == "Shaman" then
+        playerInfoText = "|cFF0070DD"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
+    elseif HCScore_Character.class == "Warlock" then
+        playerInfoText = "|cFF8788EE"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
+    elseif HCScore_Character.class == "Warrior" then
+        playerInfoText = "|cFFC69B6D"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
+    end
+    
+    return playerInfoText 
+end
 
 function HCS_ScoreboardSummaryUI:UpdateUI()
     local totProfessions = HCS_ProfessionsScore:GetNumberOfProfessions()
@@ -266,6 +346,7 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     local totDiscovery = HCS_DiscoveryScore:GetNumberOfDiscovery()
     local totMilestones = HCS_MilestonesScore:GetNumberOfMilestones()
     local leveling = UnitLevel("player")
+    local playerInfoText = GetPlayerInfoText()
     
     local equippedgearScore = HCScore_Character.scores.equippedGearScore
     local levelingScore = HCScore_Character.scores.levelingScore
@@ -279,8 +360,12 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     local coreScore = HCScore_Character.scores.coreScore
 
     --ScoreboardSummaryFrame
-    txtCoreScore1:SetText("Hardcore Score - ".. string.format("%.2f", coreScore))
-    --Frame 2
+--    txtCoreScore1:SetText("Hardcore Score - ".. string.format("%.2f", coreScore))
+    txtCoreScore1:SetText("Hardcore Score")
+    txtCoreScore2:SetText(string.format("%.2f", coreScore))
+    txtCoreScore3:SetText(playerInfoText)
+
+    --ScoreboardDetailsFrame
     txt_equippedgear_score:SetText(string.format("%.2f", equippedgearScore))    
     txt_leveling:SetText("Leveling ("..leveling..")")
     txt_leveling_score:SetText(string.format("%.2f",levelingScore))
