@@ -6,13 +6,14 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "0.0.0.2" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "0.9.0.1" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
     level = 0,
     faction = "",
     version = 0,
+    deaths = 0,
     scores = {
         coreScore = 0,
         equippedGearScore = 0,
@@ -146,6 +147,7 @@ function Hardcore_Score:CreateMiniMapButton()
         icon = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-minimap-16.blp",  -- XP_ICON, Spell_Nature_Polymorph
         OnClick = function(self, button)
             -- Add OnClick code here
+            HCS_MessageFrameUI.DisplayMessage("This is a test message!")
         end,        
 
         OnTooltipShow = function(tooltip)
@@ -218,6 +220,7 @@ function Hardcore_Score:init(event, name)
     if HCScore_Character.level == nil then HCScore_Character.level = 0 end
     if HCScore_Character.faction == nil then HCScore_Character.faction = "" end
     if HCScore_Character.version == nil then HCScore_Character.version = HCS_Version end
+    if HCScore_Character.deaths == nil then HCScore_Character.version = 0 end
     if HCScore_Character.quests == nil then HCScore_Character.quests = {} end
     if HCScore_Character.scores == nil then HCScore_Character.scores = {} end
     if HCScore_Character.scores.coreScore == nil then HCScore_Character.scores.coreScore = 0 end

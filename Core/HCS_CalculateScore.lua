@@ -15,9 +15,9 @@ function HCS_CalculateScore:RefreshScores()
     HCScore_Character.scores.professionsScore = HCS_ProfessionsScore:GetProfessionsScore() * LevelScalePercentage
     HCScore_Character.scores.reputationScore = HCS_ReputationScore:GetReputationScore() * LevelScalePercentage
     HCScore_Character.scores.discoveryScore = HCS_DiscoveryScore:GetDiscoveryScore() * LevelScalePercentage
+    HCScore_Character.scores.milestonesScore = HCS_MilestonesScore:GetMilestonesScore() * LevelScalePercentage
     HCScore_Character.scores.questingScore = HCS_PlayerQuestingScore:GetQuestingScore()
-    HCScore_Character.scores.mobsKilledScore = HCS_KillingMobsScore:GetMobsKilledScore()
-    HCScore_Character.scores.milestonesScore = HCS_MilestonesScore:GetMilestonesScore()
+    HCScore_Character.scores.mobsKilledScore = HCS_KillingMobsScore:GetMobsKilledScore()    
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
     
     RefreshUI()

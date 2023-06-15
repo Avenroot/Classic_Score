@@ -36,6 +36,11 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     HCScore_Character.class = UnitClass("player")
     HCScore_Character.level = UnitLevel("player")
     HCScore_Character.faction = UnitFactionGroup("player")
+    HCScore_Character.version = HCS_Version
+    if HCScore_Character.deaths == nil then HCScore_Character.deaths = 0 end
+    if HCScore_Character.milestones == nil then HCScore_Character.milestones = {} end
+
+    
    -- _G["CurrentXP"] = UnitXP("player")  -- CurrentXP
    -- _G["CurrentMaxXP"] = UnitXPMax("player") -- CurrentMaxXP
 
