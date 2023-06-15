@@ -2,7 +2,7 @@
 ## Title: Hardcore Score
 ## Notes: Your Hardcore score for your character
 ## Author: Avenroot
-## Version: 0.0.0.2
+## Version: 0.9.0.1
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character
@@ -31,9 +31,14 @@ Events/HCS_ProfessionsEvent.lua
 Events/HCS_ReputationEvent.lua
 Events/HCS_PlayerDiscoveryEvent.lua
 Events/HCS_XPUpdateEvent.lua
+Events/HCS_DeathEvent.lua
 
+Data/HCS_MilestonesDB.lua
+
+UI/HCS_MessageFrameUI.lua
 UI/HCS_ScoreboardUI.lua
 UI/HCS_ScoreboardSummaryUI.lua
+
 Hardcore_Score.lua
 
 
