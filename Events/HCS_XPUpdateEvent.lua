@@ -1,10 +1,6 @@
 HCS_XPUpdateEvent = {}
 
 function HCS_XPUpdateEvent:GetXPGain()
-    print(_G["CurrentXP"])
-    print(CurrentXP)
-    print(_G["CurrentMaxXP"])
-    print(CurrentMaxXP)
     
     local currentXP = _G["CurrentXP"]
     local newXP = UnitXP("player")
@@ -13,7 +9,7 @@ function HCS_XPUpdateEvent:GetXPGain()
         xpGain = (_G["CurrentMaxXP"] - currentXP) + newXP 
     end
     _G["CurrentXP"] = newXP
-    print("xp gained: "..xpGain)
+
     return xpGain
 end
 
@@ -26,12 +22,7 @@ _xpupdate_event:SetScript("OnEvent", function(event, ...)
     local mobName = _G["MobName"]
     local mobLevel = _G["MobLevel"]
     
-    print("----- PLAYER_XP_UPDATE -----")
-    print("MobCombatKill = "..tostring(mobCombatKill))
-    print("ZoneChanged = "..tostring(zoneChanged))
-
     if mobCombatKill == true then
-        print("----- PLAYER_XP_UPDATE - MOB KILL -----")
         HCS_KillingMobsScore:UpdateMobsKilled()
         mobCombatKill = false
         mobName = ""
@@ -41,22 +32,16 @@ _xpupdate_event:SetScript("OnEvent", function(event, ...)
         zoneChanged = false 
     end    
 
-    print("ZoneChanged = "..tostring(zoneChanged))
     if zoneChanged == true then       
-        print("----- PLAYER_XP_UPDATE - ZONE CHANGED -----")
         HCS_DiscoveryScore:UpdateDiscoveryScore()
         zoneChanged = false
     end
    
     HCS_CalculateScore:RefreshScores()
 
-    print("MobCombatKill = "..tostring(mobCombatKill))
-    print("ZoneChanged = "..tostring(zoneChanged))
     _G["MobCombatKill"] = mobCombatKill
     _G["ZoneChanged"] = zoneChanged
     _G["MobName"] = mobName
     _G["MobLevel"] = mobLevel
-
-    print("Out XP Update")
     
 end)

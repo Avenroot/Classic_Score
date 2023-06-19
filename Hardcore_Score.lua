@@ -63,6 +63,24 @@ local options = {
             set = function(info,val) Hardcore_Score.db.profile.shareDetails = val end,  -- update your set function
             get = function(info) return Hardcore_Score.db.profile.shareDetails end  -- update your get function
         },
+        twitterLink = {
+            name = "Follow us on Twitter at https://twitter.com//HardcoreScore",
+            desc = "https://twitter.com//HardcoreScore",
+            type = "description",
+            order = 1
+        },
+        discordLink = {
+            name = "Join our Discord server at https://discord.gg/hWhhEryF",
+            desc = "https://discord.gg/hWhhEryF",
+            type = "description",
+            order = 2
+        },
+        addonInfo = {
+            name = "Addon Information",
+            desc = "Here you can put any other info about the addon...",
+            type = "description",
+            order = 3
+        },        
     },
 }
 
@@ -166,7 +184,8 @@ function Hardcore_Score:CreateMiniMapButton()
         icon = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-minimap-16.blp",  -- XP_ICON, Spell_Nature_Polymorph
         OnClick = function(self, button)
             -- Add OnClick code here
-            HCS_MessageFrameUI.DisplayMessage("This is a test message!")
+            --HCS_MessageFrameUI.DisplayMessage("This is a test message!")
+            HCS_WelcomeUI:ToggleMyFrame()            
         end,        
 
         OnTooltipShow = function(tooltip)
@@ -191,7 +210,6 @@ function Hardcore_Score:LoadSavedFramePosition()
             ScoreboardSummaryDetailsFrame:Show()
         end
     end
-    --print("saving location of frame")
 end
 
 -- WARNING: self automatically becomes events frame!
@@ -234,45 +252,32 @@ function Hardcore_Score:init(event, name)
     if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
 
     HCS_Playerinfo:LoadCharacterData()
+    print("LoadCharacterData")
 
     HCS_ScoreboardSummaryUI:CreateFrame()
+    print("HCS_ScoreboardSummaryUI:Create")
 
-    HCS_CalculateScore:RefreshScores()
     Hardcore_Score:CreateDB()
+    print("CreateDB")
 
     -- Create minimap button
     Hardcore_Score:CreateMiniMapButton()
+    print("CreateMiniMapButton")
 
     -- Get frame saved position
     Hardcore_Score:LoadSavedFramePosition()    
+    print("LoadSavedFramePosition")
 
     -- Register the options table
     AceConfig:RegisterOptionsTable("Hardcore_Score", options)
+    print("RegisterOptionsTable")
 
     -- Add the options table to the Blizzard interface options
     AceConfigDialog:AddToBlizOptions("Hardcore_Score", "Hardcore Score")
+    print("AddToBlizOptions")
 
-
---[[    
-    -- Load Tooltip to see other players scores
-    local playerScores = _G["HCScore_Character"] or {}
-
-    -- Hook the tooltip after the saved variables have been loaded
-
-    GameTooltip:HookScript("OnTooltipSetUnit", function(self)
-        -- Get the unit's information
-        print("Trying to setup tooltip..")
-        local name, unit = self:GetUnit()
-       
-        print(UnitIsPlayer(unit))
-        print(playerScores.coreScore)
-        -- If this unit is a player, and you have a score stored for them, then display it
-        if UnitIsPlayer(unit) and playerScores then
-            self:AddLine("Hardcore Score: " .. string.format("%.2f", playerScores.scores.coreScore) )
-            print('Setup tooltip')
-        end
-    end)    
-]]
+    HCS_CalculateScore:RefreshScores()
+    print("RefreshScores")
 
     -- Print fun stuff for the player    
 --    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");

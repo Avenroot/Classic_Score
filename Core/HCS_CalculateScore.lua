@@ -21,10 +21,13 @@ function HCS_CalculateScore:RefreshScores()
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
     
     RefreshUI()
-    
 end
 
 function RefreshUI()
     HCS_ScoreboardSummaryUI:UpdateUI()
-    HCS_PlayerCom:SendScore(HCScore_Character.scores)
+    print("five")
+    
+    if HCS_PlayerCom ~= nil then
+        HCS_PlayerCom:SendScore()       
+    end
 end

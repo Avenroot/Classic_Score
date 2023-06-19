@@ -104,7 +104,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
    -- txtCoreScore3:SetTextColor(129/255, 183/255, 233/255) -- Set the text color to blue
 
     txtCoreScore3:SetJustifyH("LEFT")
-    txtCoreScore3:SetWidth(200)    
+    txtCoreScore3:SetWidth(220)    
     
 
 

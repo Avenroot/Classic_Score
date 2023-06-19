@@ -50,8 +50,6 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
   if levelMod > 9 then
     score =  xpReward * VERYHARD
   end
-  
-  print("score: "..score.. " levelmod: "..levelMod.. " player level: "..playerLevel.. " quest level: "..questLevel)
 
   HCS_PlayerQuestingScore:UpdateQuestingScore(score, questID, xpReward, levelMod)
 

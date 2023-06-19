@@ -10,24 +10,10 @@ ZoneChanged = false
 function HCS_Playerinfo:LoadCharacterData()  
     
     HCS_Playerinfo:GetHCS_Playerinfo()
---    print("Got Player Info")
-
     HCScore_Character.scores.levelingScore = HCS_PlayerLevelingScore:GetLevelScore()
---    print("Got Level Score")
-
     HCScore_Character.scores.equippedGearScore = HCS_PlayerEquippedGearScore:GetEquippedGearScore()
---    print("Got Player GetEquippedGearScore")
-
-    --HCScore_Character.scores.questingScore = HCS_PlayerQuestingScore:GetQuestingScore();
-    --print("Got Questing Score")
-
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
---    print("Got Core Score")
-
     HCS_ReputationScore:UpdateRepScore()
-    --SaveHCScoreData:SaveVariables()
-    --  SaveVariables("HCScore_StoredVariables")
-    -- HCS_ScoreboardUI:UpdateUI()
 
 end
 
