@@ -97,10 +97,8 @@ function HCS_ProfessionsScore:GetProfessionsScore()
         local skillName, isHeader, _, skillRank, _, _, skillMaxRank, _, _, skillLineID = GetSkillLineInfo(i)
         
         if not isHeader then
-            --print(i, GetSkillLineInfo(i))
-            UpdateProfessionScore(skillName, skillRank)
-            --print("skillName: "..skillName.."skillRank: "..skillRank)
-        end
+           UpdateProfessionScore(skillName, skillRank)
+         end
     end
 
     self:GetScore()

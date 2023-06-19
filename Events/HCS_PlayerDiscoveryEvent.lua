@@ -2,9 +2,6 @@ HCS_PlayerDiscoveryEvent = {}
 
 
 function CheckZoneStatus()
-    print("Zone changed to ".. GetZoneText())
-    print("Subzone - ".. GetSubZoneText())
-    print("Map id -".. C_Map.GetBestMapForUnit("player"))
 
     local mapID = C_Map.GetBestMapForUnit("player")
     local newZone = GetZoneText()
@@ -44,7 +41,6 @@ function CheckZoneStatus()
     end
 
     zoneChanged = not found
-    print("Zone changed = "..tostring(zoneChanged))  
     _G["ZoneChanged"] = zoneChanged;  
 end
 
@@ -52,14 +48,12 @@ local _playerdiscovery3 = CreateFrame("Frame")
 _playerdiscovery3:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 _playerdiscovery3:SetScript("OnEvent", function (self, event, ...)
 
-    print("----- ZONE_CHANGED_NEW_AREA -----")
-    CheckZoneStatus()
+     CheckZoneStatus()
 end)
 
 local _playerdiscovery2 = CreateFrame("Frame")
 _playerdiscovery2:RegisterEvent("ZONE_CHANGED")
 _playerdiscovery2:SetScript("OnEvent", function (self, event, ...)
 
-    print("----- ZONE_CHANGED -----")
-    CheckZoneStatus()
+     CheckZoneStatus()
 end)

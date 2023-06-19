@@ -13,7 +13,7 @@ function HCS_DiscoveryScore:UpdateDiscoveryScore()
 
         if xpGained > 0 then
   
-            print("Experience gained in", newZone, ":", xpGained)
+            --print("Experience gained in", newZone, ":", xpGained)
             local newxp = xpGained * 0.012
 
             for _, map in pairs(HCScore_Character.discovery) do

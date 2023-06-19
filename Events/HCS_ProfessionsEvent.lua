@@ -1,11 +1,7 @@
 HCS_ProfessionsEvent = {}
 
 local function OnSkillLinesChanged(event)
-
---    HCS_ProfessionsScore:GetNumberOfProfessions()
     HCS_CalculateScore:RefreshScores()  
---    print("A profession have been updated")
-
 end
   
   local _HCS_ProfessionsEvent = CreateFrame("FRAME")

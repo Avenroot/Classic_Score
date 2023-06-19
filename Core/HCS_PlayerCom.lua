@@ -1,5 +1,6 @@
-HCS_PlayerCom = {}
 local AceSerializer = LibStub("AceSerializer-3.0")
+
+HCS_PlayerCom = {}
 
 local scoresComm = {
     coreScore = '',
@@ -15,31 +16,27 @@ local scoresComm = {
     milestoneScore = '',
 }
 
+local function init()
+    scoresComm = {
+        coreScore = '',
+        equippedGearScore = '',
+        hcAchievementScore = '',
+        levelingScore = '',
+        questingScore = '',
+        mobsKilledScore = '',
+        professionsScore = '',
+        dungeonsScore = '',
+        reputationScore = '',
+        discoveryScore = '',
+        milestoneScore = '',
+    }        
+end
 
 -- The prefix for your addon's messages. This should be a unique string that other addons are not likely to use.
 local PREFIX = "HardcoreAddon"  -- Replace with your addon prefix
 
 -- Table to store scores received from other players.
 local playerScores = {}
-
-local function PrintTotalRecords()
-    local count = 0
-    for _ in pairs(playerScores) do
-      count = count + 1
-    end
-    
-    print("playerScores = "..count)  -- Output: total number of records in the table
-    
-end
-
-local function PrintTable(tbl)
-    if tbl then 
-        for key, value in pairs(tbl) do
-            print(key, value)
-        end   
-    end
-end
-
 
 local function padString(str, len)
     local length = string.len(str)
@@ -49,14 +46,14 @@ local function padString(str, len)
     return str
 end
 
-
 -- Function to send a player's score.
-function HCS_PlayerCom:SendScore(score)
---    print("SendScore")
-    --PrintTable(score)
---    for key, value in pairs(score) do
---        print(key, value)
---    end
+function HCS_PlayerCom:SendScore()
+
+    if scoresComm == nil then init() end
+
+    --print(scoresComm.coreScore)
+    --print(HCScore_Character.scores.coreScore)
+    --print(string.format("%.2f", HCScore_Character.scores.coreScore))
 
     scoresComm.coreScore = string.format("%.2f", HCScore_Character.scores.coreScore)
     scoresComm.equippedGearScore = string.format("%.2f", HCScore_Character.scores.equippedGearScore)
@@ -70,13 +67,10 @@ function HCS_PlayerCom:SendScore(score)
     scoresComm.discoveryScore = string.format("%.2f", HCScore_Character.scores.discoveryScore)
     scoresComm.milestoneScore = string.format("%.2f", HCScore_Character.scores.milestonesScore)
 
-
     local serializedScore = AceSerializer:Serialize(scoresComm)
 
     if IsInGroup() then
- --       print("In a group")
         local channel = IsInRaid() and "RAID" or "PARTY"
-        print(channel)
         
         C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, channel)
     elseif IsInGuild() then
@@ -86,31 +80,21 @@ end
 
 local f = CreateFrame("Frame")
 f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
---    print("Comm frame event")
---    HCS_PlayerCom:SendScore(HCScore_Character.scores)
---    print(event)
---    print(message)
---    print(prefix)
---    print(PREFIX)
---    print(sender)
+
     if event == "PLAYER_ENTERING_WORLD" or event == "GROUP_ROSTER_UPDATE" or event == "GROUP_JOINED" then
         -- Player has entered the world or group roster has been updated, send our score
-        HCS_PlayerCom:SendScore(HCScore_Character.scores)
+        HCS_PlayerCom:SendScore()
 
     elseif event == "CHAT_MSG_ADDON" and prefix == PREFIX then
-       -- print("updating playerScores")
-     --   HCS_PlayerCom:SendScore(HCScore_Character.scores)
     
-            local success, scoreReveived = AceSerializer:Deserialize(message)
-    
-            if success then     
-                --print("Adding Score to playerScore table")
-                --PrintTable(scoreReveived)    
-                playerScores[sender] = scoreReveived --tonumber(message)
-            
-            else
-                --print("Deserialization failed:", scoreReveived)
-            end                 
+        local success, scoreReveived = AceSerializer:Deserialize(message)
+
+        if success then     
+            playerScores[sender] = scoreReveived --tonumber(message)
+        
+        else
+            --print("Deserialization failed:", scoreReveived)
+        end                 
     end
 end)
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -120,14 +104,12 @@ f:RegisterEvent("CHAT_MSG_ADDON")
 
 -- Function to add a player's score to their tooltip.
 local function ModifyTooltip(self)
---    print("ModifyTooltip")
     local unit = select(2, self:GetUnit())
---    print(unit)
+
     if not unit then
         return
     end
 
-    --local name = GetUnitName(unit, true)
     local name, server = UnitFullName(unit)
     if server == nil then
       server = GetNormalizedRealmName()
@@ -135,13 +117,7 @@ local function ModifyTooltip(self)
     local fullname = name..'-'..server
     local score = playerScores[fullname]
 
---    print(fullname)
---    print("PRINTING TABLE")
---    PrintTable(score) 
---    print(score)
-
     if score then
-        print(score)
         self:AddLine(padString("Hardcore Score", 15) .. string.format("%.2f", score.coreScore))
 
         local equippedGear = score.equippedGearScore
@@ -164,8 +140,6 @@ local function ModifyTooltip(self)
     else
       --  print("No score found for player " .. fullname)
     end
-       -- self:AddLine("Hardcore Score: " .. string.format("%.2f", score))
-    --end
 end
 
 

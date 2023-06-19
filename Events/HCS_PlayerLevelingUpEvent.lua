@@ -8,7 +8,6 @@ _HCS_PlayerLevelingUpEvent:RegisterEvent("PLAYER_LEVEL_UP")
 
 local function OnPlayerLevelUp(event, arg1, arg2, arg3, arg4)
   HCS_CalculateScore:RefreshScores()  
-  --print("executed _HCS_PlayerLevelingUpEvent code")
 end
 
 -- set the event handler function for the myFrame

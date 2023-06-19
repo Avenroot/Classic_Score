@@ -1,21 +1,5 @@
 HCS_PlayerEquippedGearScore = {}
 
-local function PrintGearInfo()
-    for slotID = 1, 19 do
-        local itemLink = GetInventoryItemLink("player", slotID)
-        if itemLink then
-          local _, _, itemRarity = GetItemInfo(itemLink)
-          local itemName, _, _, itemLevel, _, _, _, _, itemEquipLoc = GetItemInfo(itemLink)
-          local color = ITEM_QUALITY_COLORS[itemRarity]          
---          if color.name ~= nil then
---            print(itemName.." ("..itemLevel..") - "..color.hex..color.name.."|r ["..itemEquipLoc.."]")
-            --end
-          print("itemRarity("..itemRarity..") "..itemName.." ("..itemLevel..") - |r ["..itemEquipLoc.."]")
-
-        end    
-    end
-end
-
 function HCS_PlayerEquippedGearScore:GetEquippedGearScore()
     local itemScore = 0
 
@@ -25,13 +9,8 @@ function HCS_PlayerEquippedGearScore:GetEquippedGearScore()
           local _, _, itemRarity = GetItemInfo(itemLink)
           local itemName, _, _, itemLevel, _, _, _, _, itemEquipLoc = GetItemInfo(itemLink)
           local color = ITEM_QUALITY_COLORS[itemRarity]          
---          if color.name ~= nil then
---            print(itemName.." ("..itemLevel..") - "..color.hex..color.name.."|r ["..itemEquipLoc.."]")
-            --end
-           -- print("itemRarity("..itemRarity..") "..itemName.." ("..itemLevel..") - |r ["..itemEquipLoc.."]")
-
            
-           local cases = {
+          local cases = {
             [0] = function() 
               itemScore = (itemLevel * 1.0) + itemScore --grey
             end,
@@ -60,8 +39,6 @@ function HCS_PlayerEquippedGearScore:GetEquippedGearScore()
         
         end
     end
-      --print("equipped gear score is ".. itemScore)
-      --PrintGearInfo()
 
       return itemScore  
 end
