@@ -30,6 +30,7 @@ local function AddMilestone(id)
 
                 print("|cff81b7e9"..milestone.desc.."|r")     
                 table.insert(HCScore_Character.milestones, newMilestone)
+                HCS_PointsLogUI:AddMessage(milestone.desc)
             end
         end   
     end

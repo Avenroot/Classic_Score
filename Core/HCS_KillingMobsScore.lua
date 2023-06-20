@@ -85,7 +85,9 @@ function HCS_KillingMobsScore:UpdateMobsKilled()
         table.insert(HCScore_Character.mobsKilled, newMob)
     end
 
-    HCS_CalculateScore:RefreshScores()    
+    local desc = mobName.." killed"
+
+    HCS_CalculateScore:RefreshScores(desc)    
 end
 
 function HCS_KillingMobsScore:GetNumMobTypes()

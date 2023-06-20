@@ -15,7 +15,7 @@ function HCS_PlayerQuestingScore:UpdateQuestingScore(score, questId, xpReward, l
 
     table.insert(HCScore_Character.quests, newQuest)
 
-    HCS_CalculateScore:RefreshScores()
+    HCS_CalculateScore:RefreshScores("Completed Quest")
 end
 
 function HCS_PlayerQuestingScore:GetNumberOfQuests()

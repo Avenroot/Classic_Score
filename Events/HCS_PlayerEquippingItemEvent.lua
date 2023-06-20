@@ -7,6 +7,6 @@ local _HCS_PlayerEquippingItemEvent = CreateFrame("Frame")
 
   _HCS_PlayerEquippingItemEvent:SetScript("OnEvent", function(self, event, unit)
 
-    HCS_CalculateScore:RefreshScores()
+    HCS_CalculateScore:RefreshScores("Equip update")
  
 end)
