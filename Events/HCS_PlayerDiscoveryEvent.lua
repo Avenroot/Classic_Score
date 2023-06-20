@@ -36,7 +36,7 @@ function CheckZoneStatus()
 
             table.insert(HCScore_Character.discovery, newDiscovery)
             HCScore_Character.scores.discoveryScore = HCScore_Character.scores.discoveryScore + newxp
-            HCS_CalculateScore:RefreshScores()     
+            HCS_CalculateScore:RefreshScores("Discovery")     
         end
     end
 

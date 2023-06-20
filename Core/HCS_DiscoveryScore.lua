@@ -38,7 +38,7 @@ function HCS_DiscoveryScore:UpdateDiscoveryScore()
             end
 
             HCScore_Character.scores.discoveryScore = HCScore_Character.scores.discoveryScore + newxp
-            HCS_CalculateScore:RefreshScores()
+            HCS_CalculateScore:RefreshScores("Discovery")
         end 
     end
 end

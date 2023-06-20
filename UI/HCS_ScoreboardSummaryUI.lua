@@ -1,5 +1,3 @@
-local AceGUI = LibStub("AceGUI-3.0")
-
 HCS_ScoreboardSummaryUI = {};
 
 -- Frame 1

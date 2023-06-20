@@ -1,7 +1,7 @@
 HCS_ProfessionsEvent = {}
 
 local function OnSkillLinesChanged(event)
-    HCS_CalculateScore:RefreshScores()  
+    HCS_CalculateScore:RefreshScores("Profession")  
 end
   
   local _HCS_ProfessionsEvent = CreateFrame("FRAME")

@@ -56,12 +56,24 @@ local options = {
     name = "Hardcore Score",
     type = "group",
     args = {
-        enable = {
+        shareScore = {
             name = "Share your score",
             desc = "Enables / disables sharing your score with others",
             type = "toggle",
+            order = 4,
             set = function(info,val) Hardcore_Score.db.profile.shareDetails = val end,  -- update your set function
             get = function(info) return Hardcore_Score.db.profile.shareDetails end  -- update your get function
+        },
+        showPointsLog = {
+            name = "Show Points Log",
+            desc = "Enables / disables showing Points Log",
+            type = "toggle",
+            order = 5,
+            set = function(info,val) 
+                    Hardcore_Score.db.profile.framePositionLog.show = val 
+                    HCS_PointsLogUI:SetVisibility()
+                end,  -- update your set function
+            get = function(info) return Hardcore_Score.db.profile.framePositionLog.show end  -- update your get function
         },
         twitterLink = {
             name = "Follow us on Twitter at https://twitter.com//HardcoreScore",
@@ -169,6 +181,14 @@ function Hardcore_Score:CreateDB()
                 xOfs = 0,
                 yOfs = 0,
             },
+            framePositionLog = {
+                point = "CENTER",  --"CENTER",
+                relativeTo = "UIParent",
+                relativePoint = "CENTER", -- "CENTER",
+                xOfs = 0,
+                yOfs = 0,
+                show = false,
+            },
             minimap = {},
             showDetails = false,
             shareDetails = true,
@@ -185,7 +205,8 @@ function Hardcore_Score:CreateMiniMapButton()
         OnClick = function(self, button)
             -- Add OnClick code here
             --HCS_MessageFrameUI.DisplayMessage("This is a test message!")
-            HCS_WelcomeUI:ToggleMyFrame()            
+            --HCS_WelcomeUI:ToggleMyFrame()            
+            HCS_PointsLogUI:ToggleMyFrame()
         end,        
 
         OnTooltipShow = function(tooltip)
@@ -252,32 +273,34 @@ function Hardcore_Score:init(event, name)
     if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
 
     HCS_Playerinfo:LoadCharacterData()
-    print("LoadCharacterData")
+    --print("LoadCharacterData")
 
     HCS_ScoreboardSummaryUI:CreateFrame()
-    print("HCS_ScoreboardSummaryUI:Create")
+    --print("HCS_ScoreboardSummaryUI:Create")
 
     Hardcore_Score:CreateDB()
-    print("CreateDB")
+    --print("CreateDB")
 
     -- Create minimap button
     Hardcore_Score:CreateMiniMapButton()
-    print("CreateMiniMapButton")
+    --print("CreateMiniMapButton")
 
     -- Get frame saved position
     Hardcore_Score:LoadSavedFramePosition()    
-    print("LoadSavedFramePosition")
-
+    --print("LoadSavedFramePosition")
+    
     -- Register the options table
     AceConfig:RegisterOptionsTable("Hardcore_Score", options)
-    print("RegisterOptionsTable")
+    --print("RegisterOptionsTable")
 
     -- Add the options table to the Blizzard interface options
     AceConfigDialog:AddToBlizOptions("Hardcore_Score", "Hardcore Score")
-    print("AddToBlizOptions")
+    --print("AddToBlizOptions")
+
+    HCS_PointsLogUI:SetVisibility()
 
     HCS_CalculateScore:RefreshScores()
-    print("RefreshScores")
+    --print("RefreshScores")
 
     -- Print fun stuff for the player    
 --    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
