@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "0.9.0.1" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "0.9.1" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -60,7 +60,7 @@ local options = {
             name = "Share your score",
             desc = "Enables / disables sharing your score with others",
             type = "toggle",
-            order = 4,
+            order = 1,
             set = function(info,val) Hardcore_Score.db.profile.shareDetails = val end,  -- update your set function
             get = function(info) return Hardcore_Score.db.profile.shareDetails end  -- update your get function
         },
@@ -68,31 +68,91 @@ local options = {
             name = "Show Points Log",
             desc = "Enables / disables showing Points Log",
             type = "toggle",
-            order = 5,
+            order = 2,
             set = function(info,val) 
                     Hardcore_Score.db.profile.framePositionLog.show = val 
                     HCS_PointsLogUI:SetVisibility()
                 end,  -- update your set function
             get = function(info) return Hardcore_Score.db.profile.framePositionLog.show end  -- update your get function
         },
+        Space1 = {
+            name = "",
+            desc = "",
+            type = "description",
+            fontSize = "medium",
+            order = 3
+        },
+        LinksHeader = {
+            name = "Connect for more information",
+            type = "header",
+            order = 4
+        },
         twitterLink = {
             name = "Follow us on Twitter at https://twitter.com//HardcoreScore",
             desc = "https://twitter.com//HardcoreScore",
             type = "description",
-            order = 1
+            fontSize = "medium",
+            image = "Interface\\Addons\\Hardcore_Score\\Media\\TwitterLogo.blp",
+            order = 5
         },
         discordLink = {
             name = "Join our Discord server at https://discord.gg/hWhhEryF",
             desc = "https://discord.gg/hWhhEryF",
             type = "description",
-            order = 2
+            fontSize = "medium",
+            image = "Interface\\Addons\\Hardcore_Score\\Media\\DiscordLogo.blp",
+            order = 6
         },
-        addonInfo = {
-            name = "Addon Information",
-            desc = "Here you can put any other info about the addon...",
+        Space2 = {
+            name = "",
+            desc = "",
             type = "description",
-            order = 3
-        },        
+            fontSize = "medium",
+            order = 7
+        },
+
+        addonInfoHeader = {
+            name = "Note from the author",
+            type = "header",
+            order = 8
+        },
+        addonInfo1 = {
+            name = "Thank you for trying out Hardcore Score. We are still in beta process and are aware of a few issues we are ironing out. We wanted to get this into your hands to get some feedback on what you think and let us know what changes you would like. If you find a bug please report it to our Discord.",
+            desc = "Addon Information",
+            type = "description",
+            fontSize = "medium",
+            order = 9
+        },            
+        Space3 = {
+            name = "",
+            desc = "",
+            type = "description",
+            fontSize = "medium",
+            order = 10
+        },
+        addonInfo2 = {
+            name = "We have a lot of things we would like to do with Hardcore Score. We are excited to share those with you soon. Please be patient with us as we work out any issues in this beta. Enjoy challenging yourself to get the best Hardcore Score possible and share your results with us. Thank you and have fun!!",
+            desc = "Addon Information",
+            type = "description",
+            fontSize = "medium",
+            order = 11
+        },            
+
+        Space4 = {
+            name = "",
+            desc = "",
+            type = "description",
+            fontSize = "medium",
+            order = 12
+        },
+        addonInfoNote = {
+            name = "* Note - Although we encourage you to use the Hardcore Addon with Hardcore Score, we are not accociated with the Hardcore Addon team.",
+            desc = "Addon Information",
+            type = "description",
+            fontSize = "medium",
+            order = 13
+        },            
+
     },
 }
 
@@ -304,7 +364,7 @@ function Hardcore_Score:init(event, name)
 
     -- Print fun stuff for the player    
 --    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
-    print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score! LET'S GO!");   
+--    print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score! LET'S GO!");   
 end
 
 local events = CreateFrame("Frame");
