@@ -31,7 +31,7 @@ function HCS_CalculateScore:RefreshScores(desc)
 --    print(scorediff)
     if scorediff ~= 0 and desc ~= nil then
         local formatted_time = date("%H:%M:%S")
-        local msg = "["..formatted_time.."]".."  "..desc.."  ".. string.format("%.2f",scorediff).." pts"
+        local msg = "["..formatted_time.."]".."  "..desc.."  ".. string.format("%.3f",scorediff).." pts"
         HCS_PointsLogUI:AddMessage(msg)
     end
 
