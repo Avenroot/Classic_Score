@@ -1,0 +1,7 @@
+Frequently asked qustions
+
+Q. What happens if I start using Hardcore Score on an existing Character.  Will it reflect an accuate score.
+A. No, Hardcore Score has no knowledge of all of your journey and therefore cannot give an accurate score.  You will see a score but it will not accurate.
+
+Q. How is the score calculated?
+A. There are a lot of different calcuations that go into the scoring.  We are working on a document that has a lot of detail.  In general 

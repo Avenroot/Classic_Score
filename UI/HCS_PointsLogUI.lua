@@ -24,7 +24,7 @@ frame:SetBackdropBorderColor(1, 1, 1)
 
 -- Create a title for the frame
 local title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-title:SetPoint("LEFT", frame, "TOPLEFT", 10, -10)
+title:SetPoint("LEFT", frame, "TOPLEFT", 10, -15)
 title:SetText("Hardcore Score Points Log")
 title:SetTextColor(241/255, 194/255, 50/255)
 
@@ -95,22 +95,26 @@ function HCS_PointsLogUI:AddMessage(msg)
     if #self.chatHistory > 100 then
         table.remove(self.chatHistory, 1)
     end
-    
+
     -- Update the text in the editBox
     editBox:SetText(table.concat(self.chatHistory, "\n"))
 
-    -- Scroll to the bottom after a small delay
-    C_Timer.After(0, function()
+    -- Scroll to the bottom
+    C_Timer.After(0.1, function()  -- Slightly delay to let the UI update first
+        scrollFrame:UpdateScrollChildRect()  -- Update scroll child rectangle
         local _, maxScroll = scrollFrame.ScrollBar:GetMinMaxValues()
         scrollFrame.ScrollBar:SetValue(maxScroll)
     end)
 end
+
+
 
 -- Set the script for resizing
 frame:SetScript("OnSizeChanged", function(self, width, height)
     scrollFrame:SetWidth(width - 36)
     scrollFrame:SetHeight(height - 50)
     editBox:SetWidth(width - 36)
+    editBox:SetHeight(height - 50)
 end)
 
 -- Create a resize button

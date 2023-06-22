@@ -81,22 +81,26 @@ end
 local f = CreateFrame("Frame")
 f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
 
-    if event == "PLAYER_ENTERING_WORLD" or event == "GROUP_ROSTER_UPDATE" or event == "GROUP_JOINED" then
-        -- Player has entered the world or group roster has been updated, send our score
-        HCS_PlayerCom:SendScore()
-
-    elseif event == "CHAT_MSG_ADDON" and prefix == PREFIX then
+    -- if player selects to share information.
+    if Hardcore_Score.db.profile.shareDetails then
+        if event == "PLAYER_ENTERING_WORLD" or event == "GROUP_ROSTER_UPDATE" or event == "GROUP_JOINED" then
+            -- Player has entered the world or group roster has been updated, send our score
+            HCS_PlayerCom:SendScore()
     
-        local success, scoreReveived = AceSerializer:Deserialize(message)
-
-        if success then     
-            playerScores[sender] = scoreReveived --tonumber(message)
+        elseif event == "CHAT_MSG_ADDON" and prefix == PREFIX then
         
-        else
-            --print("Deserialization failed:", scoreReveived)
-        end                 
+            local success, scoreReveived = AceSerializer:Deserialize(message)
+    
+            if success then     
+                playerScores[sender] = scoreReveived --tonumber(message)
+            
+            else
+                --print("Deserialization failed:", scoreReveived)
+            end                 
+        end
     end
 end)
+
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:RegisterEvent("GROUP_ROSTER_UPDATE")
 f:RegisterEvent("GROUP_JOINED")
