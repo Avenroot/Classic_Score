@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "0.9.2" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "0.9.3" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",

@@ -40,34 +40,61 @@ local function CalcScore(skilllevel)
 end
 
 function UpdateProfessionScore(professionid, skilllevel)
+    local score = CalcScore(skilllevel)
 
     if professionid == ALCHEMY then 
-        HCScore_Character.professions.alchemy = CalcScore(skilllevel)
+      if score > HCScore_Character.professions.alchemy then
+            HCScore_Character.professions.alchemy = score    
+      end
     elseif professionid == BLACKSMITHING then 
-        HCScore_Character.professions.blacksmithing = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.blacksmithing then
+            HCScore_Character.professions.blacksmithing = score
+        end
     elseif professionid == ENCHANTING then 
-        HCScore_Character.professions.enchanting = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.enchanting then
+            HCScore_Character.professions.enchanting = score
+        end
     elseif professionid == ENGINEERING then 
-        HCScore_Character.professions.engineering = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.engineering then
+            HCScore_Character.professions.engineering = score
+        end
     elseif professionid == HERBALISM then 
-        HCScore_Character.professions.herbalism = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.herbalism then
+            HCScore_Character.professions.herbalism = score
+        end
     elseif professionid == LEATHERWORKING then 
-        HCScore_Character.professions.leatherworking = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.leatherworking then
+            HCScore_Character.professions.leatherworking = score
+        end
     elseif professionid == LOCKPICKING then 
-        HCScore_Character.professions.lockpicking = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.lockpicking then
+            HCScore_Character.professions.lockpicking = score
+        end
     elseif professionid == MINING then 
-        HCScore_Character.professions.mining = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.mining then
+            HCScore_Character.professions.mining = score
+        end
     elseif professionid == SKINNING then 
-        HCScore_Character.professions.skinning = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.skinning then
+            HCScore_Character.professions.skinning = score
+        end
     elseif professionid == TAILORING then 
-        HCScore_Character.professions.tailoring = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.tailoring then
+            HCScore_Character.professions.tailoring = score
+        end
     elseif professionid == FISHING then 
-        HCScore_Character.professions.fishing = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.fishing then
+            HCScore_Character.professions.fishing = score
+        end
     elseif professionid == COOKING then 
-        HCScore_Character.professions.cooking = CalcScore(skilllevel)
+        if score > HCScore_Character.professions.cooking then
+            HCScore_Character.professions.cooking = score
+        end
     elseif professionid == FISTAID then 
-        HCScore_Character.professions.firstaid = CalcScore(skilllevel)
-    end    
+        if score > HCScore_Character.professions.firstaid then
+            HCScore_Character.professions.firstaid = score
+        end
+    end
 end
 
 function HCS_ProfessionsScore:GetScore()
