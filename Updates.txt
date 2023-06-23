@@ -5,3 +5,5 @@ Version 0.9.2
     Updated some text in the Points log.
     Now see 3 digits of detail instead of 2 in the Points log.
     Fixed Sharing Detals option.
+Version 0.9.3
+    Professions - No longer do you lose points when untraining a profession and re-learning it.
