@@ -7,3 +7,5 @@ Version 0.9.2
     Fixed Sharing Detals option.
 Version 0.9.3
     Professions - No longer do you lose points when untraining a profession and re-learning it.
+Version 0.9.4
+    Deleting a character and creating a new one with the same name will reset points correctly.

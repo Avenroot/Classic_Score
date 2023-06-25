@@ -129,7 +129,7 @@ local function ModifyTooltip(self)
         local questing = score.questingScore
         local mobsKilled = score.mobsKilledScore
         local professions = score.professionsScore
-        local reputation = score.reputationScore
+        local reputation = score.reputationScorez
         local discovery = score.discoveryScore
         local milestones = score.milestoneScore
 
