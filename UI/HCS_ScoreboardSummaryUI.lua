@@ -4,6 +4,8 @@ HCS_ScoreboardSummaryUI = {};
 local txtCoreScore1
 local txtCoreScore2
 local txtCoreScore3
+local imgPortrait
+
 -- Frame 2
 local txt_equippedgear
 local txt_equippedgear_score
@@ -71,11 +73,10 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     end)
 
     -- Create the round image
-    local image1 = ScoreboardSummaryFrame:CreateTexture(nil, "OVERLAY")
-    image1:SetSize(32, 32)
-   -- image1:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcs-logo-32.blp")  -- Replace with your image texture path
-    image1:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcsimagewithframe32x32.blp")
-    image1:SetPoint("TOPLEFT", ScoreboardSummaryFrame, "TOPLEFT", -12, 10)
+    imgPortrait = ScoreboardSummaryFrame:CreateTexture(nil, "OVERLAY")
+    imgPortrait:SetSize(32, 32)
+    imgPortrait:SetTexture(CurrentPortrait)
+    imgPortrait:SetPoint("TOPLEFT", ScoreboardSummaryFrame, "TOPLEFT", -12, 10)
     
     -- Create the first label
     txtCoreScore1 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -362,6 +363,9 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     txtCoreScore1:SetText("Hardcore Score")
     txtCoreScore2:SetText(string.format("%.2f", coreScore))
     txtCoreScore3:SetText(playerInfoText)
+
+    -- Portrait
+    imgPortrait:SetTexture(CurrentPortrait)
 
     --ScoreboardDetailsFrame
     txt_equippedgear_score:SetText(string.format("%.2f", equippedgearScore))    

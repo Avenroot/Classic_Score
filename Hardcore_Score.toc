@@ -1,15 +1,17 @@
 ## Interface: 11403
-## Title: Hardcore Score 0.9.4
+## Title: Hardcore Score 0.9.5
 ## Notes: Your Hardcore score for your character
 ## Author: Avenroot
-## Version: 0.9.4
+## Version: 0.9.5
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character
 ## X-Curse-Project-ID: 873836
+## X-Website: https://avenroothcs.wixsite.com/hardcore-score
 
 embeds.xml
 
+Core/HCS_Globals.lua
 Core/HCS_Playerinfo.lua
 Core/HCS_PlayerCoreScore.lua
 Core/HCS_PlayerLevelingScore.lua
