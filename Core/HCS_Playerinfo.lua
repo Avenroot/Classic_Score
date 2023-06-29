@@ -1,12 +1,5 @@
 HCS_Playerinfo = {}
 
-CurrentXP = 0
-CurrentMaxXP = 0
-MobCombatKill = false
-MobName = ""
-MobLevel = 0
-ZoneChanged = false
-
 function HCS_Playerinfo:LoadCharacterData()  
     -- Check to make sure this is not a new character with the same name.  If it is reset all points.
     local playerLevel = UnitLevel("player")

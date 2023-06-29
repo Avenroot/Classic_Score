@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "0.9.4" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "0.9.5" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -75,67 +75,97 @@ local options = {
                 end,  -- update your set function
             get = function(info) return Hardcore_Score.db.profile.framePositionLog.show end  -- update your get function
         },
+        showMessages = {
+            name = "Show Messages",
+            desc = "Enables / disables reward messages",
+            type = "toggle",
+            order = 3,
+            set = function(info,val) 
+                    Hardcore_Score.db.profile.framePositionMsg.show = val 
+                end,  -- update your set function
+            get = function(info) return Hardcore_Score.db.profile.framePositionMsg.show end  -- update your get function
+        },
+ --[[
+        setMessageslocation = {
+            name = "Set Location",
+            desc = "Sets the location of where the messages show up",
+            type = "execute",
+            order = 4,
+            func = function() 
+                    local frame = HCS_MessageFrameUI.DisplayMessage("Your message here", 5) -- Display for 5 seconds
+                    frame:ShowMessage() -- Manually trigger the message display                       
+                end,
+        },
+]]        
         Space1 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 3
+            order = 5
         },
         LinksHeader = {
             name = "Connect for more information",
             type = "header",
-            order = 4
+            order = 6
         },
         twitterLink = {
-            name = "Follow us on Twitter at https://twitter.com//HardcoreScore",
+            name = " Follow us on Twitter at https://twitter.com//HardcoreScore",
             desc = "https://twitter.com//HardcoreScore",
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\TwitterLogo.blp",
-            order = 5
+            order = 7
         },
         discordLink = {
-            name = "Join our Discord server at https://discord.gg/hWhhEryF",
-            desc = "https://discord.gg/hWhhEryF",
+            name = " Join our Discord server at https://discord.gg/j92hrVZU2Q",
+            desc = "https://discord.gg/j92hrVZU2Q",
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\DiscordLogo.blp",
-            order = 6
+            order = 8
+        },
+        websiteLink = {
+            name = " Website  https://avenroothcs.wixsite.com/hardcore-score",
+            desc = "https://avenroothcs.wixsite.com/hardcore-score",
+            type = "description",
+            fontSize = "medium",
+            image = "Interface\\Addons\\Hardcore_Score\\Media\\www_icon.blp",
+            order = 9
         },
         Space2 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 7
+            order = 10
         },
 
         addonInfoHeader = {
             name = "Note from the author",
             type = "header",
-            order = 8
+            order = 11
         },
         addonInfo1 = {
             name = "Thank you for trying out Hardcore Score. We are still in beta process and are aware of a few issues we are ironing out. We wanted to get this into your hands to get some feedback on what you think and let us know what changes you would like. If you find a bug please report it to our Discord.",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 9
+            order = 12
         },            
         Space3 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 10
+            order = 13
         },
         addonInfo2 = {
             name = "We have a lot of things we would like to do with Hardcore Score. We are excited to share those with you soon. Please be patient with us as we work out any issues in this beta. Enjoy challenging yourself to get the best Hardcore Score possible and share your results with us. Thank you and have fun!!",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 11
+            order = 14
         },            
 
         Space4 = {
@@ -249,6 +279,14 @@ function Hardcore_Score:CreateDB()
                 yOfs = 0,
                 show = false,
             },
+            framePositionMsg = {
+                point = "CENTER",  --"CENTER",
+                relativeTo = "UIParent",
+                relativePoint = "CENTER", -- "CENTER",
+                xOfs = 0,
+                yOfs = 0,
+                show = true,
+            },
             minimap = {},
             showDetails = false,
             shareDetails = true,
@@ -265,6 +303,18 @@ function Hardcore_Score:CreateMiniMapButton()
         OnClick = function(self, button)
             -- Add OnClick code here
             --HCS_MessageFrameUI.DisplayMessage("This is a test message!")
+--[[
+            if Hardcore_Score.db.profile.framePositionMsg.show then
+                local frame = HCS_MessageFrameUI.DisplayMessage("Milestone! You have killed 500 mobs", 5, Img_hcs_milestoneframedark_32) -- Display for 5 seconds
+                frame:ShowMessage() -- Manually trigger the message display
+
+                local frame = HCS_MessageFrameUI.DisplayMessage("Milestone! You reached for level 55", 5, Img_hcs_milestoneframedark_32) -- Display for 5 seconds
+                frame:ShowMessage() -- Manually trigger the message display
+
+                local frame = HCS_MessageFrameUI.DisplayMessage("Level 55! You gained 1000.00 pts", 5, Img_hcs_levelupframe_32) -- Display for 5 seconds
+                frame:ShowMessage() -- Manually trigger the message display
+            end
+]]
             --HCS_WelcomeUI:ToggleMyFrame()            
             HCS_PointsLogUI:ToggleMyFrame()
         end,        

@@ -9,3 +9,10 @@ Version 0.9.3
     Professions - No longer do you lose points when untraining a profession and re-learning it.
 Version 0.9.4
     Deleting a character and creating a new one with the same name will reset points correctly.
+Version 0.9.5
+    Added website link to options (https://avenroothcs.wixsite.com/hardcore-score)
+    Added a new messaging system.  Milestones and gaining levels now have a reward message show on the screen. Messaging can be turned on/off in options.
+    Added Portraits.  You can get a new portrait to show on your Hardscore summary circle.  There are 7 different portraits you can unlock.
+        Portraits are Grey, Green, Blue, Purple, Orange, Diamond Ruby, Gold Crown.  Have fun unlocking them all.
+        
+    

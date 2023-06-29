@@ -2,6 +2,46 @@ HCS_CalculateScore = {}
 
 LevelScalePercentage = 0
 
+-- Portrait Level Points
+local GREY = 0
+local GREEN = 100
+local BLUE = 1000
+local PURPLE = 2500
+local ORANGE = 5000
+local RED = 10000
+local GOLD = 15000
+
+function GetCurrentPortrait()
+    local playerLevel = UnitLevel("player")
+    local playerScore = HCScore_Character.scores.coreScore
+    local currentPortrait = Img_hcs_greyframe_32 -- default
+
+    -- Gold Crown
+    if playerLevel == 60 and playerScore > GOLD then
+        currentPortrait = Img_hcs_gold_crown_portrait_32
+    -- Red Diamond
+    elseif playerLevel >= 50 and playerScore >= RED then
+        currentPortrait = Img_hcs_red_diamond_portrait_32
+    -- Orange
+    elseif playerLevel >= 40 and playerScore >= ORANGE then
+        currentPortrait = Img_hcs_orange_portrait_32
+    -- Purple
+    elseif playerLevel >= 30 and playerScore >= PURPLE then
+        currentPortrait = Img_hcs_purple_portrait_32
+    -- Blue
+    elseif playerLevel >= 20 and playerScore >= BLUE then
+        currentPortrait = Img_hcs_blue_portrait_32
+    -- Green
+    elseif playerLevel >= 10 and playerScore >= GREEN then
+        currentPortrait = Img_hcs_green_portrait_32
+    -- Grey
+    elseif playerLevel >= 1 and playerScore >= GREY then
+        currentPortrait = Img_hcs_grey_portrait_32
+    end
+
+    return currentPortrait
+end
+
 function HCS_CalculateScore:RefreshScores(desc)
 
     LevelScalePercentage = (UnitLevel("player")  / 60) --* 100
@@ -23,6 +63,7 @@ function HCS_CalculateScore:RefreshScores(desc)
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
     
     RefreshUI()
+    CurrentPortrait = GetCurrentPortrait()
 
     local scoreafter = HCScore_Character.scores.coreScore
     local scorediff = scoreafter - scorebefore
