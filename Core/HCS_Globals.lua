@@ -3,11 +3,24 @@ HCS_Globals = {}
 -- Player information
 CurrentXP = 0
 CurrentMaxXP = 0
+CurrentLevel = 0  -- a work around because level doesn't get updated on PLAYER_LEVEL_UP
 MobCombatKill = false
 MobName = ""
 MobLevel = 0
 ZoneChanged = false
+PlayerLeveled = false
 
+ScoringDescriptions = {
+    equippedGearScore = "Equipped Gain",
+    levelingScore = "Leveling Gain",
+    professionsScore = "Professions Gain",
+    reputationScore = "Reputation Gain",
+    discoveryScore = "Discovery Gain",
+    milestonesScore = "Milestones Gain",
+    questingScore = "Questing Gain",
+    mobsKilledScore = "Mobs Killed Gain",
+    coreScore = "Core Score Gain",
+}
 
 -- images 
 Img_hcs_greyframe_32 = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-greyframe-32.blp"

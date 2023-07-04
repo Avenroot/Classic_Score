@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "0.9.5" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "0.9.6" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -49,6 +49,7 @@ HCScore_Character = {
     mobsKilled = {},
     discovery = {},
     milestones = {},
+    levelScores = {},
 }    
 
 -- Define your options table
@@ -409,12 +410,14 @@ function Hardcore_Score:init(event, name)
 
     HCS_PointsLogUI:SetVisibility()
 
+    HCS_PlayerCompletingQuestEvent:RecalculateQuests()
+    
     HCS_CalculateScore:RefreshScores()
-    --print("RefreshScores")
 
-    -- Print fun stuff for the player    
+    -- Print fun stuff for the player
+    print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome to Hardcore Score v0.9.6.  Lets GO!")
 --    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
---    print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score! LET'S GO!");   
+    --print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score! LET'S GO!");   
 end
 
 local events = CreateFrame("Frame");

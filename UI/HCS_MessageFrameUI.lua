@@ -40,6 +40,7 @@ end
 function HCS_MessageFrameUI.DisplayMessage(msg, delay, imagePath)
     local frame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
     frame:SetSize(300, MESSAGE_FRAME_HEIGHT)
+    frame:SetFrameStrata("MEDIUM")
     frame:Hide()
 
     frame:SetBackdrop({

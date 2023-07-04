@@ -37,8 +37,9 @@ function HCS_DiscoveryScore:UpdateDiscoveryScore()
                 table.insert(HCScore_Character.discovery, newDiscovery)                    
             end
 
-            HCScore_Character.scores.discoveryScore = HCScore_Character.scores.discoveryScore + newxp
-            HCS_CalculateScore:RefreshScores("Discovery")
+            --HCScore_Character.scores.discoveryScore = HCScore_Character.scores.discoveryScore + newxp
+            _G["ScoringDescriptions"].discoveryScore = "Discovery"
+            HCS_CalculateScore:RefreshScores(ScoringDescriptions)
         end 
     end
 end

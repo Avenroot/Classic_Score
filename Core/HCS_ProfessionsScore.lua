@@ -97,11 +97,11 @@ function UpdateProfessionScore(professionid, skilllevel)
     end
 end
 
-function HCS_ProfessionsScore:GetScore()
+local function GetScore()
     local char = HCScore_Character.professions
     local score = 0
   
-    score = char.alchemy +
+    local score = char.alchemy +
             char.blacksmithing +
             char.cooking +
             char.enchanting +
@@ -115,7 +115,7 @@ function HCS_ProfessionsScore:GetScore()
             char.skinning +
             char.tailoring
 
-    HCScore_Character.scores.professionsScore = score
+    return score
 end
 
 function HCS_ProfessionsScore:GetProfessionsScore()
@@ -128,9 +128,9 @@ function HCS_ProfessionsScore:GetProfessionsScore()
          end
     end
 
-    self:GetScore()
+    local score = GetScore()
 
-    return HCScore_Character.scores.professionsScore
+    return score
 end
 
 function HCS_ProfessionsScore:GetNumberOfProfessions()

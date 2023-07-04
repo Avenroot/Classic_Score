@@ -14,5 +14,15 @@ Version 0.9.5
     Added a new messaging system.  Milestones and gaining levels now have a reward message show on the screen. Messaging can be turned on/off in options.
     Added Portraits.  You can get a new portrait to show on your Hardscore summary circle.  There are 7 different portraits you can unlock.
         Portraits are Grey, Green, Blue, Purple, Orange, Diamond Ruby, Gold Crown.  Have fun unlocking them all.
+Version 0.9.6
+    1. Updated Messaging/Notification system significantly.
+        You should see more details in the points log.  Especially when leveling.
+    2. Points gained for completing quests have been increased significantly.
+        When logging into your character, questing points will be re-calculated to reflect these changes.  You should see a bigger score.  :slight_smile:
+    3. Points gained for killing mobs has been increased for mobs Yellow and above.
+        Unfortunately, points can't be re-calculated.  However, changes only significantly affect orange and red mobs. Slight change to Yellow and no change to Green.
+    4.  Set the Message Frame Priority to "MEDIUM" to show on top of other HCS frames.
+    5.  Addon now tracks how many points gained for each level and keeps a history of it.
+    
         
     
