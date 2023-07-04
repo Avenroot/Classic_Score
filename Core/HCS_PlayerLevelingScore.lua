@@ -74,3 +74,25 @@ function HCS_PlayerLevelingScore:GetLevelScore()
     return score
 
 end
+
+function HCS_PlayerLevelingScore:SaveLevelScore()
+    local playerLevel = UnitLevel("player") - 1
+    local isLevelfound = false
+
+    for _, lvl in pairs(HCScore_Character.levelScores) do
+        if lvl.level == playerLevel then
+            isLevelfound = true
+            break
+        end
+    end
+
+    if not isLevelfound then
+        -- add level details
+        local newLevel = {
+            level = playerLevel,
+            points = HCScore_Character.scores.coreScore,
+        }
+         table.insert(HCScore_Character.levelScores, newLevel)
+    end
+
+end

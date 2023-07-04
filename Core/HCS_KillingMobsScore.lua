@@ -2,9 +2,9 @@ HCS_KillingMobsScore = {}
 
 local TRIVAL = 0 -- grey
 local EASY = 0.0005 -- green
-local MODERATE = 0.00075 -- yellow
-local HARD = 0.001 -- orange
-local VERYHARD = 0.00125 -- red
+local MODERATE = 0.001 -- yellow
+local HARD = 0.0025 -- orange
+local VERYHARD = 0.005 -- red
 
 local function between(x, a, b)
     return x >= a and x <= b
@@ -49,11 +49,8 @@ end
 
 function HCS_KillingMobsScore:UpdateMobsKilled()
 
-    local currentMobScore = HCScore_Character.scores.mobsKilledScore
     local mobScore = GetMobKillHCScore(_G["MobLevel"])
     local mobName = _G["MobName"]
-
-    HCScore_Character.scores.mobsKilledScore = currentMobScore + mobScore[1]
 
     if not HCScore_Character.mobsKilled then
         HCScore_Character.mobsKilled = {}  -- Create an empty table
@@ -86,8 +83,8 @@ function HCS_KillingMobsScore:UpdateMobsKilled()
     end
 
     local desc = mobName.." killed"
-
-    HCS_CalculateScore:RefreshScores(desc)    
+    _G["ScoringDescriptions"].mobsKilledScore = desc
+    HCS_CalculateScore:RefreshScores(ScoringDescriptions)
 end
 
 function HCS_KillingMobsScore:GetNumMobTypes()

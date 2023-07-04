@@ -1,14 +1,16 @@
 HCS_PlayerCompletingQuestEvent = {}
 
 local TRIVAL = 0 -- grey
-local EASY = 0.00055 -- green
-local MODERATE = 0.000825 -- yellow
-local HARD = 0.0011 -- orange
-local VERYHARD = 0.001375 -- red
+local EASY = 0.001 -- green
+local MODERATE = 0.002 -- yellow
+local HARD = 0.0035 -- orange
+local VERYHARD = 0.005 -- red
+
 local score = 0
 local questLevel
 local playerLevel
 local levelMod
+
 
 -- create a frame to handle events
 local _HCS_PlayerCompletingQuestEvent = CreateFrame("Frame")
@@ -52,6 +54,34 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
   end
 
   HCS_PlayerQuestingScore:UpdateQuestingScore(score, questID, xpReward, levelMod)
+
+end
+
+function HCS_PlayerCompletingQuestEvent:RecalculateQuests()
+
+  --print("Recalculating Quests")
+  for _, quest in pairs(HCScore_Character.quests) do
+    -- grey
+    if quest.difficulty <= -6 then
+      quest.points = 0
+    end
+    -- green
+    if between(quest.difficulty, -5, -1) then
+      quest.points =  quest.xp * EASY         
+    end 
+    -- yellow
+    if between(quest.difficulty, 0, 4) then
+      quest.points = quest.xp * MODERATE    
+    end
+    -- orange
+    if between(quest.difficulty, 5, 9) then
+      quest.points = quest.xp * HARD
+    end
+    -- red
+    if quest.difficulty > 9 then
+      quest.points =  quest.xp * VERYHARD
+    end
+  end
 
 end
 

@@ -37,7 +37,7 @@ _xpupdate_event:SetScript("OnEvent", function(event, ...)
         zoneChanged = false
     end
    
-    HCS_CalculateScore:RefreshScores()
+    --HCS_CalculateScore:RefreshScores()
 
     _G["MobCombatKill"] = mobCombatKill
     _G["ZoneChanged"] = zoneChanged

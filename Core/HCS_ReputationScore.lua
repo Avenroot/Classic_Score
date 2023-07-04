@@ -28,7 +28,7 @@ local function CalcScore(repEarned, standing)
         score = score + EXALTED_BONUS        
     end
 
-    return score * LevelScalePercentage 
+    return score
 end
 
 function HCS_ReputationScore:UpdateRepScore()
@@ -73,14 +73,14 @@ function HCS_ReputationScore:UpdateRepScore()
             --  DEFAULT_CHAT_FRAME:AddMessage("Faction: " .. name .. " - " .. earnedValue.." StandingID: "..standingId .. " Score: ".. CalcScore(earnedValue, standingId))
         end        
     end
-    HCScore_Character.scores.reputationScore = repScore
+    return repScore
 end
 
 function HCS_ReputationScore:GetNumFactions()
   return #HCScore_Character.reputations
 end
 
-function HCS_ReputationScore:GetReputationScore()
-    HCS_ReputationScore:UpdateRepScore()
-    return HCScore_Character.scores.reputationScore
+function HCS_ReputationScore:GetReputationScore()    
+    local score =  HCS_ReputationScore:UpdateRepScore()
+    return score
 end

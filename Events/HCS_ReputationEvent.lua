@@ -5,7 +5,8 @@ frame:RegisterEvent("UPDATE_FACTION")
 
 local function eventHandler(self, event, ...)
     HCS_ReputationScore:UpdateRepScore()
-    HCS_CalculateScore:RefreshScores("Reputation Gain")  
+    _G["ScoringDescriptions"].reputationScore = "Reputation Gain"
+    HCS_CalculateScore:RefreshScores(ScoringDescriptions)
 end
 
 frame:SetScript("OnEvent", eventHandler)
