@@ -1,19 +1,24 @@
 Version 0.9.1
     Initial release
+
 Version 0.9.2
     Fixed Points log scrolling. Newest entry shows correctly.
     Updated some text in the Points log.
     Now see 3 digits of detail instead of 2 in the Points log.
     Fixed Sharing Detals option.
+
 Version 0.9.3
     Professions - No longer do you lose points when untraining a profession and re-learning it.
+
 Version 0.9.4
     Deleting a character and creating a new one with the same name will reset points correctly.
+
 Version 0.9.5
     Added website link to options (https://avenroothcs.wixsite.com/hardcore-score)
     Added a new messaging system.  Milestones and gaining levels now have a reward message show on the screen. Messaging can be turned on/off in options.
     Added Portraits.  You can get a new portrait to show on your Hardscore summary circle.  There are 7 different portraits you can unlock.
         Portraits are Grey, Green, Blue, Purple, Orange, Diamond Ruby, Gold Crown.  Have fun unlocking them all.
+
 Version 0.9.6
     1. Updated Messaging/Notification system significantly.
         You should see more details in the points log.  Especially when leveling.
@@ -24,5 +29,11 @@ Version 0.9.6
     4.  Set the Message Frame Priority to "MEDIUM" to show on top of other HCS frames.
     5.  Addon now tracks how many points gained for each level and keeps a history of it.
     
-        
+Version 0.9.7
+    1. Hide the close button on the Points Log.  Can open and close it from the options or clicking on them minimap icon.
+    2. *Fixed a reported issue where Notification Message is one level behind when leveling.
+    3. Added option to now show timestamps in the points log.
+    4. Added option to change the points log font.
+    5. Minor bug fixes and code updates.        
+* This is still an issue in some cases.  We continue to investigate. It is just a display issue with Milestones. Points are calculated with the correct level.
     

@@ -67,7 +67,7 @@ function HCS_PlayerLevelingScore:GetLevelScore()
     
     local score = 0
     local level = UnitLevel("player")
-    HCScore_Character.level  = level
+    HCScore_Character.level = level
     
     score = data[level].Total
 
@@ -76,7 +76,7 @@ function HCS_PlayerLevelingScore:GetLevelScore()
 end
 
 function HCS_PlayerLevelingScore:SaveLevelScore()
-    local playerLevel = UnitLevel("player") - 1
+    local playerLevel = HCScore_Character.level - 1
     local isLevelfound = false
 
     for _, lvl in pairs(HCScore_Character.levelScores) do

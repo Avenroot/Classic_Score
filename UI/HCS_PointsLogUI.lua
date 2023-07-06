@@ -1,3 +1,4 @@
+-- Globals / Namespace
 HCS_PointsLogUI = {}
 
 -- Create a table to store chat history
@@ -54,6 +55,7 @@ end)
 -- Create a close button
 local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
 closeButton:SetPoint("TOPRIGHT")
+closeButton:Hide()
 
 -- Create a scrollframe
 local scrollFrame = CreateFrame("ScrollFrame", nil, frame, "UIPanelScrollFrameTemplate")
@@ -61,12 +63,12 @@ scrollFrame:SetPoint("TOPLEFT", 16, -32)  -- Adjust the position to leave space 
 scrollFrame:SetPoint("BOTTOMRIGHT", -30, 16)
 
 -- Create an edit box for multi-line text
-local editBox = CreateFrame("EditBox", nil, scrollFrame)
-editBox:SetMultiLine(true)
-editBox:SetFontObject(ChatFontNormal)
-editBox:SetWidth(250)
-editBox:Disable()  -- This makes the text read-only
-scrollFrame:SetScrollChild(editBox)
+HCS_PointsLogUI.EditBox = CreateFrame("EditBox", nil, scrollFrame)
+HCS_PointsLogUI.EditBox:SetMultiLine(true)
+HCS_PointsLogUI.EditBox:SetFontObject(ChatFontNormal)
+HCS_PointsLogUI.EditBox:SetWidth(250)
+HCS_PointsLogUI.EditBox:Disable()  -- This makes the text read-only
+scrollFrame:SetScrollChild(HCS_PointsLogUI.EditBox)
 
 -- Function to toggle frame visibility
 function HCS_PointsLogUI:ToggleMyFrame()
@@ -97,7 +99,7 @@ function HCS_PointsLogUI:AddMessage(msg)
     end
 
     -- Update the text in the editBox
-    editBox:SetText(table.concat(self.chatHistory, "\n"))
+    HCS_PointsLogUI.EditBox:SetText(table.concat(self.chatHistory, "\n"))
 
     -- Scroll to the bottom
     C_Timer.After(0.1, function()  -- Slightly delay to let the UI update first
@@ -113,8 +115,8 @@ end
 frame:SetScript("OnSizeChanged", function(self, width, height)
     scrollFrame:SetWidth(width - 36)
     scrollFrame:SetHeight(height - 50)
-    editBox:SetWidth(width - 36)
-    editBox:SetHeight(height - 50)
+    HCS_PointsLogUI.EditBox:SetWidth(width - 36)
+    HCS_PointsLogUI.EditBox:SetHeight(height - 50)
 end)
 
 -- Create a resize button

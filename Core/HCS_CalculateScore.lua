@@ -39,12 +39,17 @@ local function CompareStats(beforeStats, scores, descriptions)
     for key, value in pairs(beforeStats) do
         local desc = descriptions[key] or key -- Use the matched description if available, otherwise use the key itself
 
-        
         if key ~= "coreScore" and beforeStats[key] ~= scores[key]  then
             -- Values are different, do something            
             local difference = scores[key] - beforeStats[key]
             local formatted_time = date("%H:%M:%S")
-            local msg = "[" .. formatted_time .. "] " .. (desc) .. " " .. string.format("%.3f", difference) .. " pts"
+            local msg = ""
+            local showTimestamp = Hardcore_Score.db.profile.framePositionLog.showTimestamp
+            if showTimestamp then
+                msg = "[" .. formatted_time .. "] " .. (desc) .. " " .. string.format("%.3f", difference) .. " pts"
+            else
+                msg = (desc) .. " " .. string.format("%.3f", difference) .. " pts"
+            end
             HCS_PointsLogUI:AddMessage(msg)
         end
     end
@@ -91,12 +96,14 @@ end
 
 local function LeveledUp(points)
 
-    if Hardcore_Score.db.profile.framePositionMsg.show then    
+    if Hardcore_Score.db.profile.framePositionMsg.show then
         local playerLevel = UnitLevel("player")
+        if playerLevel < HCScore_Character.level then
+            playerLevel = playerLevel + 1 
+        end
         local msg = "Level Up! You reached level "..playerLevel
-
         local frame = HCS_MessageFrameUI.DisplayMessage(msg, 10, Img_hcs_levelupframe_32)
-        frame:ShowMessage() 
+        frame:ShowMessage()
 
        -- local msg = "You just gained "..string.format("%.3f",points).." pts by leveling!"
        -- local frame = HCS_MessageFrameUI.DisplayMessage(msg, 10, Img_hcs_levelupframe_32)
@@ -105,7 +112,6 @@ local function LeveledUp(points)
     
     HCS_PlayerLevelingScore:SaveLevelScore()
     PlayerLeveled = false
-
 end
 
 function HCS_CalculateScore:RefreshScores(desc)
@@ -118,8 +124,8 @@ function HCS_CalculateScore:RefreshScores(desc)
 
     HCS_MilestonesScore:CheckMilestones()
 
-    HCScore_Character.scores.equippedGearScore = HCS_PlayerEquippedGearScore:GetEquippedGearScore() * levelScalePercentage
     HCScore_Character.scores.levelingScore = HCS_PlayerLevelingScore:GetLevelScore() * levelScalePercentage
+    HCScore_Character.scores.equippedGearScore = HCS_PlayerEquippedGearScore:GetEquippedGearScore() * levelScalePercentage
     HCScore_Character.scores.professionsScore = HCS_ProfessionsScore:GetProfessionsScore() * levelScalePercentage
     HCScore_Character.scores.reputationScore = HCS_ReputationScore:GetReputationScore() * (levelScalePercentage ^ 2)
     HCScore_Character.scores.discoveryScore = HCS_DiscoveryScore:GetDiscoveryScore() * levelScalePercentage
@@ -134,8 +140,8 @@ function HCS_CalculateScore:RefreshScores(desc)
     if desc ~= nil then
         CompareStats(beforeStats, HCScore_Character.scores, desc)
     end
-
-    if PlayerLeveled then 
+ 
+    if PlayerLeveled  then 
       local scorebefore = beforeStats.coreScore
       local scoreafter = HCScore_Character.scores.coreScore
       local scorediff = scoreafter - scorebefore

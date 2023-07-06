@@ -1,8 +1,8 @@
 ## Interface: 11403
-## Title: Hardcore Score 0.9.6
+## Title: Hardcore Score 0.9.7
 ## Notes: Your Hardcore score for your character
 ## Author: Avenroot
-## Version: 0.9.6
+## Version: 0.9.7
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character

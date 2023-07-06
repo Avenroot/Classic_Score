@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "0.9.6" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "0.9.7" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -65,50 +65,75 @@ local options = {
             set = function(info,val) Hardcore_Score.db.profile.shareDetails = val end,  -- update your set function
             get = function(info) return Hardcore_Score.db.profile.shareDetails end  -- update your get function
         },
+        showMessages = {
+            name = "Show Messages",
+            desc = "Enables / disables reward messages",
+            type = "toggle",
+            order = 2,
+            set = function(info,val) 
+                    Hardcore_Score.db.profile.framePositionMsg.show = val 
+                end,  -- update your set function
+            get = function(info) return Hardcore_Score.db.profile.framePositionMsg.show end  -- update your get function
+        },
+        Space1 = {
+            name = "",
+            desc = "",
+            type = "description",
+            fontSize = "medium",
+            order = 3
+        },
+        PointsLogHeader = {
+            name = "Points Log",
+            type = "header",
+            order = 4
+        },
         showPointsLog = {
             name = "Show Points Log",
             desc = "Enables / disables showing Points Log",
             type = "toggle",
-            order = 2,
+            order = 5,
             set = function(info,val) 
                     Hardcore_Score.db.profile.framePositionLog.show = val 
                     HCS_PointsLogUI:SetVisibility()
                 end,  -- update your set function
             get = function(info) return Hardcore_Score.db.profile.framePositionLog.show end  -- update your get function
         },
-        showMessages = {
-            name = "Show Messages",
-            desc = "Enables / disables reward messages",
+        showPointsLogTimeStamp = {
+            name = "Show Timestamp",
+            desc = "Displays showing the timestamp in Points log",
             type = "toggle",
-            order = 3,
-            set = function(info,val) 
-                    Hardcore_Score.db.profile.framePositionMsg.show = val 
-                end,  -- update your set function
-            get = function(info) return Hardcore_Score.db.profile.framePositionMsg.show end  -- update your get function
+            order = 6,
+            set = function(info,val) Hardcore_Score.db.profile.framePositionLog.showTimestamp = val end,
+            get = function(info) return Hardcore_Score.db.profile.framePositionLog.showTimestamp end
         },
- --[[
-        setMessageslocation = {
-            name = "Set Location",
-            desc = "Sets the location of where the messages show up",
-            type = "execute",
-            order = 4,
-            func = function() 
-                    local frame = HCS_MessageFrameUI.DisplayMessage("Your message here", 5) -- Display for 5 seconds
-                    frame:ShowMessage() -- Manually trigger the message display                       
-                end,
+
+        editBoxFontSize = {
+            name = "Font Size",
+            desc = "Adjusts the font size in the Points Log edit box",
+            type = "range",
+            order = 7,
+            min = 10,
+            max = 24,
+            step = 1,
+            set = function(info,val)
+                Hardcore_Score.db.profile.framePositionLog.fontSize = val
+                local fontName, _, fontFlags = HCS_PointsLogUI.EditBox:GetFont()
+                HCS_PointsLogUI.EditBox:SetFont(fontName, val, fontFlags)
+            end,
+            get = function(info) return Hardcore_Score.db.profile.framePositionLog.fontSize end
         },
-]]        
-        Space1 = {
+
+        Space2 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 5
+            order = 8
         },
         LinksHeader = {
             name = "Connect for more information",
             type = "header",
-            order = 6
+            order = 9
         },
         twitterLink = {
             name = " Follow us on Twitter at https://twitter.com//HardcoreScore",
@@ -116,7 +141,7 @@ local options = {
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\TwitterLogo.blp",
-            order = 7
+            order = 10
         },
         discordLink = {
             name = " Join our Discord server at https://discord.gg/j92hrVZU2Q",
@@ -124,7 +149,7 @@ local options = {
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\DiscordLogo.blp",
-            order = 8
+            order = 11
         },
         websiteLink = {
             name = " Website  https://avenroothcs.wixsite.com/hardcore-score",
@@ -132,28 +157,8 @@ local options = {
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\www_icon.blp",
-            order = 9
-        },
-        Space2 = {
-            name = "",
-            desc = "",
-            type = "description",
-            fontSize = "medium",
-            order = 10
-        },
-
-        addonInfoHeader = {
-            name = "Note from the author",
-            type = "header",
-            order = 11
-        },
-        addonInfo1 = {
-            name = "Thank you for trying out Hardcore Score. We are still in beta process and are aware of a few issues we are ironing out. We wanted to get this into your hands to get some feedback on what you think and let us know what changes you would like. If you find a bug please report it to our Discord.",
-            desc = "Addon Information",
-            type = "description",
-            fontSize = "medium",
             order = 12
-        },            
+        },
         Space3 = {
             name = "",
             desc = "",
@@ -161,27 +166,47 @@ local options = {
             fontSize = "medium",
             order = 13
         },
-        addonInfo2 = {
-            name = "We have a lot of things we would like to do with Hardcore Score. We are excited to share those with you soon. Please be patient with us as we work out any issues in this beta. Enjoy challenging yourself to get the best Hardcore Score possible and share your results with us. Thank you and have fun!!",
+
+        addonInfoHeader = {
+            name = "Note from the author",
+            type = "header",
+            order = 14
+        },
+        addonInfo1 = {
+            name = "Thank you for trying out Hardcore Score. We are still in beta process and are aware of a few issues we are ironing out. We wanted to get this into your hands to get some feedback on what you think and let us know what changes you would like. If you find a bug please report it to our Discord.",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 14
+            order = 15
         },            
-
         Space4 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 12
+            order = 16
+        },
+        addonInfo2 = {
+            name = "We have a lot of things we would like to do with Hardcore Score. We are excited to share those with you soon. Please be patient with us as we work out any issues in this beta. Enjoy challenging yourself to get the best Hardcore Score possible and share your results with us. Thank you and have fun!!",
+            desc = "Addon Information",
+            type = "description",
+            fontSize = "medium",
+            order = 17
+        },            
+
+        Space5 = {
+            name = "",
+            desc = "",
+            type = "description",
+            fontSize = "medium",
+            order = 18
         },
         addonInfoNote = {
             name = "* Note - Although we encourage you to use the Hardcore Addon with Hardcore Score, we are not accociated with the Hardcore Addon team.",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 13
+            order = 19
         },            
 
     },
@@ -272,6 +297,7 @@ function Hardcore_Score:CreateDB()
                 xOfs = 0,
                 yOfs = 0,
             },
+            -- Points Log
             framePositionLog = {
                 point = "CENTER",  --"CENTER",
                 relativeTo = "UIParent",
@@ -279,7 +305,10 @@ function Hardcore_Score:CreateDB()
                 xOfs = 0,
                 yOfs = 0,
                 show = false,
+                showTimestamp = true,
+                fontSize = 14,
             },
+            -- Notification / Message 
             framePositionMsg = {
                 point = "CENTER",  --"CENTER",
                 relativeTo = "UIParent",
@@ -302,21 +331,7 @@ function Hardcore_Score:CreateMiniMapButton()
         type = "launcher",
         icon = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-minimap-16.blp",  -- XP_ICON, Spell_Nature_Polymorph
         OnClick = function(self, button)
-            -- Add OnClick code here
-            --HCS_MessageFrameUI.DisplayMessage("This is a test message!")
---[[
-            if Hardcore_Score.db.profile.framePositionMsg.show then
-                local frame = HCS_MessageFrameUI.DisplayMessage("Milestone! You have killed 500 mobs", 5, Img_hcs_milestoneframedark_32) -- Display for 5 seconds
-                frame:ShowMessage() -- Manually trigger the message display
-
-                local frame = HCS_MessageFrameUI.DisplayMessage("Milestone! You reached for level 55", 5, Img_hcs_milestoneframedark_32) -- Display for 5 seconds
-                frame:ShowMessage() -- Manually trigger the message display
-
-                local frame = HCS_MessageFrameUI.DisplayMessage("Level 55! You gained 1000.00 pts", 5, Img_hcs_levelupframe_32) -- Display for 5 seconds
-                frame:ShowMessage() -- Manually trigger the message display
-            end
-]]
-            --HCS_WelcomeUI:ToggleMyFrame()            
+            -- Add OnClick code here          
             HCS_PointsLogUI:ToggleMyFrame()
         end,        
 
@@ -344,83 +359,104 @@ function Hardcore_Score:LoadSavedFramePosition()
     end
 end
 
--- WARNING: self automatically becomes events frame!
 function Hardcore_Score:init(event, name)
-    if (name ~= "Hardcore_Score") then return end
+    if event == "ADDON_LOADED" then
+        if name ~= "Hardcore_Score" then return end
 
-    -- allows using left and right buttons to move through chat 'edit' box
-    for i = 1, NUM_CHAT_WINDOWS do
-        _G["ChatFrame"..i.."EditBox"]:SetAltArrowKeyMode(false);
+        -- allows using left and right buttons to move through chat 'edit' box
+        for i = 1, NUM_CHAT_WINDOWS do
+            _G["ChatFrame"..i.."EditBox"]:SetAltArrowKeyMode(false);
+        end
+
+        -- Register Slash Commands!
+        SLASH_RELOADUI1 = "/rl"; -- new slash command for reloading UI
+        SlashCmdList.RELOADUI = ReloadUI;
+
+        SLASH_FRAMESTK1 = "/fs"; -- new slash command for showing framestack tool
+        SlashCmdList.FRAMESTK = function ()
+            LoadAddOn("Blizzard_DebugTools");
+            FrameStackTooltip_Toggle();        
+        end
+
+        -- initalization Hardcore_Score_Settings
+        if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
+
+        HCS_Playerinfo:LoadCharacterData()
+        --print("LoadCharacterData")
+
+        HCS_ScoreboardSummaryUI:CreateFrame()
+        --print("HCS_ScoreboardSummaryUI:Create")
+
+        Hardcore_Score:CreateDB()
+        --print("CreateDB")
+
+        -- Create minimap button
+        Hardcore_Score:CreateMiniMapButton()
+        --print("CreateMiniMapButton")
+
+        -- Get frame saved position
+        Hardcore_Score:LoadSavedFramePosition()    
+        --print("LoadSavedFramePosition")
+
+        -- Register the options table
+        AceConfig:RegisterOptionsTable("Hardcore_Score", options)
+        --print("RegisterOptionsTable")
+
+        -- Add the options table to the Blizzard interface options
+        AceConfigDialog:AddToBlizOptions("Hardcore_Score", "Hardcore Score")
+        --print("AddToBlizOptions")
+
+        HCS_PointsLogUI:SetVisibility()
+
+        HCS_PlayerCompletingQuestEvent:RecalculateQuests()
+
+        HCS_CalculateScore:RefreshScores()
+
+    elseif event == "PLAYER_LOGIN" then
+        local playerName
+        local fontSize = Hardcore_Score.db.profile.framePositionLog.fontSize
+        local showTimestamp = Hardcore_Score.db.profile.framePositionLog.showTimestamp
+        if fontSize == nil then
+            fontSize = 14  -- save the default value 
+            Hardcore_Score.db.profile.framePositionLog.fontSize = fontSize  -- save the default value
+        end
+        if showTimestamp == nil then
+            Hardcore_Score.db.profile.framePositionLog.showTimestamp = true
+        end
+        local fontName, _, fontFlags = HCS_PointsLogUI.EditBox:GetFont()
+        HCS_PointsLogUI.EditBox:SetFont(fontName, fontSize, fontFlags)
+
+
+        if HCScore_Character.class == "Druid" then 
+            playerName = "|cFFFF7C0A"..HCScore_Character.name.."|r"
+        elseif HCScore_Character.class == "Hunter" then
+            playerName = "|cFFAAD372"..HCScore_Character.name.."|r"
+        elseif HCScore_Character.class == "Mage" then
+            playerName = "|cFF3FC7EB"..HCScore_Character.name.."|r"
+        elseif HCScore_Character.class == "Paladin" then
+            playerName = "|cFFF48CBA"..HCScore_Character.name.."|r"
+        elseif HCScore_Character.class == "Priest" then
+            playerName = "|cFFFFFFFF"..HCScore_Character.name.."|r"
+        elseif HCScore_Character.class == "Rouge" then
+            playerName = "|cFFFFF468"..HCScore_Character.name.."|r"
+        elseif HCScore_Character.class == "Shaman" then
+            playerName = "|cFF0070DD"..HCScore_Character.name.."|r"
+        elseif HCScore_Character.class == "Warlock" then
+            playerName = "|cFF8788EE"..HCScore_Character.name.."|r"
+        elseif HCScore_Character.class == "Warrior" then
+            playerName = "|cFFC69B6D"..HCScore_Character.name.."|r"
+        end
+
+        -- Print fun stuff for the player
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v0.9.7.  Lets GO!")
+        --print("|cff81b7e9".."Hardcore Score: ".."|r".."Psst,", playerName.. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score!");   
+
     end
 
-    -- Register Slash Commands!
-    SLASH_RELOADUI1 = "/rl"; -- new slash command for reloading UI
-    SlashCmdList.RELOADUI = ReloadUI;
-
-    -- Register Slash Commands!
---    SLASH_GETGEARINFO1 = "/gearinfo"; -- new slash command for getting gearinfo
---    SlashCmdList.SLASH_GETGEARINFO = HCS_PlayerEquippedGearScore:GetEquippedGearScore()
-    
-    SLASH_FRAMESTK1 = "/fs"; -- new slash command for showing framestack tool
-    SlashCmdList.FRAMESTK = function ()
-        LoadAddOn("Blizzard_DebugTools");
-        FrameStackTooltip_Toggle();        
-    end
-
---    SLASH_HCS_ScoreboardUI1 = "/lb";
---    SlashCmdList.HCS_ScoreboardUI = HandleSlashCommands;
-
-    -- Load the saved variables data for your addon
- --   HCScore_Character = _G[ADDON_NAMESPACE] or {}
-
-    -- Set the default values for your addon's saved variables
---    HCScore_StoredVariables = HCScore_StoredVariables or {}
-
-    -- Save the updated values back to the store variables file
---    _G[ADDON_NAMESPACE] = HCScore_StoredVariables
- --   CharacterInfo = HCScore_StoredVariables.CharacterInfo
-    
-    -- initalization Hardcore_Score_Settings
-    if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
-
-    HCS_Playerinfo:LoadCharacterData()
-    --print("LoadCharacterData")
-
-    HCS_ScoreboardSummaryUI:CreateFrame()
-    --print("HCS_ScoreboardSummaryUI:Create")
-
-    Hardcore_Score:CreateDB()
-    --print("CreateDB")
-
-    -- Create minimap button
-    Hardcore_Score:CreateMiniMapButton()
-    --print("CreateMiniMapButton")
-
-    -- Get frame saved position
-    Hardcore_Score:LoadSavedFramePosition()    
-    --print("LoadSavedFramePosition")
-    
-    -- Register the options table
-    AceConfig:RegisterOptionsTable("Hardcore_Score", options)
-    --print("RegisterOptionsTable")
-
-    -- Add the options table to the Blizzard interface options
-    AceConfigDialog:AddToBlizOptions("Hardcore_Score", "Hardcore Score")
-    --print("AddToBlizOptions")
-
-    HCS_PointsLogUI:SetVisibility()
-
-    HCS_PlayerCompletingQuestEvent:RecalculateQuests()
-    
-    HCS_CalculateScore:RefreshScores()
-
-    -- Print fun stuff for the player
-    print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome to Hardcore Score v0.9.6.  Lets GO!")
---    Hardcore_Score:Print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCScore_Character.scores.coreScore).. " is a great score! LET'S GO!");
-    --print("Psst, ", UnitName("player").. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score! LET'S GO!");   
 end
 
 local events = CreateFrame("Frame");
 events:RegisterEvent("ADDON_LOADED");
+events:RegisterEvent("PLAYER_LOGIN")
 events:SetScript("OnEvent", Hardcore_Score.init);
 
