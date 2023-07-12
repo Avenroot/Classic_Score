@@ -33,7 +33,7 @@ local isFrame2Visible = false
 -- Create the frame
 function HCS_ScoreboardSummaryUI:CreateFrame()
 
-    ScoreboardSummaryFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+    ScoreboardSummaryFrame = CreateFrame("Frame", "MainScoreFrame", UIParent, "BackdropTemplate")
     ScoreboardSummaryFrame:SetWidth(275)
     ScoreboardSummaryFrame:SetHeight(50)
     ScoreboardSummaryFrame:SetPoint("CENTER")
@@ -65,10 +65,11 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
 
         Hardcore_Score.db.profile.framePosition = {
             point = point,
-            relativeTo = relativeTo, --"UIParent",
+            relativeTo = (relativeTo and relativeTo:GetName() and relativeTo:GetName() ~= "") and relativeTo:GetName() or "UIParent", --relativeTo, --"UIParent",
             relativePoint = relativePoint,
             xOfs = xOfs,
             yOfs = yOfs,
+            show = true,
         }        
     end)
 
@@ -274,7 +275,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
                 ScoreboardSummaryDetailsFrame:Hide()
             end
             
-            Hardcore_Score.db.profile.showDetails = isFrame2Visible                 
+            Hardcore_Score.db.profile.showDetails = isFrame2Visible              
 
         end
     end)
@@ -306,41 +307,19 @@ local function GetPlayerInfoText()
     local playerInfoText = ""
     local factionText = ""
     
-    if HCScore_Character.faction == "Horde" then
-        factionText = "|cFFFF0000Horde|r"
-    else
-        factionText = "|cFF0000FFAlliance|r"
-    end
-    
-    playerInfoText = HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class--..factionText 
-    
-    if HCScore_Character.class == "Druid" then 
-        playerInfoText = "|cFFFF7C0A"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
-    elseif HCScore_Character.class == "Hunter" then
-        playerInfoText = "|cFFAAD372"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
-    elseif HCScore_Character.class == "Mage" then
-        playerInfoText = "|cFF3FC7EB"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
-    elseif HCScore_Character.class == "Paladin" then
-        playerInfoText = "|cFFF48CBA"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
-    elseif HCScore_Character.class == "Priest" then
-        playerInfoText = "|cFFFFFFFF"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
-    elseif HCScore_Character.class == "Rouge" then
-        playerInfoText = "|cFFFFF468"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
-    elseif HCScore_Character.class == "Shaman" then
-        playerInfoText = "|cFF0070DD"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
-    elseif HCScore_Character.class == "Warlock" then
-        playerInfoText = "|cFF8788EE"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
-    elseif HCScore_Character.class == "Warrior" then
-        playerInfoText = "|cFFC69B6D"..HCScore_Character.name.. "  "..HCScore_Character.race.."  "..HCScore_Character.class.."|r"--.."  "..factionText 
-    end
-    
+    local name = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.name)
+    local race = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.race)
+    local class = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.class)
+
+    playerInfoText = name.. "  "..race.."  "..class --..factionText 
+
     return playerInfoText 
 end
 
 function HCS_ScoreboardSummaryUI:UpdateUI()
     local totProfessions = HCS_ProfessionsScore:GetNumberOfProfessions()
     local totReputations = HCS_ReputationScore:GetNumFactions()
-    local totMobTypesKilled = HCS_KillingMobsScore:GetNumMobTypes()
+    local totMobTypesKilled = HCS_KillingMobsScore:GetTotalMobsKilled()  --HCS_KillingMobsScore:GetNumMobTypes()
     local totQuests = HCS_PlayerQuestingScore:GetNumberOfQuests()
     local totDiscovery = HCS_DiscoveryScore:GetNumberOfDiscovery()
     local totMilestones = HCS_MilestonesScore:GetNumberOfMilestones()

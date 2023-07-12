@@ -91,6 +91,16 @@ function HCS_KillingMobsScore:GetNumMobTypes()
     return #HCScore_Character.mobsKilled
 end
 
+function HCS_KillingMobsScore:GetTotalMobsKilled()
+    local totalKills = 0
+
+    for _, mob in pairs(HCScore_Character.mobsKilled) do
+        totalKills = totalKills + mob.kills
+    end
+
+    return totalKills
+end
+
 function HCS_KillingMobsScore:GetMobsKilledScore()
     local score = 0
 

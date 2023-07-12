@@ -35,7 +35,7 @@ local function AddMilestone(id)
                 if Hardcore_Score.db.profile.framePositionMsg.show then
                     local frame = HCS_MessageFrameUI.DisplayMessage(milestone.shortdesc, 5, milestone.image)
                     frame:ShowMessage() 
-                end    
+                end
             end
         end   
     end

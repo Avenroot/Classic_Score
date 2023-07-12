@@ -23,8 +23,8 @@ title:SetText("Welcome to Hardcore Score")
 -- Make the frame movable and resizable
 frame:SetMovable(true)
 frame:SetResizable(true)
-frame:SetMinResize(100, 100)  -- set minimum size
-frame:SetMaxResize(500, 500)  -- set maximum size
+--frame:SetMinResize(100, 100)  -- set minimum size
+--frame:SetMaxResize(500, 500)  -- set maximum size
 frame:EnableMouse(true)
 frame:RegisterForDrag("LeftButton")
 frame:SetScript("OnDragStart", frame.StartMoving)

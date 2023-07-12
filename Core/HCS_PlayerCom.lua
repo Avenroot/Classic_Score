@@ -71,7 +71,7 @@ function HCS_PlayerCom:SendScore()
 
     if IsInGroup() then
         local channel = IsInRaid() and "RAID" or "PARTY"
-        
+
         C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, channel)
     elseif IsInGuild() then
         C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, "GUILD")
@@ -81,22 +81,24 @@ end
 local f = CreateFrame("Frame")
 f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
 
+    if Hardcore_Score.db ~= nil then 
     -- if player selects to share information.
-    if Hardcore_Score.db.profile.shareDetails then
-        if event == "PLAYER_ENTERING_WORLD" or event == "GROUP_ROSTER_UPDATE" or event == "GROUP_JOINED" then
-            -- Player has entered the world or group roster has been updated, send our score
-            HCS_PlayerCom:SendScore()
-    
-        elseif event == "CHAT_MSG_ADDON" and prefix == PREFIX then
-        
-            local success, scoreReveived = AceSerializer:Deserialize(message)
-    
-            if success then     
-                playerScores[sender] = scoreReveived --tonumber(message)
-            
-            else
-                --print("Deserialization failed:", scoreReveived)
-            end                 
+        if Hardcore_Score.db.profile.shareDetails then
+            if event == "PLAYER_ENTERING_WORLD" or event == "GROUP_ROSTER_UPDATE" or event == "GROUP_JOINED" then
+                -- Player has entered the world or group roster has been updated, send our score
+                HCS_PlayerCom:SendScore()
+
+            elseif event == "CHAT_MSG_ADDON" and prefix == PREFIX then
+
+                local success, scoreReveived = AceSerializer:Deserialize(message)
+
+                if success then
+                    playerScores[sender] = scoreReveived --tonumber(message)
+
+                else
+                    --print("Deserialization failed:", scoreReveived)
+                end
+            end
         end
     end
 end)
