@@ -88,6 +88,7 @@ end
 
 local function RefreshUI()
     HCS_ScoreboardSummaryUI:UpdateUI()
+    HCS_CharactersInfoUI:LoadData()
 
     if HCS_PlayerCom ~= nil then
         HCS_PlayerCom:SendScore()       
@@ -114,6 +115,21 @@ local function LeveledUp(points)
     PlayerLeveled = false
 end
 
+local function UpdateProfileScores()    
+    Hardcore_Score.db.global.characterScores[HCScore_Character.name] = {
+        charClass = HCScore_Character.class,
+        coreScore = HCScore_Character.scores.coreScore,
+        equippedGearScore = HCScore_Character.scores.equippedGearScore,
+        levelingScore = HCScore_Character.scores.levelingScore,
+        questingScore = HCScore_Character.scores.questingScore,
+        mobsKilledScore = HCScore_Character.scores.mobsKilledScore,
+        professionsScore = HCScore_Character.scores.professionsScore,
+        reputationScore = HCScore_Character.scores.reputationScore,
+        discoveryScore = HCScore_Character.scores.discoveryScore,
+        milestonesScore = HCScore_Character.scores.milestonesScore,
+    }
+end
+
 function HCS_CalculateScore:RefreshScores(desc)
 
     levelScalePercentage = (UnitLevel("player")  / 60) --* 100
@@ -134,6 +150,8 @@ function HCS_CalculateScore:RefreshScores(desc)
     HCScore_Character.scores.mobsKilledScore = HCS_KillingMobsScore:GetMobsKilledScore()
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
 
+
+    UpdateProfileScores()
     RefreshUI()
     CurrentPortrait = GetCurrentPortrait()
 

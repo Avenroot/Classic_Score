@@ -36,4 +36,12 @@ Version 0.9.7
     4. Added option to change the points log font.
     5. Minor bug fixes and code updates.        
 * This is still an issue in some cases.  We continue to investigate. It is just a display issue with Milestones. Points are calculated with the correct level.
+
+Version 0.9.8
+1. Changes made to support the new 1.14.4 version.
+2. Mobs Killed () now shows total kills and not just Mob Types killed.
+3. New Character Summary where you can see all your HCS character's scores in one location. Must log in to each char to see.
+4. Minimap button now displays options. The mini-map tip shows the score when the main score UI is off.
+5. In the options you can now turn off the main score UI.
+6. Lots and lots of code changes and fixes.
     
