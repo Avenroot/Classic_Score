@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "0.9.8" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "0.9.9" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -233,7 +233,6 @@ local options = {
 
 -- Custom Slash Command
 Hardcore_Score.commands = {
- --   ["show"] = Hardcore_Score.HCS_ScoreboardUI.Toggle, -- this is a function (no knowledge of Config object)
 
     ["help"] = function ()
         print(" ");
@@ -293,8 +292,6 @@ function Hardcore_Score.HandleSlashCommands(str)
 end
 
 function Hardcore_Score:Print(...)
---    local hex = select(4, HCS_ScoreboardUI:GetThemeColor());
---    local prefix = string.format("|cff%s%s|r", hex:upper(), "Hardcore HCS_ScoreboardUI:");
 --    DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, tostringall(...)));    
     local debugging = true
     
@@ -373,6 +370,7 @@ function Hardcore_Score:CreateMiniMapButton()
             elseif button == "RightButton" then
                 -- Display your frame
                 HCS_CharactersInfoUI.frame:Show() 
+                --HCS_MainInfoFrameUI.frame:Show()
             end
         end,
 
@@ -464,35 +462,36 @@ function Hardcore_Score:init(event, name)
         if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
 
         HCS_Playerinfo:LoadCharacterData()
-        --print("LoadCharacterData")
 
         HCS_ScoreboardSummaryUI:CreateFrame()
-        --print("HCS_ScoreboardSummaryUI:Create")
 
         Hardcore_Score:CreateDB()
-        --print("CreateDB")
+        
+        -- Hides any messages that may be shown by recalcuating tables / scores (1) - Change settings
+        local saveShowMessages = Hardcore_Score.db.profile.framePositionMsg.show
+        Hardcore_Score.db.profile.framePositionMsg.show = false
 
         -- Create minimap button
         Hardcore_Score:CreateMiniMapButton()
-        --print("CreateMiniMapButton")
 
         -- Get frame saved position
         Hardcore_Score:LoadSavedFramePosition()    
-        --print("LoadSavedFramePosition")
 
         -- Register the options table
         AceConfig:RegisterOptionsTable("Hardcore_Score", options)
-        --print("RegisterOptionsTable")
 
         -- Add the options table to the Blizzard interface options
         AceConfigDialog:AddToBlizOptions("Hardcore_Score", "Hardcore Score")
-        --print("AddToBlizOptions")
 
         HCS_PointsLogUI:SetVisibility()
 
         HCS_PlayerCompletingQuestEvent:RecalculateQuests()
+        HCS_MilestonesScore:RecalculateMilestones()
 
         HCS_CalculateScore:RefreshScores()
+
+        -- Hides any messages that may be shown by recalcuating tables / scores (2) - Restores settings
+        Hardcore_Score.db.profile.framePositionMsg.show = saveShowMessages
 
     elseif event == "PLAYER_LOGIN" then
         local playerName
@@ -516,8 +515,9 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI.EditBox:SetFont(fontName, fontSize, fontFlags)
 
         playerName = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.name)
+
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v0.9.8.  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v0.9.9.  Lets GO!")
         --print("|cff81b7e9".."Hardcore Score: ".."|r".."Psst,", playerName.. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score!");   
     end
 
