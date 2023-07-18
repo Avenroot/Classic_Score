@@ -2,16 +2,20 @@ local levelPoints = 5
 local mobKillsPoints = 5
 local questPoints = 5
 local discoveryPoints = 5
+local professionTotal = 10
+local professionPoints = 5
 local imgLeveling = Img_hcs_milestoneframedark_32
 local imgKillingMobs = Img_hcs_milestoneframedark_32
 local imgQuests = Img_hcs_milestoneframedark_32
 local imgDiscovery = Img_hcs_milestoneframedark_32
+local imgProfessionTotal = Img_hcs_milestoneframedark_32
+local imgProfession = Img_hcs_milestoneframedark_32
 
 HCS_MilestonesDB = {
 
 -- Leveling Milestones
   {
-    id = 1,
+    id = "lvl_1",
     name = "Level 5",
     desc = "Milestone! Congrats! You reached for level 5",
     shortdesc = "You reached for level 5",
@@ -19,7 +23,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 2,
+    id = "lvl_2",
     name = "Level 10",
     desc = "Milestone! Congrats! You reached for level 10",
     shortdesc = "You reached for level 10",
@@ -27,7 +31,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 3,
+    id = "lvl_3",
     name = "Level 15",
     desc = "Milestone! Congrats! You reached for level 15",
     shortdesc = "You reached for level 15",
@@ -35,7 +39,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 4,
+    id = "lvl_4",
     name = "Level 20",
     desc = "Milestone! Congrats! You reached for level 20",
     shortdesc = "You reached for level 20",
@@ -43,7 +47,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 5,
+    id = "lvl_5",
     name = "Level 25",
     desc = "Milestone! Congrats! You reached for level 25",
     shortdesc = "You reached for level 25",
@@ -51,7 +55,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 6,
+    id = "lvl_6",
     name = "Level 30",
     desc = "Milestone! Congrats! You reached for level 30",
     shortdesc = "You reached for level 30",
@@ -59,7 +63,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 7,
+    id = "lvl_7",
     name = "Level 35",
     desc = "Milestone! Congrats! You reached for level 35",
     shortdesc = "You reached for level 35",
@@ -67,7 +71,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 8,
+    id = "lvl_8",
     name = "Level 40",
     desc = "Milestone! Congrats! You reached for level 40",
     shortdesc = "You reached for level 40",
@@ -75,7 +79,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 9,
+    id = "lvl_9",
     name = "Level 45",
     desc = "Milestone! Congrats! You reached for level 45",
     shortdesc = "You reached for level 45",
@@ -83,7 +87,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 10,
+    id = "lvl_10",
     name = "Level 50",
     desc = "Milestone! Congrats! You reached for level 50",
     shortdesc = "You reached for level 50",
@@ -91,7 +95,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 11,
+    id = "lvl_11",
     name = "Level 55",
     desc = "Milestone! Congrats! You reached for level 55",
     shortdesc = "You reached for level 55",
@@ -99,7 +103,7 @@ HCS_MilestonesDB = {
     image = imgLeveling,
   }, 
   {
-    id = 12,
+    id = "lvl_12",
     name = "Level 60",
     desc = "Milestone! Congrats! You reached for level 60",
     shortdesc = "You reached for level 60",
@@ -109,7 +113,7 @@ HCS_MilestonesDB = {
 
 -- Killing Mobs Milestones
   {
-    id = 13,
+    id = "mobk_1",
     name = "Killed 50 mobs",
     desc = "Milestone! Congrats! You have killed 50 mobs",
     shortdesc = "You have killed 50 mobs",
@@ -117,7 +121,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 14,
+    id = "mobk_2",
     name = "Killed 100 mobs",
     desc = "Milestone! Congrats! You have killed 100 mobs",
     shortdesc = "You have killed 100 mobs",
@@ -125,7 +129,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 15,
+    id = "mobk_3",
     name = "Killed 250 mobs",
     desc = "Milestone! Congrats! You have killed 250 mobs",
     shortdesc = "You have killed 250 mobs",
@@ -133,7 +137,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 16,
+    id = "mobk_4",
     name = "Killed 500 mobs",
     desc = "Milestone! Congrats! You have killed 500 mobs",
     shortdesc = "You have killed 500 mobs",
@@ -141,7 +145,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 17,
+    id = "mobk_5",
     name = "Killed 1000 mobs",
     desc = "Milestone! Congrats! You have killed 1000 mobs",
     shortdesc = "You have killed 1000 mobs",
@@ -149,7 +153,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 18,
+    id = "mobk_6",
     name = "Killed 2000 mobs",
     desc = "Milestone! Congrats! You have killed 2000 mobs",
     shortdesc = "You have killed 2000 mobs",
@@ -157,7 +161,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 19,
+    id = "mobk_7",
     name = "Killed 3000 mobs",
     desc = "Milestone! Congrats! You have killed 3000 mobs",
     shortdesc = "You have killed 3000 mobs",
@@ -165,7 +169,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 20,
+    id = "mobk_8",
     name = "Killed 4000 mobs",
     desc = "Milestone! Congrats! You have killed 4000 mobs",
     shortdesc = "You have killed 4000 mobs",
@@ -173,15 +177,115 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 21,
+    id = "mobk_9",
     name = "Killed 5000 mobs",
     desc = "Milestone! Congrats! You have killed 5000 mobs",
     shortdesc = "You have killed 5000 mobs",
     points = mobKillsPoints,
     image = imgKillingMobs,
+  },
+
+  -- Added in version 0.9.9
+  {
+    id = "mobk_10",
+    name = "Killed 5 mobs",
+    desc = "Milestone! Congrats! You have killed 5 mobs",
+    shortdesc = "You have killed 5 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
   }, 
   {
-    id = 22,
+    id = "mobk_11",
+    name = "Killed 750 mobs",
+    desc = "Milestone! Congrats! You have killed 750 mobs",
+    shortdesc = "You have killed 750 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+  {
+    id = "mobk_12",
+    name = "Killed 1250 mobs",
+    desc = "Milestone! Congrats! You have killed 1250 mobs",
+    shortdesc = "You have killed 1250 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+  {
+    id = "mobk_13",
+    name = "Killed 1500 mobs",
+    desc = "Milestone! Congrats! You have killed 1500 mobs",
+    shortdesc = "You have killed 1500 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+  {
+    id = "mobk_14",
+    name = "Killed 1750 mobs",
+    desc = "Milestone! Congrats! You have killed 1750 mobs",
+    shortdesc = "You have killed 1750 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  },
+  {
+    id = "mobk_15",
+    name = "Killed 2250 mobs",
+    desc = "Milestone! Congrats! You have killed 2250 mobs",
+    shortdesc = "You have killed 2250 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+  {
+    id = "mobk_16",
+    name = "Killed 2500 mobs",
+    desc = "Milestone! Congrats! You have killed 2500 mobs",
+    shortdesc = "You have killed 2500 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+  {
+    id = "mobk_17",
+    name = "Killed 2750 mobs",
+    desc = "Milestone! Congrats! You have killed 2750 mobs",
+    shortdesc = "You have killed 2750 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+  {
+    id = "mobk_18",
+    name = "Killed 3500 mobs",
+    desc = "Milestone! Congrats! You have killed 3500 mobs",
+    shortdesc = "You have killed 3500 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+  {
+    id = "mobk_19",
+    name = "Killed 4500 mobs",
+    desc = "Milestone! Congrats! You have killed 4500 mobs",
+    shortdesc = "You have killed 4500 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+  {
+    id = "mobk_20",
+    name = "Killed 5500 mobs",
+    desc = "Milestone! Congrats! You have killed 5500 mobs",
+    shortdesc = "You have killed 5500 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+  {
+    id = "mobk_21",
+    name = "Killed 6000 mobs",
+    desc = "Milestone! Congrats! You have killed 6000 mobs",
+    shortdesc = "You have killed 6000 mobs",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  }, 
+
+  -- Killing Mob Types Milestones
+  {
+    id = "mobkt_1",
     name = "Killed 5 mobs types",
     desc = "Milestone! Congrats! You have killed 5 mob types",
     shortdesc = "You have killed 5 mob types",
@@ -189,7 +293,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 23,
+    id = "mobkt_2",
     name = "Killed 10 mobs types",
     desc = "Milestone! Congrats! You have killed 10 mob types",
     shortdesc = "You have killed 10 mob types",
@@ -197,7 +301,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 24,
+    id = "mobkt_3",
     name = "Killed 20 mobs types",
     desc = "Milestone! Congrats! You have killed 20 mob types",
     shortdesc = "You have killed 20 mob types",
@@ -205,7 +309,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   },
   {
-    id = 25,
+    id = "mobkt_4",
     name = "Killed 30 mobs types",
     desc = "Milestone! Congrats! You have killed 30 mob types",
     shortdesc = "You have killed 30 mob types",
@@ -213,7 +317,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 26,
+    id = "mobkt_5",
     name = "Killed 40 mobs types",
     desc = "Milestone! Congrats! You have killed 40 mob types",
     shortdesc = "You have killed 40 mob types",
@@ -221,7 +325,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 27,
+    id = "mobkt_6",
     name = "Killed 50 mobs types",
     desc = "Milestone! Congrats! You have killed 50 mob types",
     shortdesc = "You have killed 50 mob types",
@@ -229,7 +333,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 28,
+    id = "mobkt_7",
     name = "Killed 60 mobs types",
     desc = "Milestone! Congrats! You have killed 60 mob types",
     shortdesc = "You have killed 60 mob types",
@@ -237,7 +341,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 29,
+    id = "mobkt_8",
     name = "Killed 70 mobs types",
     desc = "Milestone! Congrats! You have killed 70 mob types",
     shortdesc = "You have killed 70 mob types",
@@ -245,7 +349,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 30,
+    id = "mobkt_9",
     name = "Killed 80 mobs types",
     desc = "Milestone! Congrats! You have killed 80 mob types",
     shortdesc = "You have killed 80 mob types",
@@ -253,7 +357,7 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 31,
+    id = "mobkt_10",
     name = "Killed 90 mobs types",
     desc = "Milestone! Congrats! You have killed 90 mob types",
     shortdesc = "You have killed 90 mob types",
@@ -261,17 +365,35 @@ HCS_MilestonesDB = {
     image = imgKillingMobs,
   }, 
   {
-    id = 32,
+    id = "mobkt_11",
     name = "Killed 100 mobs types",
     desc = "Milestone! Congrats! You have killed 100 mob types",
     shortdesc = "You have killed 100 mob types",
     points = mobKillsPoints,
     image = imgKillingMobs,
-  }, 
-      
-  -- Quests
+  },
+
+  -- Added in version 0.9.9
   {
-    id = 33,
+    id = "mobkt_12",
+    name = "Killed 110 mobs types",
+    desc = "Milestone! Congrats! You have killed 110 mob types",
+    shortdesc = "You have killed 110 mob types",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  },
+  {
+    id = "mobkt_13",
+    name = "Killed 120 mobs types",
+    desc = "Milestone! Congrats! You have killed 120 mob types",
+    shortdesc = "You have killed 120 mob types",
+    points = mobKillsPoints,
+    image = imgKillingMobs,
+  },
+
+  -- Total Quests Milestones
+  {
+    id = "qtot_1",
     name = "Completed 5 Quests",
     desc = "Milestone! Congrats! You have Completed 5 Quests",
     shortdesc = "You have Completed 5 Quests",
@@ -279,7 +401,7 @@ HCS_MilestonesDB = {
     image = imgQuests,
   }, 
   {
-    id = 34,
+    id = "qtot_2",
     name = "Completed 15 Quests",
     desc = "Milestone! Congrats! You have Completed 15 Quests",
     shortdesc = "You have Completed 15 Quests",
@@ -287,7 +409,7 @@ HCS_MilestonesDB = {
     image = imgQuests,
   }, 
   {
-    id = 35,
+    id = "qtot_3",
     name = "Completed 30 Quests",
     desc = "Milestone! Congrats! You have Completed 30 Quests",
     shortdesc = "You have Completed 30 Quests",
@@ -295,7 +417,7 @@ HCS_MilestonesDB = {
     image = imgQuests,
   }, 
   {
-    id = 36,
+    id = "qtot_4",
     name = "Completed 50 Quests",
     desc = "Milestone! Congrats! You have Completed 50 Quests",
     shortdesc = "You have Completed 50 Quests",
@@ -303,7 +425,7 @@ HCS_MilestonesDB = {
     image = imgQuests,
   }, 
   {
-    id = 37,
+    id = "qtot_5",
     name = "Completed 100 Quests",
     desc = "Milestone! Congrats! You have Completed 100 Quests",
     shortdesc = "You have Completed 100 Quests",
@@ -311,7 +433,7 @@ HCS_MilestonesDB = {
     image = imgQuests,
   },
   {
-    id = 38,
+    id = "qtot_6",
     name = "Completed 200 Quests",
     desc = "Milestone! Congrats! You have Completed 200 Quests",
     shortdesc = "You have Completed 200 Quests",
@@ -319,7 +441,7 @@ HCS_MilestonesDB = {
     image = imgQuests,
   }, 
   {
-    id = 39,
+    id = "qtot_7",
     name = "Completed 300 Quests",
     desc = "Milestone! Congrats! You have Completed 300 Quests",
     shortdesc = "You have Completed 300 Quests",
@@ -327,7 +449,7 @@ HCS_MilestonesDB = {
     image = imgQuests,
   }, 
   {
-    id = 40,
+    id = "qtot_8",
     name = "Completed 400 Quests",
     desc = "Milestone! Congrats! You have Completed 400 Quests",
     shortdesc = "You have Completed 400 Quests",
@@ -335,7 +457,7 @@ HCS_MilestonesDB = {
     image = imgQuests,
   }, 
   {
-    id = 41,
+    id = "qtot_9",
     name = "Completed 500 Quests",
     desc = "Milestone! Congrats! You have Completed 500 Quests",
     shortdesc = "You have Completed 500 Quests",
@@ -343,25 +465,155 @@ HCS_MilestonesDB = {
     image = imgQuests,
   }, 
   {
-    id = 42,
-    name = "Completed 750 Quests",
-    desc = "Milestone! Congrats! You have Completed 750 Quests",
-    shortdesc = "You have Completed 750 Quests",
+    id = "qtot_10",
+    name = "Completed 700 Quests",
+    desc = "Milestone! Congrats! You have Completed 700 Quests",
+    shortdesc = "You have Completed 700 Quests",
     points = questPoints,
     image = imgQuests,
   }, 
   {
-    id = 43,
+    id = "qtot_11",
     name = "Completed 1000 Quests",
     desc = "Milestone! Congrats! You have Completed 1000 Quests",
     shortdesc = "You have Completed 1000 Quests",
     points = questPoints,
     image = imgQuests,
   }, 
+  
+  -- Added version 0.9.9
+  {
+    id = "qtot_12",
+    name = "Completed 75 Quests",
+    desc = "Milestone! Congrats! You have Completed 75 Quests",
+    shortdesc = "You have Completed 75 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_13",
+    name = "Completed 125 Quests",
+    desc = "Milestone! Congrats! You have Completed 125 Quests",
+    shortdesc = "You have Completed 125 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_14",
+    name = "Completed 150 Quests",
+    desc = "Milestone! Congrats! You have Completed 150 Quests",
+    shortdesc = "You have Completed 150 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_15",
+    name = "Completed 175 Quests",
+    desc = "Milestone! Congrats! You have Completed 175 Quests",
+    shortdesc = "You have Completed 175 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_16",
+    name = "Completed 225 Quests",
+    desc = "Milestone! Congrats! You have Completed 225 Quests",
+    shortdesc = "You have Completed 225 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_17",
+    name = "Completed 250 Quests",
+    desc = "Milestone! Congrats! You have Completed 250 Quests",
+    shortdesc = "You have Completed 250 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_18",
+    name = "Completed 275 Quests",
+    desc = "Milestone! Congrats! You have Completed 275 Quests",
+    shortdesc = "You have Completed 275 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_19",
+    name = "Completed 325 Quests",
+    desc = "Milestone! Congrats! You have Completed 325 Quests",
+    shortdesc = "You have Completed 325 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_20",
+    name = "Completed 350 Quests",
+    desc = "Milestone! Congrats! You have Completed 350 Quests",
+    shortdesc = "You have Completed 350 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_21",
+    name = "Completed 375 Quests",
+    desc = "Milestone! Congrats! You have Completed 375 Quests",
+    shortdesc = "You have Completed 375 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_22",
+    name = "Completed 425 Quests",
+    desc = "Milestone! Congrats! You have Completed 425 Quests",
+    shortdesc = "You have Completed 425 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_23",
+    name = "Completed 450 Quests",
+    desc = "Milestone! Congrats! You have Completed 450 Quests",
+    shortdesc = "You have Completed 450 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_24",
+    name = "Completed 475 Quests",
+    desc = "Milestone! Congrats! You have Completed 475 Quests",
+    shortdesc = "You have Completed 475 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_25",
+    name = "Completed 600 Quests",
+    desc = "Milestone! Congrats! You have Completed 600 Quests",
+    shortdesc = "You have Completed 600 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_26",
+    name = "Completed 800 Quests",
+    desc = "Milestone! Congrats! You have Completed 800 Quests",
+    shortdesc = "You have Completed 800 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
+  {
+    id = "qtot_27",
+    name = "Completed 900 Quests",
+    desc = "Milestone! Congrats! You have Completed 900 Quests",
+    shortdesc = "You have Completed 900 Quests",
+    points = questPoints,
+    image = imgQuests,
+  },
 
   -- Discovery
   {
-    id = 44,
+    id = "disc_1",
     name = "Completed 5 Discoveries",
     desc = "Milestone! Congrats! You have made 5 Discoveries",
     shortdesc = "You have made 5 Discoveries",
@@ -369,7 +621,7 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 45,
+    id = "disc_2",
     name = "Completed 10 Discoveries",
     desc = "Milestone! Congrats! You have made 10 Discoveries",
     shortdesc = "You have made 10 Discoveries",
@@ -377,7 +629,7 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 46,
+    id = "disc_3",
     name = "Completed 25 Discoveries",
     desc = "Milestone! Congrats! You have made 25 Discoveries",
     shortdesc = "You have made 25 Discoveries",
@@ -385,7 +637,7 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 47,
+    id = "disc_4",
     name = "Completed 50 Discoveries",
     desc = "Milestone! Congrats! You have made 50 Discoveries",
     shortdesc = "You have made 50 Discoveries",
@@ -393,7 +645,7 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 48,
+    id = "disc_5",
     name = "Completed 100 Discoveries",
     desc = "Milestone! Congrats! You have made 100 Discoveries",
     shortdesc = "You have made 100 Discoveries",
@@ -401,7 +653,7 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 49,
+    id = "disc_6",
     name = "Completed 150 Discoveries",
     desc = "Milestone! Congrats! You have made 150 Discoveries",
     shortdesc = "You have made 150 Discoveries",
@@ -409,7 +661,7 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 50,
+    id = "disc_7",
     name = "Completed 200 Discoveries",
     desc = "Milestone! Congrats! You have made 200 Discoveries",
     shortdesc = "You have made 200 Discoveries",
@@ -417,7 +669,7 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 51,
+    id = "disc_8",
     name = "Completed 250 Discoveries",
     desc = "Milestone! Congrats! You have made 250 Discoveries",
     shortdesc = "You have made 250 Discoveries",
@@ -425,7 +677,7 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 52,
+    id = "disc_9",
     name = "Completed 300 Discoveries",
     desc = "Milestone! Congrats! You have made 300 Discoveries",
     shortdesc = "You have made 300 Discoveries",
@@ -433,7 +685,7 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 53,
+    id = "disc_10",
     name = "Completed 350 Discoveries",
     desc = "Milestone! Congrats! You have made 350 Discoveries",
     shortdesc = "You have made 350 Discoveries",
@@ -441,13 +693,299 @@ HCS_MilestonesDB = {
     image = imgDiscovery,
   }, 
   {
-    id = 54,
+    id = "disc_11",
     name = "Completed 400 Discoveries",
     desc = "Milestone! Congrats! You have made 400 Discoveries",
     shortdesc = "You have made 400 Discoveries",
     points = discoveryPoints,
     image = imgDiscovery,
-  }, 
+  },
 
-  
+  -- Added in version 0.9.9
+  {
+    id = "disc_12",
+    name = "Completed 75 Discoveries",
+    desc = "Milestone! Congrats! You have made 75 Discoveries",
+    shortdesc = "You have made 75 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_13",
+    name = "Completed 125 Discoveries",
+    desc = "Milestone! Congrats! You have made 125 Discoveries",
+    shortdesc = "You have made 125 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_14",
+    name = "Completed 175 Discoveries",
+    desc = "Milestone! Congrats! You have made 175 Discoveries",
+    shortdesc = "You have made 175 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_15",
+    name = "Completed 225 Discoveries",
+    desc = "Milestone! Congrats! You have made 225 Discoveries",
+    shortdesc = "You have made 225 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_16",
+    name = "Completed 275 Discoveries",
+    desc = "Milestone! Congrats! You have made 275 Discoveries",
+    shortdesc = "You have made 275 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_17",
+    name = "Completed 325 Discoveries",
+    desc = "Milestone! Congrats! You have made 325 Discoveries",
+    shortdesc = "You have made 325 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_18",
+    name = "Completed 375 Discoveries",
+    desc = "Milestone! Congrats! You have made 375 Discoveries",
+    shortdesc = "You have made 375 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_19",
+    name = "Completed 425 Discoveries",
+    desc = "Milestone! Congrats! You have made 425 Discoveries",
+    shortdesc = "You have made 425 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_20",
+    name = "Completed 450 Discoveries",
+    desc = "Milestone! Congrats! You have made 450 Discoveries",
+    shortdesc = "You have made 450 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_21",
+    name = "Completed 475 Discoveries",
+    desc = "Milestone! Congrats! You have made 475 Discoveries",
+    shortdesc = "You have made 475 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+  {
+    id = "disc_22",
+    name = "Completed 500 Discoveries",
+    desc = "Milestone! Congrats! You have made 500 Discoveries",
+    shortdesc = "You have made 500 Discoveries",
+    points = discoveryPoints,
+    image = imgDiscovery,
+  },
+
+-- Professions Total (Started)
+{
+  id = "proft_1",
+  name = "Started 5 Professions",
+  desc = "Milestone! Congrats! You have started 5 professions",
+  shortdesc = "You have started 5 professions",
+  points = professionTotal,
+  image = imgProfessionTotal,
+},
+{
+  id = "proft_2",
+  name = "Started 10 Professions",
+  desc = "Milestone! Congrats! You have started 10 professions",
+  shortdesc = "You have started 10 professions",
+  points = professionTotal,
+  image = imgProfessionTotal,
+},
+
+-- Profession points
+{
+  id = "profp_1",
+  name = "5 Profession Points",
+  desc = "Milestone! Congrats! You have 5 Profession Points",
+  shortdesc = "You have 5 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_2",
+  name = "15 Profession Points",
+  desc = "Milestone! Congrats! You have 15 Profession Points",
+  shortdesc = "You have 15 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_3",
+  name = "50 Profession Points",
+  desc = "Milestone! Congrats! You have 50 Profession Points",
+  shortdesc = "You have 50 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_4",
+  name = "100 Profession Points",
+  desc = "Milestone! Congrats! You have 100 Profession Points",
+  shortdesc = "You have 100 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_5",
+  name = "150 Profession Points",
+  desc = "Milestone! Congrats! You have 150 Profession Points",
+  shortdesc = "You have 150 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_6",
+  name = "200 Profession Points",
+  desc = "Milestone! Congrats! You have 200 Profession Points",
+  shortdesc = "You have 200 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_7",
+  name = "250 Profession Points",
+  desc = "Milestone! Congrats! You have 250 Profession Points",
+  shortdesc = "You have 250 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_8",
+  name = "300 Profession Points",
+  desc = "Milestone! Congrats! You have 300 Profession Points",
+  shortdesc = "You have 300 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_9",
+  name = "350 Profession Points",
+  desc = "Milestone! Congrats! You have 350 Profession Points",
+  shortdesc = "You have 350 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_10",
+  name = "400 Profession Points",
+  desc = "Milestone! Congrats! You have 400 Profession Points",
+  shortdesc = "You have 400 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_11",
+  name = "450 Profession Points",
+  desc = "Milestone! Congrats! You have 450 Profession Points",
+  shortdesc = "You have 450 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_12",
+  name = "500 Profession Points",
+  desc = "Milestone! Congrats! You have 500 Profession Points",
+  shortdesc = "You have 500 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_13",
+  name = "600 Profession Points",
+  desc = "Milestone! Congrats! You have 600 Profession Points",
+  shortdesc = "You have 600 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_14",
+  name = "700 Profession Points",
+  desc = "Milestone! Congrats! You have 700 Profession Points",
+  shortdesc = "You have 700 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_15",
+  name = "800 Profession Points",
+  desc = "Milestone! Congrats! You have 800 Profession Points",
+  shortdesc = "You have 800 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_16",
+  name = "900 Profession Points",
+  desc = "Milestone! Congrats! You have 900 Profession Points",
+  shortdesc = "You have 900 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_17",
+  name = "1000 Profession Points",
+  desc = "Milestone! Congrats! You have 1000 Profession Points",
+  shortdesc = "You have 1000 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_18",
+  name = "1100 Profession Points",
+  desc = "Milestone! Congrats! You have 1100 Profession Points",
+  shortdesc = "You have 1100 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_19",
+  name = "1200 Profession Points",
+  desc = "Milestone! Congrats! You have 1200 Profession Points",
+  shortdesc = "You have 1200 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_20",
+  name = "1300 Profession Points",
+  desc = "Milestone! Congrats! You have 1300 Profession Points",
+  shortdesc = "You have 1300 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_21",
+  name = "1400 Profession Points",
+  desc = "Milestone! Congrats! You have 1400 Profession Points",
+  shortdesc = "You have 1400 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+{
+  id = "profp_22",
+  name = "1500 Profession Points",
+  desc = "Milestone! Congrats! You have 1500 Profession Points",
+  shortdesc = "You have 1500 Profession Points",
+  points = professionPoints,
+  image = imgProfession,
+},
+
+
 }
