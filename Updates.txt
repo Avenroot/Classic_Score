@@ -49,3 +49,8 @@ Version 0.9.9
     1. Added 65 new Milestones to complete.
     2. Milestones are re-calcuated when logging in.
     2. Removed old lua files and other cleanup.
+
+Version 0.9.10
+    1. Overhauled the visuals for Milestones.
+    2. Added support for WOTLK. Adjusted calculations to support level 80.
+    3. Fixed leveling display when leveling via turning in a quest (I hope). 

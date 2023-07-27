@@ -1,8 +1,8 @@
-## Interface: 11403
-## Title: Hardcore Score 0.9.9
+## Interface: 20500  -- This indicates the addon is compatible up to the WOTLK client.
+## Title: Hardcore Score 0.9.10
 ## Notes: Your Hardcore score for your character
 ## Author: Avenroot
-## Version: 0.9.9
+## Version: 0.9.10
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character

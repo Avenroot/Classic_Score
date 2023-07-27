@@ -1,5 +1,6 @@
 HCS_PlayerLevelingScore = {}
 
+--[[
 local data = {
         {Level = 1, Bonus = 0.01, LevelTotal = 1.01, Total = 1.01},
         {Level = 2, Bonus = 0.04, LevelTotal = 2.04, Total = 3.05},
@@ -62,9 +63,24 @@ local data = {
         {Level = 59, Bonus = 34.81, LevelTotal = 93.81, Total = 2472.10},
         {Level = 60, Bonus = 36.00, LevelTotal = 96.00, Total = 2568.10},
     }
-            
-function HCS_PlayerLevelingScore:GetLevelScore()
-    
+]]
+
+local data = {}
+
+local function CreateDataTable()
+    for i = 1, 80 do
+        local level = i
+        local bonus = (level ^ 2) / 100
+        local levelTotal = level + bonus
+        local total = i == 1 and levelTotal or data[#data].Total + levelTotal
+
+        table.insert(data, {Level = level, Bonus = bonus, LevelTotal = levelTotal, Total = total})
+    end    
+end
+
+CreateDataTable()  -- This creates the data table once when the script is executed
+
+function HCS_PlayerLevelingScore:GetLevelScore()    
     local score = 0
     local level = UnitLevel("player")
     HCScore_Character.level = level
@@ -72,8 +88,8 @@ function HCS_PlayerLevelingScore:GetLevelScore()
     score = data[level].Total
 
     return score
-
 end
+
 
 function HCS_PlayerLevelingScore:SaveLevelScore()
     local playerLevel = HCScore_Character.level - 1

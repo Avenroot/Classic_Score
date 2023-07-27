@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "0.9.9" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "0.9.10" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -50,7 +50,7 @@ HCScore_Character = {
     discovery = {},
     milestones = {},
     levelScores = {},
-}    
+}
 
 -- Define your options table
 local options = {
@@ -343,7 +343,7 @@ function Hardcore_Score:CreateDB()
                 yOfs = 0,
                 --show = true,
             },
-
+            
             minimap = {},
             showDetails = false,
             shareDetails = true,
@@ -361,18 +361,33 @@ function Hardcore_Score:CreateMiniMapButton()
         type = "launcher",
         icon = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-minimap-16.blp",  -- XP_ICON, Spell_Nature_Polymorph
         OnClick = function(self, button)
+
+
             -- Check if left mouse button was clicked
             if button == "LeftButton" then
+
+                --local msg1 = "Level 10"
+                --local frame1 = HCS_MessageFrameUI.DisplayLevelingMessage(msg1, 10)
+                --frame1:ShowMessage()
+
+                --local msg2 = "LEVEL 10"
+                --local frame2 = HCS_MessageFrameUI.DisplayMilestoneMessage(msg2, Img_hcs_milestone_level, 10)
+                --frame2:ShowMessage()
+
                 -- Open Hardcore_Score section of the options menu
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score");
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score"); -- yes, you need to call it twice.
-            -- Check if right mouse button was clicked
+
+                -- Check if right mouse button was clicked
             elseif button == "RightButton" then
                 -- Display your frame
                 HCS_CharactersInfoUI.frame:Show() 
                 --HCS_MainInfoFrameUI.frame:Show()
             end
+
+
         end,
+
 
         OnTooltipShow = function(tooltip)
             --tooltip:SetText("")  -- This should help ensure the title's style isn't applied to the first line
@@ -517,7 +532,7 @@ function Hardcore_Score:init(event, name)
         playerName = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.name)
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v0.9.9.  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v0.9.10.  Lets GO!")
         --print("|cff81b7e9".."Hardcore Score: ".."|r".."Psst,", playerName.. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score!");   
     end
 
