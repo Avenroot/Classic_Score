@@ -1,5 +1,8 @@
 HCS_Globals = {}
 
+-- Game information
+HCS_GameVersion = select(4, GetBuildInfo())  -- if over 3000 than playing WOTLK
+
 -- Player information
 CurrentXP = 0
 CurrentMaxXP = 0
@@ -9,6 +12,7 @@ MobName = ""
 MobLevel = 0
 ZoneChanged = false
 PlayerLeveled = false
+HCS_OldLevel = 0
 
 ScoringDescriptions = {
     equippedGearScore = "Equipped Gain",
@@ -23,13 +27,13 @@ ScoringDescriptions = {
 }
 
 -- images 
-Img_hcs_greyframe_32 = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-greyframe-32.blp"
-Img_hcs_greenframe_32 = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-greenframe-32.blp"
-Img_hcs_blueframe_32 = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-blueframe-32.blp"
-Img_hcs_goldframe_32 = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-goldframe-32.blp"
-Img_hcs_levelupframe_32 = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-levelupframe-32.blp"
-Img_hcs_milestoneframelight_32 = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-milestoneframelight-32.blp"
-Img_hcs_milestoneframedark_32 = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-milestoneframedark-32.blp"
+Img_hcs_milestoneframe = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-milestone-frame.tga"
+Img_hcs_milestone_quest = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-quest.tga"
+Img_hcs_milestone_profession = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-profession.tga"
+Img_hcs_milestone_mobtypes = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-mobtypes.tga"
+Img_hcs_milestone_level = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-level.tga"
+Img_hcs_milestone_kill = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-kill.tga"
+Img_hcs_milestone_discovery = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-discovery.tga"
 
 -- portrait images
 CurrentPortrait = ""

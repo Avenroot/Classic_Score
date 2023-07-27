@@ -2,7 +2,7 @@ HCS_CalculateScore = {}
 
 local levelScalePercentage = 0
 
--- Portrait Level Points
+-- Portrait Level Points Classic
 local GREY = 0
 local GREEN = 100
 local BLUE = 1000
@@ -10,6 +10,15 @@ local PURPLE = 2500
 local ORANGE = 5000
 local RED = 10000
 local GOLD = 15000
+
+-- Portrait Level Points WOTLK - increased by 33.33%
+local GREY_wotlk = 0
+local GREEN_wotlk = 133  
+local BLUE_wotlk = 1333  
+local PURPLE_wotlk = 3333 
+local ORANGE_wotlk = 6667
+local RED_wotlk = 13333
+local GOLD_wotlk = 20000
 
 local beforeStats = {
     equippedGearScore = 0,
@@ -58,29 +67,54 @@ end
 function GetCurrentPortrait()
     local playerLevel = UnitLevel("player")
     local playerScore = HCScore_Character.scores.coreScore
-    local currentPortrait = Img_hcs_greyframe_32 -- default
+    local currentPortrait = Img_hcs_grey_portrait_32 -- default    
 
-    -- Gold Crown
-    if playerLevel == 60 and playerScore > GOLD then
-        currentPortrait = Img_hcs_gold_crown_portrait_32
-    -- Red Diamond
-    elseif playerLevel >= 50 and playerScore >= RED then
-        currentPortrait = Img_hcs_red_diamond_portrait_32
-    -- Orange
-    elseif playerLevel >= 40 and playerScore >= ORANGE then
-        currentPortrait = Img_hcs_orange_portrait_32
-    -- Purple
-    elseif playerLevel >= 30 and playerScore >= PURPLE then
-        currentPortrait = Img_hcs_purple_portrait_32
-    -- Blue
-    elseif playerLevel >= 20 and playerScore >= BLUE then
-        currentPortrait = Img_hcs_blue_portrait_32
-    -- Green
-    elseif playerLevel >= 10 and playerScore >= GREEN then
-        currentPortrait = Img_hcs_green_portrait_32
-    -- Grey
-    elseif playerLevel >= 1 and playerScore >= GREY then
-        currentPortrait = Img_hcs_grey_portrait_32
+    if HCS_GameVersion < 3000 then -- Classic
+        -- Gold Crown
+        if playerLevel == 60 and playerScore > GOLD then
+            currentPortrait = Img_hcs_gold_crown_portrait_32
+        -- Red Diamond
+        elseif playerLevel >= 50 and playerScore >= RED then
+            currentPortrait = Img_hcs_red_diamond_portrait_32
+        -- Orange
+        elseif playerLevel >= 40 and playerScore >= ORANGE then
+            currentPortrait = Img_hcs_orange_portrait_32
+        -- Purple
+        elseif playerLevel >= 30 and playerScore >= PURPLE then
+            currentPortrait = Img_hcs_purple_portrait_32
+        -- Blue
+        elseif playerLevel >= 20 and playerScore >= BLUE then
+            currentPortrait = Img_hcs_blue_portrait_32
+        -- Green
+        elseif playerLevel >= 10 and playerScore >= GREEN then
+            currentPortrait = Img_hcs_green_portrait_32
+        -- Grey
+        elseif playerLevel >= 1 and playerScore >= GREY then
+            currentPortrait = Img_hcs_grey_portrait_32
+        end
+    else  -- WOTLK
+        -- Gold Crown
+        if playerLevel == 80 and playerScore > GOLD_wotlk then  -- Level increased to 80
+            currentPortrait = Img_hcs_gold_crown_portrait_32
+        -- Red Diamond
+        elseif playerLevel >= 67 and playerScore >= RED_wotlk then  -- Level increased to 67
+            currentPortrait = Img_hcs_red_diamond_portrait_32
+        -- Orange
+        elseif playerLevel >= 53 and playerScore >= ORANGE_wotlk then  -- Level increased to 53
+            currentPortrait = Img_hcs_orange_portrait_32
+        -- Purple
+        elseif playerLevel >= 40 and playerScore >= PURPLE_wotlk then  -- Level increased to 40
+            currentPortrait = Img_hcs_purple_portrait_32
+        -- Blue
+        elseif playerLevel >= 27 and playerScore >= BLUE_wotlk then  -- Level increased to 27
+            currentPortrait = Img_hcs_blue_portrait_32
+        -- Green
+        elseif playerLevel >= 13 and playerScore >= GREEN_wotlk then  -- Level increased to 13
+            currentPortrait = Img_hcs_green_portrait_32
+        -- Grey
+        elseif playerLevel >= 1 and playerScore >= GREY_wotlk then
+            currentPortrait = Img_hcs_grey_portrait_32
+        end                
     end
 
     return currentPortrait
@@ -97,21 +131,20 @@ end
 
 local function LeveledUp(points)
 
-    if Hardcore_Score.db.profile.framePositionMsg.show then
-        local playerLevel = UnitLevel("player")
-        if playerLevel < HCScore_Character.level then
-            playerLevel = playerLevel + 1 
-        end
-        local msg = "Level Up! You reached level "..playerLevel
-        local frame = HCS_MessageFrameUI.DisplayMessage(msg, 10, Img_hcs_levelupframe_32)
-        frame:ShowMessage()
+    local playerLevel = UnitLevel("player")
 
-       -- local msg = "You just gained "..string.format("%.3f",points).." pts by leveling!"
-       -- local frame = HCS_MessageFrameUI.DisplayMessage(msg, 10, Img_hcs_levelupframe_32)
-       -- frame:ShowMessage()     
+    if Hardcore_Score.db.profile.framePositionMsg.show then
+        
+        --if playerLevel < HCScore_Character.level then
+        --    playerLevel = playerLevel + 1 
+        --end
+        local msg = "Level "..playerLevel
+        local frame = HCS_MessageFrameUI.DisplayLevelingMessage(msg, 10)
+        frame:ShowMessage()
       end
     
     HCS_PlayerLevelingScore:SaveLevelScore()
+    HCS_OldLevel = PlayerLevel
     PlayerLeveled = false
 end
 
@@ -131,8 +164,15 @@ local function UpdateProfileScores()
 end
 
 function HCS_CalculateScore:RefreshScores(desc)
+    
+    if HCS_OldLevel == nil or HCS_OldLevel == 0 then HCS_OldLevel = UnitLevel("player") end -- makes sure HCS_OldLevel is set correctly when logging in.
+   
+    if HCS_GameVersion < 30000 then
+        levelScalePercentage = (UnitLevel("player")  / 60) -- Classic
+    else
+        levelScalePercentage = (UnitLevel("player")  / 80)  -- WOTLK
+    end
 
-    levelScalePercentage = (UnitLevel("player")  / 60) --* 100
     _G["CurrentXP"] = UnitXP("player")  -- CurrentXP
     _G["CurrentMaxXP"] = UnitXPMax("player") -- CurrentMaxXP
 
@@ -159,7 +199,7 @@ function HCS_CalculateScore:RefreshScores(desc)
         CompareStats(beforeStats, HCScore_Character.scores, desc)
     end
  
-    if PlayerLeveled  then 
+    if HCS_OldLevel <  UnitLevel("player") then -- player has leveled
       local scorebefore = beforeStats.coreScore
       local scoreafter = HCScore_Character.scores.coreScore
       local scorediff = scoreafter - scorebefore

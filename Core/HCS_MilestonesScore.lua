@@ -33,7 +33,8 @@ local function AddMilestone(id)
                 HCS_PointsLogUI:AddMessage(milestone.desc)
 
                 if Hardcore_Score.db.profile.framePositionMsg.show then
-                    local frame = HCS_MessageFrameUI.DisplayMessage(milestone.shortdesc, 7, milestone.image)
+                    local desc = string.upper(milestone.shortdesc)
+                    local frame = HCS_MessageFrameUI.DisplayMilestoneMessage(desc, milestone.image, 10)
                     frame:ShowMessage() 
                 end
             end
@@ -55,7 +56,11 @@ local function CheckLeveling()
     if level >= 45 then AddMilestone("lvl_9") end
     if level >= 50 then AddMilestone("lvl_10") end
     if level >= 55 then AddMilestone("lvl_11") end
-    if level == 60 then AddMilestone("lvl_12") end
+    if level >= 60 then AddMilestone("lvl_12") end
+    if level >= 65 then AddMilestone("lvl_13") end
+    if level >= 70 then AddMilestone("lvl_14") end    
+    if level >= 75 then AddMilestone("lvl_15") end
+    if level == 80 then AddMilestone("lvl_16") end
 
 end
 

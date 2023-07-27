@@ -25,13 +25,13 @@ end
 local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward)
 
 -- a hack for Discovery until I can figure out how to detect if any xp is gained by entering a new zone.
-  _G["ZoneChanged"] = false 
+  _G["ZoneChanged"] = false
 
   questLevel = select(2, GetQuestLogTitle(GetQuestLogIndexByID(questID)))
   playerLevel = UnitLevel("player")
- 
+
   levelMod = questLevel - playerLevel
-  
+
   -- grey
   if levelMod <= -6 then
     score = 0
