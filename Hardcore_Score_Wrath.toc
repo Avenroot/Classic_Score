@@ -1,0 +1,51 @@
+## Interface: 30402
+## Title: Hardcore Score 0.9.11
+## Notes: Your Hardcore score for your character
+## Author: Avenroot
+## Version: 0.9.11
+## DefaultState: enabled
+## SavedVariables: Hardcore_Score_Settings
+## SavedVariablesPerCharacter: HCScore_Character
+## X-Curse-Project-ID: 873836
+## X-Website: https://avenroothcs.wixsite.com/hardcore-score
+
+embeds.xml
+
+Core/HCS_Utils.lua
+Core/HCS_Globals.lua
+Core/HCS_Playerinfo.lua
+Core/HCS_PlayerCoreScore.lua
+Core/HCS_PlayerLevelingScore.lua
+Core/HCS_PlayerEquippedGearScore.lua
+Core/HCS_PlayerHCAchievementScore.lua
+Core/HCS_PlayerQuestingScore.lua
+Core/HCS_KillingMobsScore.lua
+Core/HCS_ProfessionsScore.lua
+Core/HCS_ReputationScore.lua
+Core/HCS_DiscoveryScore.lua
+Core/HCS_PlayerCom.lua
+Core/HCS_CalculateScore.lua
+Core/HCS_MilestonesScore.lua
+
+Events/HCS_PlayerLevelingUpEvent.lua
+Events/HCS_PlayerEquippingItemEvent.lua
+Events/HCS_PlayerCompletingQuestEvent.lua
+Events/HCS_KillingMobsEvent.lua
+Events/HCS_ProfessionsEvent.lua
+Events/HCS_ReputationEvent.lua
+Events/HCS_PlayerDiscoveryEvent.lua
+Events/HCS_XPUpdateEvent.lua
+Events/HCS_DeathEvent.lua
+
+Data/HCS_MilestonesDB.lua
+
+UI/HCS_MainInfoFrameUI.lua
+UI/HCS_ScoreboardSummaryUI.lua
+UI/HCS_PointsLogUI.lua
+UI/HCS_CharactersInfoUI.lua
+UI/HCS_MessageFrameUI.lua
+UI/HCS_WelcomeUI.lua
+
+Hardcore_Score.lua
+
+

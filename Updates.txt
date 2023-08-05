@@ -54,3 +54,8 @@ Version 0.9.10
     1. Overhauled the visuals for Milestones.
     2. Added support for WOTLK. Adjusted calculations to support level 80.
     3. Fixed leveling display when leveling via turning in a quest (I hope). 
+
+Version 0.9.11
+    1. Set Milestone message popup to display 5 seconds instead of 10 seconds.
+    2. Fixed a bug when hovering over another player's portrait to see their scores.
+    3. Milestone Kill Type was showing the wrong image.  Fixed.

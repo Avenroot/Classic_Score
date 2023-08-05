@@ -323,7 +323,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 5 mob types",
       shortdesc = "Killed 5 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     }, 
     {
       id = "mobkt_2",
@@ -331,7 +331,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 10 mob types",
       shortdesc = "Killed 10 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     }, 
     {
       id = "mobkt_3",
@@ -339,7 +339,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 20 mob types",
       shortdesc = "Killed 20 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     },
     {
       id = "mobkt_4",
@@ -347,7 +347,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 30 mob types",
       shortdesc = "Killed 30 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     }, 
     {
       id = "mobkt_5",
@@ -355,7 +355,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 40 mob types",
       shortdesc = "Killed 40 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     }, 
     {
       id = "mobkt_6",
@@ -363,7 +363,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 50 mob types",
       shortdesc = "Killed 50 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     }, 
     {
       id = "mobkt_7",
@@ -371,7 +371,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 60 mob types",
       shortdesc = "Killed 60 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     }, 
     {
       id = "mobkt_8",
@@ -379,7 +379,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 70 mob types",
       shortdesc = "Killed 70 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     }, 
     {
       id = "mobkt_9",
@@ -387,7 +387,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 80 mob types",
       shortdesc = "Killed 80 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     }, 
     {
       id = "mobkt_10",
@@ -395,7 +395,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 90 mob types",
       shortdesc = "Killed 90 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     }, 
     {
       id = "mobkt_11",
@@ -403,7 +403,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 100 mob types",
       shortdesc = "Killed 100 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     },
 
     -- Added in version 0.9.9
@@ -413,7 +413,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 110 mob types",
       shortdesc = "Killed 110 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     },
     {
       id = "mobkt_13",
@@ -421,7 +421,7 @@ HCS_MilestonesDB = {
       desc = "Milestone! Congrats! You've killed 120 mob types",
       shortdesc = "Killed 120 mob types",
       points = mobKillsPoints,
-      image = imgKillingMobs,
+      image = imgKillingMobsType,
     },
 
     -- Total Quests Milestones

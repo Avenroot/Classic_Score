@@ -133,13 +133,9 @@ local function LeveledUp(points)
 
     local playerLevel = UnitLevel("player")
 
-    if Hardcore_Score.db.profile.framePositionMsg.show then
-        
-        --if playerLevel < HCScore_Character.level then
-        --    playerLevel = playerLevel + 1 
-        --end
+    if Hardcore_Score.db.profile.framePositionMsg.show then       
         local msg = "Level "..playerLevel
-        local frame = HCS_MessageFrameUI.DisplayLevelingMessage(msg, 10)
+        local frame = HCS_MessageFrameUI.DisplayLevelingMessage(msg, 5)
         frame:ShowMessage()
       end
     
@@ -170,15 +166,13 @@ function HCS_CalculateScore:RefreshScores(desc)
     if HCS_GameVersion < 30000 then
         levelScalePercentage = (UnitLevel("player")  / 60) -- Classic
     else
-        levelScalePercentage = (UnitLevel("player")  / 80)  -- WOTLK
+        levelScalePercentage = (UnitLevel("player")  / 80) -- WOTLK
     end
 
     _G["CurrentXP"] = UnitXP("player")  -- CurrentXP
     _G["CurrentMaxXP"] = UnitXPMax("player") -- CurrentMaxXP
 
     SetBeforeStats()
-
-    HCS_MilestonesScore:CheckMilestones()
 
     HCScore_Character.scores.levelingScore = HCS_PlayerLevelingScore:GetLevelScore() * levelScalePercentage
     HCScore_Character.scores.equippedGearScore = HCS_PlayerEquippedGearScore:GetEquippedGearScore() * levelScalePercentage
@@ -190,7 +184,7 @@ function HCS_CalculateScore:RefreshScores(desc)
     HCScore_Character.scores.mobsKilledScore = HCS_KillingMobsScore:GetMobsKilledScore()
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
 
-
+    HCS_MilestonesScore:CheckMilestones()
     UpdateProfileScores()
     RefreshUI()
     CurrentPortrait = GetCurrentPortrait()
