@@ -24,7 +24,8 @@ function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, 
                        -- print("--------- SWING DAMAGE ---------")
                         _G["MobCombatKill"] = true
                         _G["MobName"] = destName
-                        _G["MobLevel"] = UnitLevel("target")    
+                        _G["MobLevel"] = UnitLevel("target")
+                        _G["MobClassification"] = UnitClassification("target")    
                         
                        -- print(destName.. " - level ".. _G["MobLevel"].. " ("..guidType..")")
                        -- print(sourceName.. " - ".. " ("..sourceType..")")                                                       
@@ -38,7 +39,8 @@ function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, 
                     if mobDifficulty > -6 then
                         _G["MobCombatKill"] = true
                         _G["MobName"] = destName
-                        _G["MobLevel"] = UnitLevel("target")                        
+                        _G["MobLevel"] = UnitLevel("target")                  
+                        _G["MobClassification"] = UnitClassification("target")      
         
                        -- print("--------- PARTY KILL ---------")
                        -- print("MobCombatKill = "..tostring(_G["MobCombatKill"]))
@@ -54,6 +56,7 @@ function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, 
                         _G["MobCombatKill"] = true
                         _G["MobName"] = destName
                         _G["MobLevel"] = UnitLevel("target")
+                        _G["MobClassification"] = UnitClassification("target")
         
                        -- print("--------- UNIT DIED ----------")
                        -- print("MobCombatKill = "..tostring(_G["MobCombatKill"]))

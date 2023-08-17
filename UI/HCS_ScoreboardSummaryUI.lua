@@ -23,6 +23,8 @@ local txt_discovery
 local txt_discovery_score
 local txt_milestones
 local txt_milestones_score
+local txt_achievements
+local txt_achievements_score
 
 local frame2scoreposition = 50
 local labelwidth = 125
@@ -35,14 +37,14 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
 
     ScoreboardSummaryFrame = CreateFrame("Frame", "MainScoreFrame", UIParent, "BackdropTemplate")
     ScoreboardSummaryFrame:SetWidth(275)
-    ScoreboardSummaryFrame:SetHeight(50)
+    ScoreboardSummaryFrame:SetHeight(48)
     ScoreboardSummaryFrame:SetPoint("CENTER")
     ScoreboardSummaryFrame:SetClampedToScreen(true)
     
     -- Set backdrop with gradient background and border
     ScoreboardSummaryFrame:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        edgeFile = Current_hcs_Border,
         tile = true,
         tileSize = 16,
         edgeSize = 16,
@@ -75,13 +77,13 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
 
     -- Create the round image
     imgPortrait = ScoreboardSummaryFrame:CreateTexture(nil, "OVERLAY")
-    imgPortrait:SetSize(32, 32)
-    imgPortrait:SetTexture(CurrentPortrait)
-    imgPortrait:SetPoint("TOPLEFT", ScoreboardSummaryFrame, "TOPLEFT", -12, 10)
+    imgPortrait:SetSize(48, 48)
+    imgPortrait:SetTexture(Current_hcs_Portrait)
+    imgPortrait:SetPoint("TOPLEFT", ScoreboardSummaryFrame, "TOPLEFT", -25, 0)
     
     -- Create the first label
     txtCoreScore1 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    txtCoreScore1:SetPoint("LEFT", ScoreboardSummaryFrame, "TOPLEFT", 15, -15)
+    txtCoreScore1:SetPoint("LEFT", ScoreboardSummaryFrame, "TOPLEFT", 20, -15)
     txtCoreScore1:SetText("Hardcore Score")
     txtCoreScore1:SetWidth(120)
     -- Set larger font size
@@ -90,7 +92,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
 
     -- Create the second label
     txtCoreScore2 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    txtCoreScore2:SetPoint("LEFT", txtCoreScore1, "RIGHT", 50, 0)
+    txtCoreScore2:SetPoint("LEFT", txtCoreScore1, "RIGHT", 48, 0)
    -- txtCoreScore2:SetText( string.format("%.2f", HCScore_Character.scores.coreScore)) -- replace with your text
     txtCoreScore2:SetJustifyH("RIGHT")
     txtCoreScore2:SetWidth(80)
@@ -98,7 +100,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
 
     -- Create the third label
     txtCoreScore3 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    txtCoreScore3:SetPoint("TOPLEFT", txtCoreScore1, "BOTTOMLEFT", 0, -5)
+    txtCoreScore3:SetPoint("TOPLEFT", txtCoreScore1, "BOTTOMLEFT", 5, -5)
  --   txtCoreScore3:SetText("Third Label - " .. "Your text here") -- replace with your text
     txtCoreScore3:SetFont(font, 12, flags) -- Set a smaller font size (12 in this example)
    -- txtCoreScore3:SetTextColor(129/255, 183/255, 233/255) -- Set the text color to blue
@@ -106,41 +108,15 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txtCoreScore3:SetJustifyH("LEFT")
     txtCoreScore3:SetWidth(220)    
     
-
-
---[[
-    
-    -- Create the round image
-    local image1 = ScoreboardSummaryFrame:CreateTexture(nil, "OVERLAY")
-    image1:SetSize(32, 32)
-    image1:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcs-logo-32.blp")  -- Replace with your image texture path
-    image1:SetPoint("LEFT", 10, 0)
-    
-    -- Create the label
-    txtCoreScore1 = ScoreboardSummaryFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    txtCoreScore1:SetPoint("LEFT", image1, "RIGHT", 10, 0)
-    txtCoreScore1:SetText("Hardcore Score - " .. string.format("%.2f", HCScore_Character.scores.coreScore))
-    -- Set larger font size
-    local font, _, flags = txtCoreScore1:GetFont()
-    txtCoreScore1:SetFont(font, 14, flags) -- Set the desired font size (16 in this example)    
-   
-    ScoreboardSummaryFrame:Show()
-]]
- 
- 
- 
- 
- 
- 
     ScoreboardSummaryDetailsFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
     ScoreboardSummaryDetailsFrame:SetWidth(275)
-    ScoreboardSummaryDetailsFrame:SetHeight(150)
+    ScoreboardSummaryDetailsFrame:SetHeight(168)
     ScoreboardSummaryDetailsFrame:SetPoint("TOP", ScoreboardSummaryFrame, "BOTTOM", 0, -10)
     
     -- Set backdrop with gradient background and border
     ScoreboardSummaryDetailsFrame:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        edgeFile = Current_hcs_Border,
         tile = true,
         tileSize = 16,
         edgeSize = 16,
@@ -194,11 +170,36 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_questing_score:SetWidth(labelwidthscore)
 
     -- Mobs Killed
-    txt_mobskilled = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    txt_mobskilled:SetPoint("TOPLEFT", txt_questing, "BOTTOMLEFT", 0, -5)
+
+    -- Create a wrapper frame for txt_mobskilled
+    local txt_mobskilledWrapper = CreateFrame("Frame", nil, ScoreboardSummaryDetailsFrame)
+    txt_mobskilledWrapper:SetPoint("TOPLEFT", txt_questing, "BOTTOMLEFT", 0, -5)
+
+    -- Mobs Killed font string
+    txt_mobskilled = txt_mobskilledWrapper:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     txt_mobskilled:SetJustifyH("LEFT")
     txt_mobskilled:SetWidth(labelwidth)
-    
+    txt_mobskilled:SetText("Mobs Killed")  -- seems to be needed to set the proper place to trigger the tooltip.  
+
+    -- Set the position of txt_mobskilled within its wrapper frame
+    txt_mobskilled:SetPoint("TOPLEFT", txt_mobskilledWrapper, "TOPLEFT", 0, 0)
+
+    -- Calculate and set the size of the wrapper frame after the font string has been created
+    txt_mobskilledWrapper:SetSize(labelwidth, txt_mobskilled:GetHeight())
+
+    -- Create a tooltip for txt_mobskilledWrapper
+    txt_mobskilledWrapper:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
+        GameTooltip:SetText("Mobs Killed", 1, 1, 1, true)
+        
+        HCS_KillingMobsScore:GetToolTip(GameTooltip)
+        GameTooltip:Show()
+    end)
+
+    txt_mobskilledWrapper:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+
     -- Mobs Killed Score
     txt_mobskilled_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     txt_mobskilled_score:SetPoint("LEFT", txt_mobskilled, "RIGHT", frame2scoreposition, 0)
@@ -242,16 +243,80 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_discovery_score:SetWidth(labelwidthscore)
 
     -- Milestones
-    txt_milestones = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    txt_milestones:SetPoint("TOPLEFT", txt_discovery, "BOTTOMLEFT", 0, -5)
+
+    -- Create a wrapper frame for txt_milestones
+    local txt_milestonesWrapper = CreateFrame("Frame", nil, ScoreboardSummaryDetailsFrame)
+    txt_milestonesWrapper:SetPoint("TOPLEFT", txt_discovery, "BOTTOMLEFT", 0, -5)
+
+    -- Milestones font string
+    txt_milestones = txt_milestonesWrapper:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     txt_milestones:SetJustifyH("LEFT")
     txt_milestones:SetWidth(labelwidth)
+    txt_milestones:SetText("Milestones")  -- seems to be needed to set the proper place to trigger the tooltip.  
+
+    -- Set the position of txt_milestones within its wrapper frame
+    txt_milestones:SetPoint("TOPLEFT", txt_milestonesWrapper, "TOPLEFT", 0, 0)
+
+    -- Calculate and set the size of the wrapper frame after the font string has been created
+    txt_milestonesWrapper:SetSize(labelwidth, txt_milestones:GetHeight())
+
+    -- Create a tooltip for txt_milestonesWrapper
+    txt_milestonesWrapper:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
+        GameTooltip:SetText(string.format("%.2f", HCScore_Character.scores.milestonesScore).. " Milestone Points", 1, 1, 1, true)
+        
+        HCS_MilestonesScore:GetToolTip(GameTooltip)
+       
+        GameTooltip:Show()
+    end)
+
+    txt_milestonesWrapper:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
 
     -- Milestones Score
     txt_milestones_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     txt_milestones_score:SetPoint("LEFT", txt_milestones, "RIGHT", frame2scoreposition, 0)
     txt_milestones_score:SetJustifyH("RIGHT")
     txt_milestones_score:SetWidth(labelwidthscore)
+
+    ScoreboardSummaryDetailsFrame:Hide()
+
+
+    -- Achievements
+
+    -- Create a wrapper frame for txt_milestones
+    local txt_achievementsWrapper = CreateFrame("Frame", nil, ScoreboardSummaryDetailsFrame)
+    txt_achievementsWrapper:SetPoint("TOPLEFT", txt_milestones, "BOTTOMLEFT", 0, -5)
+
+    -- Achievements font string
+    txt_achievements = txt_achievementsWrapper:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    txt_achievements:SetJustifyH("LEFT")
+    txt_achievements:SetWidth(labelwidth)
+    txt_achievements:SetText("Achievements")  -- seems to be needed to set the proper place to trigger the tooltip.  
+
+    -- Set the position of txt_milestones within its wrapper frame
+    txt_achievements:SetPoint("TOPLEFT", txt_achievementsWrapper, "TOPLEFT", 0, 0)
+
+    -- Calculate and set the size of the wrapper frame after the font string has been created
+    txt_achievementsWrapper:SetSize(labelwidth, txt_achievements:GetHeight())
+
+    -- Create a tooltip for txt_milestonesWrapper
+    txt_achievementsWrapper:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
+        GameTooltip:SetText(string.format("%.2f", HCScore_Character.scores.achievementScore).. " Achievement Points", 1, 1, 1, true)           
+        GameTooltip:Show()
+    end)
+
+    txt_achievementsWrapper:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+
+    -- Achievements Score
+    txt_achievements_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    txt_achievements_score:SetPoint("LEFT", txt_achievements, "RIGHT", frame2scoreposition, 0)
+    txt_achievements_score:SetJustifyH("RIGHT")
+    txt_achievements_score:SetWidth(labelwidthscore)
 
     ScoreboardSummaryDetailsFrame:Hide()
 
@@ -279,28 +344,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
 
         end
     end)
-    
---[[
-    ScoreboardSummaryFrame:SetScript("OnEnter", function()
-        frame2:Show()
-    end)
 
-    ScoreboardSummaryFrame:SetScript("OnLeave", function()
-        frame2:Hide()
-    end)
-
-    local isFrame2Visible = false
-    ScoreboardSummaryFrame:SetScript("OnMouseDown", function(_, button)
-        if button == "LeftButton" then
-            isFrame2Visible = not isFrame2Visible
-            if isFrame2Visible then
-                frame2:Show()
-            else
-                frame2:Hide()
-            end
-        end
-    end)
-]]
 end
 
 local function GetPlayerInfoText()
@@ -323,6 +367,7 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     local totQuests = HCS_PlayerQuestingScore:GetNumberOfQuests()
     local totDiscovery = HCS_DiscoveryScore:GetNumberOfDiscovery()
     local totMilestones = HCS_MilestonesScore:GetNumberOfMilestones()
+    local totAchievements = HCS_AchievementScore:GetNumberOfAchievements()
     local leveling = UnitLevel("player")
     local playerInfoText = GetPlayerInfoText()
     
@@ -334,6 +379,7 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     local reputationScore = HCScore_Character.scores.reputationScore
     local discoveryScore = HCScore_Character.scores.discoveryScore
     local milestonesScore = HCScore_Character.scores.milestonesScore
+    local achievementsScore = HCScore_Character.scores.achievementScore
 
     local coreScore = HCScore_Character.scores.coreScore
 
@@ -343,9 +389,33 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     txtCoreScore2:SetText(string.format("%.2f", coreScore))
     txtCoreScore3:SetText(playerInfoText)
 
-    -- Portrait
-    imgPortrait:SetTexture(CurrentPortrait)
+    -- Set Portrait
+    imgPortrait:SetTexture(Current_hcs_Portrait)
 
+    -- Set Borders
+    ScoreboardSummaryFrame:SetBackdrop({
+        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+        edgeFile = Current_hcs_Border,
+        tile = true,
+        tileSize = 16,
+        edgeSize = 16,
+        insets = { left = 4, right = 4, top = 4, bottom = 4 },
+    })
+    ScoreboardSummaryFrame:SetBackdropColor(0, 0, 0, 1)
+    ScoreboardSummaryFrame:SetBackdropBorderColor(1, 1, 1)
+
+    ScoreboardSummaryDetailsFrame:SetBackdrop({
+        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+        edgeFile = Current_hcs_Border,
+        tile = true,
+        tileSize = 16,
+        edgeSize = 16,
+        insets = { left = 4, right = 4, top = 4, bottom = 4 },
+    })
+    ScoreboardSummaryDetailsFrame:SetBackdropColor(0, 0, 0, 1)
+    ScoreboardSummaryDetailsFrame:SetBackdropBorderColor(1, 1, 1)
+
+   
     --ScoreboardDetailsFrame
     txt_equippedgear_score:SetText(string.format("%.2f", equippedgearScore))    
     txt_leveling:SetText("Leveling ("..leveling..")")
@@ -362,6 +432,8 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     txt_discovery_score:SetText(string.format("%.2f", discoveryScore))
     txt_milestones:SetText("Milestones ("..totMilestones..")")
     txt_milestones_score:SetText(string.format("%.2f", milestonesScore))
+    txt_achievements:SetText("Achievements ("..totAchievements..")")
+    txt_achievements_score:SetText(string.format("%.2f", achievementsScore))
 
 end
 

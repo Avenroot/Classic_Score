@@ -10,7 +10,7 @@ local function between(x, a, b)
     return x >= a and x <= b
   end
   
-function GetMobKillHCScore(mobLevel)
+local function GetMobKillHCScore(mobLevel)
     local xpGain = HCS_XPUpdateEvent:GetXPGain()
     local score = 0
 
@@ -26,11 +26,11 @@ function GetMobKillHCScore(mobLevel)
         score =  xpGain * EASY         
     end 
     -- yellow
-    if between(mobDifficulty, 0, 3) then
+    if between(mobDifficulty, 0, 2) then
         score = xpGain * MODERATE    
     end
     -- orange
-    if between(mobDifficulty, 4, 5) then
+    if between(mobDifficulty, 3, 5) then
         score = xpGain * HARD
     end
     -- red
@@ -47,10 +47,46 @@ function GetMobKillHCScore(mobLevel)
     return {score, mobDifficulty} 
 end
 
+local function AddDangerousMobKill(mobScore, mobName)
+
+    if not HCScore_Character.dangerousMobsKilled then
+        HCScore_Character.dangerousMobsKilled = {}  -- Create an empty table
+    end
+
+    if mobName == "" then
+        mobName = "None"
+        _G["MobName"] = mobName
+    end
+
+    local found = false
+
+    for _, mob in pairs(HCScore_Character.dangerousMobsKilled) do
+        if mob.id == mobName and mob.difficulty == mobScore[2] then
+            mob.kills = mob.kills + 1
+            mob.score = mob.score + mobScore[1]
+            found = true
+            break
+        end
+    end
+
+    if not found then
+        -- add mob details
+        local newMob = {
+            id = mobName,
+            kills = 1,
+            score = mobScore[1],
+            difficulty = mobScore[2],
+        }
+        table.insert(HCScore_Character.dangerousMobsKilled, newMob)
+    end
+
+end
+
 function HCS_KillingMobsScore:UpdateMobsKilled()
 
     local mobScore = GetMobKillHCScore(_G["MobLevel"])
     local mobName = _G["MobName"]
+    --print(_G["MobClassification"])
 
     if not HCScore_Character.mobsKilled then
         HCScore_Character.mobsKilled = {}  -- Create an empty table
@@ -82,6 +118,9 @@ function HCS_KillingMobsScore:UpdateMobsKilled()
         table.insert(HCScore_Character.mobsKilled, newMob)
     end
 
+    -- Add a Dangerous Kill
+    if mobScore[2] >= 3 then AddDangerousMobKill(mobScore, mobName) end
+
     local desc = mobName.." killed"
     _G["ScoringDescriptions"].mobsKilledScore = desc
     HCS_CalculateScore:RefreshScores(ScoringDescriptions)
@@ -111,3 +150,23 @@ function HCS_KillingMobsScore:GetMobsKilledScore()
     return score
 
 end
+
+function HCS_KillingMobsScore:GetNumberDangerousKills()
+    local totalKills = 0
+
+    for _, mob in pairs(HCScore_Character.dangerousMobsKilled) do
+        totalKills = totalKills + mob.kills
+    end
+
+    return totalKills
+
+end
+
+function HCS_KillingMobsScore:GetToolTip(tooltip)
+    local totalKilltypes = HCS_KillingMobsScore:GetNumMobTypes()
+    local totalDangerousKills = HCS_KillingMobsScore:GetNumberDangerousKills()
+    
+    tooltip:AddLine(string.format("%.0f", (totalKilltypes)) .. " Kill Types", nil, nil, nil, true)
+    tooltip:AddLine(string.format("%.0f", (totalDangerousKills)) .. " Dangerous Kills", nil, nil, nil, true)
+end
+

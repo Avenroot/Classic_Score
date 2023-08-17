@@ -114,6 +114,12 @@ function HCS_PointsLogUI:AddMessage(msg)
     end)
 end
 
+-- Clears the Points Log
+function HCS_PointsLogUI:ClearPointsLog()
+    HCS_PointsLogUI.chatHistory = {}  -- Clear the chat history table
+    HCS_PointsLogUI.EditBox:SetText("")  -- Clear the text in the edit box
+end
+
 -- Set the script for resizing
 HCS_PointsLogUI.frame:SetScript("OnSizeChanged", function(self, width, height)
     HCS_PointsLogUI.scrollFrame:SetWidth(width - 36)

@@ -1,0 +1,174 @@
+Killing Mobs
+100 enemies killed
+200 enemies killed
+300 enemies killed
+400 enemies killed
+500 enemies killed
+600 enemies killed
+700 enemies killed
+800 enemies killed
+900 enemies killed
+-- achiev --
+1.500 enemies killed
+2.000 enemies killed
+2.500 enemies killed
+3.000 enemies killed
+3.500 enemies killed
+4.000 enemies killed
+4.500 enemies killed
+-- achiev --
+5.500 enemies killed
+6.000 enemies killed
+6.500 enemies killed
+7.000 enemies killed
+7.500 enemies killed
+8.000 enemies killed
+8.500 enemies killed
+9.500 enemies killed
+-- achiev --
+
+
+
+Killing Mob Types
+10 creature types killed
+20 creature types killed
+30 creature types killed
+40 creature types killed
+50 creature types killed
+60 creature types killed
+70 creature types killed
+80 creature types killed
+90 creature types killed
+-- achiev --
+110 creature types killed
+120 creature types killed
+130 creature types killed
+140 creature types killed
+150 creature types killed
+160 creature types killed
+170 creature types killed
+180 creature types killed
+190 creature types killed
+-- achiev --
+
+
+Quests
+10 Quests completed
+50 Quests completed
+-- achiev --
+150 Quests completed
+200 Quests completed
+250 Quests completed
+300 Quests completed
+350 Quests completed
+400 Quests completed
+450 Quests completed
+-- achiev --
+550 Quests completed
+600 Quests completed
+650 Quests completed
+700 Quests completed
+750 Quests completed
+800 Quests completed
+850 Quests completed
+900 Quests completed
+950 Quests completed
+-- achiev --
+
+
+Discovery
+10 Discoveries made
+50 Discoveries made
+-- achiev --
+150 Discoveries made
+200 Discoveries made
+250 Discoveries made
+300 Discoveries made
+350 Discoveries made
+400 Discoveries made
+450 Discoveries made
+-- achiev --
+550 Discoveries made
+600 Discoveries made
+650 Discoveries made
+700 Discoveries made
+750 Discoveries made
+800 Discoveries made
+850 Discoveries made
+900 Discoveries made
+950 Discoveries made
+-- achiev --
+
+
+
+REWORK INC - Number of Profession Points
+xxxxxx     1. You have 10 Profession Points
+xxxxxx     2. You have 50 Profession Points
+xxxxxx     3. You have 100 Profession Points
+xxxxxx     4. You have 200 Profession Points
+xxxxxx     5. You have 300 Profession Points
+xxxxxx     6. You have 400 Profession Points
+xxxxxx     7. You have 500 Profession Points
+xxxxxx     8. You have 750 Profession Points
+xxxxxx     9. You have 1000 Profession Points
+xxxxxx     10. You have 1500 Profession Points
+xxxxxx     11. You have 2000 Profession Points
+xxxxxx     12. You have 2500 Profession Points
+
+
+
+
+Killing dangerous enemies (playerlevel +3 or more)
+
+-- achiev --
+5 dangerous enemies killed
+25 dangerous enemies killed
+50 dangerous enemies killed
+75 dangerous enemies killed
+-- achiev --
+125 dangerous enemies killed
+150 dangerous enemies killed
+175 dangerous enemies killed
+200 dangerous enemies killed
+225 dangerous enemies killed
+250 dangerous enemies killed
+275 dangerous enemies killed
+300 dangerous enemies killed
+325 dangerous enemies killed
+350 dangerous enemies killed
+375 dangerous enemies killed
+400 dangerous enemies killed
+425 dangerous enemies killed
+450 dangerous enemies killed
+475 dangerous enemies killed
+-- achiev --
+525 dangerous enemies killed
+550 dangerous enemies killed
+575 dangerous enemies killed
+600 dangerous enemies killed
+625 dangerous enemies killed
+650 dangerous enemies killed
+675 dangerous enemies killed
+700 dangerous enemies killed
+725 dangerous enemies killed
+750 dangerous enemies killed
+775 dangerous enemies killed
+800 dangerous enemies killed
+825 dangerous enemies killed
+850 dangerous enemies killed
+875 dangerous enemies killed
+900 dangerous enemies killed
+925 dangerous enemies killed
+950 dangerous enemies killed
+975 dangerous enemies killed
+-- achiev --
+
+
+XXXX Killing elite enemies
+someday :>
+
+
+
+
+* All Milestones are awarded 2.5 points unless noted.
+** All Milestones are scaled by level. Each level you complete you get more of the points.

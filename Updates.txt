@@ -59,3 +59,15 @@ Version 0.9.11
     1. Set Milestone message popup to display 5 seconds instead of 10 seconds.
     2. Fixed a bug when hovering over another player's portrait to see their scores.
     3. Milestone Kill Type was showing the wrong image.  Fixed.
+
+Version 1.0.0
+    1. Dangerous enemy kills (>=3) are tracked.
+    2. Overhauled the Milestones visuals. No longer stack when showing but are put in a queue to display every 5 seconds if more than one.
+    3. Updated most of the Milestone's requirements. Added more.
+    4. Added Milestones for Dangerous Enemies killed.
+    5. New Portraits
+    6. New fitting boarders
+    7. Updated logo
+    8. NEW Category! Achievements!
+    9. Lots of code fixes and updates.
+    10. Ready for Official Hardcore Servers.
