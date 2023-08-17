@@ -1,8 +1,8 @@
 ## Interface: 11403
-## Title: Hardcore Score 0.9.11
+## Title: Hardcore Score 1.0.0
 ## Notes: Your Hardcore score for your character
 ## Author: Avenroot
-## Version: 0.9.11
+## Version: 1.0.0
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character
@@ -17,7 +17,7 @@ Core/HCS_Playerinfo.lua
 Core/HCS_PlayerCoreScore.lua
 Core/HCS_PlayerLevelingScore.lua
 Core/HCS_PlayerEquippedGearScore.lua
-Core/HCS_PlayerHCAchievementScore.lua
+Core/HCS_AchievementScore.lua
 Core/HCS_PlayerQuestingScore.lua
 Core/HCS_KillingMobsScore.lua
 Core/HCS_ProfessionsScore.lua
@@ -38,6 +38,7 @@ Events/HCS_XPUpdateEvent.lua
 Events/HCS_DeathEvent.lua
 
 Data/HCS_MilestonesDB.lua
+Data/HCS_AchievementsDB.lua
 
 UI/HCS_MainInfoFrameUI.lua
 UI/HCS_ScoreboardSummaryUI.lua

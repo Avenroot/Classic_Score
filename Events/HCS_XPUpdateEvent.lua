@@ -21,12 +21,14 @@ _xpupdate_event:SetScript("OnEvent", function(event, ...)
     local zoneChanged = _G["ZoneChanged"]
     local mobName = _G["MobName"]
     local mobLevel = _G["MobLevel"]
+    local mobClassification = _G["MobClassification"]
     
     if mobCombatKill == true then
         HCS_KillingMobsScore:UpdateMobsKilled()
         mobCombatKill = false
         mobName = ""
         mobLevel = 0
+        mobClassification = ""
         
         -- a hack for Discovery until I can figure out how to detect if any xp is gained by entering a new zone.
         zoneChanged = false 
@@ -43,5 +45,6 @@ _xpupdate_event:SetScript("OnEvent", function(event, ...)
     _G["ZoneChanged"] = zoneChanged
     _G["MobName"] = mobName
     _G["MobLevel"] = mobLevel
+    _G["MobClassification"] = mobClassification
     
 end)

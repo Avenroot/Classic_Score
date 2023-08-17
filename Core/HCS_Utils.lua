@@ -38,5 +38,11 @@ function HCS_Utils:GetTextWithFactionColor(faction, text)
     return txt
 end
 
+HCS_print = true  -- Global!  Allows you to turn printing on and off if needed in certains
+function HCS_Utils:Print(msg)
+    
+    if HCS_print then
+        print(msg)
+    end
 
-
+end

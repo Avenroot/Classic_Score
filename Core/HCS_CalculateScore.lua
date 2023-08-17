@@ -1,6 +1,6 @@
 HCS_CalculateScore = {}
 
-local levelScalePercentage = 0
+--local levelScalePercentage = 0
 
 -- Portrait Level Points Classic
 local GREY = 0
@@ -27,6 +27,7 @@ local beforeStats = {
     reputationScore = 0,
     discoveryScore = 0,
     milestonesScore = 0,
+    achievementScore = 0,
     questingScore = 0,
     mobsKilledScore = 0,
     coreScore = 0,
@@ -41,6 +42,7 @@ local function SetBeforeStats()
     beforeStats.milestonesScore = HCScore_Character.scores.milestonesScore
     beforeStats.questingScore = HCScore_Character.scores.questingScore
     beforeStats.mobsKilledScore = HCScore_Character.scores.mobsKilledScore
+    beforeStats.achievementScore = HCScore_Character.scores.achievementScore
     beforeStats.coreScore = HCScore_Character.scores.coreScore
 end
 
@@ -67,57 +69,72 @@ end
 function GetCurrentPortrait()
     local playerLevel = UnitLevel("player")
     local playerScore = HCScore_Character.scores.coreScore
-    local currentPortrait = Img_hcs_grey_portrait_32 -- default    
+    local currentPortrait = Img_hcs_lvl_1_portrait -- default 
+    local currentBorder = Img_hcs_lvl_1_border -- default  
 
-    if HCS_GameVersion < 3000 then -- Classic
+    if HCS_GameVersion < 30000 then -- Classic
         -- Gold Crown
         if playerLevel == 60 and playerScore > GOLD then
-            currentPortrait = Img_hcs_gold_crown_portrait_32
+            currentPortrait = Img_hcs_lvl_7_portrait
+            currentBorder = Img_hcs_lvl_7_border
         -- Red Diamond
         elseif playerLevel >= 50 and playerScore >= RED then
-            currentPortrait = Img_hcs_red_diamond_portrait_32
+            currentPortrait = Img_hcs_lvl_6_portrait
+            currentBorder = Img_hcs_lvl_6_border
         -- Orange
         elseif playerLevel >= 40 and playerScore >= ORANGE then
-            currentPortrait = Img_hcs_orange_portrait_32
+            currentPortrait = Img_hcs_lvl_5_portrait
+            currentBorder = Img_hcs_lvl_5_border
         -- Purple
         elseif playerLevel >= 30 and playerScore >= PURPLE then
-            currentPortrait = Img_hcs_purple_portrait_32
+            currentPortrait = Img_hcs_lvl_4_portrait
+            currentBorder = Img_hcs_lvl_4_border
         -- Blue
         elseif playerLevel >= 20 and playerScore >= BLUE then
-            currentPortrait = Img_hcs_blue_portrait_32
+            currentPortrait = Img_hcs_lvl_3_portrait
+            currentBorder = Img_hcs_lvl_3_border
         -- Green
         elseif playerLevel >= 10 and playerScore >= GREEN then
-            currentPortrait = Img_hcs_green_portrait_32
+            currentPortrait = Img_hcs_lvl_2_portrait
+            currentBorder = Img_hcs_lvl_2_border
         -- Grey
         elseif playerLevel >= 1 and playerScore >= GREY then
-            currentPortrait = Img_hcs_grey_portrait_32
+            currentPortrait = Img_hcs_lvl_1_portrait
+            currentBorder = Img_hcs_lvl_1_border
         end
     else  -- WOTLK
         -- Gold Crown
         if playerLevel == 80 and playerScore > GOLD_wotlk then  -- Level increased to 80
-            currentPortrait = Img_hcs_gold_crown_portrait_32
+            currentPortrait = Img_hcs_lvl_7_portrait
+            currentBorder = Img_hcs_lvl_7_border
         -- Red Diamond
         elseif playerLevel >= 67 and playerScore >= RED_wotlk then  -- Level increased to 67
-            currentPortrait = Img_hcs_red_diamond_portrait_32
+            currentPortrait = Img_hcs_lvl_6_portrait
+            currentBorder = Img_hcs_lvl_6_border
         -- Orange
         elseif playerLevel >= 53 and playerScore >= ORANGE_wotlk then  -- Level increased to 53
-            currentPortrait = Img_hcs_orange_portrait_32
+            currentPortrait = Img_hcs_lvl_5_portrait
+            currentBorder = Img_hcs_lvl_5_border
         -- Purple
         elseif playerLevel >= 40 and playerScore >= PURPLE_wotlk then  -- Level increased to 40
-            currentPortrait = Img_hcs_purple_portrait_32
+            currentPortrait = Img_hcs_lvl_4_portrait
+            currentBorder = Img_hcs_lvl_4_border
         -- Blue
         elseif playerLevel >= 27 and playerScore >= BLUE_wotlk then  -- Level increased to 27
-            currentPortrait = Img_hcs_blue_portrait_32
+            currentPortrait = Img_hcs_lvl_3_portrait
+            currentBorder = Img_hcs_lvl_3_border
         -- Green
         elseif playerLevel >= 13 and playerScore >= GREEN_wotlk then  -- Level increased to 13
-            currentPortrait = Img_hcs_green_portrait_32
+            currentPortrait = Img_hcs_lvl_2_portrait
+            currentBorder = Img_hcs_lvl_2_border
         -- Grey
         elseif playerLevel >= 1 and playerScore >= GREY_wotlk then
-            currentPortrait = Img_hcs_grey_portrait_32
+            currentPortrait = Img_hcs_lvl_1_portrait
+            currentBorder = Img_hcs_lvl_1_border
         end                
     end
 
-    return currentPortrait
+    return currentPortrait, currentBorder
 end
 
 local function RefreshUI()
@@ -156,6 +173,7 @@ local function UpdateProfileScores()
         reputationScore = HCScore_Character.scores.reputationScore,
         discoveryScore = HCScore_Character.scores.discoveryScore,
         milestonesScore = HCScore_Character.scores.milestonesScore,
+        achievementScore = HCScore_Character.scores.achievementScore,
     }
 end
 
@@ -163,31 +181,36 @@ function HCS_CalculateScore:RefreshScores(desc)
     
     if HCS_OldLevel == nil or HCS_OldLevel == 0 then HCS_OldLevel = UnitLevel("player") end -- makes sure HCS_OldLevel is set correctly when logging in.
    
+    -- Update Scaling Percentage
     if HCS_GameVersion < 30000 then
-        levelScalePercentage = (UnitLevel("player")  / 60) -- Classic
+        HCS_LevelScalePercentage = (UnitLevel("player")  / 60) -- Classic
     else
-        levelScalePercentage = (UnitLevel("player")  / 80) -- WOTLK
+        HCS_LevelScalePercentage = (UnitLevel("player")  / 80) -- WOTLK
     end
 
     _G["CurrentXP"] = UnitXP("player")  -- CurrentXP
     _G["CurrentMaxXP"] = UnitXPMax("player") -- CurrentMaxXP
 
     SetBeforeStats()
+    HCS_MilestonesScore:CheckMilestones()
+    HCS_AchievementScore:CheckAchievements()
 
-    HCScore_Character.scores.levelingScore = HCS_PlayerLevelingScore:GetLevelScore() * levelScalePercentage
-    HCScore_Character.scores.equippedGearScore = HCS_PlayerEquippedGearScore:GetEquippedGearScore() * levelScalePercentage
-    HCScore_Character.scores.professionsScore = HCS_ProfessionsScore:GetProfessionsScore() * levelScalePercentage
-    HCScore_Character.scores.reputationScore = HCS_ReputationScore:GetReputationScore() * (levelScalePercentage ^ 2)
-    HCScore_Character.scores.discoveryScore = HCS_DiscoveryScore:GetDiscoveryScore() * levelScalePercentage
-    HCScore_Character.scores.milestonesScore = HCS_MilestonesScore:GetMilestonesScore() * levelScalePercentage
+    HCScore_Character.scores.levelingScore = HCS_PlayerLevelingScore:GetLevelScore() * HCS_LevelScalePercentage
+    HCScore_Character.scores.equippedGearScore = HCS_PlayerEquippedGearScore:GetEquippedGearScore() * HCS_LevelScalePercentage
+    HCScore_Character.scores.professionsScore = HCS_ProfessionsScore:GetProfessionsScore() * HCS_LevelScalePercentage
+    HCScore_Character.scores.reputationScore = HCS_ReputationScore:GetReputationScore() * (HCS_LevelScalePercentage ^ 2)
+    HCScore_Character.scores.discoveryScore = HCS_DiscoveryScore:GetDiscoveryScore() * HCS_LevelScalePercentage
+    HCScore_Character.scores.milestonesScore = HCS_MilestonesScore:GetMilestonesScore() * HCS_LevelScalePercentage
+    HCScore_Character.scores.achievementScore = HCS_AchievementScore:GetAchievementsScore() * HCS_LevelScalePercentage
     HCScore_Character.scores.questingScore = HCS_PlayerQuestingScore:GetQuestingScore()
     HCScore_Character.scores.mobsKilledScore = HCS_KillingMobsScore:GetMobsKilledScore()
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
 
-    HCS_MilestonesScore:CheckMilestones()
     UpdateProfileScores()
     RefreshUI()
-    CurrentPortrait = GetCurrentPortrait()
+    Current_hcs_Portrait, Current_hcs_Border = GetCurrentPortrait()
+    --Current_hcs_Portrait = Img_hcs_lvl_7_portrait
+    --Current_hcs_Border = Img_hcs_lvl_7_border
 
     if desc ~= nil then
         CompareStats(beforeStats, HCScore_Character.scores, desc)

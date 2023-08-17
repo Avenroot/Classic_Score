@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "0.9.11" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.0.0" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -19,7 +19,7 @@ HCScore_Character = {
     scores = {
         coreScore = 0,
         equippedGearScore = 0,
-        hcAchievementScore = 0,
+        achievementScore = 0,
         levelingScore = 0,
         questingScore = 0,
         mobsKilledScore = 0,
@@ -50,6 +50,8 @@ HCScore_Character = {
     discovery = {},
     milestones = {},
     levelScores = {},
+    dangerousMobsKilled = {},
+    achievements = {},
 }
 
 -- Define your options table
@@ -291,16 +293,6 @@ function Hardcore_Score.HandleSlashCommands(str)
     end
 end
 
-function Hardcore_Score:Print(...)
---    DEFAULT_CHAT_FRAME:AddMessage(string.join(" ", prefix, tostringall(...)));    
-    local debugging = true
-    
-    if debugging then
-        print(...)        
-    end
-
-end
-
 function Hardcore_Score:CreateDB()
 
     -- Create a new database for your addon    
@@ -358,20 +350,34 @@ end
 
 function Hardcore_Score:CreateMiniMapButton()
     local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("HCScoreMinimapButton", {
-        type = "launcher",
-        icon = "Interface\\Addons\\Hardcore_Score\\Media\\hcs-minimap-16.blp",  -- XP_ICON, Spell_Nature_Polymorph
+        type = "data source",
+        icon = "Interface\\Addons\\Hardcore_Score\\Media\\MM_logo_2.tga",
         OnClick = function(self, button)
 
 
             -- Check if left mouse button was clicked
             if button == "LeftButton" then
 
-                --local msg1 = "Level 10"
-                --local frame1 = HCS_MessageFrameUI.DisplayLevelingMessage(msg1, 10)
-                --frame1:ShowMessage()
+                --local msg1 = "10 discoveries made"
+                --local frame1 = HCS_MessageFrameUI.DisplayMilestoneMessage(msg1, 5, HCS_MilestonesColors.Discoveries)                
+                --frame1:EnqueueMessage()
+                
+                --local msg2 = "350 quests completed"
+                --local frame2 = HCS_MessageFrameUI.DisplayMilestoneMessage(msg2, 5, HCS_MilestonesColors.QuestsCompleted)
+                --frame2:EnqueueMessage()
 
-                --local msg2 = "LEVEL 10"
-                --local frame2 = HCS_MessageFrameUI.DisplayMilestoneMessage(msg2, Img_hcs_milestone_level, 10)
+                --local msg3 = "100 enemies killed"
+                --local frame3 = HCS_MessageFrameUI.DisplayMilestoneMessage(msg3, 5, HCS_MilestonesColors.EnemiesKilled)
+                --frame3:EnqueueMessage()
+
+                                
+                --local playerLevel = UnitLevel("player")
+                --local msg = "Level "..playerLevel
+                --local frame = HCS_MessageFrameUI.DisplayLevelingMessage(msg, 5)
+                --frame:ShowMessage()                
+
+                --local msg2 = "1,000 dangerous enemies killed"
+                --local frame2 = HCS_MessageFrameUI.DisplayAchievementMessage(msg2, Img_hcs_achievement_level, 5)
                 --frame2:ShowMessage()
 
                 -- Open Hardcore_Score section of the options menu
@@ -382,7 +388,7 @@ function Hardcore_Score:CreateMiniMapButton()
             elseif button == "RightButton" then
                 -- Display your frame
                 HCS_CharactersInfoUI.frame:Show() 
-                --HCS_MainInfoFrameUI.frame:Show()
+                
             end
 
 
@@ -476,6 +482,9 @@ function Hardcore_Score:init(event, name)
         -- initalization Hardcore_Score_Settings
         if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
 
+        -- Turn printing to message window off while loading and re-calculating
+        HCS_print = false
+
         HCS_Playerinfo:LoadCharacterData()
 
         HCS_ScoreboardSummaryUI:CreateFrame()
@@ -501,12 +510,19 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI:SetVisibility()
 
         HCS_PlayerCompletingQuestEvent:RecalculateQuests()
-        HCS_MilestonesScore:RecalculateMilestones()
+        
+        HCS_MilestonesScore:ClearMilestones()
 
         HCS_CalculateScore:RefreshScores()
 
         -- Hides any messages that may be shown by recalcuating tables / scores (2) - Restores settings
         Hardcore_Score.db.profile.framePositionMsg.show = saveShowMessages
+        
+        -- Turn printing to message window back on
+        HCS_print = true
+
+        -- Clear Points Log
+        HCS_PointsLogUI:ClearPointsLog()
 
     elseif event == "PLAYER_LOGIN" then
         local playerName
@@ -531,8 +547,11 @@ function Hardcore_Score:init(event, name)
 
         playerName = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.name)
 
+        -- Clear Points Log
+        HCS_PointsLogUI:ClearPointsLog()
+
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v0.9.11.  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.0.  Lets GO!")
         --print("|cff81b7e9".."Hardcore Score: ".."|r".."Psst,", playerName.. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score!");   
     end
 

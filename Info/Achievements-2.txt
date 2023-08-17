@@ -1,0 +1,16 @@
+Killing Elites (+rare elites)
+You have killed 1 elite enemy
+You have killed 100 elite enemies
+You have killed 500 elite enemies
+You have killed 1.000 elite enemies
+You have killed 5.000 elite enemies
+
+Killing world bosses
+You have killed 1 world boss
+You have killed 10 world bosses
+You have killed 20 world bosses
+
+Killing Rares (+Rare elites)
+You have killed 1 rare enemy
+You have killed 10 rare enemies
+You have killed 20 rare enemies

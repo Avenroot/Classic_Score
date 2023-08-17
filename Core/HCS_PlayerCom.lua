@@ -5,7 +5,7 @@ HCS_PlayerCom = {}
 local scoresComm = {
     coreScore = '',
     equippedGearScore = '',
-    hcAchievementScore = '',
+    achievementScore = '',
     levelingScore = '',
     questingScore = '',
     mobsKilledScore = '',
@@ -20,7 +20,7 @@ local function init()
     scoresComm = {
         coreScore = '',
         equippedGearScore = '',
-        hcAchievementScore = '',
+        achievementScore = '',
         levelingScore = '',
         questingScore = '',
         mobsKilledScore = '',
@@ -57,7 +57,7 @@ function HCS_PlayerCom:SendScore()
 
     scoresComm.coreScore = string.format("%.2f", HCScore_Character.scores.coreScore)
     scoresComm.equippedGearScore = string.format("%.2f", HCScore_Character.scores.equippedGearScore)
-    scoresComm.hcAchievementScore = string.format("%.2f", HCScore_Character.scores.hcAchievementScore)
+    scoresComm.achievementScore = string.format("%.2f", HCScore_Character.scores.achievementScore)
     scoresComm.levelingScore = string.format("%.2f", HCScore_Character.scores.levelingScore)
     scoresComm.questingScore = string.format("%.2f", HCScore_Character.scores.questingScore)
     scoresComm.mobsKilledScore = string.format("%.2f", HCScore_Character.scores.mobsKilledScore)

@@ -29,7 +29,7 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.scores.discoveryScore == nil then HCScore_Character.scores.discoveryScore = 0 end
     if HCScore_Character.scores.dungeonsScore == nil then HCScore_Character.scores.dungeonsScore = 0 end
     if HCScore_Character.scores.equippedGearScore == nil then HCScore_Character.scores.equippedGearScore = 0 end
-    if HCScore_Character.scores.hcAchievementScore == nil then HCScore_Character.scores.hcAchievementScore = 0 end
+    if HCScore_Character.scores.achievementScore == nil then HCScore_Character.scores.achievementScore = 0 end
     if HCScore_Character.scores.levelingScore == nil then HCScore_Character.scores.levelingScore = 0 end
     if HCScore_Character.scores.mobsKilledScore == nil then HCScore_Character.scores.mobsKilledScore = 0 end
     if HCScore_Character.scores.professionsScore == nil then HCScore_Character.scores.professionsScore = 0 end
@@ -55,6 +55,8 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.discovery == nil then HCScore_Character.discovery = {} end
     if HCScore_Character.milestones == nil then HCScore_Character.milestones = {} end
     if HCScore_Character.levelScores == nil then HCScore_Character.levelScores = {} end
+    if HCScore_Character.dangerousMobsKilled == nil then HCScore_Character.dangerousMobsKilled = {} end
+    if HCScore_Character.achievements == nil then HCScore_Character.achievements = {} end
 
     HCScore_Character.name = UnitName("player")
     HCScore_Character.class = UnitClass("player")
@@ -81,7 +83,7 @@ function ResetCharacterStats()
     if HCScore_Character.scores.discoveryScore ~= nil then HCScore_Character.scores.discoveryScore = 0 end
     if HCScore_Character.scores.dungeonsScore ~= nil then HCScore_Character.scores.dungeonsScore = 0 end
     if HCScore_Character.scores.equippedGearScore ~= nil then HCScore_Character.scores.equippedGearScore = 0 end
-    if HCScore_Character.scores.hcAchievementScore ~= nil then HCScore_Character.scores.hcAchievementScore = 0 end
+    if HCScore_Character.scores.achievementScore ~= nil then HCScore_Character.scores.achievementScore = 0 end
     if HCScore_Character.scores.levelingScore ~= nil then HCScore_Character.scores.levelingScore = 0 end
     if HCScore_Character.scores.mobsKilledScore ~= nil then HCScore_Character.scores.mobsKilledScore = 0 end
     if HCScore_Character.scores.professionsScore ~= nil then HCScore_Character.scores.professionsScore = 0 end
@@ -107,6 +109,8 @@ function ResetCharacterStats()
     if HCScore_Character.discovery ~= nil then HCScore_Character.discovery = {} end
     if HCScore_Character.milestones ~= nil then HCScore_Character.milestones = {} end
     if HCScore_Character.levelScores ~= nil then HCScore_Character.levelScores = {} end
+    if HCScore_Character.dangerousMobsKilled == nil then HCScore_Character.dangerousMobsKilled = {} end
+    if HCScore_Character.achievements == nil then HCScore_Character.achievements = {} end
 
 end
 
