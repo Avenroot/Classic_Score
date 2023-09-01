@@ -48,22 +48,14 @@ end
 local function CheckLeveling()
     local level = UnitLevel("player")
 
-    if level >= 5 then AddAchievement("ach_lvl_1") end
-    if level >= 10 then AddAchievement("ach_lvl_2") end
-    if level >= 15 then AddAchievement("ach_lvl_3") end
-    if level >= 20 then AddAchievement("ach_lvl_4") end
-    if level >= 25 then AddAchievement("ach_lvl_5") end
-    if level >= 30 then AddAchievement("ach_lvl_6") end
-    if level >= 35 then AddAchievement("ach_lvl_7") end
-    if level >= 40 then AddAchievement("ach_lvl_8") end
-    if level >= 45 then AddAchievement("ach_lvl_9") end
-    if level >= 50 then AddAchievement("ach_lvl_10") end
-    if level >= 55 then AddAchievement("ach_lvl_11") end
-    if level >= 60 then AddAchievement("ach_lvl_12") end
-    if level >= 65 then AddAchievement("ach_lvl_13") end
-    if level >= 70 then AddAchievement("ach_lvl_14") end    
-    if level >= 75 then AddAchievement("ach_lvl_15") end
-    if level == 80 then AddAchievement("ach_lvl_16") end
+    if level >= 10 then AddAchievement("ach_lvl_1") end    
+    if level >= 20 then AddAchievement("ach_lvl_2") end    
+    if level >= 30 then AddAchievement("ach_lvl_3") end
+    if level >= 40 then AddAchievement("ach_lvl_4") end
+    if level >= 50 then AddAchievement("ach_lvl_5") end
+    if level >= 60 then AddAchievement("ach_lvl_6") end
+    if level >= 70 then AddAchievement("ach_lvl_7") end    
+    if level == 80 then AddAchievement("ach_lvl_8") end
 
 end
 

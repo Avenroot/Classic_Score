@@ -3,6 +3,11 @@ HCS_Globals = {}
 -- Game information
 HCS_GameVersion = select(4, GetBuildInfo())  -- if over 3000 than playing WOTLK
 
+-- Loading delay
+HCS_Delay = 0  -- this is an ugly hack to delay printing messages when the game is being logged in. (Not reloading)
+               -- The addon loads differently if it is logging in as opposed to doing a reload.
+               -- TODO: Need to find a better solution.
+
 -- Scaling Percentage
 HCS_LevelScalePercentage = 0
 
@@ -13,6 +18,7 @@ CurrentLevel = 0  -- a work around because level doesn't get updated on PLAYER_L
 ZoneChanged = false
 PlayerLeveled = false
 HCS_OldLevel = 0
+HCS_PlayerRank = {}
 
 -- Mob information
 MobCombatKill = false
@@ -33,7 +39,20 @@ ScoringDescriptions = {
     achievementScore = "Achievement Gain",
 }
 
--- images 
+-- Class Images
+Img_hcs_Class_Shaman = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_shaman.blp"
+Img_hcs_Class_Warlock = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_warlock.blp"
+Img_hcs_Class_DeathKnight = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_deathknight.blp"
+Img_hcs_Class_Druid = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_druid.blp"
+Img_hcs_Class_Hunter = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_hunter.blp"
+Img_hcs_Class_Mage = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_mage.blp"
+Img_hcs_Class_Paladin = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_paladin.blp"
+Img_hcs_Class_Priest = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_priest.blp"
+Img_hcs_Class_Rouge = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_rouge.blp"
+Img_hcs_Class_Warrior = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_warrior.blp"
+Img_hcs_Class_None = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_class0.blp"
+
+-- Achievement Images 
 Img_hcs_achievement_frame = "Interface\\Addons\\Hardcore_Score\\Media\\Achievements\\hcs-achievement-frame.blp"
 Img_hcs_achievement_quest = "Interface\\Addons\\Hardcore_Score\\Media\\Achievements\\hcs-quest.tga"
 Img_hcs_achievement_profession = "Interface\\Addons\\Hardcore_Score\\Media\\Achievements\\hcs-profession.tga"
@@ -43,25 +62,70 @@ Img_hcs_achievement_kill = "Interface\\Addons\\Hardcore_Score\\Media\\Achievemen
 Img_hcs_achievement_discovery = "Interface\\Addons\\Hardcore_Score\\Media\\Achievements\\hcs-discovery.tga"
 Img_hcs_ahcievement_dangerous_ememey_kill = "Interface\\Addons\\Hardcore_Score\\Media\\Achievements\\hcs-dangerous-enemy.tga"
 
--- portrait images
+--Simple Rank images
+Img_hcs_Rank1 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port1.tga"
+Img_hcs_Rank2 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port2.tga"
+Img_hcs_Rank3 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port3.tga"
+Img_hcs_Rank4 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port4.tga"
+Img_hcs_Rank5 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port5.tga"
+Img_hcs_Rank6 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port6.tga"
+Img_hcs_Rank7 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port7.tga"
+
+-- Rank portrait images
 Current_hcs_Portrait = ""
-Img_hcs_lvl_1_portrait = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port1.tga"
-Img_hcs_lvl_2_portrait = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port2.tga"
-Img_hcs_lvl_3_portrait = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port3.tga"
-Img_hcs_lvl_4_portrait = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port4.tga"
-Img_hcs_lvl_5_portrait = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port5.tga"
-Img_hcs_lvl_6_portrait = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port6.tga"
-Img_hcs_lvl_7_portrait = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\port7.tga"
+
+-- Bronze
+Img_hcs_Rank1_Level0 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Bronze_0.blp" 
+Img_hcs_Rank1_Level1 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Bronze_1.blp"
+Img_hcs_Rank1_Level2 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Bronze_2.blp"
+Img_hcs_Rank1_Level3 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Bronze_3.blp"
+Img_hcs_Rank1_Level4 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Bronze_4.blp"
+-- Silver 
+Img_hcs_Rank2_Level0 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Silver_0.blp"
+Img_hcs_Rank2_Level1 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Silver_1.blp"
+Img_hcs_Rank2_Level2 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Silver_2.blp"
+Img_hcs_Rank2_Level3 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Silver_3.blp"
+Img_hcs_Rank2_Level4 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Silver_4.blp"
+-- Gold
+Img_hcs_Rank3_Level0 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Gold_0.blp"
+Img_hcs_Rank3_Level1 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Gold_1.blp"
+Img_hcs_Rank3_Level2 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Gold_2.blp"
+Img_hcs_Rank3_Level3 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Gold_3.blp"
+Img_hcs_Rank3_Level4 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Gold_4.blp"
+-- Platinum
+Img_hcs_Rank4_Level0 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Platinum_0.blp"
+Img_hcs_Rank4_Level1 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Platinum_1.blp"
+Img_hcs_Rank4_Level2 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Platinum_2.blp"
+Img_hcs_Rank4_Level3 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Platinum_3.blp"
+Img_hcs_Rank4_Level4 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Platinum_4.blp"
+-- Diamond
+Img_hcs_Rank5_Level0 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Diamond_0.blp" 
+Img_hcs_Rank5_Level1 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Diamond_1.blp"
+Img_hcs_Rank5_Level2 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Diamond_2.blp" 
+Img_hcs_Rank5_Level3 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Diamond_3.blp" 
+Img_hcs_Rank5_Level4 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Diamond_4.blp" 
+-- Epic
+Img_hcs_Rank6_Level0 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Epic_0.blp"
+Img_hcs_Rank6_Level1 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Epic_1.blp"
+Img_hcs_Rank6_Level2 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Epic_2.blp"
+Img_hcs_Rank6_Level3 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Epic_3.blp"
+Img_hcs_Rank6_Level4 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Epic_4.blp"
+--Legendary
+Img_hcs_Rank7_Level0 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Legendary_0.blp"
+Img_hcs_Rank7_Level1 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Legendary_1.blp"
+Img_hcs_Rank7_Level2 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Legendary_2.blp"
+Img_hcs_Rank7_Level3 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Legendary_3.blp"
+Img_hcs_Rank7_Level4 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Bracket_Legendary_4.blp"
 
 -- portrait boarders
 Current_hcs_Border = ""
-Img_hcs_lvl_1_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\border1.blp"
-Img_hcs_lvl_2_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\border2.blp"
-Img_hcs_lvl_3_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\border3.blp"
-Img_hcs_lvl_4_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\border4.blp"
-Img_hcs_lvl_5_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\border5.blp"
-Img_hcs_lvl_6_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\border6.blp"
-Img_hcs_lvl_7_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\border7.blp"
+Img_hcs_lvl_1_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Bronze.blp"
+Img_hcs_lvl_2_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Silver.blp"
+Img_hcs_lvl_3_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Gold.blp"
+Img_hcs_lvl_4_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Platinum.blp"
+Img_hcs_lvl_5_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Diamond.blp"
+Img_hcs_lvl_6_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Epic.blp"
+Img_hcs_lvl_7_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Legendary.blp"
 
 -- milestone text colors  
 HCS_MilestonesColors = {

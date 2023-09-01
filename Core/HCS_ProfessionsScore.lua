@@ -120,6 +120,8 @@ end
 
 function HCS_ProfessionsScore:GetProfessionsScore()
 
+    -- we need to introduce localization
+    
     for i = 1, GetNumSkillLines() do
         local skillName, isHeader, _, skillRank, _, _, skillMaxRank, _, _, skillLineID = GetSkillLineInfo(i)
         

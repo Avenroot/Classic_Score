@@ -17,16 +17,8 @@ local imgProfession = Img_hcs_achievement_profession
 HCS_AchievementsDB = {
 
     -- Leveling Achievements
-    {
-        id = "ach_lvl_1",
-        name = "Level 5",
-        desc = "Achievement! Congrats! You reached for level 5",
-        shortdesc = "Level 5",
-        points = levelPoints,
-        image = imgLeveling,
-      }, 
       {
-        id = "ach_lvl_2",
+        id = "ach_lvl_1",
         name = "Level 10",
         desc = "Achievement! Congrats! You reached for level 10",
         shortdesc = "Level 10",
@@ -34,15 +26,7 @@ HCS_AchievementsDB = {
         image = imgLeveling,
       }, 
       {
-        id = "ach_lvl_3",
-        name = "Level 15",
-        desc = "Achievement! Congrats! You reached for level 15",
-        shortdesc = "Level 15",
-        points = levelPoints,
-        image = imgLeveling,
-      }, 
-      {
-        id = "ach_lvl_4",
+        id = "ach_lvl_2",
         name = "Level 20",
         desc = "Achievement! Congrats! You reached for level 20",
         shortdesc = "Level 20",
@@ -50,15 +34,7 @@ HCS_AchievementsDB = {
         image = imgLeveling,
       }, 
       {
-        id = "ach_lvl_5",
-        name = "Level 25",
-        desc = "Achievement! Congrats! You reached for level 25",
-        shortdesc = "Level 25",
-        points = levelPoints,
-        image = imgLeveling,
-      }, 
-      {
-        id = "ach_lvl_6",
+        id = "ach_lvl_3",
         name = "Level 30",
         desc = "Achievement! Congrats! You reached for level 30",
         shortdesc = "Level 30",
@@ -66,15 +42,7 @@ HCS_AchievementsDB = {
         image = imgLeveling,
       }, 
       {
-        id = "ach_lvl_7",
-        name = "Level 35",
-        desc = "Achievement! Congrats! You reached for level 35",
-        shortdesc = "Level 35",
-        points = levelPoints,
-        image = imgLeveling,
-      }, 
-      {
-        id = "ach_lvl_8",
+        id = "ach_lvl_4",
         name = "Level 40",
         desc = "Achievement! Congrats! You reached for level 40",
         shortdesc = "Level 40",
@@ -82,15 +50,7 @@ HCS_AchievementsDB = {
         image = imgLeveling,
       }, 
       {
-        id = "ach_lvl_9",
-        name = "Level 45",
-        desc = "Achievement! Congrats! You reached for level 45",
-        shortdesc = "Level 45",
-        points = levelPoints,
-        image = imgLeveling,
-      }, 
-      {
-        id = "ach_lvl_10",
+        id = "ach_lvl_5",
         name = "Level 50",
         desc = "Achievement! Congrats! You reached for level 50",
         shortdesc = "Level 50",
@@ -98,15 +58,7 @@ HCS_AchievementsDB = {
         image = imgLeveling,
       }, 
       {
-        id = "ach_lvl_11",
-        name = "Level 55",
-        desc = "Achievement! Congrats! You reached for level 55",
-        shortdesc = "Level 55",
-        points = levelPoints,
-        image = imgLeveling,
-      }, 
-      {
-        id = "ach_lvl_12",
+        id = "ach_lvl_6",
         name = "Level 60",
         desc = "Achievement! Congrats! You reached for level 60",
         shortdesc = "Level 60",
@@ -114,15 +66,7 @@ HCS_AchievementsDB = {
         image = imgLeveling,
       }, 
       {
-        id = "ach_lvl_13",
-        name = "Level 65",
-        desc = "Achievement! Congrats! You've reached level 65",
-        shortdesc = "Level 65",
-        points = 10,
-        image = imgLeveling,
-      }, 
-      {
-        id = "ach_lvl_14",
+        id = "ach_lvl_7",
         name = "Level 70",
         desc = "Achievement! Congrats! You've reached level 70",
         shortdesc = "Level 70",
@@ -130,15 +74,7 @@ HCS_AchievementsDB = {
         image = imgLeveling,
       },
       {
-        id = "ach_lvl_15",
-        name = "Level 75",
-        desc = "Achievement! Congrats! You've reached level 75",
-        shortdesc = "Level 75",
-        points = 10,
-        image = imgLeveling,
-      }, 
-      {
-        id = "ach_lvl_16",
+        id = "ach_lvl_8",
         name = "Level 80",
         desc = "Achievement! Congrats! You've reached level 80",
         shortdesc = "Level 80",

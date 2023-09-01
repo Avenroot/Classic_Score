@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.0.0" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.0.2" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -189,12 +189,12 @@ local options = {
         },
 
         addonInfoHeader = {
-            name = "Note from the author",
+            name = "Note from the author(s)",
             type = "header",
             order = 15
         },
         addonInfo1 = {
-            name = "Thank you for trying out Hardcore Score. We are still in beta process and are aware of a few issues we are ironing out. We wanted to get this into your hands to get some feedback on what you think and let us know what changes you would like. If you find a bug please report it to our Discord.",
+            name = "Thank you for trying out Hardcore Score. We would love your feedback. Please report feedback and bugs to our Discord.",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -208,7 +208,7 @@ local options = {
             order = 17
         },
         addonInfo2 = {
-            name = "We have a lot of things we would like to do with Hardcore Score. We are excited to share those with you soon. Please be patient with us as we work out any issues in this beta. Enjoy challenging yourself to get the best Hardcore Score possible and share your results with us. Thank you and have fun!!",
+            name = "We have a lot of things planned for Hardcore Score. Look for annoucements in our Discord and on our website. Enjoy challenging yourself to get the best Hardcore Score possible and share your results with us. Thank you and have fun!!",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -223,7 +223,7 @@ local options = {
             order = 19
         },
         addonInfoNote = {
-            name = "* Note - Although we encourage you to use the Hardcore Addon with Hardcore Score, we are not accociated with the Hardcore Addon team.",
+            name = "version 1.0.2 - authors: Avenroot, Caith",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -371,18 +371,28 @@ function Hardcore_Score:CreateMiniMapButton()
                 --frame3:EnqueueMessage()
 
                                 
-                --local playerLevel = UnitLevel("player")
+               -- local playerLevel = UnitLevel("player")
                 --local msg = "Level "..playerLevel
                 --local frame = HCS_MessageFrameUI.DisplayLevelingMessage(msg, 5)
-                --frame:ShowMessage()                
+                --frame:EnqueueMessage()
 
+               -- local msg2 = "1,000 dangerous enemies killed"
+               -- local frame2 = HCS_MessageFrameUI.DisplayAchievementMessage(msg2, Img_hcs_achievement_level, 5)
+                --frame2:ShowMessage()
+                
                 --local msg2 = "1,000 dangerous enemies killed"
                 --local frame2 = HCS_MessageFrameUI.DisplayAchievementMessage(msg2, Img_hcs_achievement_level, 5)
                 --frame2:ShowMessage()
 
+                --local msg = HCS_PlayerRank.LevelText
+                --local img = HCS_PlayerRank.PortraitImage
+                --local frame = HCS_MessageFrameUI.DisplayHCSRankLevelingMessage(delay)
+                --frame:EnqueueMessage()                
+
                 -- Open Hardcore_Score section of the options menu
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score");
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score"); -- yes, you need to call it twice.
+                --HCS_WelcomeUI:ToggleMyFrame()
 
                 -- Check if right mouse button was clicked
             elseif button == "RightButton" then
@@ -391,9 +401,7 @@ function Hardcore_Score:CreateMiniMapButton()
                 
             end
 
-
         end,
-
 
         OnTooltipShow = function(tooltip)
             --tooltip:SetText("")  -- This should help ensure the title's style isn't applied to the first line
@@ -551,7 +559,7 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI:ClearPointsLog()
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.0.  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.2.  Lets GO!")
         --print("|cff81b7e9".."Hardcore Score: ".."|r".."Psst,", playerName.. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score!");   
     end
 
