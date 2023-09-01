@@ -71,3 +71,11 @@ Version 1.0.0
     8. NEW Category! Achievements!
     9. Lots of code fixes and updates.
     10. Ready for Official Hardcore Servers.
+
+Version 1.0.1
+    1. Version update to reflect new Classic update to version 1.14.4.  No other changes. 
+
+Version 1.0.2
+    1. New Rank/Leveling system added.
+    2. New UI.  It is so beautiful!  
+    3. Lots and lots of coding updates, bug fixes.

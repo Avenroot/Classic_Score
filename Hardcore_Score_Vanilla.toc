@@ -1,8 +1,8 @@
-## Interface: 11403
-## Title: Hardcore Score 1.0.0
+## Interface: 11404
+## Title: Hardcore Score 1.0.2
 ## Notes: Your Hardcore score for your character
-## Author: Avenroot
-## Version: 1.0.0
+## Author: Avenroot, Caith
+## Version: 1.0.2
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character
@@ -39,6 +39,7 @@ Events/HCS_DeathEvent.lua
 
 Data/HCS_MilestonesDB.lua
 Data/HCS_AchievementsDB.lua
+Data/HCS_RanksDB.lua
 
 UI/HCS_MainInfoFrameUI.lua
 UI/HCS_ScoreboardSummaryUI.lua

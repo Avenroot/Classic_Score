@@ -45,28 +45,6 @@ local function AddMilestone(id)
     end
 end
 
-local function CheckLeveling()
-    local level = UnitLevel("player")
-
-    if level >= 5 then AddMilestone("lvl_1") end
-    if level >= 10 then AddMilestone("lvl_2") end
-    if level >= 15 then AddMilestone("lvl_3") end
-    if level >= 20 then AddMilestone("lvl_4") end
-    if level >= 25 then AddMilestone("lvl_5") end
-    if level >= 30 then AddMilestone("lvl_6") end
-    if level >= 35 then AddMilestone("lvl_7") end
-    if level >= 40 then AddMilestone("lvl_8") end
-    if level >= 45 then AddMilestone("lvl_9") end
-    if level >= 50 then AddMilestone("lvl_10") end
-    if level >= 55 then AddMilestone("lvl_11") end
-    if level >= 60 then AddMilestone("lvl_12") end
-    if level >= 65 then AddMilestone("lvl_13") end
-    if level >= 70 then AddMilestone("lvl_14") end    
-    if level >= 75 then AddMilestone("lvl_15") end
-    if level == 80 then AddMilestone("lvl_16") end
-
-end
-
 local function CheckMobKillsByType()
     local mobskilled = #HCScore_Character.mobsKilled
 

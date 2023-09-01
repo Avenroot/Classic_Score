@@ -1,5 +1,51 @@
 HCS_WelcomeUI = {}
 
+local message = [[
+    Rank / Level
+    
+    Bronze RANK 1
+    Bronze RANK 1 LEVEL 1
+    Bronze RANK 1 LEVEL 2
+    Bronze RANK 1 LEVEL 3
+    Bronze RANK 1 LEVEL 4
+    
+    Silver RANK 2
+    Silver RANK 2 LEVEL 1
+    Silver RANK 2 LEVEL 2
+    Silver RANK 2 LEVEL 3
+    Silver RANK 2 LEVEL 4
+    
+    Gold RANK 3
+    Gold RANK 3 LEVEL 1
+    Gold RANK 3 LEVEL 2
+    Gold RANK 3 LEVEL 3
+    Gold RANK 3 LEVEL 4
+    
+    Platinum RANK 4
+    Platinum RANK 4 LEVEL 1
+    Platinum RANK 4 LEVEL 2
+    Platinum RANK 4 LEVEL 3
+    Platinum RANK 4 LEVEL 4
+    
+    Diamond RANK 5
+    Diamond RANK 5 LEVEL 1
+    Diamond RANK 5 LEVEL 2
+    Diamond RANK 5 LEVEL 3
+    Diamond RANK 5 LEVEL 4
+    
+    Epic RANK 6
+    Epic RANK 6 LEVEL 1
+    Epic RANK 6 LEVEL 2
+    Epic RANK 6 LEVEL 3
+    Epic RANK 6 LEVEL 4
+    
+    Legendary RANK 7
+    Legendary RANK 7 LEVEL 1
+    Legendary RANK 7 LEVEL 2
+    Legendary RANK 7 LEVEL 3
+    Legendary RANK 7 LEVEL 4
+    ]]    
+
 -- Create the frame
 local frame = CreateFrame("Frame", "MyFrame", UIParent, "DialogBoxFrame")
 frame:SetPoint("CENTER")
@@ -18,7 +64,7 @@ title:SetPoint("LEFT", titleBackground, "LEFT", 4, 0)
 
 --local title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 --title:SetPoint("TOPLEFT", 8, -8)
-title:SetText("Welcome to Hardcore Score")
+title:SetText("Rank / Level system")
 
 -- Make the frame movable and resizable
 frame:SetMovable(true)
@@ -50,13 +96,12 @@ if newSubzone == "" then
     newSubzone = GetZoneText()
 end
 
+
 local editBox = CreateFrame("EditBox", nil, scrollFrame)
 editBox:SetMultiLine(true)
 editBox:SetFontObject(ChatFontNormal)
 editBox:SetWidth(250)
-editBox:SetText("Welcome, adventurer, to the Hardcore Score addon! Designed to highlight your skill and dedication in World of Warcraft Classic Hardcore, this tool captures the essence of YOUR hard work, turning your character, "..playername..", into a true Hardcore legend."..
-                "As fresh as a "..newSubzone.." recruit, our addon may still have some creases to iron out; we thank you in advance for your patience."..
-                "Embrace your journey,  ".."|cFF6FA8DC"..playername.."|r".."! We're cheering you on every step of your epic quest. Here's to writing your own Hardcore history together in the expansive realm of Azeroth!")
+editBox:SetText(message)
 editBox:Disable()  -- This makes the text read-only
 scrollFrame:SetScrollChild(editBox)
 
