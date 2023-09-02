@@ -70,8 +70,8 @@ function GetPlayerRank()
     if HCS_print then
         if HCS_PlayerRank.Rank > oldRank or HCS_PlayerRank.Level > oldLevel then
             if Hardcore_Score.db.profile.framePositionMsg.show then                 
-                local shouldDisplayRankChangeMessage = currentRank ~= HCS_PlayerRank.Rank
-                local frame = HCS_MessageFrameUI.DisplayHCSRankLevelingMessage(delay, shouldDisplayRankChangeMessage)
+                local shouldDisplayRankChangeImage = oldRank ~= HCS_PlayerRank.Rank
+                local frame = HCS_MessageFrameUI.DisplayHCSRankLevelingMessage(delay, shouldDisplayRankChangeImage)
                 frame:EnqueueMessage()   
             end    
         end            
