@@ -13,8 +13,8 @@ function HCS_Utils:GetClassImage(class)
         image = Img_hcs_Class_Paladin
     elseif class == "Priest" then
         image = Img_hcs_Class_Priest
-    elseif class == "Rouge" then
-        image = Img_hcs_Class_Rouge
+    elseif class == "Rogue" then
+        image = Img_hcs_Class_Rogue
     elseif class == "Shaman" then
         image = Img_hcs_Class_Shaman
     elseif class == "Warlock" then
@@ -42,7 +42,7 @@ function HCS_Utils:GetTextWithClassColor(class, text)
         txt = "|cFFF48CBA"..text.."|r"
     elseif class == "Priest" then
         txt = "|cFFFFFFFF"..text.."|r"
-    elseif class == "Rouge" then
+    elseif class == "Rogue" then
         txt = "|cFFFFF468"..text.."|r"
     elseif class == "Shaman" then
         txt = "|cFF0070DD"..text.."|r"

@@ -48,7 +48,7 @@ Img_hcs_Class_Hunter = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Def
 Img_hcs_Class_Mage = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_mage.blp"
 Img_hcs_Class_Paladin = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_paladin.blp"
 Img_hcs_Class_Priest = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_priest.blp"
-Img_hcs_Class_Rouge = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_rouge.blp"
+Img_hcs_Class_Rogue = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_rogue.blp"
 Img_hcs_Class_Warrior = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_warrior.blp"
 Img_hcs_Class_None = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_class0.blp"
 
