@@ -33,8 +33,8 @@ local function AddMilestone(id)
                 --print("|cff81b7e9"..milestone.desc.."|r")     
                 table.insert(HCScore_Character.milestones, newMilestone)
                 
-                HCS_PointsLogUI:AddMessage(milestone.desc)                
-
+                HCS_PointsLogUI:AddMessage(milestone.desc)                               
+                
                 if Hardcore_Score.db.profile.framePositionMsg.show then
                     local desc = string.upper(milestone.shortdesc)
                     local frame = HCS_MessageFrameUI.DisplayMilestoneMessage(desc, 5, milestone.textcolor)                    

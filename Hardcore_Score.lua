@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.0.3" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.0.4" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -223,7 +223,7 @@ local options = {
             order = 19
         },
         addonInfoNote = {
-            name = "version 1.0.3 - authors: Avenroot, Caith",
+            name = "version 1.0.4 - authors: Avenroot, Caith",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -354,41 +354,9 @@ function Hardcore_Score:CreateMiniMapButton()
         icon = "Interface\\Addons\\Hardcore_Score\\Media\\MM_logo_2.tga",
         OnClick = function(self, button)
 
-
             -- Check if left mouse button was clicked
             if button == "LeftButton" then
-
-                --local msg1 = "10 discoveries made"
-                --local frame1 = HCS_MessageFrameUI.DisplayMilestoneMessage(msg1, 5, HCS_MilestonesColors.Discoveries)                
-                --frame1:EnqueueMessage()
-                
-                --local msg2 = "350 quests completed"
-                --local frame2 = HCS_MessageFrameUI.DisplayMilestoneMessage(msg2, 5, HCS_MilestonesColors.QuestsCompleted)
-                --frame2:EnqueueMessage()
-
-                --local msg3 = "100 enemies killed"
-                --local frame3 = HCS_MessageFrameUI.DisplayMilestoneMessage(msg3, 5, HCS_MilestonesColors.EnemiesKilled)
-                --frame3:EnqueueMessage()
-
-                                
-               -- local playerLevel = UnitLevel("player")
-                --local msg = "Level "..playerLevel
-                --local frame = HCS_MessageFrameUI.DisplayLevelingMessage(msg, 5)
-                --frame:EnqueueMessage()
-
-               -- local msg2 = "1,000 dangerous enemies killed"
-               -- local frame2 = HCS_MessageFrameUI.DisplayAchievementMessage(msg2, Img_hcs_achievement_level, 5)
-                --frame2:ShowMessage()
-                
-                --local msg2 = "1,000 dangerous enemies killed"
-                --local frame2 = HCS_MessageFrameUI.DisplayAchievementMessage(msg2, Img_hcs_achievement_level, 5)
-                --frame2:ShowMessage()
-
-                --local msg = HCS_PlayerRank.LevelText
-                --local img = HCS_PlayerRank.PortraitImage
-                --local frame = HCS_MessageFrameUI.DisplayHCSRankLevelingMessage(delay)
-                --frame:EnqueueMessage()                
-
+               
                 -- Open Hardcore_Score section of the options menu
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score");
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score"); -- yes, you need to call it twice.
@@ -397,10 +365,8 @@ function Hardcore_Score:CreateMiniMapButton()
                 -- Check if right mouse button was clicked
             elseif button == "RightButton" then
                 -- Display your frame
-                HCS_CharactersInfoUI.frame:Show() 
-                
+                HCS_CharactersInfoUI.frame:Show()                 
             end
-
         end,
 
         OnTooltipShow = function(tooltip)
@@ -559,7 +525,7 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI:ClearPointsLog()
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.3.  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.4.  Lets GO!")
         --print("|cff81b7e9".."Hardcore Score: ".."|r".."Psst,", playerName.. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score!");   
     end
 

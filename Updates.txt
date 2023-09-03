@@ -83,4 +83,9 @@ Version 1.0.2
 Version 1.0.3
     1. Fixed bug for getting Rogue class icon.
     2. Fixed a bug not displaying the rank image when the new rank message was shown.
-    3. Removed PNG files from the \Media\Portraits\Default directory to lower download size.    
+    3. Removed PNG files from the \Media\Portraits\Default directory to lower download size.  
+
+Version 1.0.4
+    1. Fixed the image for Silver Rank 4 image.
+    2. Changed Scoring text color.  No longer Red.
+    3. Reaching levels 10, 20, 30, 40, 50, 60, and Ranks Bronze - Legendary now shows in guild chat.

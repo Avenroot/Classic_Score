@@ -64,15 +64,23 @@ function GetPlayerRank()
         end
     end
 
-    -- Hack!  This gives the addon a chance to sync the rankings before fulling loaded
---    if HCS_Delay < 5 then HCS_Delay = HCS_Delay + 1 end
-
     if HCS_print then
         if HCS_PlayerRank.Rank > oldRank or HCS_PlayerRank.Level > oldLevel then
             if Hardcore_Score.db.profile.framePositionMsg.show then                 
                 local shouldDisplayRankChangeImage = oldRank ~= HCS_PlayerRank.Rank
                 local frame = HCS_MessageFrameUI.DisplayHCSRankLevelingMessage(delay, shouldDisplayRankChangeImage)
                 frame:EnqueueMessage()   
+                
+                if shouldDisplayRankChangeImage then
+                    if IsInGuild() then
+                        if Hardcore_Score.db.profile.shareDetails then
+                            local rank = string.upper(HCS_PlayerRank.LevelText)
+                            local score = string.format("%.2f", HCScore_Character.scores.coreScore)
+                            local message = "RANK UP: reached "..rank.. " (current Hardcore SCORE is "..score.. ")"
+                            SendChatMessage(message, "GUILD")  -- Send the message to guild chat                         
+                        end                        
+                    end
+                end
             end    
         end            
     end
@@ -87,6 +95,16 @@ local function RefreshUI()
     end
 end
 
+-- Function to check if a value exists in a table
+local function tableContains(table, value)
+    for _, v in pairs(table) do
+        if v == value then
+            return true
+        end
+    end
+    return false
+end
+
 local function LeveledUp(points)
 
     local playerLevel = UnitLevel("player")
@@ -98,8 +116,23 @@ local function LeveledUp(points)
       end
     
     HCS_PlayerLevelingScore:SaveLevelScore()
-    HCS_OldLevel = PlayerLevel
+    HCS_OldLevel = playerLevel
     PlayerLeveled = false
+
+
+    if Hardcore_Score.db.profile.shareDetails then
+        if IsInGuild() then
+            local score = string.format("%.2f", HCScore_Character.scores.coreScore)
+            local validLevels = {10, 20, 30, 40, 50, 60}
+        
+            -- Check if the player's level is in the list of valid levels
+            if tableContains(validLevels, playerLevel) then
+                local message = "LEVEL UP: reached level " .. playerLevel .. " (current Hardcore SCORE is " .. score .. ")"
+                SendChatMessage(message, "GUILD")  -- Send the message to guild chat
+            end            
+        end
+    end
+    
 end
 
 local function UpdateProfileScores()    
