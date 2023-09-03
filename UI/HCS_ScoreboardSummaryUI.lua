@@ -36,6 +36,11 @@ local labelwidth = 125
 local ranklabelwidth = 130
 local labelwidthscore = 75
 local isFrame2Visible = false
+local txtNumberColor = {
+    red = 217 / 255,
+    green = 190 / 255,
+    blue = 132 / 255,
+}
 
 
 -- Create the frame
@@ -108,7 +113,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txtCoreScore2:SetWidth(80)
     local font, _, flags = txtCoreScore2:GetFont()
     txtCoreScore2:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 16, flags) -- Set the desired font size (14 in this example)
-    txtCoreScore2:SetTextColor(211, 0, 0) -- Red color
+    txtCoreScore2:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) -- Red color
       
     --  ScoreboardSummaryDetailsFrame
     ScoreboardSummaryDetailsFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
@@ -192,7 +197,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_equippedgear_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_equippedgear_score:GetFont()
     txt_equippedgear_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
-    txt_equippedgear_score:SetTextColor(211, 0, 0) -- Red color    
+    txt_equippedgear_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) -- Red color    
 
 
     -- Leveling
@@ -210,7 +215,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_leveling_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_leveling_score:GetFont()
     txt_leveling_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
-    txt_leveling_score:SetTextColor(211, 0, 0) -- Red color    
+    txt_leveling_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) -- Red color    
 
     -- Questing
     txt_questing = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -227,7 +232,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_questing_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_questing_score:GetFont()
     txt_questing_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
-    txt_questing_score:SetTextColor(211, 0, 0) -- Red color    
+    txt_questing_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) -- Red color    
 
     -- Mobs Killed
 
@@ -270,7 +275,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_mobskilled_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_mobskilled_score:GetFont()
     txt_mobskilled_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
-    txt_mobskilled_score:SetTextColor(211, 0, 0) -- Red color    
+    txt_mobskilled_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) 
 
     -- Professions
     txt_professions = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -287,7 +292,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_professions_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_professions_score:GetFont()
     txt_professions_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
-    txt_professions_score:SetTextColor(211, 0, 0) -- Red color    
+    txt_professions_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) 
 
     -- Reputations (Factions)
     txt_reputation = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -304,7 +309,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_reputation_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_reputation_score:GetFont()
     txt_reputation_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
-    txt_reputation_score:SetTextColor(211, 0, 0) -- Red color    
+    txt_reputation_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) 
 
     -- Discovery
     txt_discovery = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -321,7 +326,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_discovery_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_discovery_score:GetFont()
     txt_discovery_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
-    txt_discovery_score:SetTextColor(211, 0, 0) -- Red color    
+    txt_discovery_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)     
 
     -- Milestones
 
@@ -364,7 +369,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_milestones_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_milestones_score:GetFont()
     txt_milestones_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
-    txt_milestones_score:SetTextColor(211, 0, 0) -- Red color    
+    txt_milestones_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) 
 
     ScoreboardSummaryDetailsFrame:Hide()
 
@@ -407,7 +412,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_achievements_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_achievements_score:GetFont()
     txt_achievements_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
-    txt_achievements_score:SetTextColor(211, 0, 0) -- Red color    
+    txt_achievements_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)    
 
     ScoreboardSummaryDetailsFrame:Hide()
 

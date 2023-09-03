@@ -121,7 +121,7 @@ HCS_RanksDB = {
         LevelText = "Silver - lvl 4",
         MinPoints = GetPointValue(820),
         MaxPoints = GetPointValue(999.99),
-        PortraitImage = Img_hcs_Rank2_Level3,
+        PortraitImage = Img_hcs_Rank2_Level4,
         SimplePortraitImage = Img_hcs_Rank2,
         PortraitBoarderImage = Img_hcs_lvl_2_border, 
     },

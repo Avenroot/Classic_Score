@@ -3,11 +3,6 @@ HCS_Globals = {}
 -- Game information
 HCS_GameVersion = select(4, GetBuildInfo())  -- if over 3000 than playing WOTLK
 
--- Loading delay
-HCS_Delay = 0  -- this is an ugly hack to delay printing messages when the game is being logged in. (Not reloading)
-               -- The addon loads differently if it is logging in as opposed to doing a reload.
-               -- TODO: Need to find a better solution.
-
 -- Scaling Percentage
 HCS_LevelScalePercentage = 0
 

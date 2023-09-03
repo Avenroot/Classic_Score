@@ -33,7 +33,7 @@ local function AddAchievement(id)
                 --print("|cff81b7e9"..milestone.desc.."|r")     
                 table.insert(HCScore_Character.achievements, newAchievement)
                 
-                HCS_PointsLogUI:AddMessage(achievement.desc)                
+                HCS_PointsLogUI:AddMessage(achievement.desc) 
 
                 if Hardcore_Score.db.profile.framePositionMsg.show then
                     local desc = string.upper(achievement.shortdesc)
