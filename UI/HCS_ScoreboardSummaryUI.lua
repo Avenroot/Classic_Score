@@ -480,7 +480,7 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     local coreScore = HCScore_Character.scores.coreScore
 
     --ScoreboardSummaryFrame
-    txtCoreScore2:SetText(string.format("%.2f", coreScore))
+    txtCoreScore2:SetText(HCS_Utils:AddThousandsCommas(string.format("%.2f", coreScore)))
     
     -- Set Portrait
     imgPortrait:SetTexture(Current_hcs_Portrait)

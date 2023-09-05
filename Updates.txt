@@ -89,3 +89,7 @@ Version 1.0.4
     1. Fixed the image for Silver Rank 4 image.
     2. Changed Scoring text color.  No longer Red.
     3. Reaching levels 10, 20, 30, 40, 50, 60, and Ranks Bronze - Legendary now shows in guild chat.
+
+Version 1.0.5
+    1. Fixed for showing Rank message in Guild chat when logging in.
+    2. Added comma's to the Main Score Points total.

@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.0.4" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.0.5" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -223,7 +223,7 @@ local options = {
             order = 19
         },
         addonInfoNote = {
-            name = "version 1.0.4 - authors: Avenroot, Caith",
+            name = "version 1.0.5 - authors: Avenroot, Caith",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -493,12 +493,14 @@ function Hardcore_Score:init(event, name)
         Hardcore_Score.db.profile.framePositionMsg.show = saveShowMessages
         
         -- Turn printing to message window back on
-        HCS_print = true
+        --HCS_print = true
 
         -- Clear Points Log
         HCS_PointsLogUI:ClearPointsLog()
 
     elseif event == "PLAYER_LOGIN" then
+        
+        HCS_print = true
         local playerName
 
         local fontSize = Hardcore_Score.db.profile.framePositionLog.fontSize or 14
@@ -525,7 +527,7 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI:ClearPointsLog()
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.4.  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.5.  Lets GO!")
         --print("|cff81b7e9".."Hardcore Score: ".."|r".."Psst,", playerName.. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score!");   
     end
 
