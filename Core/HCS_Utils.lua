@@ -190,6 +190,10 @@ function HCS_Utils:GetPercentageToNextLevelAsText()
     return formattedPercentage
 end
 
+function HCS_Utils:AddThousandsCommas(inputString)
+    local formattedString, _ = string.gsub(inputString, "^(-?%d+)(%d%d%d)", '%1,%2')
+    return formattedString    
+end   
 
 HCS_print = true  -- Global!  Allows you to turn printing on and off if needed in certains
 function HCS_Utils:Print(msg)
