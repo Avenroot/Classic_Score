@@ -18,6 +18,7 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     -- initialization HCScore_Character
     if HCScore_Character.name == nil then HCScore_Character.name = UnitName("player") end
     if HCScore_Character.class == nil then HCScore_Character.class = UnitClass("player") end
+    if HCScore_Character.classid == nil then _, _, HCScore_Character.classid = UnitClass("player") end
     if HCScore_Character.level == nil then HCScore_Character.level = UnitLevel("player") end
     if HCScore_Character.race == nil then HCScore_Character.race = UnitRace("player") end
     if HCScore_Character.faction == nil then HCScore_Character.faction = UnitFactionGroup("player") end
@@ -60,6 +61,7 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
 
     HCScore_Character.name = UnitName("player")
     HCScore_Character.class = UnitClass("player")
+    _, _, HCScore_Character.classid = UnitClass("player")
     HCScore_Character.level = UnitLevel("player")
     HCScore_Character.race = UnitRace("player")
 
@@ -72,6 +74,7 @@ function ResetCharacterStats()
 
     if HCScore_Character.name ~= nil then HCScore_Character.name = UnitName("player") end
     if HCScore_Character.class ~= nil then HCScore_Character.class = UnitClass("player") end
+    if HCScore_Character.classid == nil then _, _, HCScore_Character.classid = UnitClass("player") end
     if HCScore_Character.level ~= nil then HCScore_Character.level = UnitLevel("player") end
     if HCScore_Character.race ~= nil then HCScore_Character.race = UnitRace("player") end
     if HCScore_Character.faction ~= nil then HCScore_Character.faction = UnitFactionGroup("player") end

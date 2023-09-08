@@ -93,3 +93,9 @@ Version 1.0.4
 Version 1.0.5
     1. Fixed for showing Rank message in Guild chat when logging in.
     2. Added comma's to the Main Score Points total.
+
+Version 1.0.6
+    1. Character color names, class icons, and profession points now show correctly for non-English languages.
+    2. Updated Portrait and border images.. again.
+    3. Updated Guild chat message to be more personal.
+    4. Fixed the location of the Achievement message so it is NOT at the top of the screen.

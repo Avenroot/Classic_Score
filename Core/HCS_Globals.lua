@@ -114,13 +114,13 @@ Img_hcs_Rank7_Level4 = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Def
 
 -- portrait boarders
 Current_hcs_Border = ""
-Img_hcs_lvl_1_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Bronze.blp"
-Img_hcs_lvl_2_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Silver.blp"
-Img_hcs_lvl_3_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Gold.blp"
-Img_hcs_lvl_4_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Platinum.blp"
-Img_hcs_lvl_5_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Diamond.blp"
-Img_hcs_lvl_6_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Epic.blp"
-Img_hcs_lvl_7_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_Legendary.blp"
+Img_hcs_lvl_1_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp"
+Img_hcs_lvl_2_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp"
+Img_hcs_lvl_3_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp"
+Img_hcs_lvl_4_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp"
+Img_hcs_lvl_5_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp"
+Img_hcs_lvl_6_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp"
+Img_hcs_lvl_7_border = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp"
 
 -- milestone text colors  
 HCS_MilestonesColors = {

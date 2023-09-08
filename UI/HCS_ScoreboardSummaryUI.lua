@@ -118,7 +118,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     --  ScoreboardSummaryDetailsFrame
     ScoreboardSummaryDetailsFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
     ScoreboardSummaryDetailsFrame:SetWidth(200)
-    ScoreboardSummaryDetailsFrame:SetHeight(254)
+    ScoreboardSummaryDetailsFrame:SetHeight(246)
     ScoreboardSummaryDetailsFrame:SetPoint("TOP", ScoreboardSummaryFrame, "BOTTOM", 22, -10)
     
     -- Set backdrop with gradient background and border
@@ -447,9 +447,9 @@ local function GetPlayerInfoText()
     local playerInfoText = ""
     local factionText = ""
     
-    local name = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.name)
-    local race = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.race)
-    local class = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.class)
+    local name = HCS_Utils:GetTextWithClassColor(HCScore_Character.classid, HCScore_Character.name)
+    local race = HCS_Utils:GetTextWithClassColor(HCScore_Character.classid, HCScore_Character.race)
+    local class = HCS_Utils:GetTextWithClassColor(HCScore_Character.classid, HCScore_Character.class)
 
     playerInfoText = name.. "  "..race.."  "..class --..factionText 
 
@@ -484,7 +484,7 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     
     -- Set Portrait
     imgPortrait:SetTexture(Current_hcs_Portrait)
-    imageClass:SetTexture(HCS_Utils:GetClassImage(HCScore_Character.class))
+    imageClass:SetTexture(HCS_Utils:GetClassImage(HCScore_Character.classid))
 
     -- Summary Frame
     ScoreboardSummaryFrame:SetBackdrop({
@@ -511,7 +511,7 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     ScoreboardSummaryDetailsFrame:SetBackdropBorderColor(1, 1, 1)
    
     --ScoreboardDetailsFrame
-    txt_charactername:SetText("Name: " ..HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.name))
+    txt_charactername:SetText("Name: " ..HCS_Utils:GetTextWithClassColor(HCScore_Character.classid, HCScore_Character.name))
     txt_rank:SetText("Rank: " ..HCS_Utils:GetRankLevelText(HCS_PlayerRank.Rank, HCS_PlayerRank.Level))
     txt_nextlevel:SetText("LVL Completed: |cffff8000"..HCS_Utils:GetPercentageToNextLevelAsText())
     txt_equippedgear_score:SetText(string.format("%.2f", equippedgearScore))    

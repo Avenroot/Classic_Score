@@ -76,7 +76,7 @@ function GetPlayerRank()
                         if Hardcore_Score.db.profile.shareDetails then
                             local rank = string.upper(HCS_PlayerRank.LevelText)
                             local score = string.format("%.2f", HCScore_Character.scores.coreScore)
-                            local message = "RANK UP: reached "..rank.. " (current Hardcore SCORE is "..score.. ")"
+                            local message = "I have reached "..rank.." Rank - Hardcore SCORE "..score
                             SendChatMessage(message, "GUILD")  -- Send the message to guild chat                         
                         end                        
                     end
@@ -127,7 +127,7 @@ local function LeveledUp(points)
         
             -- Check if the player's level is in the list of valid levels
             if tableContains(validLevels, playerLevel) then
-                local message = "LEVEL UP: reached level " .. playerLevel .. " (current Hardcore SCORE is " .. score .. ")"
+                local message = "I have reached lvl " .. playerLevel .. " - Hardcore Score " .. score
                 SendChatMessage(message, "GUILD")  -- Send the message to guild chat
             end            
         end
@@ -138,6 +138,7 @@ end
 local function UpdateProfileScores()    
     Hardcore_Score.db.global.characterScores[HCScore_Character.name] = {
         charClass = HCScore_Character.class,
+        charClassId = HCScore_Character.classid,
         coreScore = HCScore_Character.scores.coreScore,
         equippedGearScore = HCScore_Character.scores.equippedGearScore,
         levelingScore = HCScore_Character.scores.levelingScore,
@@ -172,28 +173,19 @@ local function CalculateScore()
     HCScore_Character.scores.mobsKilledScore = HCS_KillingMobsScore:GetMobsKilledScore()
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
 
-    --print(equippmentScore)
-    --print(HCScore_Character.scores.equippedGearScore)    
-    --print(coreScore)
-    --print(HCScore_Character.scores.coreScore)
-    
     -- Set scores back if coreScore goes backwards
     local equippmentScoreRounded = round(equippmentScore, 3)
     local equippedGearScoreRounded = round(HCScore_Character.scores.equippedGearScore, 3)
     local diff = equippmentScoreRounded - equippedGearScoreRounded
     local threshold = 0.0001 -- Adjust this threshold as needed
     
-    --print("diff: " .. diff)
-    if diff > threshold then
-        --print("adjusting...")
+    if diff > threshold then    
         HCScore_Character.scores.equippedGearScore = equippmentScore
         if HCScore_Character.scores.coreScore < coreScore then
             HCScore_Character.scores.coreScore = HCScore_Character.scores.coreScore  + diff  
         end
         
     end
-
-    --print("---")
 end
 
 function HCS_CalculateScore:RefreshScores(desc)
