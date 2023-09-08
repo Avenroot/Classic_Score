@@ -1,27 +1,28 @@
 HCS_Utils = {}
 
-function HCS_Utils:GetClassImage(class)
+function HCS_Utils:GetClassImage(classid)
+
     local image = Img_hcs_Class_None -- default image
 
-    if class == "Druid" then 
+    if classid == 11 then -- Druid
         image = Img_hcs_Class_Druid
-    elseif class == "Hunter" then
+    elseif classid == 3 then -- Hunter
         image = Img_hcs_Class_Hunter
-    elseif class == "Mage" then
+    elseif classid == 8 then  -- Mage
         image = Img_hcs_Class_Mage
-    elseif class == "Paladin" then
+    elseif classid == 2 then -- Paladin
         image = Img_hcs_Class_Paladin
-    elseif class == "Priest" then
+    elseif classid == 5 then -- Priest
         image = Img_hcs_Class_Priest
-    elseif class == "Rogue" then
-        image = Img_hcs_Class_Rogue
-    elseif class == "Shaman" then
+    elseif classid == 4 then -- Rogue
+        image = Img_hcs_Class_Rogue 
+    elseif classid == 7 then -- Shaman
         image = Img_hcs_Class_Shaman
-    elseif class == "Warlock" then
+    elseif classid == 9 then -- Warlock
         image = Img_hcs_Class_Warlock
-    elseif class == "Warrior" then
+    elseif classid == 1 then -- Warrior
         image = Img_hcs_Class_Warrior
-    elseif class == "Death Knight" then
+    elseif classid == 6 then -- Death Knight
         image = Img_hcs_Class_DeathKnight
     end
 
@@ -29,26 +30,26 @@ function HCS_Utils:GetClassImage(class)
 
 end
 
-function HCS_Utils:GetTextWithClassColor(class, text)
+function HCS_Utils:GetTextWithClassColor(classid, text)
     local txt = text
 
-    if class == "Druid" then 
+    if classid == 11 then -- Druid
         txt = "|cFFFF7C0A"..text.."|r"
-    elseif class == "Hunter" then
+    elseif classid == 3 then -- Hunter
         txt = "|cFFAAD372"..text.."|r"
-    elseif class == "Mage" then
+    elseif classid == 8 then -- Mage
         txt = "|cFF3FC7EB"..text.."|r"
-    elseif class == "Paladin" then
+    elseif classid == 2 then -- Paladin
         txt = "|cFFF48CBA"..text.."|r"
-    elseif class == "Priest" then
+    elseif classid == 5 then -- Priest
         txt = "|cFFFFFFFF"..text.."|r"
-    elseif class == "Rogue" then
+    elseif classid == 4 then -- Rogue
         txt = "|cFFFFF468"..text.."|r"
-    elseif class == "Shaman" then
+    elseif classid == 7 then -- Shaman
         txt = "|cFF0070DD"..text.."|r"
-    elseif class == "Warlock" then
+    elseif classid == 9 then -- Warlock
         txt = "|cFF8788EE"..text.."|r"
-    elseif class == "Warrior" then
+    elseif classid == 1 then -- Warrior
         txt = "|cFFC69B6D"..text.."|r"
     end
 

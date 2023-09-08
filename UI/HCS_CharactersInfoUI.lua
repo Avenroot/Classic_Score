@@ -124,7 +124,7 @@ end
 local function CreateRowForCharacter(row, characterName, characterScores)
     -- ...
     local dataPoints = { 
-        HCS_Utils:GetTextWithClassColor(characterScores.charClass, characterName),
+        HCS_Utils:GetTextWithClassColor(characterScores.charClassId, characterName),
         string.format("%.2f", characterScores.equippedGearScore), 
         string.format("%.2f", characterScores.levelingScore), 
         string.format("%.2f", characterScores.questingScore), 

@@ -8,16 +8,27 @@ local FADE_OUT_TIME = 2
 local isDisplayingMessage = false
 local FIXED_MESSAGE_POSITION = { "TOP", UIParent, "TOP", 0, -200 }  -- Adjust the position here
 
+local function StackMessageFrame(frame)
+    if #messageStack > 0 then
+        local prevFrame = messageStack[#messageStack]
+        frame:SetPoint("BOTTOMLEFT", prevFrame, "TOPLEFT", 0, MESSAGE_FRAME_MARGIN) -- Changed "TOPLEFT" to "BOTTOMLEFT" and made the Y-offset positive
+    else
+        frame:SetPoint("TOP", UIParent, "TOP", 0, -600) -- Adjust the vertical starting position here
+    end
+    table.insert(messageStack, frame)
+end
 
+--[[
 local function StackMessageFrame(frame)
     if #messageStack > 0 then
         local prevFrame = messageStack[#messageStack]
         frame:SetPoint("TOPLEFT", prevFrame, "BOTTOMLEFT", 0, -MESSAGE_FRAME_MARGIN)
     else
-        frame:SetPoint("TOP", UIParent, "TOP", 0, 0) -- Adjust the vertical starting position here
+        frame:SetPoint("TOP", UIParent, "TOP", 0, -600) -- Adjust the vertical starting position here
     end
     table.insert(messageStack, frame)
 end
+]]
 
 local function UnstackMessageFrame(frame)
     local index = 0
@@ -31,10 +42,11 @@ local function UnstackMessageFrame(frame)
         table.remove(messageStack, index)
         for i = index, #messageStack do
             if i == 1 then
-                messageStack[i]:SetPoint("TOP", UIParent, "TOP", 0, -200) -- Adjust the vertical position here
+                messageStack[i]:SetPoint("TOP", UIParent, "TOP", 0, -600) -- Adjust the vertical position here
             else
                 local prevFrame = messageStack[i - 1]
-                messageStack[i]:SetPoint("TOPLEFT", prevFrame, "BOTTOMLEFT", 0, -MESSAGE_FRAME_MARGIN)
+                --messageStack[i]:SetPoint("TOPLEFT", prevFrame, "BOTTOMLEFT", 0, -MESSAGE_FRAME_MARGIN)
+                messageStack[i]:SetPoint("BOTTOMLEFT", prevFrame, "TOPLEFT", 0, -MESSAGE_FRAME_MARGIN)
             end
         end
     end

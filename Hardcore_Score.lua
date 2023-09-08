@@ -7,10 +7,11 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.0.5" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.0.6" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
+    classid = 0,
     level = 0,
     race = "",
     faction = "",
@@ -223,7 +224,7 @@ local options = {
             order = 19
         },
         addonInfoNote = {
-            name = "version 1.0.5 - authors: Avenroot, Caith",
+            name = "version 1.0.6 - authors: Avenroot, Caith",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -356,7 +357,7 @@ function Hardcore_Score:CreateMiniMapButton()
 
             -- Check if left mouse button was clicked
             if button == "LeftButton" then
-               
+
                 -- Open Hardcore_Score section of the options menu
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score");
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score"); -- yes, you need to call it twice.
@@ -378,7 +379,7 @@ function Hardcore_Score:CreateMiniMapButton()
             if Hardcore_Score.db.profile.framePosition.show == false then
                 tooltip:AddLine(" ")
                 if HCScore_Character ~= nil then
-                    local txt = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.name ).. "  "..string.format("%.2f", HCScore_Character.scores.coreScore)
+                    local txt = HCS_Utils:GetTextWithClassColor(HCScore_Character.classid, HCScore_Character.name ).. "  "..string.format("%.2f", HCScore_Character.scores.coreScore)
                     tooltip:AddLine(txt)
                 else
                     tooltip:AddLine("Hardcore Score "..tostring(HCS_Version))
@@ -521,14 +522,24 @@ function Hardcore_Score:init(event, name)
         local fontName, _, fontFlags = HCS_PointsLogUI.EditBox:GetFont()
         HCS_PointsLogUI.EditBox:SetFont(fontName, fontSize, fontFlags)
 
-        playerName = HCS_Utils:GetTextWithClassColor(HCScore_Character.class, HCScore_Character.name)
+        playerName = HCS_Utils:GetTextWithClassColor(HCScore_Character.classid, HCScore_Character.name)
 
         -- Clear Points Log
         HCS_PointsLogUI:ClearPointsLog()
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.5.  Lets GO!")
-        --print("|cff81b7e9".."Hardcore Score: ".."|r".."Psst,", playerName.. "! "..  string.format("%.2f", HCS_PlayerCoreScore:GetCoreScore()).. " is a great score!");   
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.6.  Lets GO!")
+                
+        -- Localization Example
+        ---- Load AceLocale-3.0
+        --local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
+
+        ---- Get the localization instance for our addon
+        --local L = AceLocale:GetLocale("Hardcore_Score")
+
+        ---- Use the localized string
+        --print(L["Hello"])  -- Will print "Hello, World!" or "Hallo, Welt!" depending on the locale
+
     end
 
 end
