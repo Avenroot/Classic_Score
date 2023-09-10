@@ -99,3 +99,6 @@ Version 1.0.6
     2. Updated Portrait and border images.. again.
     3. Updated Guild chat message to be more personal.
     4. Fixed the location of the Achievement message so it is NOT at the top of the screen.
+
+Version 1.0.7
+    1. Fixed professions not being calculated for non English languages.  Added support to fix this for German, French, Spanish and Portuguese.

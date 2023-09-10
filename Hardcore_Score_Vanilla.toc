@@ -1,8 +1,8 @@
 ## Interface: 11404
-## Title: Hardcore Score 1.0.6
+## Title: Hardcore Score 1.0.7
 ## Notes: Your Hardcore score for your character
 ## Author: Avenroot, Caith
-## Version: 1.0.6
+## Version: 1.0.7
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character
@@ -11,6 +11,7 @@
 
 embeds.xml
 
+Core/HCS_Localization.lua
 Core/HCS_Utils.lua
 Core/HCS_Globals.lua
 Core/HCS_Playerinfo.lua
@@ -26,7 +27,6 @@ Core/HCS_DiscoveryScore.lua
 Core/HCS_PlayerCom.lua
 Core/HCS_CalculateScore.lua
 Core/HCS_MilestonesScore.lua
-Core/HCS_Localization.lua
 
 Events/HCS_PlayerLevelingUpEvent.lua
 Events/HCS_PlayerEquippingItemEvent.lua

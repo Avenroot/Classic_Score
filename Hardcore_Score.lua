@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.0.6" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.0.7" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -224,7 +224,7 @@ local options = {
             order = 19
         },
         addonInfoNote = {
-            name = "version 1.0.6 - authors: Avenroot, Caith",
+            name = "version 1.0.7 - authors: Avenroot, Caith",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -528,18 +528,8 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI:ClearPointsLog()
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.6.  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.7.  Lets GO!")
                 
-        -- Localization Example
-        ---- Load AceLocale-3.0
-        --local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
-
-        ---- Get the localization instance for our addon
-        --local L = AceLocale:GetLocale("Hardcore_Score")
-
-        ---- Use the localized string
-        --print(L["Hello"])  -- Will print "Hello, World!" or "Hallo, Welt!" depending on the locale
-
     end
 
 end
