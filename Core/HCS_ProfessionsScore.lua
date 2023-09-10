@@ -1,18 +1,24 @@
 HCS_ProfessionsScore = {}
 
-local ALCHEMY = "Alchemy"
-local BLACKSMITHING = "Blacksmithing"
-local ENCHANTING = "Enchanting"
-local ENGINEERING = "Engineering"
-local HERBALISM = "Herbalism"
-local LEATHERWORKING = "Leatherworking"
+---- Load AceLocale-3.0
+local AceLocale = LibStub:GetLibrary("AceLocale-3.0")
+
+---- Get the localization instance
+local L = AceLocale:GetLocale("Hardcore_Score")
+
+local ALCHEMY = L["Alchemy"]
+local BLACKSMITHING = L["Blacksmithing"]
+local ENCHANTING = L["Enchanting"]
+local ENGINEERING = L["Engineering"]
+local HERBALISM = L["Herbalism"]
+local LEATHERWORKING = L["Leatherworking"]
 local LOCKPICKING = "Lockpicking"
-local MINING = "Mining"
-local SKINNING = "Skinning"
-local TAILORING = "Tailoring"
-local FISHING = "Fishing"
-local COOKING = "Cooking"
-local FISTAID = "First Aid"
+local MINING = L["Mining"]
+local SKINNING = L["Skinning"]
+local TAILORING = L["Tailoring"]
+local FISHING = L["Fishing"]
+local COOKING = L["Cooking"]
+local FIRSTAID = L["First Aid"]
 
 local LEVEL1 = 0
 local LEVEL2 = 25
@@ -90,7 +96,7 @@ function UpdateProfessionScore(professionid, skilllevel)
         if score > HCScore_Character.professions.cooking then
             HCScore_Character.professions.cooking = score
         end
-    elseif professionid == FISTAID then 
+    elseif professionid == FIRSTAID then 
         if score > HCScore_Character.professions.firstaid then
             HCScore_Character.professions.firstaid = score
         end
@@ -120,7 +126,7 @@ end
 
 function HCS_ProfessionsScore:GetProfessionsScore()
 
-    -- we need to introduce localization
+    -- TODO: we need to introduce localization
     
     for i = 1, GetNumSkillLines() do
         local skillName, isHeader, _, skillRank, _, _, skillMaxRank, _, _, skillLineID = GetSkillLineInfo(i)
