@@ -11,10 +11,11 @@ HCS_PointsLogUI.frame:SetSize(300, 200)
 HCS_PointsLogUI.frame:SetFrameStrata("LOW")
 HCS_PointsLogUI.frame:SetClampedToScreen(true)
 
+print(Current_hcs_Border)
 -- Set backdrop with gradient background and border
 HCS_PointsLogUI.frame:SetBackdrop({
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    edgeFile = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp",--Current_hcs_Border, --"Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
     tileSize = 16,
     edgeSize = 16,

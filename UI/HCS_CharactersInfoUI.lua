@@ -11,7 +11,7 @@ HCS_CharactersInfoUI.frame:SetClampedToScreen(true)
 -- Set backdrop with gradient background and border
 HCS_CharactersInfoUI.frame:SetBackdrop({
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    edgeFile = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp", --"Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
     tileSize = 16,
     edgeSize = 16,
