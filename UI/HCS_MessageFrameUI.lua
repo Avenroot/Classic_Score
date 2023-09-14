@@ -11,24 +11,12 @@ local FIXED_MESSAGE_POSITION = { "TOP", UIParent, "TOP", 0, -200 }  -- Adjust th
 local function StackMessageFrame(frame)
     if #messageStack > 0 then
         local prevFrame = messageStack[#messageStack]
-        frame:SetPoint("BOTTOMLEFT", prevFrame, "TOPLEFT", 0, MESSAGE_FRAME_MARGIN) -- Changed "TOPLEFT" to "BOTTOMLEFT" and made the Y-offset positive
-    else
-        frame:SetPoint("TOP", UIParent, "TOP", 0, -600) -- Adjust the vertical starting position here
+        frame:SetPoint("BOTTOMLEFT", prevFrame, "TOPLEFT", 0, MESSAGE_FRAME_MARGIN) 
+    else        
+        frame:SetPoint("CENTER", UIParent, "CENTER", 0, -200) -- Adjust the vertical starting position here
     end
     table.insert(messageStack, frame)
 end
-
---[[
-local function StackMessageFrame(frame)
-    if #messageStack > 0 then
-        local prevFrame = messageStack[#messageStack]
-        frame:SetPoint("TOPLEFT", prevFrame, "BOTTOMLEFT", 0, -MESSAGE_FRAME_MARGIN)
-    else
-        frame:SetPoint("TOP", UIParent, "TOP", 0, -600) -- Adjust the vertical starting position here
-    end
-    table.insert(messageStack, frame)
-end
-]]
 
 local function UnstackMessageFrame(frame)
     local index = 0
@@ -59,7 +47,7 @@ local function ShowNextMessage()
 
         nextFrame:SetPoint(unpack(FIXED_MESSAGE_POSITION))  -- Set the fixed position
         nextFrame:Show()
-
+        PlaySoundFile("Interface\\Addons\\Hardcore_Score\\Media\\IM.ogg", "Master", false, 0.5) -- Adjust volume here (0.5 for 50% volume)
         C_Timer.After(nextFrame.delay or 5, function()
             UIFrameFadeOut(nextFrame, FADE_OUT_TIME, 1, 0) 
             C_Timer.After(FADE_OUT_TIME, function()
@@ -131,17 +119,19 @@ function HCS_MessageFrameUI.DisplayMilestoneMessage(msg, delay, color)
 
     local backgroundImage = frame:CreateTexture(nil, "BACKGROUND")
     backgroundImage:SetAllPoints(frame)
-    backgroundImage:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcs-message-frame-background.blp")
-    --backgroundImage:SetVertexColor(0, 0, 0, 0.7) -- Set the RGB color to black and the alpha to 0.7 (darker)
-
-    frame.Text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    backgroundImage:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcs-message-frame-background.blp") --  UI-Tooltip-Background
+    
+    frame.Text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")    
+    
+    local font, _, flags = frame.Text:GetFont()
+    frame.Text:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
     frame.Text:SetPoint("TOP", frame, "TOP", 0, -38)  -- Position it closer to the top of the frame
     frame.Text:SetText("Milestone Reached")
-    frame.Text:SetTextColor(1, 1, 1)  -- Set the color to white
+    frame.Text:SetTextColor(1, 1, 0)  -- Set the color to yellow
 
     frame.BigText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")  -- Larger font
     local fontName, _, fontFlags = frame.BigText:GetFont()
-    frame.BigText:SetFont(fontName, 24, fontFlags)  -- Set the font size to 30
+    frame.BigText:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 24, fontFlags)  -- Unthinkers.otf
     frame.BigText:SetPoint("TOP", frame.Text, "BOTTOM", 0, -5)  -- Position it closer to the first text
     frame.BigText:SetText(msg or "")  -- The message to display
     frame.BigText:SetTextColor(color.red, color.green, color.blue)  -- Set the color
@@ -171,13 +161,15 @@ function HCS_MessageFrameUI.DisplayLevelingMessage(lvlMsg, delay)
     backgroundImage:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcs-message-frame-background.blp")
 
     frame.Text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    local fontName, _, fontFlags = frame.Text:GetFont()
+    frame.Text:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, fontFlags)  
     frame.Text:SetPoint("TOP", frame, "TOP", 0, -38)  -- Position it closer to the top of the frame
     frame.Text:SetText("You've Reached")
     frame.Text:SetTextColor(1, 1, 1)  -- Set the color to white
 
     frame.BigText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")  -- Larger font
     local fontName, _, fontFlags = frame.BigText:GetFont()
-    frame.BigText:SetFont(fontName, 24, fontFlags)  -- Set the font size to 30
+    frame.BigText:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 24, fontFlags) 
     frame.BigText:SetPoint("TOP", frame.Text, "BOTTOM", 0, -5)  -- Position it closer to the first text
     frame.BigText:SetText(lvlMsg or "")  -- The message to display
     frame.BigText:SetTextColor(1, 1, 0)  -- Set the color to yellow
@@ -248,13 +240,15 @@ function HCS_MessageFrameUI.DisplayHCSRankLevelingMessage(delay, displayImg)
     backgroundImage:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcs-message-frame-background.blp")
 
     frame.Text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    local fontName, _, fontFlags = frame.Text:GetFont()
+    frame.Text:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, fontFlags)  
     frame.Text:SetPoint("TOP", frame, "TOP", 0, -38)  -- Position it closer to the top of the frame
     frame.Text:SetText("You Reached")
     frame.Text:SetTextColor(1, 1, 0)  -- Set the color to white
 
     frame.BigText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")  -- Larger font
     local fontName, _, fontFlags = frame.BigText:GetFont()
-    frame.BigText:SetFont(fontName, 24, fontFlags)  -- Set the font size to 30
+    frame.BigText:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 24, fontFlags) 
     frame.BigText:SetPoint("TOP", frame.Text, "BOTTOM", 0, -5)  -- Position it closer to the first text
     frame.BigText:SetText(HCS_Utils:GetTextWithRankColor(HCS_PlayerRank.Rank, HCS_PlayerRank.LevelText) or "")  -- The message to display
     

@@ -177,7 +177,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     
     -- Image divider
     imagedivider = ScoreboardSummaryDetailsFrame:CreateTexture(nil, "OVERLAY")
-    imagedivider:SetSize(175, 1)  -- Thin line image at the top    
+    imagedivider:SetSize(170, 1)  -- Thin line image at the top    
     imagedivider:SetPoint("TOPLEFT", txt_nextlevel, "BOTTOMLEFT", 0, -5)    
     imagedivider:SetTexture("Interface\\Addons\\Hardcore_Score\\Media\\hcs-line2a.blp"  )
 
@@ -416,17 +416,44 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
 
     ScoreboardSummaryDetailsFrame:Hide()
 
+    function ScoreboardSummaryFrame:SetScoreboardSummaryDetailsFramePosition()
+        local bottom = ScoreboardSummaryFrame:GetBottom()
+        local screenHeight = GetScreenHeight()
+        local frameHeight = ScoreboardSummaryDetailsFrame:GetHeight()
+        
+        ScoreboardSummaryDetailsFrame:ClearAllPoints()
+        
+        -- Default position (below the ScoreboardSummaryFrame)
+        local defaultPoint = "TOP"
+        local relativeTo = ScoreboardSummaryFrame
+        local relativePoint = "BOTTOM"
+        local xOffset = 22
+        local yOffset = -10
+        
+        -- Check if placing below would go off the screen
+        if bottom - frameHeight < 0 then
+            -- Not enough space below, place above
+            defaultPoint = "BOTTOM"
+            relativePoint = "TOP"
+            yOffset = 10
+        end
+        
+        ScoreboardSummaryDetailsFrame:SetPoint(defaultPoint, relativeTo, relativePoint, xOffset, yOffset)
+    end
+    
     -- mouseover show/hide frame2
     ScoreboardSummaryFrame:SetScript("OnEnter", function()
+        -- Set the position based on screen space
+        ScoreboardSummaryFrame:SetScoreboardSummaryDetailsFramePosition()
         ScoreboardSummaryDetailsFrame:Show()
     end)
-    
+
     ScoreboardSummaryFrame:SetScript("OnLeave", function()
         if not isFrame2Visible then
             ScoreboardSummaryDetailsFrame:Hide()
         end
     end)
-    
+
     ScoreboardSummaryFrame:SetScript("OnMouseDown", function(_, button)
         if button == "LeftButton" then
             isFrame2Visible = not isFrame2Visible

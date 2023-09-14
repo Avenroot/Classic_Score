@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.0.7" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.0.8" --GetAddOnMetadata("Hardcore Score", "Version")
 HCScore_Character = {
     name = "",
     class = "",
@@ -224,7 +224,7 @@ local options = {
             order = 19
         },
         addonInfoNote = {
-            name = "version 1.0.7 - authors: Avenroot, Caith",
+            name = "version 1.0.8 - authors: Avenroot, Caith",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -361,7 +361,6 @@ function Hardcore_Score:CreateMiniMapButton()
                 -- Open Hardcore_Score section of the options menu
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score");
                 InterfaceOptionsFrame_OpenToCategory("Hardcore Score"); -- yes, you need to call it twice.
-                --HCS_WelcomeUI:ToggleMyFrame()
 
                 -- Check if right mouse button was clicked
             elseif button == "RightButton" then
@@ -490,6 +489,8 @@ function Hardcore_Score:init(event, name)
 
         HCS_CalculateScore:RefreshScores()
 
+        ScoreboardSummaryFrame:SetScoreboardSummaryDetailsFramePosition()
+
         -- Hides any messages that may be shown by recalcuating tables / scores (2) - Restores settings
         Hardcore_Score.db.profile.framePositionMsg.show = saveShowMessages
         
@@ -528,7 +529,7 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI:ClearPointsLog()
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.7.  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.8  Lets GO!")
                 
     end
 

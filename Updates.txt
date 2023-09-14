@@ -102,3 +102,10 @@ Version 1.0.6
 
 Version 1.0.7
     1. Fixed professions not being calculated for non English languages.  Added support to fix this for German, French, Spanish and Portuguese.
+
+Version 1.0.8
+    1. Fixed where Achievements appear on the screen when using UI Scaling.  It should no longer cover your character.
+    2. Milestone / Leveling messages have a darker background and a new font to keep consistant with the rest of the addon.
+    3. HCS Details will now show above the main score if the details will be off the screen.
+    4. There is a sound when a Milestone is reached.
+    5. All Hardcore Score frames now have the same boarder (Points Log and Character Summary)
