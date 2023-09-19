@@ -7,7 +7,8 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.0.8" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.0.9" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Release = 20
 HCScore_Character = {
     name = "",
     class = "",
@@ -16,6 +17,7 @@ HCScore_Character = {
     race = "",
     faction = "",
     version = 0,
+    release = 0,
     deaths = 0,
     scores = {
         coreScore = 0,
@@ -38,7 +40,6 @@ HCScore_Character = {
         engineering = 0,
         herbalism = 0,
         leatherworking = 0,
-        lockpicking = 0,
         mining = 0,
         skinning = 0,
         tailoring = 0,
@@ -48,6 +49,7 @@ HCScore_Character = {
     },
     reputations = {},
     mobsKilled = {},
+    mobsKilledMap = {}, -- Shows difficulty, total kills, total xp, total points  (example: -1, 10, 150, 25)
     discovery = {},
     milestones = {},
     levelScores = {},
@@ -224,7 +226,7 @@ local options = {
             order = 19
         },
         addonInfoNote = {
-            name = "version 1.0.8 - authors: Avenroot, Caith",
+            name = "version 1.0.9 - authors: Avenroot, Caith",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -529,7 +531,7 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI:ClearPointsLog()
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.8  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.9  Lets GO!")
                 
     end
 

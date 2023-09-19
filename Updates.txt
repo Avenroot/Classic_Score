@@ -108,4 +108,13 @@ Version 1.0.8
     2. Milestone / Leveling messages have a darker background and a new font to keep consistant with the rest of the addon.
     3. HCS Details will now show above the main score if the details will be off the screen.
     4. There is a sound when a Milestone is reached.
-    5. All Hardcore Score frames now have the same boarder (Points Log and Character Summary)
+    5. All Hardcore Score frames now have the same border (Points Log and Character Summary)
+
+Version 1.0.9
+    1. Achievement points were not included in the Hardcore Score.  Fixed.
+    2. New file sound when reaching a Milestone.
+    3. Removed Lockpicking from Professions calculations.
+    4. Overhauled the calculations for killing mobs.  It should be about 25% more.
+    5. Added tracking XP earned for killing mob types.  Important for re-calculation current score based on changed modifiers
+    6. Added a mobs-killed data map.  This is a new data category (not a score category).  It stores a table with 4 fields.  Difficulty, Kills, XP,  Score.  This will allow us to see how many kills, XP earned and score earned for each difficulty level.
+    7. Added Release property.  When a character is created it is marked which release it was created in.  

@@ -12,7 +12,6 @@ local ENCHANTING = L["Enchanting"]
 local ENGINEERING = L["Engineering"]
 local HERBALISM = L["Herbalism"]
 local LEATHERWORKING = L["Leatherworking"]
-local LOCKPICKING = "Lockpicking"
 local MINING = L["Mining"]
 local SKINNING = L["Skinning"]
 local TAILORING = L["Tailoring"]
@@ -72,10 +71,6 @@ function UpdateProfessionScore(professionid, skilllevel)
         if score > HCScore_Character.professions.leatherworking then
             HCScore_Character.professions.leatherworking = score
         end
-    elseif professionid == LOCKPICKING then 
-        if score > HCScore_Character.professions.lockpicking then
-            HCScore_Character.professions.lockpicking = score
-        end
     elseif professionid == MINING then 
         if score > HCScore_Character.professions.mining then
             HCScore_Character.professions.mining = score
@@ -116,7 +111,6 @@ local function GetScore()
             char.fishing +
             char.herbalism +
             char.leatherworking +
-            char.lockpicking +
             char.mining +
             char.skinning +
             char.tailoring

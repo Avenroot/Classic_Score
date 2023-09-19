@@ -1,8 +1,8 @@
 ## Interface: 30402
-## Title: Hardcore Score 1.0.8
+## Title: Hardcore Score 1.0.9
 ## Notes: Your Hardcore score for your character
 ## Author: Avenroot, Caith
-## Version: 1.0.8
+## Version: 1.0.9
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character
