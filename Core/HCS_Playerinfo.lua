@@ -6,10 +6,6 @@ function HCS_Playerinfo:LoadCharacterData()
     if HCScore_Character.level ~= nil and HCScore_Character.level > playerLevel then ResetCharacterStats() end
 
     HCS_Playerinfo:GetHCS_Playerinfo()
-    --HCScore_Character.scores.levelingScore = HCS_PlayerLevelingScore:GetLevelScore()
-    --HCScore_Character.scores.equippedGearScore = HCS_PlayerEquippedGearScore:GetEquippedGearScore()
-    --HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
-    --HCS_ReputationScore:UpdateRepScore()
 
 end
 
@@ -23,6 +19,7 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.race == nil then HCScore_Character.race = UnitRace("player") end
     if HCScore_Character.faction == nil then HCScore_Character.faction = UnitFactionGroup("player") end
     if HCScore_Character.version == nil then HCScore_Character.version = HCS_Version end
+    if HCScore_Character.release == nil then HCScore_Character.release = 0 end 
     if HCScore_Character.deaths == nil then HCScore_Character.deaths = 0 end
     if HCScore_Character.quests == nil then HCScore_Character.quests = {} end
     if HCScore_Character.scores == nil then HCScore_Character.scores = {} end
@@ -44,7 +41,6 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.professions.engineering == nil then HCScore_Character.professions.engineering = 0 end
     if HCScore_Character.professions.herbalism == nil then HCScore_Character.professions.herbalism = 0 end
     if HCScore_Character.professions.leatherworking == nil then HCScore_Character.professions.leatherworking = 0 end
-    if HCScore_Character.professions.lockpicking == nil then HCScore_Character.professions.lockpicking = 0 end
     if HCScore_Character.professions.mining == nil then HCScore_Character.professions.mining = 0 end
     if HCScore_Character.professions.skinning == nil then HCScore_Character.professions.skinning = 0 end
     if HCScore_Character.professions.tailoring == nil then HCScore_Character.professions.tailoring = 0 end
@@ -53,6 +49,7 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.professions.firstaid == nil then HCScore_Character.professions.firstaid = 0 end
     if HCScore_Character.reputations == nil then HCScore_Character.reputations = {} end
     if HCScore_Character.mobsKilled == nil then HCScore_Character.mobsKilled = {} end
+    if HCScore_Character.mobsKilledMap == nil then HCScore_Character.mobsKilledMap = {} end
     if HCScore_Character.discovery == nil then HCScore_Character.discovery = {} end
     if HCScore_Character.milestones == nil then HCScore_Character.milestones = {} end
     if HCScore_Character.levelScores == nil then HCScore_Character.levelScores = {} end
@@ -67,6 +64,9 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
 
     HCScore_Character.faction = UnitFactionGroup("player")
     HCScore_Character.version = HCS_Version
+    
+    -- If you are an existing char > 1 you will always have HCScore_Character.release = 0 otherwise HCScore_Character.release = HCS_Release
+    if HCScore_Character.release == 0 and HCScore_Character.level == 1 then HCScore_Character.release = HCS_Release end
 
 end
 
@@ -79,6 +79,7 @@ function ResetCharacterStats()
     if HCScore_Character.race ~= nil then HCScore_Character.race = UnitRace("player") end
     if HCScore_Character.faction ~= nil then HCScore_Character.faction = UnitFactionGroup("player") end
     if HCScore_Character.version ~= nil then HCScore_Character.version = HCS_Version end
+    if HCScore_Character.release ~= nil then HCScore_Character.release = 0 end 
     if HCScore_Character.deaths ~= nil then HCScore_Character.deaths = 0 end
     if HCScore_Character.quests ~= nil then HCScore_Character.quests = {} end
     if HCScore_Character.scores ~= nil then HCScore_Character.scores = {} end
@@ -100,7 +101,6 @@ function ResetCharacterStats()
     if HCScore_Character.professions.engineering ~= nil then HCScore_Character.professions.engineering = 0 end
     if HCScore_Character.professions.herbalism ~= nil then HCScore_Character.professions.herbalism = 0 end
     if HCScore_Character.professions.leatherworking ~= nil then HCScore_Character.professions.leatherworking = 0 end
-    if HCScore_Character.professions.lockpicking ~= nil then HCScore_Character.professions.lockpicking = 0 end
     if HCScore_Character.professions.mining ~= nil then HCScore_Character.professions.mining = 0 end
     if HCScore_Character.professions.skinning ~= nil then HCScore_Character.professions.skinning = 0 end
     if HCScore_Character.professions.tailoring ~= nil then HCScore_Character.professions.tailoring = 0 end
@@ -109,6 +109,7 @@ function ResetCharacterStats()
     if HCScore_Character.professions.firstaid ~= nil then HCScore_Character.professions.firstaid = 0 end
     if HCScore_Character.reputations ~= nil then HCScore_Character.reputations = {} end
     if HCScore_Character.mobsKilled ~= nil then HCScore_Character.mobsKilled = {} end
+    if HCScore_Character.mobsKilledMap ~= nil then HCScore_Character.mobsKilledMap = {} end
     if HCScore_Character.discovery ~= nil then HCScore_Character.discovery = {} end
     if HCScore_Character.milestones ~= nil then HCScore_Character.milestones = {} end
     if HCScore_Character.levelScores ~= nil then HCScore_Character.levelScores = {} end

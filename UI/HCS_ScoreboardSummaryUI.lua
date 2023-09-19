@@ -68,7 +68,6 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     ScoreboardSummaryFrame:EnableMouse(true)
     ScoreboardSummaryFrame:RegisterForDrag("LeftButton")
     ScoreboardSummaryFrame:SetScript("OnDragStart", ScoreboardSummaryFrame.StartMoving)
---    frame1:SetScript("OnDragStop", frame1.StopMovingOrSizing)
     ScoreboardSummaryFrame:SetScript("OnDragStart", ScoreboardSummaryFrame.StartMoving)
 
     ScoreboardSummaryFrame:SetScript("OnDragStop", function(self)
