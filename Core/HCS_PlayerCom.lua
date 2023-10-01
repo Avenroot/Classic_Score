@@ -46,6 +46,28 @@ local function padString(str, len)
     return str
 end
 
+-- Function to send a player's detailed score
+function HCS_PlayerCom:SendDetailedScore()
+    if scoresComm == nil then init() end
+
+    local playerName, playerRealm = UnitFullName("player")
+    local playerClass, englishClass, _ = UnitClass("player")
+    local playerLevel = UnitLevel("player")
+    -- You can continue adding details here, such as realm, if necessary
+
+    local playerData = {
+        name = playerName,
+        realm = playerRealm,
+        class = englishClass,
+        level = playerLevel,
+        scores = scoresComm
+    }
+
+    local serializedData = AceSerializer:Serialize(playerData)
+    C_ChatInfo.SendAddonMessage("YourLeaderboardPrefix", serializedData, "CHANNEL", GetChannelName("YourLeaderboardChannel"))
+end
+
+
 -- Function to send a player's score.
 function HCS_PlayerCom:SendScore()
 

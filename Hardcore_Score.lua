@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.0.9" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.0.10" --GetAddOnMetadata("Hardcore Score", "Version")
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -99,23 +99,33 @@ local options = {
                 end,  -- update your set function
             get = function(info) return Hardcore_Score.db.profile.framePositionMsg.show end  -- update your get function
         },
+
+        soundOptionAll = {
+            name = "HCS Sounds",
+            desc = "Turn On/Off all HCS Sounds",
+            type = "toggle",
+            order = 4,
+            set = function(info,val) Hardcore_Score.db.profile.soundOptionALL = val end,  
+            get = function(info) return Hardcore_Score.db.profile.soundOptionALL end  
+        },
+
         Space1 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 4
+            order = 5
         },
         PointsLogHeader = {
             name = "Points Log",
             type = "header",
-            order = 5
+            order = 6
         },
         showPointsLog = {
             name = "Show Points Log",
             desc = "Enables / disables showing Points Log",
             type = "toggle",
-            order = 6,
+            order = 7,
             set = function(info,val) 
                     Hardcore_Score.db.profile.framePositionLog.show = val 
                     HCS_PointsLogUI:SetVisibility()
@@ -126,7 +136,7 @@ local options = {
             name = "Show Timestamp",
             desc = "Displays showing the timestamp in Points log",
             type = "toggle",
-            order = 7,
+            order = 8,
             set = function(info,val) Hardcore_Score.db.profile.framePositionLog.showTimestamp = val end,
             get = function(info) return Hardcore_Score.db.profile.framePositionLog.showTimestamp end
         },
@@ -135,7 +145,7 @@ local options = {
             name = "Font Size",
             desc = "Adjusts the font size in the Points Log edit box",
             type = "range",
-            order = 8,
+            order = 9,
             min = 10,
             max = 24,
             step = 1,
@@ -152,12 +162,12 @@ local options = {
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 9
+            order = 10
         },
         LinksHeader = {
             name = "Connect for more information",
             type = "header",
-            order = 10
+            order = 11
         },
         twitterLink = {
             name = " Follow us on Twitter at https://twitter.com//HardcoreScore",
@@ -165,7 +175,7 @@ local options = {
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\TwitterLogo.blp",
-            order = 11
+            order = 12
         },
         discordLink = {
             name = " Join our Discord server at https://discord.gg/j92hrVZU2Q",
@@ -173,7 +183,7 @@ local options = {
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\DiscordLogo.blp",
-            order = 12
+            order = 13
         },
         websiteLink = {
             name = " Website  https://avenroothcs.wixsite.com/hardcore-score",
@@ -181,41 +191,41 @@ local options = {
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\www_icon.blp",
-            order = 13
+            order = 14
         },
         Space3 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 14
+            order = 15
         },
 
         addonInfoHeader = {
             name = "Note from the author(s)",
             type = "header",
-            order = 15
+            order = 16
         },
         addonInfo1 = {
             name = "Thank you for trying out Hardcore Score. We would love your feedback. Please report feedback and bugs to our Discord.",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 16
+            order = 17
         },            
         Space4 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 17
+            order = 18
         },
         addonInfo2 = {
             name = "We have a lot of things planned for Hardcore Score. Look for annoucements in our Discord and on our website. Enjoy challenging yourself to get the best Hardcore Score possible and share your results with us. Thank you and have fun!!",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 18
+            order = 19
         },            
 
         Space5 = {
@@ -223,14 +233,14 @@ local options = {
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 19
+            order = 20
         },
         addonInfoNote = {
-            name = "version 1.0.9 - authors: Avenroot, Caith",
+            name = "version 1.0.10 - authors: Avenroot, Caith",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 20
+            order = 21
         },            
 
     },
@@ -342,6 +352,8 @@ function Hardcore_Score:CreateDB()
             minimap = {},
             showDetails = false,
             shareDetails = true,
+            soundOptionALL = true,
+            lockScoreboardSummaryUI = false,
         },
         global = {
             -- Shared data...
@@ -367,7 +379,8 @@ function Hardcore_Score:CreateMiniMapButton()
                 -- Check if right mouse button was clicked
             elseif button == "RightButton" then
                 -- Display your frame
-                HCS_CharactersInfoUI.frame:Show()                 
+                HCS_CharactersInfoUI.frame:Show() 
+                --HCS_LeaderBoardUI.frame:Show()                
             end
         end,
 
@@ -462,10 +475,11 @@ function Hardcore_Score:init(event, name)
         HCS_print = false
 
         HCS_Playerinfo:LoadCharacterData()
-
-        HCS_ScoreboardSummaryUI:CreateFrame()
-
+        
         Hardcore_Score:CreateDB()
+
+        HCS_ScoreboardSummaryUI:Init()
+        HCS_ScoreboardSummaryUI:CreateFrame()
         
         -- Hides any messages that may be shown by recalcuating tables / scores (1) - Change settings
         local saveShowMessages = Hardcore_Score.db.profile.framePositionMsg.show
@@ -531,7 +545,7 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI:ClearPointsLog()
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.9  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.10  Lets GO!")
                 
     end
 

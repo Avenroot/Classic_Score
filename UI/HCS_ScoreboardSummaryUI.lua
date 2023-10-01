@@ -42,7 +42,11 @@ local txtNumberColor = {
     blue = 132 / 255,
 }
 
+function HCS_ScoreboardSummaryUI:Init()
+    frameLocked = Hardcore_Score.db.profile.lockScoreboardSummaryUI or false
 
+end
+  
 -- Create the frame
 function HCS_ScoreboardSummaryUI:CreateFrame()
 
@@ -67,8 +71,11 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     ScoreboardSummaryFrame:SetMovable(true)
     ScoreboardSummaryFrame:EnableMouse(true)
     ScoreboardSummaryFrame:RegisterForDrag("LeftButton")
-    ScoreboardSummaryFrame:SetScript("OnDragStart", ScoreboardSummaryFrame.StartMoving)
-    ScoreboardSummaryFrame:SetScript("OnDragStart", ScoreboardSummaryFrame.StartMoving)
+    ScoreboardSummaryFrame:SetScript("OnDragStart", function(self)
+        if not frameLocked then 
+            self:StartMoving() 
+        end
+    end)
 
     ScoreboardSummaryFrame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
@@ -135,9 +142,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     ScoreboardSummaryDetailsFrame:SetMovable(false)
     ScoreboardSummaryDetailsFrame:EnableMouse(true)
     ScoreboardSummaryDetailsFrame:RegisterForDrag("LeftButton")
-    --ScoreboardSummaryDetailsFrame:SetScript("OnDragStart", ScoreboardSummaryDetailsFrame.StartMoving)
-    --ScoreboardSummaryDetailsFrame:SetScript("OnDragStop", ScoreboardSummaryDetailsFrame.StopMovingOrSizing)
-        
+       
     -- Character Name
     txt_charactername = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     txt_charactername:SetPoint("TOPLEFT",  10, -10)
@@ -415,6 +420,23 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
 
     ScoreboardSummaryDetailsFrame:Hide()
 
+    local function CreateDropDown(frame)
+        local info = UIDropDownMenu_CreateInfo()
+        info.isTitle = 1
+        info.text = "Options"
+        info.notCheckable = 1
+        UIDropDownMenu_AddButton(info)
+    
+        info = UIDropDownMenu_CreateInfo()
+        info.text = frameLocked and "Unlock Frame" or "Lock Frame"
+        info.func = function()
+            frameLocked = not frameLocked
+            Hardcore_Score.db.profile.lockScoreboardSummaryUI = frameLocked
+        end
+        info.notCheckable = 1
+        UIDropDownMenu_AddButton(info)
+    end
+
     function ScoreboardSummaryFrame:SetScoreboardSummaryDetailsFramePosition()
         local bottom = ScoreboardSummaryFrame:GetBottom()
         local screenHeight = GetScreenHeight()
@@ -461,9 +483,12 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
             else
                 ScoreboardSummaryDetailsFrame:Hide()
             end
-            
-            Hardcore_Score.db.profile.showDetails = isFrame2Visible              
-
+    
+            Hardcore_Score.db.profile.showDetails = isFrame2Visible
+        elseif button == "RightButton" then
+            local menuFrame = CreateFrame("Frame", "ScoreboardDropdownMenu", UIParent, "UIDropDownMenuTemplate")
+            UIDropDownMenu_Initialize(menuFrame, function() CreateDropDown(ScoreboardSummaryFrame) end, "MENU")
+            ToggleDropDownMenu(1, nil, menuFrame, "cursor", 3, -3)
         end
     end)
 

@@ -47,7 +47,9 @@ local function ShowNextMessage()
 
         nextFrame:SetPoint(unpack(FIXED_MESSAGE_POSITION))  -- Set the fixed position
         nextFrame:Show()
-        PlaySoundFile("Interface\\Addons\\Hardcore_Score\\Media\\IM.ogg", "Master", false, 0.5) -- Adjust volume here (0.5 for 50% volume)
+        if Hardcore_Score.db.profile.soundOptionALL then
+            PlaySoundFile("Interface\\Addons\\Hardcore_Score\\Media\\IM.ogg", "Master", false, 0.5) -- Adjust volume here (0.5 for 50% volume)
+        end
         C_Timer.After(nextFrame.delay or 5, function()
             UIFrameFadeOut(nextFrame, FADE_OUT_TIME, 1, 0) 
             C_Timer.After(FADE_OUT_TIME, function()
@@ -214,7 +216,9 @@ function HCS_MessageFrameUI.DisplayAchievementMessage(msg, image, delay)
         frame:Show()
         StackMessageFrame(frame)
         -- Play the sound file when the frame is shown
-        PlaySoundFile("Interface\\Addons\\Hardcore_Score\\Media\\achievement_sound.ogg", "Master", false, 0.5) -- Adjust volume here (0.5 for 50% volume)
+        if Hardcore_Score.db.profile.soundOptionALL then
+            PlaySoundFile("Interface\\Addons\\Hardcore_Score\\Media\\achievement_sound.ogg", "Master", false, 0.5) -- Adjust volume here (0.5 for 50% volume)
+        end
         C_Timer.After(delay or 5, function()
             UIFrameFadeOut(frame, FADE_OUT_TIME, 1, 0)
             C_Timer.After(FADE_OUT_TIME, function()
