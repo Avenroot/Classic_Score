@@ -89,6 +89,7 @@ end
 local function RefreshUI()
     HCS_ScoreboardSummaryUI:UpdateUI()
     HCS_CharactersInfoUI:LoadData()
+    --HCS_LeaderBoardUI:LoadData()
 
     if HCS_PlayerCom ~= nil then
         HCS_PlayerCom:SendScore()       

@@ -118,3 +118,7 @@ Version 1.0.9
     5. Added tracking XP earned for killing mob types.  Important for re-calculation current score based on changed modifiers
     6. Added a mobs-killed data map.  This is a new data category (not a score category).  It stores a table with 4 fields.  Difficulty, Kills, XP,  Score.  This will allow us to see how many kills, XP earned and score earned for each difficulty level.
     7. Added Release property.  When a character is created it is marked which release it was created in.  
+
+Version 1.0.10
+    1. You can now lock/unlock the Main Score frame by right-clicking on the frame.
+    2. Add an option to disable all the HCS sounds.
