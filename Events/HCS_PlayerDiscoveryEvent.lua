@@ -21,7 +21,13 @@ function CheckZoneStatus()
     end
 
     if not found then
-        local xpGained = HCS_XPUpdateEvent:GetXPGain()
+
+        if UnitLevel("player") == 60 then 
+            HCS_DiscoveryScore:UpdateDiscoveryScore()
+        else
+            local xpGained = HCS_XPUpdateEvent:GetXPGain()
+        end
+
         if xpGained == 0 then
             
             local newxp = 1.2

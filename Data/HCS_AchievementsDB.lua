@@ -14,12 +14,19 @@ local imgDiscovery = Img_hcs_achievement_discovery
 local imgProfessionTotal = Img_hcs_achievement_profession
 local imgProfession = Img_hcs_achievement_profession
 
+local headerLeveling = "Leveling"
+local headerKillingMobs = "Killed Enemies"
+local headerMobTypes = "Mob Types"
+local headerQuesting = "Questing"
+local headerDiscovery = "Discoveries"
+local headerDangerousEnemies = "Dangerous Enemies"
+
 HCS_AchievementsDB = {
 
     -- Leveling Achievements
       {
         id = "ach_lvl_1",
-        name = "Level 10",
+        name = headerLeveling,
         desc = "Achievement! Congrats! You reached for level 10",
         shortdesc = "Level 10",
         points = levelPoints,
@@ -27,7 +34,7 @@ HCS_AchievementsDB = {
       }, 
       {
         id = "ach_lvl_2",
-        name = "Level 20",
+        name = headerLeveling,
         desc = "Achievement! Congrats! You reached for level 20",
         shortdesc = "Level 20",
         points = levelPoints,
@@ -35,7 +42,7 @@ HCS_AchievementsDB = {
       }, 
       {
         id = "ach_lvl_3",
-        name = "Level 30",
+        name = headerLeveling,
         desc = "Achievement! Congrats! You reached for level 30",
         shortdesc = "Level 30",
         points = levelPoints,
@@ -43,7 +50,7 @@ HCS_AchievementsDB = {
       }, 
       {
         id = "ach_lvl_4",
-        name = "Level 40",
+        name = headerLeveling,
         desc = "Achievement! Congrats! You reached for level 40",
         shortdesc = "Level 40",
         points = levelPoints,
@@ -51,7 +58,7 @@ HCS_AchievementsDB = {
       }, 
       {
         id = "ach_lvl_5",
-        name = "Level 50",
+        name = headerLeveling,
         desc = "Achievement! Congrats! You reached for level 50",
         shortdesc = "Level 50",
         points = levelPoints,
@@ -59,7 +66,7 @@ HCS_AchievementsDB = {
       }, 
       {
         id = "ach_lvl_6",
-        name = "Level 60",
+        name = headerLeveling,
         desc = "Achievement! Congrats! You reached for level 60",
         shortdesc = "Level 60",
         points = 10,
@@ -67,7 +74,7 @@ HCS_AchievementsDB = {
       }, 
       {
         id = "ach_lvl_7",
-        name = "Level 70",
+        name = headerLeveling,
         desc = "Achievement! Congrats! You've reached level 70",
         shortdesc = "Level 70",
         points = 10,
@@ -75,7 +82,7 @@ HCS_AchievementsDB = {
       },
       {
         id = "ach_lvl_8",
-        name = "Level 80",
+        name = headerLeveling,
         desc = "Achievement! Congrats! You've reached level 80",
         shortdesc = "Level 80",
         points = 10,
@@ -85,7 +92,7 @@ HCS_AchievementsDB = {
       -- Killing Mobs
       {
         id = "ach_mobk_1",
-        name = "Killed 1,000 enemies",
+        name = headerKillingMobs,
         desc = "Achievement! Congrats! You've killed 1,000 enemies",
         shortdesc = "1,000 enemies killed",
         points = mobKillsPoints, 
@@ -93,7 +100,7 @@ HCS_AchievementsDB = {
       }, 
       {
         id = "ach_mobk_2",
-        name = "Killed 5,000 enemies",
+        name = headerKillingMobs,
         desc = "Achievement! Congrats! You've killed 5,000 enemies",
         shortdesc = "5,000 enemies killed",
         points = mobKillsPoints, 
@@ -101,7 +108,7 @@ HCS_AchievementsDB = {
       }, 
       {
         id = "ach_mobk_3",
-        name = "Killed 10,000 enemies",
+        name = headerKillingMobs,
         desc = "Achievement! Congrats! You've killed 10,000 enemies",
         shortdesc = "10,000 enemies killed",
         points = mobKillsPoints, 
@@ -111,7 +118,7 @@ HCS_AchievementsDB = {
       -- Killing Mob Types Milestones
     {
       id = "ach_mobkt_1",
-      name = "Killed 100 creature types",
+      name = headerMobTypes,
       desc = "Achievement! Congrats! You've killed 100 creature types",
       shortdesc = "100 creature types killed",
       points = mobKillsTypePoints,
@@ -119,7 +126,7 @@ HCS_AchievementsDB = {
     }, 
     {
       id = "ach_mobkt_2",
-      name = "Killed 200 creature types",
+      name = headerMobTypes,
       desc = "Achievement! Congrats! You've killed 200 creature types",
       shortdesc = "200 creature types killed",
       points = mobKillsTypePoints,
@@ -129,7 +136,7 @@ HCS_AchievementsDB = {
     -- Total Quests Achievements
     {
       id = "ach_qtot_1",
-      name = "Completed 100 quests",
+      name = headerQuesting,
       desc = "Achievement! Congrats! You've completed 100 Quests",
       shortdesc = "100 quests completed",
       points = questPoints,
@@ -137,7 +144,7 @@ HCS_AchievementsDB = {
     }, 
     {
       id = "ach_qtot_2",
-      name = "Completed 500 quests",
+      name = headerQuesting,
       desc = "Achievement! Congrats! You've completed 500 Quests",
       shortdesc = "500 quests completed",
       points = questPoints,
@@ -145,7 +152,7 @@ HCS_AchievementsDB = {
     }, 
     {
       id = "ach_qtot_3",
-      name = "Completed 1,000 quests",
+      name = headerQuesting,
       desc = "Achievement! Congrats! You've completed 1,000 Quests",
       shortdesc = "1,000 quests completed",
       points = questPoints,
@@ -155,7 +162,7 @@ HCS_AchievementsDB = {
     -- Discovery
     {
       id = "ach_disc_1",
-      name = "Completed 100 Discoveries",
+      name = headerDiscovery,
       desc = "Achievement! Congrats! You've made 100 Discoveries",
       shortdesc = "100 discoveries made",
       points = discoveryPoints,
@@ -163,7 +170,7 @@ HCS_AchievementsDB = {
     }, 
     {
       id = "ach_disc_2",
-      name = "Completed 500 Discoveries",
+      name = headerDiscovery,
       desc = "Achievement! Congrats! You've made 500 Discoveries",
       shortdesc = "500 discoveries made",
       points = discoveryPoints,
@@ -171,7 +178,7 @@ HCS_AchievementsDB = {
     }, 
     {
       id = "ach_disc_3",
-      name = "Completed 1,000 Discoveries",
+      name = headerDiscovery,
       desc = "Achievement! Congrats! You've made 1,000 Discoveries",
       shortdesc = "1,000 discoveries made",
       points = discoveryPoints,
@@ -181,7 +188,7 @@ HCS_AchievementsDB = {
     -- Dangerous Enemies Killed
     {
       id = "ach_dek_1",
-      name = "Killed 1 dangerous enemey",
+      name = headerDangerousEnemies,
       desc = "Achievement! Congrats! You've killed 1 dangerous enemey",
       shortdesc = "1 dangerous enemey killed",
       points = dangerousEnemiesPoints,
@@ -189,7 +196,7 @@ HCS_AchievementsDB = {
     }, 
     {
       id = "ach_dek_2",
-      name = "Killed 100 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Achievement! Congrats! You've killed 100 dangerous enemies",
       shortdesc = "100 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -197,7 +204,7 @@ HCS_AchievementsDB = {
     }, 
     {
       id = "ach_dek_3",
-      name = "Killed 500 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Achievement! Congrats! You've killed 500 dangerous enemies",
       shortdesc = "500 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -205,7 +212,7 @@ HCS_AchievementsDB = {
     }, 
     {
       id = "ach_dek_4",
-      name = "Killed 1,000 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Achievement! Congrats! You've killed 1,000 dangerous enemies",
       shortdesc = "1,000 dangerous enemies killed",
       points = dangerousEnemiesPoints,

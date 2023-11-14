@@ -6,10 +6,19 @@ function HCS_DiscoveryScore:UpdateDiscoveryScore()
     local newSubzone = GetSubZoneText()
     local zoneChanged = _G["ZoneChanged"]
     local found = false
+    local xpGained = 0
 
     if zoneChanged == true then
         
-        local xpGained = HCS_XPUpdateEvent:GetXPGain()
+        -- Initialize xpGained with the default method
+        xpGained = HCS_XPUpdateEvent:GetXPGain()
+
+        -- Modify the XP gained based on player's level and game version
+        if HCS_GameVersion < 30000 and UnitLevel("player") == 60 then
+            xpGained = 150
+        elseif HCS_GameVersion >= 30000 and UnitLevel("player") == 80 then
+            xpGained = 250
+        end
 
         if xpGained > 0 then
   

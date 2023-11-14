@@ -42,9 +42,12 @@ local txtNumberColor = {
     blue = 132 / 255,
 }
 
+local fontPath = "Interface\\Addons\\Hardcore_Score\\Fonts\\BebasNeue-Regular.ttf"
+--local fontPath = "Fonts\\FRIZQT__.TTF"
+local fontSize = 14  
+
 function HCS_ScoreboardSummaryUI:Init()
     frameLocked = Hardcore_Score.db.profile.lockScoreboardSummaryUI or false
-
 end
   
 -- Create the frame
@@ -118,7 +121,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txtCoreScore2:SetJustifyH("RIGHT")
     txtCoreScore2:SetWidth(80)
     local font, _, flags = txtCoreScore2:GetFont()
-    txtCoreScore2:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 16, flags) -- Set the desired font size (14 in this example)
+    txtCoreScore2:SetFont(fontPath, 16, flags) 
     txtCoreScore2:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) -- Red color
       
     --  ScoreboardSummaryDetailsFrame
@@ -149,7 +152,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_charactername:SetJustifyH("LEFT")
     txt_charactername:SetWidth(ranklabelwidth)    
     local font, _, flags = txt_charactername:GetFont()
-    txt_charactername:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
+    txt_charactername:SetFont(fontPath, fontSize, flags) 
 
     -- Rank
     txt_rank = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -157,7 +160,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_rank:SetJustifyH("LEFT")
     txt_rank:SetWidth(ranklabelwidth)    
     local font, _, flags = txt_rank:GetFont()
-    txt_rank:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
+    txt_rank:SetFont(fontPath, fontSize, flags) 
 
     -- Next Level
     txt_nextlevel = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -165,7 +168,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_nextlevel:SetJustifyH("LEFT")
     txt_nextlevel:SetWidth(labelwidth)    
     local font, _, flags = txt_nextlevel:GetFont()
-    txt_nextlevel:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
+    txt_nextlevel:SetFont(fontPath, fontSize, flags) 
 
     -- Class Image
     imageClass = ScoreboardSummaryDetailsFrame:CreateTexture(nil, "OVERLAY")
@@ -192,7 +195,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_equippedgear:SetJustifyH("LEFT")
     txt_equippedgear:SetWidth(labelwidth)    
     local font, _, flags = txt_equippedgear:GetFont()
-    txt_equippedgear:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
+    txt_equippedgear:SetFont(fontPath, fontSize, flags) 
 
     -- Equipped Gear Score
     txt_equippedgear_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -200,7 +203,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_equippedgear_score:SetJustifyH("RIGHT")
     txt_equippedgear_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_equippedgear_score:GetFont()
-    txt_equippedgear_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
+    txt_equippedgear_score:SetFont(fontPath, fontSize, flags) 
     txt_equippedgear_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) -- Red color    
 
 
@@ -210,7 +213,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_leveling:SetJustifyH("LEFT")
     txt_leveling:SetWidth(labelwidth)
     local font, _, flags = txt_leveling:GetFont()
-    txt_leveling:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
+    txt_leveling:SetFont(fontPath, fontSize, flags)
 
     -- Leveling Score
     txt_leveling_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -218,8 +221,8 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_leveling_score:SetJustifyH("RIGHT")
     txt_leveling_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_leveling_score:GetFont()
-    txt_leveling_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) -- Set the desired font size (14 in this example)
-    txt_leveling_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) -- Red color    
+    txt_leveling_score:SetFont(fontPath, fontSize, flags) 
+    txt_leveling_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) 
 
     -- Questing
     txt_questing = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -227,7 +230,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_questing:SetJustifyH("LEFT")
     txt_questing:SetWidth(labelwidth)
     local font, _, flags = txt_questing:GetFont()
-    txt_questing:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_questing:SetFont(fontPath, fontSize, flags) 
 
     -- Questing Score
     txt_questing_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -235,7 +238,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_questing_score:SetJustifyH("RIGHT")
     txt_questing_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_questing_score:GetFont()
-    txt_questing_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_questing_score:SetFont(fontPath, fontSize, flags) 
     txt_questing_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) -- Red color    
 
     -- Mobs Killed
@@ -250,7 +253,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_mobskilled:SetWidth(labelwidth)
     txt_mobskilled:SetText("Mobs Killed")  -- seems to be needed to set the proper place to trigger the tooltip.  
     local font, _, flags = txt_mobskilled:GetFont()
-    txt_mobskilled:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_mobskilled:SetFont(fontPath, fontSize, flags) 
 
 
     -- Set the position of txt_mobskilled within its wrapper frame
@@ -278,7 +281,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_mobskilled_score:SetJustifyH("RIGHT")
     txt_mobskilled_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_mobskilled_score:GetFont()
-    txt_mobskilled_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_mobskilled_score:SetFont(fontPath, fontSize, flags) 
     txt_mobskilled_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) 
 
     -- Professions
@@ -287,7 +290,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_professions:SetJustifyH("LEFT")
     txt_professions:SetWidth(labelwidth)
     local font, _, flags = txt_professions:GetFont()
-    txt_professions:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_professions:SetFont(fontPath, fontSize, flags) 
 
     -- Professions Score
     txt_professions_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -295,7 +298,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_professions_score:SetJustifyH("RIGHT")
     txt_professions_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_professions_score:GetFont()
-    txt_professions_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_professions_score:SetFont(fontPath, fontSize, flags) 
     txt_professions_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) 
 
     -- Reputations (Factions)
@@ -304,7 +307,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_reputation:SetJustifyH("LEFT")
     txt_reputation:SetWidth(labelwidth)
     local font, _, flags = txt_reputation:GetFont()
-    txt_reputation:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_reputation:SetFont(fontPath, fontSize, flags) 
 
     -- Reputations Score
     txt_reputation_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -312,7 +315,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_reputation_score:SetJustifyH("RIGHT")
     txt_reputation_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_reputation_score:GetFont()
-    txt_reputation_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_reputation_score:SetFont(fontPath, fontSize, flags) 
     txt_reputation_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) 
 
     -- Discovery
@@ -321,7 +324,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_discovery:SetJustifyH("LEFT")
     txt_discovery:SetWidth(labelwidth)
     local font, _, flags = txt_discovery:GetFont()
-    txt_discovery:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_discovery:SetFont(fontPath, fontSize, flags) 
 
     -- Discovery Score
     txt_discovery_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -329,7 +332,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_discovery_score:SetJustifyH("RIGHT")
     txt_discovery_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_discovery_score:GetFont()
-    txt_discovery_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_discovery_score:SetFont(fontPath, fontSize, flags) 
     txt_discovery_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)     
 
     -- Milestones
@@ -344,7 +347,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_milestones:SetWidth(labelwidth)
     txt_milestones:SetText("Milestones")  -- seems to be needed to set the proper place to trigger the tooltip.  
     local font, _, flags = txt_milestones:GetFont()
-    txt_milestones:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_milestones:SetFont(fontPath, fontSize, flags) 
 
     -- Set the position of txt_milestones within its wrapper frame
     txt_milestones:SetPoint("TOPLEFT", txt_milestonesWrapper, "TOPLEFT", 0, 0)
@@ -372,7 +375,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_milestones_score:SetJustifyH("RIGHT")
     txt_milestones_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_milestones_score:GetFont()
-    txt_milestones_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_milestones_score:SetFont(fontPath, fontSize, flags) 
     txt_milestones_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue) 
 
     ScoreboardSummaryDetailsFrame:Hide()
@@ -390,7 +393,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_achievements:SetWidth(labelwidth)
     txt_achievements:SetText("Achievements")  -- seems to be needed to set the proper place to trigger the tooltip.  
     local font, _, flags = txt_achievements:GetFont()
-    txt_achievements:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_achievements:SetFont(fontPath, fontSize, flags) 
 
     -- Set the position of txt_milestones within its wrapper frame
     txt_achievements:SetPoint("TOPLEFT", txt_achievementsWrapper, "TOPLEFT", 0, 0)
@@ -415,7 +418,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_achievements_score:SetJustifyH("RIGHT")
     txt_achievements_score:SetWidth(labelwidthscore)
     local font, _, flags = txt_achievements_score:GetFont()
-    txt_achievements_score:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 14, flags) 
+    txt_achievements_score:SetFont(fontPath, fontSize, flags) 
     txt_achievements_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)    
 
     ScoreboardSummaryDetailsFrame:Hide()

@@ -6,6 +6,9 @@ HCS_GameVersion = select(4, GetBuildInfo())  -- if over 3000 than playing WOTLK
 -- Scaling Percentage
 HCS_LevelScalePercentage = 0
 
+-- Leaderboard comm 
+HCS_PREFIX =  "Hardcore_Score"  --"Hardcore_ScoreAddon"  
+
 -- Player information
 CurrentXP = 0
 CurrentMaxXP = 0
@@ -155,3 +158,7 @@ HCS_MilestonesColors = {
         blue = 141 / 255,
     },
 }
+
+-- Filter states should be controlled by your UI checkboxes
+HCS_Leaderboard_Filters = {} 
+HCS_Leaderboard_Filtered = {}

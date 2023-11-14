@@ -122,3 +122,9 @@ Version 1.0.9
 Version 1.0.10
     1. You can now lock/unlock the Main Score frame by right-clicking on the frame.
     2. Add an option to disable all the HCS sounds.
+
+Version 1.1.0
+    1. New Scoreboard
+    2. New Character Journey information
+    3. New view of Milestones
+    4. New view of Achievements

@@ -21,6 +21,7 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.version == nil then HCScore_Character.version = HCS_Version end
     if HCScore_Character.release == nil then HCScore_Character.release = 0 end 
     if HCScore_Character.deaths == nil then HCScore_Character.deaths = 0 end
+    if HCScore_Character.guildName ~= nil then HCScore_Character.guildName = GetGuildInfo("player") or "" end
     if HCScore_Character.quests == nil then HCScore_Character.quests = {} end
     if HCScore_Character.scores == nil then HCScore_Character.scores = {} end
     if HCScore_Character.scores.coreScore == nil then HCScore_Character.scores.coreScore = 0 end
@@ -55,6 +56,7 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.levelScores == nil then HCScore_Character.levelScores = {} end
     if HCScore_Character.dangerousMobsKilled == nil then HCScore_Character.dangerousMobsKilled = {} end
     if HCScore_Character.achievements == nil then HCScore_Character.achievements = {} end
+    if HCScore_Character.leaderboard == nil then HCScore_Character.leaderboard = {} end
 
     HCScore_Character.name = UnitName("player")
     HCScore_Character.class = UnitClass("player")
@@ -63,8 +65,8 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     HCScore_Character.race = UnitRace("player")
 
     HCScore_Character.faction = UnitFactionGroup("player")
-    HCScore_Character.version = HCS_Version
-    
+    HCScore_Character.version = HCS_Version    
+        
     -- If you are an existing char > 1 you will always have HCScore_Character.release = 0 otherwise HCScore_Character.release = HCS_Release
     if HCScore_Character.release == 0 and HCScore_Character.level == 1 then HCScore_Character.release = HCS_Release end
 
@@ -81,6 +83,7 @@ function ResetCharacterStats()
     if HCScore_Character.version ~= nil then HCScore_Character.version = HCS_Version end
     if HCScore_Character.release ~= nil then HCScore_Character.release = 0 end 
     if HCScore_Character.deaths ~= nil then HCScore_Character.deaths = 0 end
+    if HCScore_Character.guildName ~= nil then HCScore_Character.guildName = GetGuildInfo("player") or "" end
     if HCScore_Character.quests ~= nil then HCScore_Character.quests = {} end
     if HCScore_Character.scores ~= nil then HCScore_Character.scores = {} end
     if HCScore_Character.scores.coreScore ~= nil then HCScore_Character.scores.coreScore = 0 end
@@ -115,6 +118,7 @@ function ResetCharacterStats()
     if HCScore_Character.levelScores ~= nil then HCScore_Character.levelScores = {} end
     if HCScore_Character.dangerousMobsKilled == nil then HCScore_Character.dangerousMobsKilled = {} end
     if HCScore_Character.achievements == nil then HCScore_Character.achievements = {} end
+    if HCScore_Character.leaderboard == nil then HCScore_Character.leaderboard = {} end
 
 end
 

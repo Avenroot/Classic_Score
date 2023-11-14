@@ -3,40 +3,30 @@ local AceSerializer = LibStub("AceSerializer-3.0")
 HCS_PlayerCom = {}
 
 local scoresComm = {
+    charName = '',
+    charClass = '',
+    charLevel = '',
     coreScore = '',
-    equippedGearScore = '',
-    achievementScore = '',
-    levelingScore = '',
-    questingScore = '',
-    mobsKilledScore = '',
-    professionsScore = '',
-    dungeonsScore = '',
-    reputationScore = '',
-    discoveryScore = '',
-    milestoneScore = '',
+    hasDied = false,
+    lastOnline = '',
+    guildName = '',
 }
 
 local function init()
     scoresComm = {
+        charName = '',
+        charClass = '',
+        charLevel = '',
         coreScore = '',
-        equippedGearScore = '',
-        achievementScore = '',
-        levelingScore = '',
-        questingScore = '',
-        mobsKilledScore = '',
-        professionsScore = '',
-        dungeonsScore = '',
-        reputationScore = '',
-        discoveryScore = '',
-        milestoneScore = '',
+        hasDied = false,
+        lastOnline = '',
+        guildName = '',
     }        
 end
 
--- The prefix for your addon's messages. This should be a unique string that other addons are not likely to use.
-local PREFIX = "HardcoreAddon"  -- Replace with your addon prefix
 
--- Table to store scores received from other players.
-local playerScores = {}
+-- The prefix for your addon's messages. This should be a unique string that other addons are not likely to use.
+local PREFIX = HCS_PREFIX  
 
 local function padString(str, len)
     local length = string.len(str)
@@ -46,25 +36,32 @@ local function padString(str, len)
     return str
 end
 
--- Function to send a player's detailed score
-function HCS_PlayerCom:SendDetailedScore()
-    if scoresComm == nil then init() end
+-- Function to send the top 100 player's scores.
+function HCS_PlayerCom:SendTopScores()
 
-    local playerName, playerRealm = UnitFullName("player")
-    local playerClass, englishClass, _ = UnitClass("player")
-    local playerLevel = UnitLevel("player")
-    -- You can continue adding details here, such as realm, if necessary
+    -- Sort the leaderboard array first
+    local leaderboardArray = {}
+    for charName, info in pairs(HCScore_Character.leaderboard) do
+        table.insert(leaderboardArray, info)
+    end
+    table.sort(leaderboardArray, function(a, b)
+        return tonumber(a.coreScore) > tonumber(b.coreScore)
+    end)
 
-    local playerData = {
-        name = playerName,
-        realm = playerRealm,
-        class = englishClass,
-        level = playerLevel,
-        scores = scoresComm
-    }
+    -- Only send top 100 scores
+    for i = 1, min(100, #leaderboardArray) do
+        local playerInfo = leaderboardArray[i]
 
-    local serializedData = AceSerializer:Serialize(playerData)
-    C_ChatInfo.SendAddonMessage("YourLeaderboardPrefix", serializedData, "CHANNEL", GetChannelName("YourLeaderboardChannel"))
+        local serializedScore = AceSerializer:Serialize(playerInfo)
+        
+        -- Your sending logic here
+        if IsInGroup() then
+            local channel = IsInRaid() and "RAID" or "PARTY"
+            C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, channel)
+        elseif IsInGuild() then
+            C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, "GUILD")
+        end
+    end
 end
 
 
@@ -73,53 +70,147 @@ function HCS_PlayerCom:SendScore()
 
     if scoresComm == nil then init() end
 
-    --print(scoresComm.coreScore)
-    --print(HCScore_Character.scores.coreScore)
-    --print(string.format("%.2f", HCScore_Character.scores.coreScore))
-
     scoresComm.coreScore = string.format("%.2f", HCScore_Character.scores.coreScore)
-    scoresComm.equippedGearScore = string.format("%.2f", HCScore_Character.scores.equippedGearScore)
-    scoresComm.achievementScore = string.format("%.2f", HCScore_Character.scores.achievementScore)
-    scoresComm.levelingScore = string.format("%.2f", HCScore_Character.scores.levelingScore)
-    scoresComm.questingScore = string.format("%.2f", HCScore_Character.scores.questingScore)
-    scoresComm.mobsKilledScore = string.format("%.2f", HCScore_Character.scores.mobsKilledScore)
-    scoresComm.professionsScore = string.format("%.2f", HCScore_Character.scores.professionsScore)
-    scoresComm.dungeonsScore = string.format("%.2f", HCScore_Character.scores.dungeonsScore)
-    scoresComm.reputationScore = string.format("%.2f", HCScore_Character.scores.reputationScore)
-    scoresComm.discoveryScore = string.format("%.2f", HCScore_Character.scores.discoveryScore)
-    scoresComm.milestoneScore = string.format("%.2f", HCScore_Character.scores.milestonesScore)
+    scoresComm.charName = HCScore_Character.name
+    scoresComm.charClass = HCScore_Character.classid
+    scoresComm.charLevel = HCScore_Character.level
+    scoresComm.hasDied = HCScore_Character.deaths > 0
+    scoresComm.lastOnline = date("%Y-%m-%d %H:%M:%S")
+    scoresComm.guildName = HCScore_Character.guildName
+    
+    --scoresComm.equippedGearScore = string.format("%.2f", HCScore_Character.scores.equippedGearScore)
+    --scoresComm.achievementScore = string.format("%.2f", HCScore_Character.scores.achievementScore)
+    --scoresComm.levelingScore = string.format("%.2f", HCScore_Character.scores.levelingScore)
+    --scoresComm.questingScore = string.format("%.2f", HCScore_Character.scores.questingScore)
+    --scoresComm.mobsKilledScore = string.format("%.2f", HCScore_Character.scores.mobsKilledScore)
+    --scoresComm.professionsScore = string.format("%.2f", HCScore_Character.scores.professionsScore)
+    --scoresComm.dungeonsScore = string.format("%.2f", HCScore_Character.scores.dungeonsScore)
+    --scoresComm.reputationScore = string.format("%.2f", HCScore_Character.scores.reputationScore)
+    --scoresComm.discoveryScore = string.format("%.2f", HCScore_Character.scores.discoveryScore)
+    --scoresComm.milestoneScore = string.format("%.2f", HCScore_Character.scores.milestonesScore)
 
     local serializedScore = AceSerializer:Serialize(scoresComm)
+    --local success, _ = AceSerializer:Deserialize(serializedScore)
+    --print("Is Serializtion working?", success)
+    --print("serializedScore", serializedScore)
+
 
     if IsInGroup() then
         local channel = IsInRaid() and "RAID" or "PARTY"
 
         C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, channel)
     elseif IsInGuild() then
+        --print("Sending to Guild")        
         C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, "GUILD")
     end
 end
 
 local f = CreateFrame("Frame")
 f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
+    
+        -- Check if the prefix is already registered
+    if not C_ChatInfo.IsAddonMessagePrefixRegistered(PREFIX) then
+        -- If not, try to register it
+        if C_ChatInfo.RegisterAddonMessagePrefix(PREFIX) then
+            print("Successfully registered addon prefix: " .. PREFIX)
+        else
+            print("Failed to register addon prefix: " .. PREFIX)
+        end
+    else
+        --print("Addon prefix already registered: " .. PREFIX)
+    end
+   
+    --C_ChatInfo.RegisterAddonMessagePrefix(PREFIX)
 
-    if Hardcore_Score.db ~= nil then 
+    --print(event, prefix, message, channel, sender)
+    --print("Received an addon message from:", sender, "Message:", message)
+    
+    if Hardcore_Score.db ~= nil then         
     -- if player selects to share information.
+    
         if Hardcore_Score.db.profile.shareDetails then
             if event == "PLAYER_ENTERING_WORLD" or event == "GROUP_ROSTER_UPDATE" or event == "GROUP_JOINED" then
                 -- Player has entered the world or group roster has been updated, send our score
-                HCS_PlayerCom:SendScore()
+                HCS_PlayerCom:SendTopScores()   --HCS_PlayerCom:SendScore()
 
             elseif event == "CHAT_MSG_ADDON" and prefix == PREFIX then
 
-                local success, scoreReveived = AceSerializer:Deserialize(message)
+                local success, scoreReveived = AceSerializer:Deserialize(message)         
 
                 if success then
-                    playerScores[sender] = scoreReveived --tonumber(message)
 
+                    --[[
+                    local function updateLeaderboard()
+                        if HCScore_Character.leaderboard[scoreReveived.charName] then
+                            -- Check if incoming coreScore is higher than existing coreScore
+                            if tonumber(scoreReveived.coreScore) > tonumber(HCScore_Character.leaderboard[scoreReveived.charName].coreScore) then
+                                HCScore_Character.leaderboard[scoreReveived.charName].coreScore = scoreReveived.coreScore
+                                HCScore_Character.leaderboard[scoreReveived.charName].hasDied = scoreReveived.hasDied
+                                HCScore_Character.leaderboard[scoreReveived.charName].lastOnline = scoreReveived.lastOnline
+                            end
+                            -- Update other fields regardless
+                            HCScore_Character.leaderboard[scoreReveived.charName].charClass = scoreReveived.charClass
+                            HCScore_Character.leaderboard[scoreReveived.charName].charLevel = scoreReveived.charLevel
+                        else
+                            -- Add the new entry if charName is not already in the table
+                            HCScore_Character.leaderboard[scoreReveived.charName] = scoreReveived
+                        end
+                        HCS_LeaderBoardUI:RefreshData() --HCS_LeaderBoardUI:LoadData()
+                    end
+                    ]]
+                    
+
+                    local function updateLeaderboard()
+                        if HCScore_Character.leaderboard[scoreReveived.charName] then
+                            -- Ensure default values for coreScore
+                            local incomingCoreScore = tonumber(scoreReveived.coreScore) or 0
+                            
+                            -- Check if incoming coreScore is higher than existing coreScore
+                            if incomingCoreScore > tonumber(HCScore_Character.leaderboard[scoreReveived.charName].coreScore) then
+                                HCScore_Character.leaderboard[scoreReveived.charName].coreScore = scoreReveived.coreScore
+                                -- Provide default values if nil
+                                HCScore_Character.leaderboard[scoreReveived.charName].hasDied = scoreReveived.hasDied or 0
+                                HCScore_Character.leaderboard[scoreReveived.charName].lastOnline = scoreReveived.lastOnline or date("%Y-%m-%d %H:%M:%S")
+                            end
+                    
+                            -- Update other fields regardless, with default values if nil
+                            HCScore_Character.leaderboard[scoreReveived.charName].charClass = scoreReveived.charClass or 0
+                            HCScore_Character.leaderboard[scoreReveived.charName].charLevel = tonumber(scoreReveived.charLevel) or 1
+                            HCScore_Character.leaderboard[scoreReveived.charName].guildName = scoreReveived.guildName or ''
+
+                        else
+                            -- Add the new entry if charName is not already in the table
+                            -- Ensure default values for all fields
+                            scoreReveived.coreScore = tonumber(scoreReveived.coreScore) or 0
+                            scoreReveived.hasDied = scoreReveived.hasDied or 0
+                            scoreReveived.lastOnline = scoreReveived.lastOnline or date("%Y-%m-%d %H:%M:%S")
+                            scoreReveived.charClass = scoreReveived.charClass or 0
+                            scoreReveived.charLevel = tonumber(scoreReveived.charLevel) or 1
+                            scoreReveived.guildName = scoreReveived.guildName or ''
+                    
+                            HCScore_Character.leaderboard[scoreReveived.charName] = scoreReveived
+                        end
+                        HCS_LeaderBoardUI:RefreshData() -- Refresh or load data to UI
+                    end
+
+
+              -- Execute the function and catch any errors
+                    local status, err = pcall(updateLeaderboard)
+                
+                    -- If an error occurred, handle it
+                    if not status then
+                        print("Failed to update leaderboard: " .. err)
+                    end
+                
+                    -- Optionally, you can also print the contents of the leaderboard here
+                   -- Print the contents of the table
+                    --for charName, info in pairs(HCScore_Character.leaderboard) do
+                    --    print(charName .. " " .. info.coreScore)
+                    --end
+                                                 
                 else
-                    --print("Deserialization failed:", scoreReveived)
-                end
+                    -- Deserialization failed
+                end                             
             end
         end
     end
@@ -129,46 +220,3 @@ f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:RegisterEvent("GROUP_ROSTER_UPDATE")
 f:RegisterEvent("GROUP_JOINED")
 f:RegisterEvent("CHAT_MSG_ADDON")
-
--- Function to add a player's score to their tooltip.
-local function ModifyTooltip(self)
-    local unit = select(2, self:GetUnit())
-
-    if not unit then
-        return
-    end
-
-    local name, server = UnitFullName(unit)
-    if server == nil then
-      server = GetNormalizedRealmName()
-    end
-    local fullname = name..'-'..server
-    local score = playerScores[fullname]
-
-    if score then
-        self:AddLine(padString("Hardcore Score", 15) .. string.format("%.2f", score.coreScore))
-
-        local equippedGear = score.equippedGearScore
-        local leveling = score.levelingScore
-        local questing = score.questingScore
-        local mobsKilled = score.mobsKilledScore
-        local professions = score.professionsScore
-        local reputation = score.reputationScore
-        local discovery = score.discoveryScore
-        local milestones = score.milestoneScore
-
-        self:AddLine(padString("Equipped Gear", 15) .. string.format("%.2f", equippedGear))
-        self:AddLine(padString("Leveling     ", 15) .. string.format("%.2f", leveling))
-        self:AddLine(padString("Questing     ", 15) .. string.format("%.2f", questing))
-        self:AddLine(padString("Mobs Killed  ", 15) .. string.format("%.2f", mobsKilled))
-        self:AddLine(padString("Professions  ", 15) .. string.format("%.2f", professions))
-        self:AddLine(padString("Reputation   ", 15) .. string.format("%.2f", reputation))
-        self:AddLine(padString("Discovery    ", 15) .. string.format("%.2f", discovery))
-        self:AddLine(padString("Milestones   ", 15) .. string.format("%.2f", milestones))
-    else
-      --  print("No score found for player " .. fullname)
-    end
-end
-
-
-GameTooltip:HookScript("OnTooltipSetUnit", ModifyTooltip)

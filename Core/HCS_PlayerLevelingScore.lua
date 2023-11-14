@@ -26,7 +26,11 @@ function HCS_PlayerLevelingScore:GetLevelScore()
 end
 
 function HCS_PlayerLevelingScore:SaveLevelScore()
-    local playerLevel = HCScore_Character.level - 1
+    local playerLevel = HCScore_Character.level
+    if playerLevel ~= 60 then
+        playerLevel = playerLevel - 1
+    end
+
     local isLevelfound = false
 
     for _, lvl in pairs(HCScore_Character.levelScores) do
@@ -44,5 +48,4 @@ function HCS_PlayerLevelingScore:SaveLevelScore()
         }
         table.insert(HCScore_Character.levelScores, newLevel)
     end
-
 end

@@ -5,13 +5,27 @@ local function between(x, a, b)
 end
   
 local function GetMobKillHCScore(mobLevel)
-    local xpGain = HCS_XPUpdateEvent:GetXPGain() -- Gives the current XP gain
-    local score = 0
-
     local playerLevel = UnitLevel("player")
+    local xpGain = 0
+    
+    --local xpGain = HCS_XPUpdateEvent:GetXPGain() -- Gives the current XP gain
+
+
+    -- Initialize xpGain with the default method
+    xpGain = HCS_XPUpdateEvent:GetXPGain()  
+
+    -- Modify the XP reward based on the player's level and game version
+    if HCS_GameVersion < 30000 and playerLevel == 60 then
+        xpGain = 300
+    elseif HCS_GameVersion >= 30000 and playerLevel == 80 then  -- WOTLK
+        xpGain = 400
+    end
+
+    local score = 0
+    
     local mobDifficulty = mobLevel - playerLevel
   
-    -- Multiplier lookup table. Replace these values with your own multipliers.
+    -- Multiplier lookup table. 
     local multipliers = {
         [-6] = 0.0000,
         [-5] = 0.0003,
@@ -47,6 +61,10 @@ local function GetMobKillHCScore(mobLevel)
         score = xpGain * multipliers[-5] * percentIncrease -- Changed from EASY to a specific level
     end
 
+    --print("mobLevel: " .. mobLevel)
+    --print("xpGain: " .. xpGain)
+    --print("mobDifficulty: " .. mobDifficulty)
+    --print("score: " .. score)
     return {score, mobDifficulty, xpGain}
 end
 

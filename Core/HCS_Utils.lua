@@ -56,6 +56,32 @@ function HCS_Utils:GetTextWithClassColor(classid, text)
     return txt
 end
 
+function HCS_Utils:GetClassColorText(classid)
+    local txt = ''
+
+    if classid == 11 then -- Druid
+        txt = "|cFFFF7C0A".."Druid".."|r"
+    elseif classid == 3 then -- Hunter
+        txt = "|cFFAAD372".."Hunter".."|r"
+    elseif classid == 8 then -- Mage
+        txt = "|cFF3FC7EB".."Mage".."|r"
+    elseif classid == 2 then -- Paladin
+        txt = "|cFFF48CBA".."Paladin".."|r"
+    elseif classid == 5 then -- Priest
+        txt = "|cFFFFFFFF".."Priest".."|r"
+    elseif classid == 4 then -- Rogue
+        txt = "|cFFFFF468".."Rogue".."|r"
+    elseif classid == 7 then -- Shaman
+        txt = "|cFF0070DD".."Shaman".."|r"
+    elseif classid == 9 then -- Warlock
+        txt = "|cFF8788EE".."Warlock".."|r"
+    elseif classid == 1 then -- Warrior
+        txt = "|cFFC69B6D".."Warrior".."|r"
+    end
+
+    return txt
+end
+
 function HCS_Utils:GetTextWithRankColor(rank, text)
     local txt = text    
 
@@ -195,6 +221,174 @@ function HCS_Utils:AddThousandsCommas(inputString)
     local formattedString, _ = string.gsub(inputString, "^(-?%d+)(%d%d%d)", '%1,%2')
     return formattedString    
 end   
+
+-- Define a consistent structure for character information
+local function CreateCharacter(charName, charClass, charLevel, coreScore, hasDied, lastOnline, guildName)
+    -- Set default values if they are not provided
+    hasDied = hasDied or 0
+    lastOnline = lastOnline or date("%Y-%m-%d %H:%M:%S") -- Default to the current date and time
+    guildName = guildName or ''
+
+    return {
+        charName = charName,
+        charClass = charClass,
+        charLevel = charLevel,
+        coreScore = coreScore,
+        hasDied = hasDied,
+        lastOnline = lastOnline,
+        guildName = guildName,
+    }
+end
+
+function HCS_Utils:FilterLeaderboard(leaderboard, playerGuildName)
+    local filtered = {}
+    local insertIndex = 1  -- Initialize an index to maintain order
+
+    print('-----')
+    print("HCS_Leaderboard_Filters:")
+    for key, value in pairs(HCS_Leaderboard_Filters) do
+        print(key, value)
+    end
+    
+    local count = 0 -- Initialize count variable
+    for _, _ in pairs(leaderboard) do
+        count = count + 1
+    end
+    print("Total records in leaderboard:", count)
+
+    for _, character in pairs(leaderboard) do
+        local includeCharacter = true
+        local filters = HCS_Leaderboard_Filters
+
+        -- Filter Level 60
+        if not filters.includeLevel60 and character.charLevel == 60 then 
+            print('filtered out - level 60')
+            includeCharacter = false
+        end
+
+        -- Filter by Guild Name
+        if filters.includeSpecificGuild and character.guildName ~= playerGuildName then
+            print('Filtered out - Character:', character.charName, ', character Guild:', character.guildName, ', Specific Guild:', playerGuildName)
+
+            includeCharacter = false
+        end
+
+        -- Filter Dead Characters
+        if not filters.includeDeadCharacters and character.hasDied then
+            print('filtered out - dead characters')
+            includeCharacter = false
+        end
+
+        -- If character passes all filters, add to the filtered list
+        --print("Include Character: ", includeCharacter)
+        if includeCharacter then
+            -- Create a new character object with the predefined structure
+            local filteredCharacter = CreateCharacter(
+                character.charName,
+                character.charClass,
+                character.charLevel,
+                character.coreScore,
+                character.hasDied,
+                character.lastOnline,
+                character.guildName
+            )
+            filtered[character.charName] = filteredCharacter -- Use charName as the key to preserve the string value
+        end
+    end
+
+    -- Print the contents of the filtered table
+    --print("Filtered Leaderboard:")
+    local count = 0
+    for charName, character in pairs(filtered) do
+        for key, value in pairs(character) do
+            --print(key, value)            
+        end
+        count = count + 1
+    end  
+
+    print("Total records in filtered:", count)
+    return filtered
+end
+
+
+
+--[[
+-- Define a consistent structure for character information
+local function CreateCharacter(charName, charClass, charLevel, coreScore, hasDied, lastOnline, guildName)
+    -- Set default values if they are not provided
+    hasDied = hasDied or 0
+    lastOnline = lastOnline or date("%Y-%m-%d %H:%M:%S") -- Default to the current date and time
+    guildName = guildName or ''
+
+    return {
+        charName = charName,
+        charClass = charClass,
+        charLevel = charLevel,
+        coreScore = coreScore,
+        hasDied = hasDied,
+        lastOnline = lastOnline,
+        guildName = guildName,
+    }
+end
+
+function HCS_Utils:FilterLeaderboard(leaderboard, playerGuildName)
+    local filtered = {}
+    local insertIndex = 1  -- Initialize an index to maintain order
+
+    print("HCS_Leaderboard_Filters:")
+    for key, value in pairs(HCS_Leaderboard_Filters) do
+        print(key, value)
+    end
+    
+    for _, character in pairs(leaderboard) do
+        local includeCharacter = true
+        local filters = HCS_Leaderboard_Filters
+
+        -- Filter Level 60
+        if not filters.includeLevel60 and character.charLevel == '60' then 
+            includeCharacter = false
+        end
+
+        -- Filter by Guild Name
+        if filters.includeSpecificGuild and character.guildName ~= playerGuildName then
+            includeCharacter = false
+        end
+
+        -- Filter Dead Characters
+        if not filters.includeDeadCharacters and character.hasDied then
+            includeCharacter = false
+        end
+
+        -- If character passes all filters, add to the filtered list
+        print("Include Character: ", includeCharacter)
+        if includeCharacter then
+            -- Create a new character object with the predefined structure
+            local filteredCharacter = CreateCharacter(
+                character.charName,
+                character.charClass,
+                character.charLevel,
+                character.coreScore,
+                character.hasDied,
+                character.lastOnline,
+                character.guildName
+            )
+            filtered[insertIndex] = filteredCharacter
+            insertIndex = insertIndex + 1  -- Increment the index
+        end
+    end
+
+    -- Print the contents of the filtered table
+    print("Filtered Leaderboard:")
+    for _, character in pairs(filtered) do
+        for key, value in pairs(character) do
+            print(key, value)
+        end
+    end  
+
+    return filtered
+end
+
+]]
 
 HCS_print = true  -- Global!  Allows you to turn printing on and off if needed in certains
 function HCS_Utils:Print(msg)
