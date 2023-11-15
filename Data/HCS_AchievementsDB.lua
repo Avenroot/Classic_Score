@@ -190,7 +190,7 @@ HCS_AchievementsDB = {
       id = "ach_dek_1",
       name = headerDangerousEnemies,
       desc = "Achievement! Congrats! You've killed 1 dangerous enemey",
-      shortdesc = "1 dangerous enemey killed",
+      shortdesc = "1 dangerous enemy killed",
       points = dangerousEnemiesPoints,
       image = imgDangerousEnemeyKill,
     }, 

@@ -112,9 +112,9 @@ f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
     if not C_ChatInfo.IsAddonMessagePrefixRegistered(PREFIX) then
         -- If not, try to register it
         if C_ChatInfo.RegisterAddonMessagePrefix(PREFIX) then
-            print("Successfully registered addon prefix: " .. PREFIX)
+            print("Successfully connected to network: " .. PREFIX)
         else
-            print("Failed to register addon prefix: " .. PREFIX)
+            print("Failed to connect: " .. PREFIX)
         end
     else
         --print("Addon prefix already registered: " .. PREFIX)
@@ -138,27 +138,6 @@ f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
                 local success, scoreReveived = AceSerializer:Deserialize(message)         
 
                 if success then
-
-                    --[[
-                    local function updateLeaderboard()
-                        if HCScore_Character.leaderboard[scoreReveived.charName] then
-                            -- Check if incoming coreScore is higher than existing coreScore
-                            if tonumber(scoreReveived.coreScore) > tonumber(HCScore_Character.leaderboard[scoreReveived.charName].coreScore) then
-                                HCScore_Character.leaderboard[scoreReveived.charName].coreScore = scoreReveived.coreScore
-                                HCScore_Character.leaderboard[scoreReveived.charName].hasDied = scoreReveived.hasDied
-                                HCScore_Character.leaderboard[scoreReveived.charName].lastOnline = scoreReveived.lastOnline
-                            end
-                            -- Update other fields regardless
-                            HCScore_Character.leaderboard[scoreReveived.charName].charClass = scoreReveived.charClass
-                            HCScore_Character.leaderboard[scoreReveived.charName].charLevel = scoreReveived.charLevel
-                        else
-                            -- Add the new entry if charName is not already in the table
-                            HCScore_Character.leaderboard[scoreReveived.charName] = scoreReveived
-                        end
-                        HCS_LeaderBoardUI:RefreshData() --HCS_LeaderBoardUI:LoadData()
-                    end
-                    ]]
-                    
 
                     local function updateLeaderboard()
                         if HCScore_Character.leaderboard[scoreReveived.charName] then
@@ -194,7 +173,7 @@ f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
                     end
 
 
-              -- Execute the function and catch any errors
+                    -- Execute the function and catch any errors
                     local status, err = pcall(updateLeaderboard)
                 
                     -- If an error occurred, handle it

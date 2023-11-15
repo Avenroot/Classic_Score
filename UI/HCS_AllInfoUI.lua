@@ -489,7 +489,8 @@ local function PopulateCharactersContent(container)
                 rep = string.format("%.2f", characterScores.reputationScore),
                 disc = string.format("%.2f", characterScores.discoveryScore),
                 mile = string.format("%.2f", characterScores.milestonesScore),
-                ach = string.format("%.2f", characterScores.achievementScore), 
+                ach = string.format("%.2f", characterScores.achievementScore or 0)
+
             }
             table.insert(allDataPoints, dataPoints) -- Add this character's dataPoints to the allDataPoints table
         end
@@ -584,147 +585,6 @@ local function PopulateCharactersContent(container)
 
 end
 
-local YourPopupModal = {}
-
-local function CreateCheckbox(parent, label, tooltip)
-    local checkButton = CreateFrame("CheckButton", "MyCheckButtonGlobalName", parent, "UICheckButtonTemplate")
-    checkButton:SetPoint("TOPLEFT", 10, -50)
-
-    -- Create the label text manually next to the check button
-    local checkButtonText = checkButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    checkButtonText:SetPoint("LEFT", checkButton, "RIGHT", 0, 0)
-    checkButtonText:SetText(label)
-
-    checkButton:SetScript("OnEnter", function(self)
-        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-        GameTooltip:SetText(tooltip, nil, nil, nil, nil, true)
-        GameTooltip:Show()
-    end)
-    checkButton:SetScript("OnLeave", GameTooltip_Hide)
-    return checkButton
-end
-
-
-local function CreateFilterModal(container)
-
-    -- Then, you create the frame and set it up similarly to the PointsLog frame
-    YourPopupModal.frame = CreateFrame("Frame", "YourPopupModalFrame", UIParent, "BackdropTemplate")
-    -- Set up the frame attributes as shown previously...
-
-    -- Assuming you have already created a frame for the pop-up modal somewhere
-    YourPopupModal.frame = CreateFrame("Frame", "YourPopupModalFrame", UIParent, "BackdropTemplate")
-    YourPopupModal.frame:SetPoint("CENTER")  -- Center on screen, adjust as necessary
-    YourPopupModal.frame:SetSize(300, 200)  -- Same size as PointsLog, adjust as necessary
-    YourPopupModal.frame:SetFrameStrata("HIGH")  -- So it's on top of other frames
-    YourPopupModal.frame:SetClampedToScreen(true)
-
-    -- Set the same backdrop, colors, and border as HCS_PointsLogUI.frame
-    YourPopupModal.frame:SetBackdrop({
-        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-        edgeFile = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp",  -- Your border path
-        tile = true,
-        tileSize = 16,
-        edgeSize = 16,
-        insets = { left = 4, right = 4, top = 4, bottom = 4 },
-    })
-
-    YourPopupModal.frame:SetBackdropColor(0, 0, 0, 1)  -- Black background
-    YourPopupModal.frame:SetBackdropBorderColor(1, 1, 1)  -- White border
-
-    -- Create a title for the frame
-    local title = YourPopupModal.frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    title:SetPoint("LEFT", YourPopupModal.frame, "TOPLEFT", 10, -15)
-    title:SetText("Leaderboard Filter")
-    title:SetTextColor(241/255, 194/255, 50/255)
-
-
-
-    -- Create a checkbox
-    local level60Checkbox = CreateCheckbox(YourPopupModal.frame, "Show Level 60 characters", "Show level 60 characters.")
-    level60Checkbox:SetPoint("TOPLEFT", YourPopupModal.frame, "TOPLEFT", 10, -50)
-    level60Checkbox:SetChecked(HCS_Leaderboard_Filters.includeLevel60)
-    level60Checkbox:SetScript("OnClick", function(self)
-    
-        
-        HCS_Leaderboard_Filters.includeLevel60 = self:GetChecked()
-        
-        -- Here you will put the logic to filter your data based on the checkbox state
-        -- You might want to refresh the display of your data here as well.
-        HCS_Leaderboard_Filtered = HCS_Utils:FilterLeaderboard(HCScore_Character.leaderboard, HCScore_Character.guildName)
-        HCS_LeaderBoardUI:RefreshData()
-        --print("Level 60 checkbox is now", HCS_Leaderboard_Filters.showLevel60 and "checked" or "unchecked")  -- Placeholder print statement
-    end)
-
-
-    -- Create the second checkbox
-    local guildPlayersCheckbox = CreateCheckbox(YourPopupModal.frame, "Guild Only", "Show only characters in your guild.")
-    guildPlayersCheckbox:SetPoint("TOPLEFT", level60Checkbox, "BOTTOMLEFT", 0, -10)
-    guildPlayersCheckbox:SetChecked(HCS_Leaderboard_Filters.includeSpecificGuild)
-    guildPlayersCheckbox:SetEnabled(false)
-    guildPlayersCheckbox:SetScript("OnClick", function(self)
-
-        --HCS_Leaderboard_Filters.includeSpecificGuild = self:GetChecked()
-
-        -- Here you will put the logic to filter your data based on the checkbox state
-        -- You might want to refresh the display of your data here as well.
-        
-        --HCS_Leaderboard_Filtered = HCS_Utils:FilterLeaderboard(HCScore_Character.leaderboard, HCScore_Character.guildName)
-        --HCS_LeaderBoardUI:RefreshData()
-        --print("Guild name checkbox is now", HCS_Leaderboard_Filters.includeSpecificGuild and "checked" or "unchecked")  -- Placeholder print statement
-        --print("Guildname ", HCScore_Character.guildName)
-    end)
-
-    -- Create the third checkbox
-    local diedPlayersCheckbox = CreateCheckbox(YourPopupModal.frame, "Show dead players", "Show characters who have died.")
-    diedPlayersCheckbox:SetPoint("TOPLEFT", guildPlayersCheckbox, "BOTTOMLEFT", 0, -10)
-    diedPlayersCheckbox:SetChecked(HCS_Leaderboard_Filters.includeDeadCharacters)
-    diedPlayersCheckbox:SetEnabled(false)
-    diedPlayersCheckbox:SetScript("OnClick", function(self)        
-        
-        --HCS_Leaderboard_Filters.includeDeadCharacters = self:GetChecked()
-
-        -- Here you will put the logic to filter your data based on the checkbox state
-        -- You might want to refresh the display of your data here as well.
-        --HCS_Leaderboard_Filtered = HCS_Utils:FilterLeaderboard(HCScore_Character.leaderboard, HCScore_Character.guildName)
-        --HCS_LeaderBoardUI:RefreshData()
-        --print("Dead checkbox is now", HCS_Leaderboard_Filters.includeDeadCharacters and "checked" or "unchecked")  -- Placeholder print statement
-    end)
-    
-    -- Create a reset button
-    local resetButton = CreateFrame("Button", nil, YourPopupModal.frame, "UIPanelButtonTemplate")
-    resetButton:SetText("Reset Leaderboard")  -- Set the button text
-    resetButton:SetWidth(150)
-    resetButton:SetPoint("BOTTOM", YourPopupModal.frame, "BOTTOM", 0, 10)  -- Position the button at the bottom
-
-    -- Define the button's click event handler
-    resetButton:SetScript("OnClick", function()
-        -- Perform the reset leaderboard action here
-        -- You can call a function or execute the code to reset the leaderboard data
-        -- For example: ResetLeaderboardData()
-        -- Make sure to define the ResetLeaderboardData function to handle the reset logic.
-        HCScore_Character.leaderboard = {}
-        HCS_Leaderboard_Filtered = {}
-    end)
-
-    -- Create a close button
-    local closeButton = CreateFrame("Button", nil, YourPopupModal.frame, "UIPanelCloseButton")
-    closeButton:SetPoint("TOPRIGHT", YourPopupModal.frame, "TOPRIGHT")
-    closeButton:SetScript("OnClick", function()
-        YourPopupModal.frame:Hide()
-    end)
-
-    -- Function to show/hide the modal, similar to the toggle function you have for PointsLog
-    function YourPopupModal:Toggle()
-        if self.frame:IsShown() then
-            self.frame:Hide()
-        else
-            self.frame:Show()
-        end
-    end
-
-    return YourPopupModal
-end
-
 local function PopulateLeaderboardContent(container)
     -- Header Group
     local headerGroup = AceGUI:Create("SimpleGroup")
@@ -774,14 +634,14 @@ local function PopulateLeaderboardContent(container)
     headerGroup:AddChild(scoreHeader)
 
     -- Filter button
-    local filterButton = AceGUI:Create("Button")
-    filterButton:SetText("Filter")
-    filterButton:SetWidth(100)
-    filterButton:SetCallback("OnClick", function()
-        -- When the button is clicked, create and show the filter modal
-        CreateFilterModal(container)
-    end)
-    headerGroup:AddChild(filterButton)        
+--    local filterButton = AceGUI:Create("Button")
+--    filterButton:SetText("Filter")
+--    filterButton:SetWidth(100)
+--    filterButton:SetCallback("OnClick", function()
+--        -- When the button is clicked, create and show the filter modal
+--        CreateFilterModal(container)
+--    end)
+--    headerGroup:AddChild(filterButton)        
     
     -- Add the header to the container
     container:AddChild(headerGroup)
@@ -796,7 +656,7 @@ local function PopulateLeaderboardContent(container)
     
     -- Convert the leaderboard to an array
     local leaderboardArray = {}
-    for charName, info in pairs(HCS_Leaderboard_Filtered) do
+    for charName, info in pairs(HCScore_Character.leaderboard) do
         info.charName = charName -- Add charName to each entry for later
         table.insert(leaderboardArray, info)
     end

@@ -236,7 +236,7 @@ function HCS_LeaderBoardUI:LoadData()
 
     -- Convert the leaderboard to an array
     local leaderboardArray = {}
-    for charName, info in pairs(HCS_Leaderboard_Filtered) do
+    for charName, info in pairs(HCScore_Character.leaderboard) do
         --print("charName: " .. charName)
         info.charName = charName -- Add charName to each entry for later
         table.insert(leaderboardArray, info)
@@ -286,7 +286,7 @@ function HCS_LeaderBoardUI:LoadDataNearChar()
 
     -- Convert the leaderboard to an array
     local leaderboardArray = {}
-    for charName, info in pairs(HCS_Leaderboard_Filtered) do
+    for charName, info in pairs(HCScore_Character.leaderboard) do
         info.charName = charName
         table.insert(leaderboardArray, info)
     end

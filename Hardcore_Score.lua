@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.0.t5" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.1.0" --GetAddOnMetadata("Hardcore Score", "Version")
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -296,7 +296,7 @@ local options = {
             order = 21
         },
         addonInfoNote = {
-            name = "version 1.1.0.t5 - authors: Avenroot, Caith",
+            name = "version 1.1.0 - authors: Avenroot, Caith - level 60 testing Fruze",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -468,7 +468,7 @@ function Hardcore_Score:CreateMiniMapButton()
             --tooltip:SetText("")  -- This should help ensure the title's style isn't applied to the first line
             tooltip:AddLine("Hardcore Score "..tostring(HCS_Version))
             tooltip:AddLine("|cFFFFA500Left-Click|r to to see your Journey")  -- Sets "Left-Click" to grey
-            tooltip:AddLine("|cFFFFA500Right-Click|r Options")  -- Sets "Right-Click" to grey
+            tooltip:AddLine("|cFFFFA500Right-Click|r Show/Hide Scoreboard")  -- Sets "Right-Click" to grey
 
             if Hardcore_Score.db.profile.framePosition.show == false then
                 tooltip:AddLine(" ")
@@ -556,6 +556,32 @@ function Hardcore_Score:init(event, name)
             FrameStackTooltip_Toggle();        
         end
 
+        -- Define a variable to track whether the reset confirmation dialog is open
+        local resetConfirmationOpen = false
+
+        SLASH_RESETLEADERBOARD1 = "/hcsresetl"; -- new slash command for resetting leaderboard
+        SlashCmdList.RESETLEADERBOARD = function ()
+            -- Show a confirmation dialog to the player
+            StaticPopupDialogs["RESET_LEADERBOARD_CONFIRM"] = {
+                text = "Are you sure you want to reset your leaderboard?",
+                button1 = "Yes",
+                button2 = "No",
+                OnAccept = function()
+                    -- Player confirmed, reset the leaderboard
+                    HCScore_Character.leaderboard = {}
+                    print("Hardcore Score: Your Leaderboard has been reset.")
+                end,
+                timeout = 0,
+                whileDead = true,
+                hideOnEscape = true,
+                showAlert = true,
+            }
+
+            StaticPopup_Show("RESET_LEADERBOARD_CONFIRM")
+            resetConfirmationOpen = true
+        end
+
+
         -- initalization Hardcore_Score_Settings
         if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
 
@@ -623,9 +649,6 @@ function Hardcore_Score:init(event, name)
             showMainScore = true
             Hardcore_Score.db.profile.framePosition.show = showTimestamp
         end
-
-        HCS_Leaderboard_Filters = Hardcore_Score.db.profile.HCS_Leaderboard_Filters
-        HCS_Leaderboard_Filtered = HCS_Utils:FilterLeaderboard(HCScore_Character.leaderboard, HCScore_Character.guildName)  --HCScore_Character.leaderboard 
 
         local fontName, _, fontFlags = HCS_PointsLogUI.EditBox:GetFont()
         HCS_PointsLogUI.EditBox:SetFont(fontName, fontSize, fontFlags)
