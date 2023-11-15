@@ -11,8 +11,9 @@ function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, 
         local guidType = select(1,strsplit("-", destGUID))
         local sourceType = select(1,strsplit("-", sourceGUID))
         local playerCharacter = HCScore_Character.name
+        local petCharacter = UnitName("pet")
 
-        if playerCharacter == sourceName then
+        if playerCharacter == sourceName or petCharacter == sourceName then 
             if (guidType ~= "Player" and guidType ~= "Pet")
             then
                 -- When any damage is done by player or player's pet, record the mob
@@ -21,14 +22,14 @@ function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, 
                     local mobDifficulty = UnitLevel("target") - UnitLevel("player")
 
                     if mobDifficulty > -6 then
-                       -- print("--------- SWING DAMAGE ---------")
+                        --print("--------- SWING DAMAGE ---------")
                         _G["MobCombatKill"] = true
                         _G["MobName"] = destName
                         _G["MobLevel"] = UnitLevel("target")
                         _G["MobClassification"] = UnitClassification("target")    
                         
-                       -- print(destName.. " - level ".. _G["MobLevel"].. " ("..guidType..")")
-                       -- print(sourceName.. " - ".. " ("..sourceType..")")                                                       
+                        --print(destName.. " - level ".. _G["MobLevel"].. " ("..guidType..")")
+                        --print(sourceName.. " - ".. " ("..sourceType..")")                                                       
                     end  
     
                 elseif (subEvent=="PARTY_KILL")
@@ -42,9 +43,10 @@ function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, 
                         _G["MobLevel"] = UnitLevel("target")                  
                         _G["MobClassification"] = UnitClassification("target")      
         
-                       -- print("--------- PARTY KILL ---------")
-                       -- print("MobCombatKill = "..tostring(_G["MobCombatKill"]))
-                       -- print(destName.. " - level ".. _G["MobLevel"].. " ("..guidType..")")                                
+                        --print("--------- PARTY KILL ---------")
+                        --print("MobCombatKill = "..tostring(_G["MobCombatKill"]))
+                        --print(destName.. " - level ".. _G["MobLevel"].. " ("..guidType..")")                                
+                        if UnitLevel("player") == 60 then HCS_XPUpdateEvent:UpdateScoresBasedOnEvents() end
                     end      
      
                 elseif (subEvent=="UNIT_DIED" and destGUID ~= nil)
@@ -53,14 +55,15 @@ function OnCombatEvent(_, event, _, sourceGUID, _, _, _, destGUID, destName, _, 
                     local mobDifficulty = UnitLevel("target") - UnitLevel("player")
                     
                     if mobDifficulty > -6 then
-                        _G["MobCombatKill"] = true
-                        _G["MobName"] = destName
-                        _G["MobLevel"] = UnitLevel("target")
-                        _G["MobClassification"] = UnitClassification("target")
+                      --  _G["MobCombatKill"] = true
+                      --  _G["MobName"] = destName
+                      --  _G["MobLevel"] = UnitLevel("target")
+                      --  _G["MobClassification"] = UnitClassification("target")
         
-                       -- print("--------- UNIT DIED ----------")
-                       -- print("MobCombatKill = "..tostring(_G["MobCombatKill"]))
-                       -- print(destName.. " - level ".. _G["MobLevel"].. " ("..guidType..")")                                                    
+                        --print("--------- UNIT DIED ----------")
+                        --print("MobCombatKill = "..tostring(_G["MobCombatKill"]))
+                        --print(destName.. " - level ".. _G["MobLevel"].. " ("..guidType..")")                                                    
+                      --  if UnitLevel("player") == 60 then HCS_XPUpdateEvent:UpdateScoresBasedOnEvents() end
                     end
                 end
             end  

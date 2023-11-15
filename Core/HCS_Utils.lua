@@ -56,6 +56,32 @@ function HCS_Utils:GetTextWithClassColor(classid, text)
     return txt
 end
 
+function HCS_Utils:GetClassColorText(classid)
+    local txt = ''
+
+    if classid == 11 then -- Druid
+        txt = "|cFFFF7C0A".."Druid".."|r"
+    elseif classid == 3 then -- Hunter
+        txt = "|cFFAAD372".."Hunter".."|r"
+    elseif classid == 8 then -- Mage
+        txt = "|cFF3FC7EB".."Mage".."|r"
+    elseif classid == 2 then -- Paladin
+        txt = "|cFFF48CBA".."Paladin".."|r"
+    elseif classid == 5 then -- Priest
+        txt = "|cFFFFFFFF".."Priest".."|r"
+    elseif classid == 4 then -- Rogue
+        txt = "|cFFFFF468".."Rogue".."|r"
+    elseif classid == 7 then -- Shaman
+        txt = "|cFF0070DD".."Shaman".."|r"
+    elseif classid == 9 then -- Warlock
+        txt = "|cFF8788EE".."Warlock".."|r"
+    elseif classid == 1 then -- Warrior
+        txt = "|cFFC69B6D".."Warrior".."|r"
+    end
+
+    return txt
+end
+
 function HCS_Utils:GetTextWithRankColor(rank, text)
     local txt = text    
 
@@ -195,6 +221,24 @@ function HCS_Utils:AddThousandsCommas(inputString)
     local formattedString, _ = string.gsub(inputString, "^(-?%d+)(%d%d%d)", '%1,%2')
     return formattedString    
 end   
+
+-- Define a consistent structure for character information
+local function CreateCharacter(charName, charClass, charLevel, coreScore, hasDied, lastOnline, guildName)
+    -- Set default values if they are not provided
+    hasDied = hasDied or 0
+    lastOnline = lastOnline or date("%Y-%m-%d %H:%M:%S") -- Default to the current date and time
+    guildName = guildName or ''
+
+    return {
+        charName = charName,
+        charClass = charClass,
+        charLevel = charLevel,
+        coreScore = coreScore,
+        hasDied = hasDied,
+        lastOnline = lastOnline,
+        guildName = guildName,
+    }
+end
 
 HCS_print = true  -- Global!  Allows you to turn printing on and off if needed in certains
 function HCS_Utils:Print(msg)

@@ -6,12 +6,21 @@ local professionTotal = 10
 local professionPoints = 5
 local dangerousEnemiesPoints = 5
 
+local headerKillingMobs = "Killed Enemies"
+local headerMobTypes = "Mob Types"
+local headerQuesting = "Questing"
+local headerDiscovery = "Discoveries"
+local headerProfessions = "Professions"
+local headerProfessionPoints = "Profession Points"
+local headerDangerousEnemies = "Dangerous Enemies"
+
+
 HCS_MilestonesDB = {
 
     -- Killing Mobs Milestones
     {
       id = "mobk_1",
-      name = "Killed 100 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 100 enemies",
       shortdesc = "100 enemies killed",
       points = mobKillsPoints,
@@ -19,7 +28,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_2",
-      name = "Killed 200 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 200 enemies",
       shortdesc = "200 enemies killed",
       points = mobKillsPoints,
@@ -27,7 +36,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_3",
-      name = "Killed 300 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 300 enemies",
       shortdesc = "300 enemies killed",
       points = mobKillsPoints,
@@ -35,7 +44,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_4",
-      name = "Killed 400 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 400 enemies",
       shortdesc = "400 enemies killed",
       points = mobKillsPoints,
@@ -43,7 +52,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_5",
-      name = "Killed 500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 500 enemies",
       shortdesc = "500 enemies killed",
       points = mobKillsPoints,
@@ -51,7 +60,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_6",
-      name = "Killed 600 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 600 enemies",
       shortdesc = "600 enemies killed",
       points = mobKillsPoints,
@@ -59,7 +68,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_7",
-      name = "Killed 700 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 700 enemies",
       shortdesc = "700 enemies killed",
       points = mobKillsPoints,
@@ -67,7 +76,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_8",
-      name = "Killed 800 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 800 enemies",
       shortdesc = "800 enemies killed",
       points = mobKillsPoints,
@@ -75,7 +84,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_9",
-      name = "Killed 900 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 200 enemies",
       shortdesc = "900 enemies killed",
       points = mobKillsPoints,
@@ -83,7 +92,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobk_10",
-      name = "Killed 1500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 1,500 enemies",
       shortdesc = "1,500 enemies killed",
       points = mobKillsPoints,
@@ -91,7 +100,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_11",
-      name = "Killed 2000 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 2,000 enemies",
       shortdesc = "2,000 enemies killed",
       points = mobKillsPoints,
@@ -99,7 +108,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_12",
-      name = "Killed 2500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 2,500 enemies",
       shortdesc = "2,500 enemies killed",
       points = mobKillsPoints,
@@ -107,7 +116,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_13",
-      name = "Killed 3000 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 3,000 enemies",
       shortdesc = "3,000 enemies killed",
       points = mobKillsPoints,
@@ -115,7 +124,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_14",
-      name = "Killed 3500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 3,500 enemies",
       shortdesc = "3,500 enemies killed",
       points = mobKillsPoints,
@@ -123,7 +132,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobk_15",
-      name = "Killed 4000 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 4,000 enemies",
       shortdesc = "4,000 enemies killed",
       points = mobKillsPoints,
@@ -131,7 +140,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_16",
-      name = "Killed 4500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 4,500 enemies",
       shortdesc = "4,500 enemies killed",
       points = mobKillsPoints,
@@ -139,7 +148,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_17",
-      name = "Killed 5500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 5,500 enemies",
       shortdesc = "5,500 enemies killed",
       points = mobKillsPoints,
@@ -147,7 +156,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_18",
-      name = "Killed 6000 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 6,000 enemies",
       shortdesc = "6,000 enemies killed",
       points = mobKillsPoints,
@@ -155,7 +164,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_19",
-      name = "Killed 6500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 6,500 enemies",
       shortdesc = "6,500 enemies killed",
       points = mobKillsPoints,
@@ -163,7 +172,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_20",
-      name = "Killed 7000 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 7,000 enemies",
       shortdesc = "7,000 enemies killed",
       points = mobKillsPoints,
@@ -171,7 +180,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_21",
-      name = "Killed 7500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 7,500 enemies",
       shortdesc = "7,500 enemies killed",
       points = mobKillsPoints,
@@ -179,7 +188,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_22",
-      name = "Killed 8000 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 8,000 enemies",
       shortdesc = "8,000 enemies killed",
       points = mobKillsPoints,
@@ -187,7 +196,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_23",
-      name = "Killed 8500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 8,500 enemies",
       shortdesc = "8,500 enemies killed",
       points = mobKillsPoints,
@@ -195,7 +204,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobk_24",
-      name = "Killed 9000 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 9,000 enemies",
       shortdesc = "9,000 enemies killed",
       points = mobKillsPoints,
@@ -203,7 +212,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobk_25",
-      name = "Killed 9500 enemies",
+      name = headerKillingMobs,
       desc = "Milestone! Congrats! You've killed 9,500 enemies",
       shortdesc = "9,500 enemies killed",
       points = mobKillsPoints,
@@ -214,7 +223,7 @@ HCS_MilestonesDB = {
     -- Killing Mob Types Milestones
     {
       id = "mobkt_1",
-      name = "Killed 10 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 10 creature types",
       shortdesc = "10 creature types killed",
       points = mobKillsPoints,
@@ -222,7 +231,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobkt_2",
-      name = "Killed 20 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 20 creature types",
       shortdesc = "20 creature types killed",
       points = mobKillsPoints,
@@ -230,7 +239,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobkt_3",
-      name = "Killed 30 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 30 creature types",
       shortdesc = "30 creature types killed",
       points = mobKillsPoints,
@@ -238,7 +247,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobkt_4",
-      name = "Killed 40 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 40 creature types",
       shortdesc = "40 creature types killed",
       points = mobKillsPoints,
@@ -246,7 +255,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobkt_5",
-      name = "Killed 50 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 50 creature types",
       shortdesc = "50 creature types killed",
       points = mobKillsPoints,
@@ -254,7 +263,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobkt_6",
-      name = "Killed 60 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 60 creature types",
       shortdesc = "60 creature types killed",
       points = mobKillsPoints,
@@ -262,7 +271,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobkt_7",
-      name = "Killed 70 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 70 creature types",
       shortdesc = "70 creature types killed",
       points = mobKillsPoints,
@@ -270,7 +279,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobkt_8",
-      name = "Killed 80 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 80 creature types",
       shortdesc = "80 creature types killed",
       points = mobKillsPoints,
@@ -278,7 +287,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobkt_9",
-      name = "Killed 90 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 90 creature types",
       shortdesc = "90 creature types killed",
       points = mobKillsPoints,
@@ -286,7 +295,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobkt_10",
-      name = "Killed 110 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 110 creature types",
       shortdesc = "110 creature types killed",
       points = mobKillsPoints,
@@ -294,7 +303,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "mobkt_11",
-      name = "Killed 120 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 120 creature types",
       shortdesc = "120 creature types killed",
       points = mobKillsPoints,
@@ -302,7 +311,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobkt_12",
-      name = "Killed 130 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 130 creature types",
       shortdesc = "130 creature types killed",
       points = mobKillsPoints,
@@ -310,7 +319,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobkt_13",
-      name = "Killed 140 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 140 creature types",
       shortdesc = "140 creature types killed",
       points = mobKillsPoints,
@@ -318,7 +327,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobkt_14",
-      name = "Killed 150 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 150 creature types",
       shortdesc = "150 creature types killed",
       points = mobKillsPoints,
@@ -326,7 +335,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobkt_15",
-      name = "Killed 160 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 160 creature types",
       shortdesc = "160 creature types killed",
       points = mobKillsPoints,
@@ -334,7 +343,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobkt_16",
-      name = "Killed 170 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 170 creature types",
       shortdesc = "170 creature types killed",
       points = mobKillsPoints,
@@ -342,7 +351,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobkt_17",
-      name = "Killed 180 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 180 creature types",
       shortdesc = "180 creature types killed",
       points = mobKillsPoints,
@@ -350,7 +359,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "mobkt_18",
-      name = "Killed 190 creature types",
+      name = headerMobTypes,
       desc = "Milestone! Congrats! You've killed 190 creature types",
       shortdesc = "190 creature types killed",
       points = mobKillsPoints,
@@ -360,7 +369,7 @@ HCS_MilestonesDB = {
     -- Total Quests Milestones
     {
       id = "qtot_1",
-      name = "Completed 10 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 10 Quests",
       shortdesc = "10 quests completed",
       points = questPoints,
@@ -368,7 +377,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "qtot_2",
-      name = "Completed 50 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 50 Quests",
       shortdesc = "50 quests completed",
       points = questPoints,
@@ -376,7 +385,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "qtot_3",
-      name = "Completed 150 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 150 Quests",
       shortdesc = "150 quests completed",
       points = questPoints,
@@ -384,7 +393,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "qtot_4",
-      name = "Completed 200 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 200 Quests",
       shortdesc = "200 quests completed",
       points = questPoints,
@@ -392,7 +401,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "qtot_5",
-      name = "Completed 250 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 250 Quests",
       shortdesc = "250 quests completed",
       points = questPoints,
@@ -400,7 +409,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "qtot_6",
-      name = "Completed 300 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 300 Quests",
       shortdesc = "300 quests completed",
       points = questPoints,
@@ -408,7 +417,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "qtot_7",
-      name = "Completed 350 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 350 Quests",
       shortdesc = "350 quests completed",
       points = questPoints,
@@ -416,7 +425,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "qtot_8",
-      name = "Completed 400 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 400 Quests",
       shortdesc = "400 quests completed",
       points = questPoints,
@@ -424,7 +433,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "qtot_9",
-      name = "Completed 450 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 450 Quests",
       shortdesc = "450 quests completed",
       points = questPoints,
@@ -432,7 +441,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "qtot_10",
-      name = "Completed 550 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 550 Quests",
       shortdesc = "550 quests completed",
       points = questPoints,
@@ -440,7 +449,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "qtot_11",
-      name = "Completed 600 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 600 Quests",
       shortdesc = "600 quests completed",
       points = questPoints,
@@ -448,7 +457,7 @@ HCS_MilestonesDB = {
     },    
     {
       id = "qtot_12",
-      name = "Completed 650 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 650 Quests",
       shortdesc = "650 quests completed",
       points = questPoints,
@@ -456,7 +465,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "qtot_13",
-      name = "Completed 700 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 700 Quests",
       shortdesc = "700 quests completed",
       points = questPoints,
@@ -464,7 +473,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "qtot_14",
-      name = "Completed 750 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 750 Quests",
       shortdesc = "750 quests completed",
       points = questPoints,
@@ -472,7 +481,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "qtot_15",
-      name = "Completed 800 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 800 Quests",
       shortdesc = "800 quests completed",
       points = questPoints,
@@ -480,7 +489,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "qtot_16",
-      name = "Completed 850 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 850 Quests",
       shortdesc = "850 quests completed",
       points = questPoints,
@@ -488,7 +497,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "qtot_17",
-      name = "Completed 900 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 900 Quests",
       shortdesc = "900 quests completed",
       points = questPoints,
@@ -496,7 +505,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "qtot_18",
-      name = "Completed 950 quests",
+      name = headerQuesting,
       desc = "Milestone! Congrats! You've completed 950 Quests",
       shortdesc = "950 quests completed",
       points = questPoints,
@@ -506,7 +515,7 @@ HCS_MilestonesDB = {
     -- Discovery
     {
       id = "disc_1",
-      name = "Completed 10 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 10 Discoveries",
       shortdesc = "10 discoveries made",
       points = discoveryPoints,
@@ -514,7 +523,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_2",
-      name = "Completed 50 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 50 Discoveries",
       shortdesc = "50 discoveries made",
       points = discoveryPoints,
@@ -522,7 +531,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_3",
-      name = "Completed 150 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 150 Discoveries",
       shortdesc = "150 discoveries made",
       points = discoveryPoints,
@@ -530,7 +539,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_4",
-      name = "Completed 200 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 200 Discoveries",
       shortdesc = "200 discoveries made",
       points = discoveryPoints,
@@ -538,7 +547,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_5",
-      name = "Completed 250 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 250 Discoveries",
       shortdesc = "250 discoveries made",
       points = discoveryPoints,
@@ -546,7 +555,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_6",
-      name = "Completed 300 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 300 Discoveries",
       shortdesc = "300 discoveries made",
       points = discoveryPoints,
@@ -554,7 +563,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_7",
-      name = "Completed 350 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 350 Discoveries",
       shortdesc = "350 discoveries made",
       points = discoveryPoints,
@@ -562,7 +571,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_8",
-      name = "Completed 400 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 400 Discoveries",
       shortdesc = "400 discoveries made",
       points = discoveryPoints,
@@ -570,7 +579,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_9",
-      name = "Completed 450 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 450 Discoveries",
       shortdesc = "450 discoveries made",
       points = discoveryPoints,
@@ -578,7 +587,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_10",
-      name = "Completed 550 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 550 Discoveries",
       shortdesc = "550 discoveries made",
       points = discoveryPoints,
@@ -586,7 +595,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "disc_11",
-      name = "Completed 600 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 600 Discoveries",
       shortdesc = "600 discoveries made",
       points = discoveryPoints,
@@ -594,7 +603,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "disc_12",
-      name = "Completed 650 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 650 Discoveries",
       shortdesc = "650 discoveries made",
       points = discoveryPoints,
@@ -602,7 +611,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "disc_13",
-      name = "Completed 700 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 700 Discoveries",
       shortdesc = "700 discoveries made",
       points = discoveryPoints,
@@ -610,7 +619,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "disc_14",
-      name = "Completed 750 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 750 Discoveries",
       shortdesc = "750 discoveries made",
       points = discoveryPoints,
@@ -618,7 +627,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "disc_15",
-      name = "Completed 800 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 800 Discoveries",
       shortdesc = "800 discoveries made",
       points = discoveryPoints,
@@ -626,7 +635,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "disc_16",
-      name = "Completed 850 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 850 Discoveries",
       shortdesc = "850 discoveries made",
       points = discoveryPoints,
@@ -634,7 +643,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "disc_17",
-      name = "Completed 900 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 900 Discoveries",
       shortdesc = "900 discoveries made",
       points = discoveryPoints,
@@ -642,7 +651,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "disc_18",
-      name = "Completed 950 Discoveries",
+      name = headerDiscovery,
       desc = "Milestone! Congrats! You've made 950 Discoveries",
       shortdesc = "950 discoveries made",
       points = discoveryPoints,
@@ -652,7 +661,7 @@ HCS_MilestonesDB = {
     -- Professions Total (Started)
     {
       id = "proft_1",
-      name = "Started 1 Profession",
+      name = headerProfessions,
       desc = "Milestone! Congrats! You've started 1 profession",
       shortdesc = "Started 1 profession",
       points = professionTotal,
@@ -660,7 +669,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "proft_2",
-      name = "Started 5 Professions",
+      name = headerProfessions,
       desc = "Milestone! Congrats! You've started 5 professions",
       shortdesc = "Started 5 professions",
       points = professionTotal,
@@ -668,7 +677,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "proft_3",
-      name = "Started 10 Professions",
+      name = headerProfessions,
       desc = "Milestone! Congrats! You've started 10 professions",
       shortdesc = "Started 10 professions",
       points = professionTotal,
@@ -678,7 +687,7 @@ HCS_MilestonesDB = {
     -- Profession points
     {
       id = "profp_1",
-      name = "10 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 10 Profession Points",
       shortdesc = "10 Profession Points",
       points = professionPoints,
@@ -686,7 +695,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_2",
-      name = "50 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 50 Profession Points",
       shortdesc = "50 Profession Points",
       points = professionPoints,
@@ -694,7 +703,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_3",
-      name = "100 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 100 Profession Points",
       shortdesc = "100 Profession Points",
       points = professionPoints,
@@ -702,7 +711,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_4",
-      name = "200 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 200 Profession Points",
       shortdesc = "200 Profession Points",
       points = professionPoints,
@@ -710,7 +719,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_5",
-      name = "300 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 300 Profession Points",
       shortdesc = "300 Profession Points",
       points = professionPoints,
@@ -718,7 +727,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_6",
-      name = "400 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 400 Profession Points",
       shortdesc = "400 Profession Points",
       points = professionPoints,
@@ -726,7 +735,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_7",
-      name = "500 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 500 Profession Points",
       shortdesc = "500 Profession Points",
       points = professionPoints,
@@ -734,7 +743,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_8",
-      name = "750 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 750 Profession Points",
       shortdesc = "750 Profession Points",
       points = professionPoints,
@@ -742,7 +751,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_9",
-      name = "1000 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 1,000 Profession Points",
       shortdesc = "1,000 Profession Points",
       points = professionPoints,
@@ -750,7 +759,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_10",
-      name = "1500 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 1,500 Profession Points",
       shortdesc = "1,500 Profession Points",
       points = professionPoints,
@@ -758,7 +767,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_11",
-      name = "2000 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 2,000 Profession Points",
       shortdesc = "2,000 Profession Points",
       points = professionPoints,
@@ -766,7 +775,7 @@ HCS_MilestonesDB = {
     },
     {
       id = "profp_12",
-      name = "2500 Profession Points",
+      name = headerProfessionPoints,
       desc = "Milestone! Congrats! You have 2,500 Profession Points",
       shortdesc = "2,500 Profession Points",
       points = professionPoints,
@@ -776,7 +785,7 @@ HCS_MilestonesDB = {
     -- Dangerous Enemies Killed
     {
       id = "dek_1",
-      name = "Killed 5 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 5 dangerous enemies",
       shortdesc = "5 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -784,7 +793,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_2",
-      name = "Killed 25 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 25 dangerous enemies",
       shortdesc = "25 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -792,7 +801,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_3",
-      name = "Killed 50 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 50 dangerous enemies",
       shortdesc = "50 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -800,7 +809,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_4",
-      name = "Killed 75 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 75 dangerous enemies",
       shortdesc = "75 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -808,7 +817,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_5",
-      name = "Killed 125 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 125 dangerous enemies",
       shortdesc = "125 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -816,7 +825,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_6",
-      name = "Killed 150 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 150 dangerous enemies",
       shortdesc = "150 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -824,7 +833,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_7",
-      name = "Killed 175 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 175 dangerous enemies",
       shortdesc = "175 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -832,7 +841,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_8",
-      name = "Killed 200 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 200 dangerous enemies",
       shortdesc = "200 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -840,7 +849,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_9",
-      name = "Killed 225 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 225 dangerous enemies",
       shortdesc = "225 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -848,7 +857,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_10",
-      name = "Killed 250 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 250 dangerous enemies",
       shortdesc = "250 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -856,7 +865,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_11",
-      name = "Killed 275 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 275 dangerous enemies",
       shortdesc = "275 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -864,7 +873,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_12",
-      name = "Killed 300 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 300 dangerous enemies",
       shortdesc = "300 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -872,7 +881,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_13",
-      name = "Killed 325 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 325 dangerous enemies",
       shortdesc = "325 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -880,7 +889,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_14",
-      name = "Killed 350 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 350 dangerous enemies",
       shortdesc = "350 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -888,7 +897,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_15",
-      name = "Killed 375 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 375 dangerous enemies",
       shortdesc = "375 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -896,7 +905,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_16",
-      name = "Killed 400 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 400 dangerous enemies",
       shortdesc = "400 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -904,7 +913,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_17",
-      name = "Killed 425 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 425 dangerous enemies",
       shortdesc = "425 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -912,7 +921,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_18",
-      name = "Killed 450 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 450 dangerous enemies",
       shortdesc = "450 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -920,7 +929,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_19",
-      name = "Killed 475 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 475 dangerous enemies",
       shortdesc = "475 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -928,7 +937,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_20",
-      name = "Killed 525 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 525 dangerous enemies",
       shortdesc = "525 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -936,7 +945,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_21",
-      name = "Killed 550 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 550 dangerous enemies",
       shortdesc = "550 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -944,7 +953,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_22",
-      name = "Killed 575 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 575 dangerous enemies",
       shortdesc = "575 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -952,7 +961,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_23",
-      name = "Killed 600 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 600 dangerous enemies",
       shortdesc = "600 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -960,7 +969,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_24",
-      name = "Killed 625 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 625 dangerous enemies",
       shortdesc = "625 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -968,7 +977,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_25",
-      name = "Killed 650 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 650 dangerous enemies",
       shortdesc = "650 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -976,7 +985,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_26",
-      name = "Killed 675 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 675 dangerous enemies",
       shortdesc = "675 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -984,7 +993,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_27",
-      name = "Killed 700 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 700 dangerous enemies",
       shortdesc = "700 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -992,7 +1001,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_28",
-      name = "Killed 725 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 725 dangerous enemies",
       shortdesc = "725 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1000,7 +1009,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_29",
-      name = "Killed 750 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 750 dangerous enemies",
       shortdesc = "750 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1008,7 +1017,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_30",
-      name = "Killed 775 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 775 dangerous enemies",
       shortdesc = "775 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1016,7 +1025,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_31",
-      name = "Killed 800 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 800 dangerous enemies",
       shortdesc = "800 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1024,7 +1033,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_32",
-      name = "Killed 825 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 825 dangerous enemies",
       shortdesc = "825 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1032,7 +1041,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_33",
-      name = "Killed 850 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 850 dangerous enemies",
       shortdesc = "850 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1040,7 +1049,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_34",
-      name = "Killed 875 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 875 dangerous enemies",
       shortdesc = "875 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1048,7 +1057,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_35",
-      name = "Killed 900 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 900 dangerous enemies",
       shortdesc = "900 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1056,7 +1065,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_36",
-      name = "Killed 925 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 925 dangerous enemies",
       shortdesc = "925 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1064,7 +1073,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_37",
-      name = "Killed 950 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 950 dangerous enemies",
       shortdesc = "950 dangerous enemies killed",
       points = dangerousEnemiesPoints,
@@ -1072,7 +1081,7 @@ HCS_MilestonesDB = {
     }, 
     {
       id = "dek_38",
-      name = "Killed 975 dangerous enemies",
+      name = headerDangerousEnemies,
       desc = "Milestone! Congrats! You've killed 975 dangerous enemies",
       shortdesc = "975 dangerous enemies killed",
       points = dangerousEnemiesPoints,

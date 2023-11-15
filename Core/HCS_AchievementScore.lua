@@ -141,3 +141,17 @@ end
 function HCS_AchievementScore:GetNumberOfAchievements()
     return #HCScore_Character.achievements
 end
+
+function HCS_AchievementScore:AchievedAchivement(achievementId)
+    local found = false
+
+    -- look up if achievement has been achieved
+      for _, achievement in pairs(HCScore_Character.achievements) do
+          if achievement.id == achievementId then
+              found = true
+              break
+          end
+      end
+
+    return found
+end

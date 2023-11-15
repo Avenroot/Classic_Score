@@ -13,10 +13,7 @@ function HCS_XPUpdateEvent:GetXPGain()
     return xpGain
 end
 
-local _xpupdate_event = CreateFrame("Frame")
-_xpupdate_event:RegisterEvent("PLAYER_XP_UPDATE")
-_xpupdate_event:SetScript("OnEvent", function(event, ...)
-
+function HCS_XPUpdateEvent:UpdateScoresBasedOnEvents()
     local mobCombatKill = _G["MobCombatKill"]
     local zoneChanged = _G["ZoneChanged"]
     local mobName = _G["MobName"]
@@ -24,6 +21,7 @@ _xpupdate_event:SetScript("OnEvent", function(event, ...)
     local mobClassification = _G["MobClassification"]
     
     if mobCombatKill == true then
+        --print("In MobCombatKill" )
         HCS_KillingMobsScore:UpdateMobsKilled()
         mobCombatKill = false
         mobName = ""
@@ -38,13 +36,17 @@ _xpupdate_event:SetScript("OnEvent", function(event, ...)
         HCS_DiscoveryScore:UpdateDiscoveryScore()
         zoneChanged = false
     end
-   
-    --HCS_CalculateScore:RefreshScores()
 
     _G["MobCombatKill"] = mobCombatKill
     _G["ZoneChanged"] = zoneChanged
     _G["MobName"] = mobName
     _G["MobLevel"] = mobLevel
     _G["MobClassification"] = mobClassification
-    
+end
+
+local _xpupdate_event = CreateFrame("Frame")
+_xpupdate_event:RegisterEvent("PLAYER_XP_UPDATE")
+_xpupdate_event:SetScript("OnEvent", function(event, ...)
+    HCS_XPUpdateEvent:UpdateScoresBasedOnEvents()
 end)
+

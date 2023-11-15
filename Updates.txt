@@ -122,3 +122,15 @@ Version 1.0.9
 Version 1.0.10
     1. You can now lock/unlock the Main Score frame by right-clicking on the frame.
     2. Add an option to disable all the HCS sounds.
+
+Version 1.1.0
+    1. New Scoreboard/Leaderboard (for guilds only)
+    2. New Character Journey information
+    3. New view of Milestones
+    4. New view of Achievements
+    5. Level 60 bug fixes
+    6. Overall just tons and tons of updates to the code.
+    7. Ability to reset leaderboard by using /hcsresetl
+    8. Updated for version 1.1.5 of Classic Era 
+    9. Updated for version 3.4.3 of Classic Era (WOTLK)
+

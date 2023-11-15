@@ -29,6 +29,19 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
 
   questLevel = select(2, GetQuestLogTitle(GetQuestLogIndexByID(questID)))
   playerLevel = UnitLevel("player")
+    
+  -- Set the XP reward based on the player's level and game version
+  if HCS_GameVersion < 30000 then
+    -- Classic version
+    if playerLevel == 60 then
+        xpReward = 1000
+    end
+  elseif HCS_GameVersion >= 30000 then
+    -- WOTLK
+    if playerLevel == 80 then
+        xpReward = 1200
+    end
+  end
 
   levelMod = questLevel - playerLevel
 

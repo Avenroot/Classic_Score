@@ -256,6 +256,20 @@ function HCS_MilestonesScore:GetMilestonesScore()
     return score
 end
 
+function HCS_MilestonesScore:AchievedMilestone(milestoneId)
+    local found = false
+
+    -- look up if achievement has been achieved
+      for _, milestone in pairs(HCScore_Character.milestones) do
+          if milestone.id == milestoneId then
+              found = true
+              break
+          end
+      end
+
+    return found
+end
+
 function HCS_MilestonesScore:GetNumberOfMilestones()
     return #HCScore_Character.milestones
 end

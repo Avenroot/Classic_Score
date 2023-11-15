@@ -73,7 +73,7 @@ function GetPlayerRank()
                 
                 if shouldDisplayRankChangeImage then
                     if IsInGuild() then
-                        if Hardcore_Score.db.profile.shareDetails then
+                        if Hardcore_Score.db.profile.shareDetails and Hardcore_Score.db.profile.shareRankProgression then
                             local rank = string.upper(HCS_PlayerRank.LevelText)
                             local score = string.format("%.2f", HCScore_Character.scores.coreScore)
                             local message = "I have reached "..rank.." Rank - Hardcore SCORE "..score
@@ -89,7 +89,7 @@ end
 local function RefreshUI()
     HCS_ScoreboardSummaryUI:UpdateUI()
     HCS_CharactersInfoUI:LoadData()
-    --HCS_LeaderBoardUI:LoadData()
+    HCS_LeaderBoardUI:RefreshData() --HCS_LeaderBoardUI:LoadData()
 
     if HCS_PlayerCom ~= nil then
         HCS_PlayerCom:SendScore()       
@@ -121,7 +121,7 @@ local function LeveledUp(points)
     PlayerLeveled = false
 
 
-    if Hardcore_Score.db.profile.shareDetails then
+    if Hardcore_Score.db.profile.shareDetails and Hardcore_Score.db.profile.shareLevelProgression then
         if IsInGuild() then
             local score = string.format("%.2f", HCScore_Character.scores.coreScore)
             local validLevels = {10, 20, 30, 40, 50, 60}

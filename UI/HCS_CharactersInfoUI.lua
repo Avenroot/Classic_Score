@@ -3,6 +3,7 @@ HCS_CharactersInfoUI.rows = {}
 
 -- Create the frame
 HCS_CharactersInfoUI.frame = CreateFrame("Frame", "CharactersInfoFrame", UIParent, "BackdropTemplate")
+--HCS_CharactersInfoUI.frame = CreateFrame("Frame", "CharactersInfoFrame", HCS_AllInfoUI.tabGroup.frame, "BackdropTemplate")
 HCS_CharactersInfoUI.frame:SetPoint("CENTER")
 HCS_CharactersInfoUI.frame:SetSize(700, 200)
 HCS_CharactersInfoUI.frame:SetFrameStrata("LOW")
@@ -188,4 +189,3 @@ function HCS_CharactersInfoUI:ToggleMyFrame()
         HCS_CharactersInfoUI.frame:Show()
     end
 end
-

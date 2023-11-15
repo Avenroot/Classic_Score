@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.0.10" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.1.0" --GetAddOnMetadata("Hardcore Score", "Version")
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -19,6 +19,7 @@ HCScore_Character = {
     version = 0,
     release = 0,
     deaths = 0,
+    guildName = '',
     scores = {
         coreScore = 0,
         equippedGearScore = 0,
@@ -55,6 +56,7 @@ HCScore_Character = {
     levelScores = {},
     dangerousMobsKilled = {},
     achievements = {},
+    leaderboard = {},
 }
 
 -- Define your options table
@@ -63,7 +65,7 @@ local options = {
     type = "group",
     args = {
         showScore = {
-            name = "Show main score",
+            name = "Show Main Score",
             desc = "Enables / disables the main score view",
             type = "toggle",
             order = 1,
@@ -81,14 +83,60 @@ local options = {
             end,  -- set
             get = function(info) return Hardcore_Score.db.profile.framePosition.show end  -- get
         },
-        shareScore = {
-            name = "Share your score",
-            desc = "Enables / disables sharing your score with others",
-            type = "toggle",
-            order = 2,
-            set = function(info,val) Hardcore_Score.db.profile.shareDetails = val end,  -- update your set function
-            get = function(info) return Hardcore_Score.db.profile.shareDetails end  -- update your get function
-        },
+
+        scoreOptions = {
+            order = 6,
+            name = "Sharing with others",
+            type = "group",
+            inline = true,
+            args = {
+                shareScore = {
+                    name = "Share your Score",
+                    desc = "Enables / disables sharing your score with others",
+                    type = "toggle",
+                    order = 1,
+                    set = function(info,val) Hardcore_Score.db.profile.shareDetails = val end,
+                    get = function(info) return Hardcore_Score.db.profile.shareDetails end,
+                },
+                shareMilestones = {
+                    order = 2,
+                    name = "Milestones",
+                    desc = "Enables / disables sharing Milestones with others",
+                    type = "toggle",
+                    disabled = function() return not Hardcore_Score.db.profile.shareDetails end,
+                    set = function(info,val) Hardcore_Score.db.profile.shareMilestones = val end,
+                    get = function(info) return Hardcore_Score.db.profile.shareMilestones end,
+                },
+                shareAchievements = {
+                    order = 3,
+                    name = "Achievements",
+                    desc = "Enables / disables sharing Achievements with others",
+                    type = "toggle",
+                    disabled = function() return not Hardcore_Score.db.profile.shareDetails end,
+                    set = function(info,val) Hardcore_Score.db.profile.shareAchievements = val end,
+                    get = function(info) return Hardcore_Score.db.profile.shareAchievements end,
+                },
+                shareRankProgression = {
+                    order = 4,
+                    name = "Rank Progression",
+                    desc = "Enables / disables sharing Rank Progression with others",
+                    type = "toggle",
+                    disabled = function() return not Hardcore_Score.db.profile.shareDetails end,
+                    set = function(info,val) Hardcore_Score.db.profile.shareRankProgression = val end,
+                    get = function(info) return Hardcore_Score.db.profile.shareRankProgression end,
+                },
+                shareLevelProgression = {
+                    order = 5,
+                    name = "Level Progression",
+                    desc = "Enables / disables sharing Level Progression with others",
+                    type = "toggle",
+                    disabled = function() return not Hardcore_Score.db.profile.shareDetails end,
+                    set = function(info,val) Hardcore_Score.db.profile.shareLevelProgression = val end,
+                    get = function(info) return Hardcore_Score.db.profile.shareLevelProgression end,
+                },
+            }
+        },        
+
         showMessages = {
             name = "Show Messages",
             desc = "Enables / disables reward messages",
@@ -109,34 +157,46 @@ local options = {
             get = function(info) return Hardcore_Score.db.profile.soundOptionALL end  
         },
 
+        showScoreboard = {
+            name = "Show Scoreboard",
+            desc = "Enables / Disables the Scoreboard",
+            type = "toggle",
+            order = 5,
+            set = function(info,val) 
+                Hardcore_Score.db.profile.framePositionScoreboard.show = val 
+                HCS_LeaderBoardUI:SetVisibility()
+            end,  -- update your set function
+            get = function(info) return Hardcore_Score.db.profile.framePositionScoreboard.show end  
+        },        
+
         Space1 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 5
+            order = 6
         },
         PointsLogHeader = {
             name = "Points Log",
             type = "header",
-            order = 6
+            order = 7
         },
         showPointsLog = {
             name = "Show Points Log",
             desc = "Enables / disables showing Points Log",
             type = "toggle",
-            order = 7,
+            order = 8,
             set = function(info,val) 
                     Hardcore_Score.db.profile.framePositionLog.show = val 
                     HCS_PointsLogUI:SetVisibility()
                 end,  -- update your set function
-            get = function(info) return Hardcore_Score.db.profile.framePositionLog.show end  -- update your get function
+            get = function(info) return Hardcore_Score.db.profile.framePositionLog.show end  
         },
         showPointsLogTimeStamp = {
             name = "Show Timestamp",
             desc = "Displays showing the timestamp in Points log",
             type = "toggle",
-            order = 8,
+            order = 9,
             set = function(info,val) Hardcore_Score.db.profile.framePositionLog.showTimestamp = val end,
             get = function(info) return Hardcore_Score.db.profile.framePositionLog.showTimestamp end
         },
@@ -145,7 +205,7 @@ local options = {
             name = "Font Size",
             desc = "Adjusts the font size in the Points Log edit box",
             type = "range",
-            order = 9,
+            order = 10,
             min = 10,
             max = 24,
             step = 1,
@@ -162,12 +222,12 @@ local options = {
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 10
+            order = 11
         },
         LinksHeader = {
             name = "Connect for more information",
             type = "header",
-            order = 11
+            order = 12
         },
         twitterLink = {
             name = " Follow us on Twitter at https://twitter.com//HardcoreScore",
@@ -175,7 +235,7 @@ local options = {
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\TwitterLogo.blp",
-            order = 12
+            order = 13
         },
         discordLink = {
             name = " Join our Discord server at https://discord.gg/j92hrVZU2Q",
@@ -183,7 +243,7 @@ local options = {
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\DiscordLogo.blp",
-            order = 13
+            order = 14
         },
         websiteLink = {
             name = " Website  https://avenroothcs.wixsite.com/hardcore-score",
@@ -191,41 +251,41 @@ local options = {
             type = "description",
             fontSize = "medium",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\www_icon.blp",
-            order = 14
+            order = 15
         },
         Space3 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 15
+            order = 16
         },
 
         addonInfoHeader = {
             name = "Note from the author(s)",
             type = "header",
-            order = 16
+            order = 17
         },
         addonInfo1 = {
             name = "Thank you for trying out Hardcore Score. We would love your feedback. Please report feedback and bugs to our Discord.",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 17
+            order = 18
         },            
         Space4 = {
             name = "",
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 18
+            order = 19
         },
         addonInfo2 = {
             name = "We have a lot of things planned for Hardcore Score. Look for annoucements in our Discord and on our website. Enjoy challenging yourself to get the best Hardcore Score possible and share your results with us. Thank you and have fun!!",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 19
+            order = 20
         },            
 
         Space5 = {
@@ -233,14 +293,14 @@ local options = {
             desc = "",
             type = "description",
             fontSize = "medium",
-            order = 20
+            order = 21
         },
         addonInfoNote = {
-            name = "version 1.0.10 - authors: Avenroot, Caith",
+            name = "version 1.1.0 - authors: Avenroot, Caith - level 60 testing Fruze",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
-            order = 21
+            order = 22
         },            
 
     },
@@ -348,12 +408,30 @@ function Hardcore_Score:CreateDB()
                 yOfs = 0,
                 --show = true,
             },
+            framePositionScoreboard = {
+                point = "CENTER",  --"CENTER",
+                relativeTo = "UIParent",
+                relativePoint = "CENTER", -- "CENTER",
+                xOfs = 0,
+                yOfs = 0,
+                show = true,
+            },
             
             minimap = {},
             showDetails = false,
             shareDetails = true,
+            shareMilestones = true,
+            shareAchievements = true,
+            shareRankProgression = true,
+            shareLevelProgression = true,
             soundOptionALL = true,
             lockScoreboardSummaryUI = false,
+            showScoreboard = true,
+            HCS_Leaderboard_Filters = {
+                includeLevel60 = true,  -- Initially set to true or false based on the checkbox state
+                includeSpecificGuild = true,  -- Set to true to include only the player's guild
+                includeDeadCharacters = true,  -- Set to true to include dead characters
+            }
         },
         global = {
             -- Shared data...
@@ -372,23 +450,25 @@ function Hardcore_Score:CreateMiniMapButton()
             -- Check if left mouse button was clicked
             if button == "LeftButton" then
 
-                -- Open Hardcore_Score section of the options menu
-                InterfaceOptionsFrame_OpenToCategory("Hardcore Score");
-                InterfaceOptionsFrame_OpenToCategory("Hardcore Score"); -- yes, you need to call it twice.
+                --HCS_AllInfoUI.frame:Show()
+                HCS_AllInfoUI:ToggleMyFrame()
 
                 -- Check if right mouse button was clicked
-            elseif button == "RightButton" then
-                -- Display your frame
-                HCS_CharactersInfoUI.frame:Show() 
-                --HCS_LeaderBoardUI.frame:Show()                
+            elseif button == "RightButton" then                               
+                
+                HCS_LeaderBoardUI:ToggleMyFrame()
+                -- Open Hardcore_Score section of the options menu
+                --InterfaceOptionsFrame_OpenToCategory("Hardcore Score");
+                --InterfaceOptionsFrame_OpenToCategory("Hardcore Score"); -- yes, you need to call it twice.
+
             end
         end,
 
         OnTooltipShow = function(tooltip)
             --tooltip:SetText("")  -- This should help ensure the title's style isn't applied to the first line
             tooltip:AddLine("Hardcore Score "..tostring(HCS_Version))
-            tooltip:AddLine("|cFFFFA500Left-Click|r to show options")  -- Sets "Left-Click" to grey
-            tooltip:AddLine("|cFFFFA500Right-Click|r to show all scores")  -- Sets "Right-Click" to grey
+            tooltip:AddLine("|cFFFFA500Left-Click|r to to see your Journey")  -- Sets "Left-Click" to grey
+            tooltip:AddLine("|cFFFFA500Right-Click|r Show/Hide Scoreboard")  -- Sets "Right-Click" to grey
 
             if Hardcore_Score.db.profile.framePosition.show == false then
                 tooltip:AddLine(" ")
@@ -406,13 +486,13 @@ function Hardcore_Score:CreateMiniMapButton()
     icon:Register("Hardcore_Score", LDB, Hardcore_Score.db.profile.minimap)
 end
 
-
 -- Load Saved Frame Position
 function Hardcore_Score:LoadSavedFramePosition()
     local framePosition = Hardcore_Score.db.profile.framePosition
     local showDetails = Hardcore_Score.db.profile.showDetails
     local framePointsLog = Hardcore_Score.db.profile.framePositionLog
     local frameCharsInfo = Hardcore_Score.db.profile.framePositionCharsInfo
+    local frameScoreboard = Hardcore_Score.db.profile.framePositionScoreboard
 
     if framePosition then
         local relativeTo = _G[framePosition.relativeTo]
@@ -436,6 +516,14 @@ function Hardcore_Score:LoadSavedFramePosition()
             HCS_PointsLogUI.frame:SetPoint(framePointsLog.point, relativeTo, framePointsLog.relativePoint, framePointsLog.xOfs, framePointsLog.yOfs)
         end
         HCS_PointsLogUI:SetVisibility()
+    end
+
+    if frameScoreboard then
+        local relativeTo = _G[frameScoreboard.relativeTo]
+        if relativeTo then
+            HCS_LeaderBoardUI.frame:SetPoint(frameScoreboard.point, relativeTo, frameScoreboard.relativePoint, frameScoreboard.xOfs, frameScoreboard.yOfs)
+        end
+        HCS_LeaderBoardUI:SetVisibility()
     end
 
     if frameCharsInfo then
@@ -467,6 +555,32 @@ function Hardcore_Score:init(event, name)
             LoadAddOn("Blizzard_DebugTools");
             FrameStackTooltip_Toggle();        
         end
+
+        -- Define a variable to track whether the reset confirmation dialog is open
+        local resetConfirmationOpen = false
+
+        SLASH_RESETLEADERBOARD1 = "/hcsresetl"; -- new slash command for resetting leaderboard
+        SlashCmdList.RESETLEADERBOARD = function ()
+            -- Show a confirmation dialog to the player
+            StaticPopupDialogs["RESET_LEADERBOARD_CONFIRM"] = {
+                text = "Are you sure you want to reset your leaderboard?",
+                button1 = "Yes",
+                button2 = "No",
+                OnAccept = function()
+                    -- Player confirmed, reset the leaderboard
+                    HCScore_Character.leaderboard = {}
+                    print("Hardcore Score: Your Leaderboard has been reset.")
+                end,
+                timeout = 0,
+                whileDead = true,
+                hideOnEscape = true,
+                showAlert = true,
+            }
+
+            StaticPopup_Show("RESET_LEADERBOARD_CONFIRM")
+            resetConfirmationOpen = true
+        end
+
 
         -- initalization Hardcore_Score_Settings
         if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
@@ -544,9 +658,12 @@ function Hardcore_Score:init(event, name)
         -- Clear Points Log
         HCS_PointsLogUI:ClearPointsLog()
 
+        -- Get updated character guild
+        HCScore_Character.guildName = GetGuildInfo("player") or ""  --print("Guild: ", GetGuildInfo("player"))
+
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.0.10  Lets GO!")
-                
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.1.0.0  Lets GO!")
+                      
     end
 
 end
