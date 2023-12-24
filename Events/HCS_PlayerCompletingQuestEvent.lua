@@ -24,7 +24,7 @@ end
 
 local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward)
 
--- a hack for Discovery until I can figure out how to detect if any xp is gained by entering a new zone.
+  -- a hack for Discovery until I can figure out how to detect if any xp is gained by entering a new zone.
   _G["ZoneChanged"] = false
 
   questLevel = select(2, GetQuestLogTitle(GetQuestLogIndexByID(questID)))
@@ -35,6 +35,11 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
     -- Classic version
     if playerLevel == 60 then
         xpReward = 1000
+    end
+  elseif HCS_SODVersion == true then
+    -- Classic - Season of Discovery
+    if playerLevel == 25 and xpReward == 0 then 
+        xpReward = math.random(50, 150)
     end
   elseif HCS_GameVersion >= 30000 then
     -- WOTLK

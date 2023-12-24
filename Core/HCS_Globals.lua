@@ -2,6 +2,7 @@ HCS_Globals = {}
 
 -- Game information
 HCS_GameVersion = select(4, GetBuildInfo())  -- if over 3000 than playing WOTLK
+HCS_SODVersion, HCS_SODRealm = HCS_Utils:IsSeasonOfDiscoveryServer()
 
 -- Scaling Percentage
 HCS_LevelScalePercentage = 0

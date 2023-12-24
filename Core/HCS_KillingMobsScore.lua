@@ -8,15 +8,18 @@ local function GetMobKillHCScore(mobLevel)
     local playerLevel = UnitLevel("player")
     local xpGain = 0
     
-    --local xpGain = HCS_XPUpdateEvent:GetXPGain() -- Gives the current XP gain
-
-
     -- Initialize xpGain with the default method
     xpGain = HCS_XPUpdateEvent:GetXPGain()  
-
+ 
     -- Modify the XP reward based on the player's level and game version
+    -- Classic
     if HCS_GameVersion < 30000 and playerLevel == 60 then
         xpGain = 300
+    -- Classic - Season of Discovery
+    elseif HCS_SODVersion == true and playerLevel == 25 and xpGain == 0 then 
+        xpGain = math.random(10, 75)
+        --print("XP Gain: " .. xpGain)
+    -- WOTLK
     elseif HCS_GameVersion >= 30000 and playerLevel == 80 then  -- WOTLK
         xpGain = 400
     end
