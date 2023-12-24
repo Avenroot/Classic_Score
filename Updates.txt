@@ -134,3 +134,8 @@ Version 1.1.0
     8. Updated for version 1.1.5 of Classic Era 
     9. Updated for version 3.4.3 of Classic Era (WOTLK)
 
+Version 1.1.1
+    Changes to XP amounts when you reach level 25 in Season of Discovery to get points.  Before none was given.  
+        1. Level 25 Classic - Season of Discovery now gives XP for mob kills when level 25.  XP is a random number between 10-75.
+        2. Level 25 Classic - Season of Discovery now gives XP for quests when level 25.  XP is a random number between 50-150.
+        3. Level 25 Classic - Season of Discovery now gives XP for discoveries when level 25.  XP is a random number between 10-50.

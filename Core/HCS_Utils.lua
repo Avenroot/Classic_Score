@@ -222,6 +222,21 @@ function HCS_Utils:AddThousandsCommas(inputString)
     return formattedString    
 end   
 
+function HCS_Utils:IsSeasonOfDiscoveryServer()
+    local realmName = GetRealmName()
+    local discoveryServers = {
+        "Lava Lash", "Chaos Bolt", "Crusader Strike", "Lone Wolf", "Wild Growth", "Living Flame", "Penance", "Shadowstrike"
+    }
+
+    for _, server in ipairs(discoveryServers) do
+        if realmName == server then
+            return true, realmName
+        end
+    end
+
+    return false, realmName
+end
+
 -- Define a consistent structure for character information
 local function CreateCharacter(charName, charClass, charLevel, coreScore, hasDied, lastOnline, guildName)
     -- Set default values if they are not provided
