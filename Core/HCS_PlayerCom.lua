@@ -36,7 +36,7 @@ local function padString(str, len)
     return str
 end
 
--- Function to send the top 100 player's scores.
+-- Function to send the top 10 player's scores.
 function HCS_PlayerCom:SendTopScores()
 
     -- Sort the leaderboard array first
@@ -48,13 +48,13 @@ function HCS_PlayerCom:SendTopScores()
         return tonumber(a.coreScore) > tonumber(b.coreScore)
     end)
 
-    -- Only send top 100 scores
-    for i = 1, min(100, #leaderboardArray) do
+    -- Only send top 10 scores
+    for i = 1, min(10, #leaderboardArray) do
         local playerInfo = leaderboardArray[i]
 
         local serializedScore = AceSerializer:Serialize(playerInfo)
         
-        -- Your sending logic here
+        -- Send
         if IsInGroup() then
             local channel = IsInRaid() and "RAID" or "PARTY"
             C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, channel)
