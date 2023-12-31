@@ -225,7 +225,7 @@ end
 function HCS_Utils:IsSeasonOfDiscoveryServer()
     local realmName = GetRealmName()
     local discoveryServers = {
-        "Lava Lash", "Chaos Bolt", "Crusader Strike", "Lone Wolf", "Wild Growth", "Living Flame", "Penance", "Shadowstrike"
+        "Lava Lash", "Chaos Bolt", "Crusader Strike", "Lone Wolf", "Wild Growth", "Living Flame", "Penance (AU)", "Shadowstrike (AU)"
     }
 
     for _, server in ipairs(discoveryServers) do
