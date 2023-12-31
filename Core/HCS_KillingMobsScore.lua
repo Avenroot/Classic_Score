@@ -7,27 +7,51 @@ end
 local function GetMobKillHCScore(mobLevel)
     local playerLevel = UnitLevel("player")
     local xpGain = 0
+    local score = 0    
+    local mobDifficulty = mobLevel - playerLevel
+
+    -- xp amounts for SOD classic level 25
+    local SODClassicXP = {
+        [-6] = 0,
+        [-5] = 12,
+        [-4] = 25,
+        [-3] = 38,
+        [-2] = 50,
+        [-1] = 63,
+        [0] = 75,
+        [1] = 87,
+        [2] = 100,
+        [3] = 112,
+        [4] = 125,
+        [5] = 137,
+        [6] = 150,
+    }
     
     -- Initialize xpGain with the default method
     xpGain = HCS_XPUpdateEvent:GetXPGain()  
- 
+
     -- Modify the XP reward based on the player's level and game version
-    -- Classic
+    -- Classic WoW
     if HCS_GameVersion < 30000 and playerLevel == 60 then
         xpGain = 300
+
     -- Classic - Season of Discovery
     elseif HCS_SODVersion == true and playerLevel == 25 and xpGain == 0 then 
-        xpGain = math.random(10, 75)
-        --print("XP Gain: " .. xpGain)
+        
+        if SODClassicXP[mobDifficulty] then
+            xpGain = SODClassicXP[mobDifficulty]
+        elseif mobDifficulty > 6 then
+            xpGain = 150
+        elseif mobDifficulty < -6 then
+            xpGain = 0
+        end
+
     -- WOTLK
     elseif HCS_GameVersion >= 30000 and playerLevel == 80 then  -- WOTLK
         xpGain = 400
     end
 
-    local score = 0
-    
-    local mobDifficulty = mobLevel - playerLevel
-  
+
     -- Multiplier lookup table. 
     local multipliers = {
         [-6] = 0.0000,
@@ -64,10 +88,6 @@ local function GetMobKillHCScore(mobLevel)
         score = xpGain * multipliers[-5] * percentIncrease -- Changed from EASY to a specific level
     end
 
-    --print("mobLevel: " .. mobLevel)
-    --print("xpGain: " .. xpGain)
-    --print("mobDifficulty: " .. mobDifficulty)
-    --print("score: " .. score)
     return {score, mobDifficulty, xpGain}
 end
 

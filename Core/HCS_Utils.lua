@@ -223,19 +223,23 @@ function HCS_Utils:AddThousandsCommas(inputString)
 end   
 
 function HCS_Utils:IsSeasonOfDiscoveryServer()
-    local realmName = GetRealmName()
-    local discoveryServers = {
-        "Lava Lash", "Chaos Bolt", "Crusader Strike", "Lone Wolf", "Wild Growth", "Living Flame", "Penance (AU)", "Shadowstrike (AU)"
-    }
+    -- Check if the game version is less than 30000 (indicating it is a Classic version)
+    if HCS_GameVersion < 30000 then
+        local realm = GetRealmName()
+        local season = C_Seasons.GetActiveSeason() or 0
 
-    for _, server in ipairs(discoveryServers) do
-        if realmName == server then
-            return true, realmName
+        -- Check if the season is '2' for Season of Discovery
+        if season == 2 then
+            return true, realm
+        else
+            return false, realm
         end
+    else
+        -- If the game version is 30000 or higher, return false and "N/A"
+        return false, "N/A"
     end
-
-    return false, realmName
 end
+
 
 -- Define a consistent structure for character information
 local function CreateCharacter(charName, charClass, charLevel, coreScore, hasDied, lastOnline, guildName)

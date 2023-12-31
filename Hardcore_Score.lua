@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.2" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.1.3" --GetAddOnMetadata("Hardcore Score", "Version")
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -296,7 +296,7 @@ local options = {
             order = 21
         },
         addonInfoNote = {
-            name = "version 1.1.2 - authors: Avenroot, Caith, Fruze (level 60 testing)",
+            name = "version 1.1.3 - authors: Avenroot, Caith, Fruze (level 60 testing)",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -662,14 +662,7 @@ function Hardcore_Score:init(event, name)
         HCScore_Character.guildName = GetGuildInfo("player") or ""  --print("Guild: ", GetGuildInfo("player"))
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.1.1.0  Lets GO!")
-
-        SOD, realm = HCS_Utils:IsSeasonOfDiscoveryServer()
-        if SOD == true then
-            print("|cff81b7e9".."Hardcore Score: ".."|r".."Season of Discovery: True" .. "  Realm: " .. realm)
-        else
-            print("|cff81b7e9".."Hardcore Score: ".."|r".."Season of Discovery: False" .. "  Realm: " .. realm)
-        end
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.1.3.0  Lets GO!")
    
     end
 
