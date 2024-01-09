@@ -35,8 +35,13 @@ ScoringDescriptions = {
     questingScore = "Questing Gain",
     mobsKilledScore = "Mobs Killed Gain",
     coreScore = "Core Score Gain",
-    achievementScore = "Achievement Gain",
+    achievementScore = "Achievement Gain", 
 }
+
+-- Only execute if in WoW Classic, Season of Discovery
+if HCS_SODVersion then
+    ScoringDescriptions.runeScore = "Rune Score Gain"
+end
 
 -- Class Images
 Img_hcs_Class_Shaman = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\hcs_shaman.blp"
@@ -158,6 +163,11 @@ HCS_MilestonesColors = {
         green = 87 / 255,
         blue = 141 / 255,
     },
+    Runes = {
+        red = 255 / 255,
+        green = 255 / 255,
+        blue = 255 / 255,
+    }
 }
 
 -- Filter states should be controlled by your UI checkboxes

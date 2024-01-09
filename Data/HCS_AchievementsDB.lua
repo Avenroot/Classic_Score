@@ -5,6 +5,7 @@ local mobKillsTypePoints = 10
 local questPoints = 10
 local discoveryPoints = 10
 local dangerousEnemiesPoints = 10
+
 local imgLeveling = Img_hcs_achievement_level
 local imgKillingMobs = Img_hcs_achievement_kill
 local imgKillingMobsType = Img_hcs_achievement_mobtypes
@@ -27,7 +28,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_lvl_1",
         name = headerLeveling,
-        desc = "Achievement! Congrats! You reached for level 10",
+        desc = "You reached for level 10",
         shortdesc = "Level 10",
         points = levelPoints,
         image = imgLeveling,
@@ -35,7 +36,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_lvl_2",
         name = headerLeveling,
-        desc = "Achievement! Congrats! You reached for level 20",
+        desc = "You reached for level 20",
         shortdesc = "Level 20",
         points = levelPoints,
         image = imgLeveling,
@@ -43,7 +44,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_lvl_3",
         name = headerLeveling,
-        desc = "Achievement! Congrats! You reached for level 30",
+        desc = "You reached for level 30",
         shortdesc = "Level 30",
         points = levelPoints,
         image = imgLeveling,
@@ -51,7 +52,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_lvl_4",
         name = headerLeveling,
-        desc = "Achievement! Congrats! You reached for level 40",
+        desc = "You reached for level 40",
         shortdesc = "Level 40",
         points = levelPoints,
         image = imgLeveling,
@@ -59,7 +60,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_lvl_5",
         name = headerLeveling,
-        desc = "Achievement! Congrats! You reached for level 50",
+        desc = "You reached for level 50",
         shortdesc = "Level 50",
         points = levelPoints,
         image = imgLeveling,
@@ -67,7 +68,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_lvl_6",
         name = headerLeveling,
-        desc = "Achievement! Congrats! You reached for level 60",
+        desc = "You reached for level 60",
         shortdesc = "Level 60",
         points = 10,
         image = imgLeveling,
@@ -75,7 +76,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_lvl_7",
         name = headerLeveling,
-        desc = "Achievement! Congrats! You've reached level 70",
+        desc = "You've reached level 70",
         shortdesc = "Level 70",
         points = 10,
         image = imgLeveling,
@@ -83,7 +84,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_lvl_8",
         name = headerLeveling,
-        desc = "Achievement! Congrats! You've reached level 80",
+        desc = "You've reached level 80",
         shortdesc = "Level 80",
         points = 10,
         image = imgLeveling,
@@ -93,7 +94,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_mobk_1",
         name = headerKillingMobs,
-        desc = "Achievement! Congrats! You've killed 1,000 enemies",
+        desc = "You've killed 1,000 enemies",
         shortdesc = "1,000 enemies killed",
         points = mobKillsPoints, 
         image = imgKillingMobs ,
@@ -101,7 +102,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_mobk_2",
         name = headerKillingMobs,
-        desc = "Achievement! Congrats! You've killed 5,000 enemies",
+        desc = "You've killed 5,000 enemies",
         shortdesc = "5,000 enemies killed",
         points = mobKillsPoints, 
         image = imgKillingMobs ,
@@ -109,7 +110,7 @@ HCS_AchievementsDB = {
       {
         id = "ach_mobk_3",
         name = headerKillingMobs,
-        desc = "Achievement! Congrats! You've killed 10,000 enemies",
+        desc = "You've killed 10,000 enemies",
         shortdesc = "10,000 enemies killed",
         points = mobKillsPoints, 
         image = imgKillingMobs ,
@@ -119,7 +120,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_mobkt_1",
       name = headerMobTypes,
-      desc = "Achievement! Congrats! You've killed 100 creature types",
+      desc = "You've killed 100 creature types",
       shortdesc = "100 creature types killed",
       points = mobKillsTypePoints,
       image = imgKillingMobsType,
@@ -127,7 +128,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_mobkt_2",
       name = headerMobTypes,
-      desc = "Achievement! Congrats! You've killed 200 creature types",
+      desc = "You've killed 200 creature types",
       shortdesc = "200 creature types killed",
       points = mobKillsTypePoints,
       image = imgKillingMobsType,
@@ -137,7 +138,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_qtot_1",
       name = headerQuesting,
-      desc = "Achievement! Congrats! You've completed 100 Quests",
+      desc = "You've completed 100 Quests",
       shortdesc = "100 quests completed",
       points = questPoints,
       image = imgQuests,
@@ -145,7 +146,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_qtot_2",
       name = headerQuesting,
-      desc = "Achievement! Congrats! You've completed 500 Quests",
+      desc = "You've completed 500 Quests",
       shortdesc = "500 quests completed",
       points = questPoints,
       image = imgQuests,
@@ -153,7 +154,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_qtot_3",
       name = headerQuesting,
-      desc = "Achievement! Congrats! You've completed 1,000 Quests",
+      desc = "You've completed 1,000 Quests",
       shortdesc = "1,000 quests completed",
       points = questPoints,
       image = imgQuests,
@@ -163,7 +164,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_disc_1",
       name = headerDiscovery,
-      desc = "Achievement! Congrats! You've made 100 Discoveries",
+      desc = "You've made 100 Discoveries",
       shortdesc = "100 discoveries made",
       points = discoveryPoints,
       image = imgDiscovery,
@@ -171,7 +172,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_disc_2",
       name = headerDiscovery,
-      desc = "Achievement! Congrats! You've made 500 Discoveries",
+      desc = "You've made 500 Discoveries",
       shortdesc = "500 discoveries made",
       points = discoveryPoints,
       image = imgDiscovery,
@@ -179,7 +180,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_disc_3",
       name = headerDiscovery,
-      desc = "Achievement! Congrats! You've made 1,000 Discoveries",
+      desc = "You've made 1,000 Discoveries",
       shortdesc = "1,000 discoveries made",
       points = discoveryPoints,
       image = imgDiscovery,
@@ -189,7 +190,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_dek_1",
       name = headerDangerousEnemies,
-      desc = "Achievement! Congrats! You've killed 1 dangerous enemey",
+      desc = "You've killed 1 dangerous enemey",
       shortdesc = "1 dangerous enemy killed",
       points = dangerousEnemiesPoints,
       image = imgDangerousEnemeyKill,
@@ -197,7 +198,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_dek_2",
       name = headerDangerousEnemies,
-      desc = "Achievement! Congrats! You've killed 100 dangerous enemies",
+      desc = "You've killed 100 dangerous enemies",
       shortdesc = "100 dangerous enemies killed",
       points = dangerousEnemiesPoints,
       image = imgDangerousEnemeyKill,
@@ -205,7 +206,7 @@ HCS_AchievementsDB = {
     {
       id = "ach_dek_3",
       name = headerDangerousEnemies,
-      desc = "Achievement! Congrats! You've killed 500 dangerous enemies",
+      desc = "You've killed 500 dangerous enemies",
       shortdesc = "500 dangerous enemies killed",
       points = dangerousEnemiesPoints,
       image = imgDangerousEnemeyKill,
@@ -213,10 +214,63 @@ HCS_AchievementsDB = {
     {
       id = "ach_dek_4",
       name = headerDangerousEnemies,
-      desc = "Achievement! Congrats! You've killed 1,000 dangerous enemies",
+      desc = "You've killed 1,000 dangerous enemies",
       shortdesc = "1,000 dangerous enemies killed",
       points = dangerousEnemiesPoints,
       image = imgDangerousEnemeyKill,
     }, 
-
 }
+
+-- Runes
+if HCS_SODVersion then
+  local runesPoints = 10
+  local imgRune = 134419
+  local headerRunes = "Runes"
+  
+  -- Add to existing HCS_AchievementsDB
+  -- Ensure HCS_AchievementsDB is already initialized
+  HCS_AchievementsDB = HCS_AchievementsDB or {}
+
+  -- Define new achievements
+  local newAchievements = {
+      {
+          id = "ach_runes_1",
+          name = headerRunes,
+          desc = "You've collected all runes in Phase 1 of Season of Discovery",
+          shortdesc = "Runic Master",
+          points = 15,
+          image = imgRune,
+      },
+  }
+
+  -- Append new achievements to HCS_AchievementsDB
+  for _, achievement in ipairs(newAchievements) do
+      table.insert(HCS_AchievementsDB, achievement)
+  end
+
+  -- Initialize ClassRuneAchievementTable if not already present
+  HCS_AchievementsDB.ClassRuneAchievementTable = HCS_AchievementsDB.ClassRuneAchievementTable or {}
+ 
+  function HCS_AchievementsDB:CreateClassRuneAchievementTable(allRunesInfo)
+  
+    local achievements = {}
+    local idCounter = 1
+  
+    for _, rune in ipairs(allRunesInfo) do
+        local achievement = {
+            id = "ach_class_rune_" .. idCounter,
+            name = headerRunes,
+            desc = "You've collected Rune " .. rune.name,
+            shortdesc = rune.name,
+            points = runesPoints,
+            image = rune.iconTexture
+        }
+  
+        table.insert(achievements, achievement)
+        idCounter = idCounter + 1
+    end
+  
+    return achievements
+  end
+      
+end

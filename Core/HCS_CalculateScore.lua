@@ -13,6 +13,11 @@ local beforeStats = {
     coreScore = 0,
 }
 
+-- Only execute if in WoW Classic, Season of Discovery
+if HCS_SODVersion then
+    beforeStats.runeScore = 0
+end
+
 local function SetBeforeStats()
     beforeStats.equippedGearScore = HCScore_Character.scores.equippedGearScore
     beforeStats.levelingScore = HCScore_Character.scores.levelingScore
@@ -24,6 +29,11 @@ local function SetBeforeStats()
     beforeStats.mobsKilledScore = HCScore_Character.scores.mobsKilledScore
     beforeStats.achievementScore = HCScore_Character.scores.achievementScore
     beforeStats.coreScore = HCScore_Character.scores.coreScore
+
+    -- Only execute if in WoW Classic, Season of Discovery
+    if HCS_SODVersion then
+        beforeStats.runeScore = HCScore_Character.scores.runeScore
+    end    
 end
 
 local function CompareStats(beforeStats, scores, descriptions)
@@ -137,6 +147,7 @@ local function LeveledUp(points)
 end
 
 local function UpdateProfileScores()    
+    -- Update the character's scores in the global database
     Hardcore_Score.db.global.characterScores[HCScore_Character.name] = {
         charClass = HCScore_Character.class,
         charClassId = HCScore_Character.classid,
@@ -151,6 +162,10 @@ local function UpdateProfileScores()
         milestonesScore = HCScore_Character.scores.milestonesScore,
         achievementScore = HCScore_Character.scores.achievementScore,
     }
+    -- Only execute if in WoW Classic, Season of Discovery
+    if HCS_SODVersion then
+        Hardcore_Score.db.global.characterScores[HCScore_Character.name].runeScore = HCScore_Character.scores.runeScore
+    end
 end
 
 local function round(num, numDecimalPlaces)
@@ -172,6 +187,12 @@ local function CalculateScore()
     HCScore_Character.scores.achievementScore = HCS_AchievementScore:GetAchievementsScore() * HCS_LevelScalePercentage
     HCScore_Character.scores.questingScore = HCS_PlayerQuestingScore:GetQuestingScore()
     HCScore_Character.scores.mobsKilledScore = HCS_KillingMobsScore:GetMobsKilledScore()
+
+    -- Only execute if in WoW Classic, Season of Discovery
+    if HCS_SODVersion then
+        HCScore_Character.scores.runeScore = HCS_EngravingEvent:GetRunesScore() * HCS_LevelScalePercentage        
+    end
+
     HCScore_Character.scores.coreScore = HCS_PlayerCoreScore:GetCoreScore()
 
     -- Set scores back if coreScore goes backwards

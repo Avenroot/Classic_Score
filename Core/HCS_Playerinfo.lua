@@ -48,6 +48,8 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.professions.fishing == nil then HCScore_Character.professions.fishing = 0 end
     if HCScore_Character.professions.cooking == nil then HCScore_Character.professions.cooking = 0 end
     if HCScore_Character.professions.firstaid == nil then HCScore_Character.professions.firstaid = 0 end
+    if HCScore_Character.professions.inscription == nil then HCScore_Character.professions.inscription = 0 end -- WotLK
+    if HCScore_Character.professions.jewelcrafting == nil then HCScore_Character.professions.jewelcrafting = 0 end -- WotLK
     if HCScore_Character.reputations == nil then HCScore_Character.reputations = {} end
     if HCScore_Character.mobsKilled == nil then HCScore_Character.mobsKilled = {} end
     if HCScore_Character.mobsKilledMap == nil then HCScore_Character.mobsKilledMap = {} end
@@ -57,6 +59,13 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.dangerousMobsKilled == nil then HCScore_Character.dangerousMobsKilled = {} end
     if HCScore_Character.achievements == nil then HCScore_Character.achievements = {} end
     if HCScore_Character.leaderboard == nil then HCScore_Character.leaderboard = {} end
+
+    -- Only execute if in WoW Classic, Season of Discovery
+    if HCS_SODVersion then
+        -- Code for handling engravings/runes
+        if HCScore_Character.scores.runesScore == nil then HCScore_Character.scores.runesScore = 0 end        
+        if HCScore_Character.runes == nil then HCScore_Character.runes = {} end        
+    end
 
     HCScore_Character.name = UnitName("player")
     HCScore_Character.class = UnitClass("player")
@@ -96,7 +105,7 @@ function ResetCharacterStats()
     if HCScore_Character.scores.professionsScore ~= nil then HCScore_Character.scores.professionsScore = 0 end
     if HCScore_Character.scores.questingScore ~= nil then HCScore_Character.scores.questingScore = 0 end
     if HCScore_Character.scores.reputationScore ~= nil then HCScore_Character.scores.reputationScore = 0 end
-    if HCScore_Character.scores.milestonesScore ~= nil then HCScore_Character.scores.milestonesScore = 0 end        
+    if HCScore_Character.scores.milestonesScore ~= nil then HCScore_Character.scores.milestonesScore = 0 end
     if HCScore_Character.professions ~= nil then HCScore_Character.professions = {} end
     if HCScore_Character.professions.alchemy ~= nil then HCScore_Character.professions.alchemy = 0 end
     if HCScore_Character.professions.blacksmithing ~= nil then HCScore_Character.professions.blacksmithing = 0 end
@@ -110,6 +119,8 @@ function ResetCharacterStats()
     if HCScore_Character.professions.fishing ~= nil then HCScore_Character.professions.fishing = 0 end
     if HCScore_Character.professions.cooking ~= nil then HCScore_Character.professions.cooking = 0 end
     if HCScore_Character.professions.firstaid ~= nil then HCScore_Character.professions.firstaid = 0 end
+    if HCScore_Character.professions.inscription == nil then HCScore_Character.professions.inscription = 0 end -- WotLK
+    if HCScore_Character.professions.jewelcrafting == nil then HCScore_Character.professions.jewelcrafting = 0 end -- WotLK
     if HCScore_Character.reputations ~= nil then HCScore_Character.reputations = {} end
     if HCScore_Character.mobsKilled ~= nil then HCScore_Character.mobsKilled = {} end
     if HCScore_Character.mobsKilledMap ~= nil then HCScore_Character.mobsKilledMap = {} end
@@ -119,6 +130,14 @@ function ResetCharacterStats()
     if HCScore_Character.dangerousMobsKilled == nil then HCScore_Character.dangerousMobsKilled = {} end
     if HCScore_Character.achievements == nil then HCScore_Character.achievements = {} end
     if HCScore_Character.leaderboard == nil then HCScore_Character.leaderboard = {} end
+ 
+    -- Only execute if in WoW Classic, Season of Discovery
+    if HCS_SODVersion then
+        -- Code for handling engravings/runes
+        if HCScore_Character.scores.runesScore == nil then HCScore_Character.scores.runesScore = 0 end        
+        if HCScore_Character.runes == nil then HCScore_Character.runes = {} end        
+    end
+
 
 end
 
