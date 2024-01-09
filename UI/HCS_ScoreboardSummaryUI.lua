@@ -30,6 +30,8 @@ local txt_milestones
 local txt_milestones_score
 local txt_achievements
 local txt_achievements_score
+local txt_runes
+local txt_runes_score
 
 local frame2scoreposition = -20
 local labelwidth = 125
@@ -127,7 +129,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     --  ScoreboardSummaryDetailsFrame
     ScoreboardSummaryDetailsFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
     ScoreboardSummaryDetailsFrame:SetWidth(200)
-    ScoreboardSummaryDetailsFrame:SetHeight(246)
+    ScoreboardSummaryDetailsFrame:SetHeight(250) 
     ScoreboardSummaryDetailsFrame:SetPoint("TOP", ScoreboardSummaryFrame, "BOTTOM", 22, -10)
     
     -- Set backdrop with gradient background and border
@@ -421,6 +423,29 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     txt_achievements_score:SetFont(fontPath, fontSize, flags) 
     txt_achievements_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)    
 
+    --Runes
+    if HCS_SODVersion then
+        txt_runes = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        txt_runes:SetPoint("TOPLEFT", txt_achievements, "BOTTOMLEFT", 0, -5)
+        txt_runes:SetJustifyH("LEFT")
+        txt_runes:SetWidth(labelwidth)
+        local font, _, flags = txt_runes:GetFont()
+        txt_runes:SetFont(fontPath, fontSize, flags) 
+
+        -- Runes Score
+        txt_runes_score = ScoreboardSummaryDetailsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        txt_runes_score:SetPoint("LEFT", txt_runes, "RIGHT", frame2scoreposition, 0)
+        txt_runes_score:SetJustifyH("RIGHT")
+        txt_runes_score:SetWidth(labelwidthscore)
+        local font, _, flags = txt_runes_score:GetFont()
+        txt_runes_score:SetFont(fontPath, fontSize, flags) 
+        txt_runes_score:SetTextColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)  
+        
+        -- Set the width of the SummaryFrame to accommodate the runes
+        ScoreboardSummaryDetailsFrame:SetHeight(270)
+    end
+    
+    
     ScoreboardSummaryDetailsFrame:Hide()
 
     local function CreateDropDown(frame)
@@ -585,6 +610,15 @@ function HCS_ScoreboardSummaryUI:UpdateUI()
     txt_milestones_score:SetText(string.format("%.2f", milestonesScore))
     txt_achievements:SetText("Achievements: |cffff8000"..totAchievements)
     txt_achievements_score:SetText(string.format("%.2f", achievementsScore))
+
+
+    -- Only execute if in WoW Classic, Season of Discovery
+    if HCS_SODVersion then
+        local totRunes = HCS_EngravingEvent:GetNumberOfRunes()
+        local runeScore = HCScore_Character.scores.runeScore
+        txt_runes:SetText("Runes: |cffff8000"..totRunes)
+        txt_runes_score:SetText(string.format("%.2f", runeScore))    
+    end
 
 end
 

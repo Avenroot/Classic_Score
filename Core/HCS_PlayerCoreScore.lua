@@ -14,6 +14,11 @@ function HCS_PlayerCoreScore:GetCoreScore()
                 mobsKilledScore + reputationScore + discoveryScore +
                 professionsScore + milestonesScore + achievementScore
 
+    -- Only execute if in WoW Classic, Season of Discovery
+    if HCS_SODVersion then
+        score = score + HCScore_Character.scores.runeScore
+    end
+
     HCScore_Character.scores.coreScore = score
     return score
 end

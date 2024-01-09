@@ -1087,5 +1087,51 @@ HCS_MilestonesDB = {
       points = dangerousEnemiesPoints,
       textcolor = HCS_MilestonesColors.DangerousEnemiesKilled,
     }, 
+  }
 
-}
+  -- Runes
+  if HCS_SODVersion then
+    local runesPoints = 10
+    --local imgRune = 134419
+    local headerRunes = "Runes"
+    
+    -- Add to existing HCS_MilestonesDB
+    -- Ensure HCS_MilestonesDB is already initialized
+    HCS_MilestonesDB = HCS_MilestonesDB or {}
+
+    -- Define new achievements
+    local newMilestones = {
+      {
+        id = "runes_1",
+        name = headerRunes,
+        desc = "Milestone! Congrats! You've earned 1 rune",
+        shortdesc = "1 rune earned",
+        points = runesPoints,
+        textcolor = HCS_MilestonesColors.Runes,
+      },
+      {
+        id = "runes_2",
+        name = headerRunes,
+        desc = "Milestone! Congrats! You've earned 5 rune",
+        shortdesc = "5 rune earned",
+        points = runesPoints,
+        textcolor = HCS_MilestonesColors.Runes,
+      },    
+      {
+        id = "runes_3",
+        name = headerRunes,
+        desc = "Milestone! Congrats! You've earned 10 rune",
+        shortdesc = "10 rune earned",
+        points = runesPoints,
+        textcolor = HCS_MilestonesColors.Runes,
+      },    
+
+    }
+
+    -- Append new achievements to HCS_AchievementsDB
+    for _, milestone in ipairs(newMilestones) do
+        table.insert(HCS_MilestonesDB, milestone)
+    end
+
+  end  
+  

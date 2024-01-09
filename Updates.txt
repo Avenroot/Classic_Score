@@ -147,3 +147,9 @@ Version 1.1.2
 Version 1.1.3
     1. Update to Detecting SOD relams
     2. Misc code updates
+
+Version 1.1.4
+    1. Runes! Runes! Runes!  Season of Discovery now tracks your runes and gives you a score for them.
+    2. Runes Achievements and Milestones added.  Collect them all!
+    3. Updated professions to include Inscriptions and Jewcrafting scores in WotLK. Opps, missed that one.
+    4. Fixed a bug when turning in a quest, sometimes the quest level was not detected and not giving a score. 

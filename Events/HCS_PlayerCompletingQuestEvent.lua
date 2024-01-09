@@ -27,9 +27,17 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
   -- a hack for Discovery until I can figure out how to detect if any xp is gained by entering a new zone.
   _G["ZoneChanged"] = false
 
-  questLevel = select(2, GetQuestLogTitle(GetQuestLogIndexByID(questID)))
   playerLevel = UnitLevel("player")
-    
+
+  local questIndex = GetQuestLogIndexByID(questID)
+  questLevel = questIndex and select(2, GetQuestLogTitle(questIndex)) or nil
+
+  if not questLevel or questLevel == 0 then
+      questLevel = playerLevel  -- Handles nil or 0 level quests, assuming playerLevel is defined
+  end
+
+  levelMod = questLevel - playerLevel
+
   -- Set the XP reward based on the player's level and game version
   if HCS_GameVersion < 30000 then
     -- Classic version
@@ -47,8 +55,6 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
         xpReward = 1200
     end
   end
-
-  levelMod = questLevel - playerLevel
 
   -- grey
   if levelMod <= -6 then

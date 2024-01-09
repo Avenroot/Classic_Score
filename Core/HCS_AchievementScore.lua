@@ -1,16 +1,9 @@
 HCS_AchievementScore = {}
 
-
-local newAchievement = {
-    id = 0,
-    points = 0,
-  }
-
 local function AddAchievement(id)
-
     local found = false
 
-  -- look up if achievement has been achieved
+    -- Check if achievement is already achieved
     for _, achievement in pairs(HCScore_Character.achievements) do
         if achievement.id == id then
             found = true
@@ -18,29 +11,50 @@ local function AddAchievement(id)
         end
     end
 
+    local achievementDesc, achievementImage
+
     if not found then
-        -- add achievement
-        for _, achievement in pairs(HCS_AchievementsDB) do
+        -- Check in HCS_AchievementsDB
+        for _, achievement in ipairs(HCS_AchievementsDB) do
             if achievement.id == id then
-                newAchievement = {
+                table.insert(HCScore_Character.achievements, {
                     id = achievement.id,
                     points = achievement.points,
-                }
---                DEFAULT_CHAT_FRAME:AddMessage("|cffADD8E6This is light blue text!|r")
+                })
+                achievementDesc = achievement.desc
+                achievementImage = achievement.image
+                found = true
+                break
+            end
+        end
+    end
 
-                HCS_Utils:Print("|cff81b7e9"..achievement.desc.."|r")                
+    if HCS_SODVersion then
 
-                --print("|cff81b7e9"..milestone.desc.."|r")     
-                table.insert(HCScore_Character.achievements, newAchievement)
-                
-                HCS_PointsLogUI:AddMessage(achievement.desc) 
-
-                if Hardcore_Score.db.profile.framePositionMsg.show then
-                    local desc = string.upper(achievement.shortdesc)
-                    local frame = HCS_MessageFrameUI.DisplayAchievementMessage(desc, achievement.image, 5)
-                    frame:ShowMessage() 
+        if not found then
+            -- Check in ClassRuneAchievementTable
+            for _, achievement in pairs(HCS_AchievementsDB.ClassRuneAchievementTable) do
+                if achievement.id == id then
+                    table.insert(HCScore_Character.achievements, {
+                        id = achievement.id,
+                        points = achievement.points,
+                    })
+                    achievementDesc = achievement.desc
+                    achievementImage = achievement.image
+                    break
                 end
             end
+        end
+    end
+
+    if achievementDesc then
+        HCS_Utils:Print("|cff81b7e9Achievement! Congrats! "..achievementDesc.."|r")
+        HCS_PointsLogUI:AddMessage(achievementDesc)
+
+        if Hardcore_Score.db.profile.framePositionMsg.show then
+            local desc = string.upper(achievementDesc)
+            local frame = HCS_MessageFrameUI.DisplayAchievementMessage(desc, achievementImage, 5)
+            frame:ShowMessage() 
         end
     end
 end
@@ -116,6 +130,23 @@ local function CheckDangerousEnemiesKilled()
 
 end
 
+local function CheckRunesCompleted()
+
+    for _, rune in pairs(HCScore_Character.runes) do
+        
+        local runeName = rune.name        
+
+        for _, runeAchievement in ipairs(HCS_AchievementsDB.ClassRuneAchievementTable) do
+            if type(runeAchievement) == "table" then  -- Ensure it's a table before processing
+                
+                if runeAchievement.shortdesc == runeName then
+                    AddAchievement(runeAchievement.id)
+                end
+            end
+        end
+    end    
+end
+
 function HCS_AchievementScore:CheckAchievements()
 
     CheckLeveling()
@@ -124,6 +155,11 @@ function HCS_AchievementScore:CheckAchievements()
     CheckQuestTotals()
     CheckDiscoveryTotals()
     CheckDangerousEnemiesKilled()
+    
+    --Runes
+    if HCS_SODVersion then
+        CheckRunesCompleted()
+    end
     
 end
 

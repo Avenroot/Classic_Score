@@ -274,6 +274,7 @@ end
 
 
 local function PopulateAchievementsContent(container)
+   
     -- Header Group
     local headerGroup = AceGUI:Create("SimpleGroup")
     headerGroup:SetFullWidth(true)
@@ -312,21 +313,24 @@ local function PopulateAchievementsContent(container)
     scrollframe:SetFullWidth(true)
     scrollframe:SetFullHeight(true)    
 
-    for _, achievement in ipairs(HCS_AchievementsDB) do
+    
+    
+    -- Function to process each achievement and add it to the scroll frame
+    local function ProcessAchievement(achievement, scrollframe, lastHeader)
         local completed = HCS_AchievementScore:AchievedAchivement(achievement.id)
+        local header = achievement.name
 
-        -- Parsing achievement.id to get the part of the string between underscores.
-        local header = achievement.name -- achievement.id:match("ach_(.-)_")
-
-        -- If the parsed header has changed, create a new Heading widget.
+        -- Check if the heading has changed
         if header ~= lastHeader then
             local heading = AceGUI:Create("Heading")
-            heading:SetText(header:upper())  -- uppercasing the header
+            heading:SetText(header:upper())
             heading:SetFullWidth(true)
             scrollframe:AddChild(heading)
             lastHeader = header
         end
 
+        -- [Rest of your code for creating the rowGroup, icon, labels, etc.]
+        -- ...
         local rowGroup = AceGUI:Create("SimpleGroup")
         rowGroup:SetFullWidth(true)
         rowGroup:SetLayout("Flow")
@@ -361,8 +365,27 @@ local function PopulateAchievementsContent(container)
         rowGroup:AddChild(descLabel)
         
         scrollframe:AddChild(rowGroup)
+
+        return lastHeader
     end
 
+    -- Iterate over the main achievements
+    local lastHeader = ""
+    for _, achievement in ipairs(HCS_AchievementsDB) do
+        if type(achievement) == "table" then  -- Ensure it's a table before processing
+            lastHeader = ProcessAchievement(achievement, scrollframe, lastHeader)
+        end
+    end
+
+    -- Iterate over the Class Rune Achievements if they exist
+    if HCS_SODVersion then 
+        if HCS_AchievementsDB.ClassRuneAchievementTable then
+            for _, runeAchievement in ipairs(HCS_AchievementsDB.ClassRuneAchievementTable) do
+                lastHeader = ProcessAchievement(runeAchievement, scrollframe, lastHeader)
+            end
+        end
+    end
+    
     -- Add scroll frame to the container
     container:AddChild(scrollframe)
 end

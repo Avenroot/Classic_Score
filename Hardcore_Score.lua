@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.3" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.1.4" --GetAddOnMetadata("Hardcore Score", "Version")
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -47,6 +47,8 @@ HCScore_Character = {
         fishing = 0,
         cooking = 0,
         firstaid = 0,
+        inscription = 0, -- WotLK
+        jewelcrafting = 0, -- WotLK
     },
     reputations = {},
     mobsKilled = {},
@@ -58,6 +60,13 @@ HCScore_Character = {
     achievements = {},
     leaderboard = {},
 }
+
+-- Only execute if in WoW Classic, Season of Discovery
+if HCS_SODVersion then
+    -- For handling engravings/runes
+    HCScore_Character.scores.runesScore = 0
+    HCScore_Character.runes = {}
+end
 
 -- Define your options table
 local options = {
@@ -296,7 +305,7 @@ local options = {
             order = 21
         },
         addonInfoNote = {
-            name = "version 1.1.3 - authors: Avenroot, Caith, Fruze (level 60 testing)",
+            name = "version 1.1.4 - authors: Avenroot, Caith, Fruze (level 60 testing)",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -628,7 +637,7 @@ function Hardcore_Score:init(event, name)
         --HCS_print = true
 
         -- Clear Points Log
-        HCS_PointsLogUI:ClearPointsLog()
+        HCS_PointsLogUI:ClearPointsLog()   
 
     elseif event == "PLAYER_LOGIN" then
         
@@ -659,10 +668,19 @@ function Hardcore_Score:init(event, name)
         HCS_PointsLogUI:ClearPointsLog()
 
         -- Get updated character guild
-        HCScore_Character.guildName = GetGuildInfo("player") or ""  --print("Guild: ", GetGuildInfo("player"))
+        HCScore_Character.guildName = GetGuildInfo("player") or ""  
+
+        -- Runes
+        if HCS_SODVersion then
+            C_Engraving.RefreshRunesList() -- Needed to refresh runes between login sessions
+
+          -- Updates the Class Rune Achievement table    
+            local runesInfo = HCS_EngravingEvent:GetAllRunesInfo()
+            HCS_AchievementsDB.ClassRuneAchievementTable = HCS_AchievementsDB:CreateClassRuneAchievementTable(runesInfo)            
+        end
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.1.3.0  Lets GO!")
+        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.1.4.0  Lets GO!")
    
     end
 

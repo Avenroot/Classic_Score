@@ -51,7 +51,6 @@ local function GetMobKillHCScore(mobLevel)
         xpGain = 400
     end
 
-
     -- Multiplier lookup table. 
     local multipliers = {
         [-6] = 0.0000,

@@ -26,11 +26,9 @@ local function AddMilestone(id)
                     id = milestone.id,
                     points = milestone.points,
                 }
---                DEFAULT_CHAT_FRAME:AddMessage("|cffADD8E6This is light blue text!|r")
 
                 HCS_Utils:Print("|cff81b7e9"..milestone.desc.."|r")                
 
-                --print("|cff81b7e9"..milestone.desc.."|r")     
                 table.insert(HCScore_Character.milestones, newMilestone)
                 
                 HCS_PointsLogUI:AddMessage(milestone.desc)                               
@@ -233,6 +231,20 @@ local function CheckDangerousEnemiesKilled()
 
 end
 
+local function CheckRunes()
+
+    local total = 0
+
+    for _, rune in pairs(HCScore_Character.runes) do
+        total = total + 1
+    end
+
+    if total >= 1 then AddMilestone("runes_1") end
+    if total >= 5 then AddMilestone("runes_2") end
+    if total >= 10 then AddMilestone("runes_3") end
+
+end
+
 function HCS_MilestonesScore:CheckMilestones()
 
     CheckMobKillsByType()
@@ -242,6 +254,11 @@ function HCS_MilestonesScore:CheckMilestones()
     CheckProfessionsTotals()
     CheckProfessionsPoints()
     CheckDangerousEnemiesKilled()
+    
+    -- Runes
+    if HCS_SODVersion then
+        CheckRunes()
+    end
 
 end
 

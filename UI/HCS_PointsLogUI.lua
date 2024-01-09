@@ -11,7 +11,7 @@ HCS_PointsLogUI.frame:SetSize(300, 200)
 HCS_PointsLogUI.frame:SetFrameStrata("LOW")
 HCS_PointsLogUI.frame:SetClampedToScreen(true)
 
-print(Current_hcs_Border)
+--print(Current_hcs_Border)
 -- Set backdrop with gradient background and border
 HCS_PointsLogUI.frame:SetBackdrop({
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
