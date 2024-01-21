@@ -1,10 +1,21 @@
 HCS_PlayerCompletingQuestEvent = {}
 
-local TRIVAL = 0 -- grey
-local EASY = 0.001 -- green
-local MODERATE = 0.002 -- yellow
-local HARD = 0.0035 -- orange
-local VERYHARD = 0.005 -- red
+local multipliers = {
+  [-6] = 0.0000,
+  [-5] = 0.0010,  -- Easy (green)
+  [-4] = 0.0012,
+  [-3] = 0.0014,
+  [-2] = 0.0016,
+  [-1] = 0.0018,
+  [0]  = 0.0020,
+  [1]  = 0.0023,
+  [2]  = 0.0025,
+  [3]  = 0.0027,
+  [4]  = 0.0029,
+  [5]  = 0.0031,
+  [6]  = 0.0035,  -- Very Hard (red)
+}
+
 
 local score = 0
 local questLevel
@@ -56,25 +67,13 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
     end
   end
 
-  -- grey
-  if levelMod <= -6 then
-    score = 0
-  end
-  -- green
-  if between(levelMod, -5, -1) then
-    score =  xpReward * EASY         
-  end 
-  -- yellow
-  if between(levelMod, 0, 4) then
-    score = xpReward * MODERATE    
-  end
-  -- orange
-  if between(levelMod, 5, 9) then
-    score = xpReward * HARD
-  end
-  -- red
-  if levelMod > 9 then
-    score =  xpReward * VERYHARD
+    -- Look up the multiplier and apply it to the score.
+  if multipliers[levelMod] then
+      score = xpReward * multipliers[levelMod] 
+  elseif levelMod > 6 then
+      score = xpReward * multipliers[6] 
+  elseif levelMod < -6 then
+      score = xpReward * multipliers[-6] 
   end
 
   HCS_PlayerQuestingScore:UpdateQuestingScore(score, questID, xpReward, levelMod)
@@ -85,26 +84,16 @@ function HCS_PlayerCompletingQuestEvent:RecalculateQuests()
 
   --print("Recalculating Quests")
   for _, quest in pairs(HCScore_Character.quests) do
-    -- grey
-    if quest.difficulty <= -6 then
-      quest.points = 0
+
+    -- Look up the multiplier and apply it to the score.
+    if multipliers[quest.difficulty ] then
+      quest.points =  quest.xp * multipliers[quest.difficulty ] 
+    elseif quest.difficulty  > 6 then
+      quest.points =  quest.xp * multipliers[6] 
+    elseif quest.difficulty  < -6 then
+      quest.points =  quest.xp * multipliers[-6] 
     end
-    -- green
-    if between(quest.difficulty, -5, -1) then
-      quest.points =  quest.xp * EASY         
-    end 
-    -- yellow
-    if between(quest.difficulty, 0, 4) then
-      quest.points = quest.xp * MODERATE    
-    end
-    -- orange
-    if between(quest.difficulty, 5, 9) then
-      quest.points = quest.xp * HARD
-    end
-    -- red
-    if quest.difficulty > 9 then
-      quest.points =  quest.xp * VERYHARD
-    end
+
   end
 
 end

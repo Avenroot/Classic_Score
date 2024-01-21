@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.4" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.1.5" --GetAddOnMetadata("Hardcore Score", "Version")
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -305,7 +305,7 @@ local options = {
             order = 21
         },
         addonInfoNote = {
-            name = "version 1.1.4 - authors: Avenroot, Caith, Fruze (level 60 testing)",
+            name = "version 1.1.5 - authors: Avenroot, Caith, Fruze (level 60 testing)",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -681,6 +681,31 @@ function Hardcore_Score:init(event, name)
 
         -- Print fun stuff for the player
         print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.1.4.0  Lets GO!")
+
+        
+        --[[
+        -- testing
+        local categories = GetStatisticsCategoryList()
+        print(categories)
+        for i, id in next(categories) do
+            local key, parent = GetCategoryInfo(id)
+            print("The key %d has the parent %d", key, parent)
+        end
+
+        -- testing
+        function GetStatisticId(StatisticTitle)
+            for _, CategoryId in pairs(GetStatisticsCategoryList()) do	
+                for i = 1, GetCategoryNumAchievements(CategoryId) do
+                    local IDNumber, Name = GetAchievementInfo(CategoryId, i)
+                    if Name == StatisticTitle then
+                        return IDNumber
+                    end
+                end		
+            end
+            return -1
+        end
+        ]]
+        
    
     end
 

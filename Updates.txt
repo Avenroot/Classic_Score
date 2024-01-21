@@ -153,3 +153,6 @@ Version 1.1.4
     2. Runes Achievements and Milestones added.  Collect them all!
     3. Updated professions to include Inscriptions and Jewcrafting scores in WotLK. Opps, missed that one.
     4. Fixed a bug when turning in a quest, sometimes the quest level was not detected and not giving a score. 
+
+Version 1.1.5
+    1. Quests reward points for each level instead of a range.  Thus, the earlier you turn in your quest the more points you get. Overall, this leads to more Quest points.
