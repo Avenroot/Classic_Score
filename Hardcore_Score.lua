@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.5" --GetAddOnMetadata("Hardcore Score", "Version")
+HCS_Version = "1.1.6" 
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -70,7 +70,7 @@ end
 
 -- Define your options table
 local options = {
-    name = "Hardcore Score",
+    name = "Classic Score",
     type = "group",
     args = {
         showScore = {
@@ -276,7 +276,7 @@ local options = {
             order = 17
         },
         addonInfo1 = {
-            name = "Thank you for trying out Hardcore Score. We would love your feedback. Please report feedback and bugs to our Discord.",
+            name = "Thank you for trying out Classic Score. We would love your feedback. Please report feedback and bugs to our Discord.",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -290,7 +290,7 @@ local options = {
             order = 19
         },
         addonInfo2 = {
-            name = "We have a lot of things planned for Hardcore Score. Look for annoucements in our Discord and on our website. Enjoy challenging yourself to get the best Hardcore Score possible and share your results with us. Thank you and have fun!!",
+            name = "We have a lot of things planned for Classic Score. Look for annoucements in our Discord and on our website. Enjoy challenging yourself to get the best Classic Score possible and share your results with us. Thank you and have fun!!",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -305,7 +305,7 @@ local options = {
             order = 21
         },
         addonInfoNote = {
-            name = "version 1.1.5 - authors: Avenroot, Caith, Fruze (level 60 testing)",
+            name = "version 1.1.6 - authors: Avenroot, Caith, Fruze (level 60 testing)",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -453,7 +453,7 @@ end
 function Hardcore_Score:CreateMiniMapButton()
     local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("HCScoreMinimapButton", {
         type = "data source",
-        icon = "Interface\\Addons\\Hardcore_Score\\Media\\MM_logo_2.tga",
+        icon = "Interface\\Addons\\Hardcore_Score\\Media\\MM_logo_cs.tga",
         OnClick = function(self, button)
 
             -- Check if left mouse button was clicked
@@ -467,15 +467,15 @@ function Hardcore_Score:CreateMiniMapButton()
                 
                 HCS_LeaderBoardUI:ToggleMyFrame()
                 -- Open Hardcore_Score section of the options menu
-                --InterfaceOptionsFrame_OpenToCategory("Hardcore Score");
-                --InterfaceOptionsFrame_OpenToCategory("Hardcore Score"); -- yes, you need to call it twice.
+                --InterfaceOptionsFrame_OpenToCategory("Classic Score");
+                --InterfaceOptionsFrame_OpenToCategory("Classic Score"); -- yes, you need to call it twice.
 
             end
         end,
 
         OnTooltipShow = function(tooltip)
             --tooltip:SetText("")  -- This should help ensure the title's style isn't applied to the first line
-            tooltip:AddLine("Hardcore Score "..tostring(HCS_Version))
+            tooltip:AddLine("Classic Score "..tostring(HCS_Version))
             tooltip:AddLine("|cFFFFA500Left-Click|r to to see your Journey")  -- Sets "Left-Click" to grey
             tooltip:AddLine("|cFFFFA500Right-Click|r Show/Hide Scoreboard")  -- Sets "Right-Click" to grey
 
@@ -485,7 +485,7 @@ function Hardcore_Score:CreateMiniMapButton()
                     local txt = HCS_Utils:GetTextWithClassColor(HCScore_Character.classid, HCScore_Character.name ).. "  "..string.format("%.2f", HCScore_Character.scores.coreScore)
                     tooltip:AddLine(txt)
                 else
-                    tooltip:AddLine("Hardcore Score "..tostring(HCS_Version))
+                    tooltip:AddLine("Classic Score "..tostring(HCS_Version))
                 end                    
             end
         end,
@@ -578,7 +578,7 @@ function Hardcore_Score:init(event, name)
                 OnAccept = function()
                     -- Player confirmed, reset the leaderboard
                     HCScore_Character.leaderboard = {}
-                    print("Hardcore Score: Your Leaderboard has been reset.")
+                    print("Classic Score: Your Leaderboard has been reset.")
                 end,
                 timeout = 0,
                 whileDead = true,
@@ -618,7 +618,7 @@ function Hardcore_Score:init(event, name)
         AceConfig:RegisterOptionsTable("Hardcore_Score", options)
 
         -- Add the options table to the Blizzard interface options
-        AceConfigDialog:AddToBlizOptions("Hardcore_Score", "Hardcore Score")
+        AceConfigDialog:AddToBlizOptions("Hardcore_Score", "Classic Score")
 
         HCS_PointsLogUI:SetVisibility()
 
@@ -676,11 +676,17 @@ function Hardcore_Score:init(event, name)
 
           -- Updates the Class Rune Achievement table    
             local runesInfo = HCS_EngravingEvent:GetAllRunesInfo()
-            HCS_AchievementsDB.ClassRuneAchievementTable = HCS_AchievementsDB:CreateClassRuneAchievementTable(runesInfo)            
+            HCS_AchievementsDB.ClassRuneAchievementTable = HCS_AchievementsDB:CreateClassRuneAchievementTable(runesInfo)  
+            
+            -- Resets the runes Collected
+            HCS_EngravingEvent:ResetRunesCollected()
+
+            -- Resets Achivements collected
+            HCS_AchievementScore:Reset()
         end
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Hardcore Score: ".."|r".."Welcome "..playerName.." to Hardcore Score v1.1.4.0  Lets GO!")
+        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v1.1.6.0  Lets GO!")
 
         
         --[[

@@ -86,7 +86,7 @@ function GetPlayerRank()
                         if Hardcore_Score.db.profile.shareDetails and Hardcore_Score.db.profile.shareRankProgression then
                             local rank = string.upper(HCS_PlayerRank.LevelText)
                             local score = string.format("%.2f", HCScore_Character.scores.coreScore)
-                            local message = "I have reached "..rank.." Rank - Hardcore SCORE "..score
+                            local message = "I have reached "..rank.." Rank - Classic SCORE "..score
                             SendChatMessage(message, "GUILD")  -- Send the message to guild chat                         
                         end                        
                     end
@@ -138,7 +138,7 @@ local function LeveledUp(points)
         
             -- Check if the player's level is in the list of valid levels
             if tableContains(validLevels, playerLevel) then
-                local message = "I have reached lvl " .. playerLevel .. " - Hardcore Score " .. score
+                local message = "I have reached lvl " .. playerLevel .. " - Classic Score " .. score
                 SendChatMessage(message, "GUILD")  -- Send the message to guild chat
             end            
         end

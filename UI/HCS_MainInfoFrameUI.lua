@@ -57,7 +57,7 @@ end)
 -- Create a title for the frame
 local title = HCS_MainInfoFrameUI.frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 title:SetPoint("LEFT", HCS_MainInfoFrameUI.frame, "TOPLEFT", 12, -15)
-title:SetText("Hardcore Score")
+title:SetText("Classic Score")
 title:SetTextColor(241/255, 194/255, 50/255)
 
 

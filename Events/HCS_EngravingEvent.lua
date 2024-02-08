@@ -96,6 +96,11 @@ function HCS_EngravingEvent:GetRunesScore()
     return score
 end
 
+function HCS_EngravingEvent:ResetRunesCollected()
+    HCScore_Character.runes = {}
+    HCS_EngravingEvent:GetCollectedRunesInfo()
+end
+
 
 local frameLearnNewRecipe = CreateFrame("Frame")
 frameLearnNewRecipe:RegisterEvent("NEW_RECIPE_LEARNED")
