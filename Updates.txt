@@ -156,3 +156,8 @@ Version 1.1.4
 
 Version 1.1.5
     1. Quests reward points for each level instead of a range.  Thus, the earlier you turn in your quest the more points you get. Overall, this leads to more Quest points.
+
+Version 1.1.6
+1. Added support for Season of Discovery phase 2 (1.15.1).
+2. NEW Runes along with new Achievements.
+3. NEW name of addon. Addon is now Classic Score and is no longer named Hardcore Score. This is because the add-on supports all versions of Classic.    

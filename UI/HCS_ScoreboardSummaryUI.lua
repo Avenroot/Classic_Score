@@ -113,7 +113,7 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
     -- Create logo image
     imgTitle = ScoreboardSummaryFrame:CreateTexture(nil, "OVERLAY")
     imgTitle:SetSize(128, 32)
-    local imgLogo = "Interface\\Addons\\Hardcore_Score\\Media\\Text-logo.blp"
+    local imgLogo = "Interface\\Addons\\Hardcore_Score\\Media\\logo_scaled_Classic_2.blp" --Text-logo.blp
     imgTitle:SetTexture(imgLogo)
     imgTitle:SetPoint("TOPLEFT", ScoreboardSummaryFrame, "TOPLEFT", 30, -5)
 

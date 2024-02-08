@@ -28,7 +28,7 @@ HCS_PointsLogUI.frame:SetBackdropBorderColor(1, 1, 1)
 -- Create a title for the frame
 local title = HCS_PointsLogUI.frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 title:SetPoint("LEFT", HCS_PointsLogUI.frame, "TOPLEFT", 10, -15)
-title:SetText("Hardcore Score Points Log")
+title:SetText("Classic Score Points Log")
 title:SetTextColor(241/255, 194/255, 50/255)
 
 -- Make the frame movable and resizable

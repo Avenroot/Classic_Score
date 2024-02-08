@@ -1,7 +1,9 @@
 HCS_AchievementScore = {}
+local showAchievements = true  -- determines if achievements should be shown in the UI (Popup).  
 
 local function AddAchievement(id)
     local found = false
+    if show == nil then show = false end
 
     -- Check if achievement is already achieved
     for _, achievement in pairs(HCScore_Character.achievements) do
@@ -47,14 +49,16 @@ local function AddAchievement(id)
         end
     end
 
-    if achievementDesc then
-        HCS_Utils:Print("|cff81b7e9Achievement! Congrats! "..achievementDesc.."|r")
-        HCS_PointsLogUI:AddMessage(achievementDesc)
+    if showAchievements then
+        if achievementDesc then
+            HCS_Utils:Print("|cff81b7e9Achievement! Congrats! "..achievementDesc.."|r")
+            HCS_PointsLogUI:AddMessage(achievementDesc)
 
-        if Hardcore_Score.db.profile.framePositionMsg.show then
-            local desc = string.upper(achievementDesc)
-            local frame = HCS_MessageFrameUI.DisplayAchievementMessage(desc, achievementImage, 5)
-            frame:ShowMessage() 
+            if Hardcore_Score.db.profile.framePositionMsg.show then
+                local desc = string.upper(achievementDesc)
+                local frame = HCS_MessageFrameUI.DisplayAchievementMessage(desc, achievementImage, 5)
+                frame:ShowMessage() 
+            end
         end
     end
 end
@@ -190,4 +194,11 @@ function HCS_AchievementScore:AchievedAchivement(achievementId)
       end
 
     return found
+end
+
+function HCS_AchievementScore:Reset()
+    HCScore_Character.achievements = {}
+    showAchievements =false
+    HCS_AchievementScore:CheckAchievements()
+    showAchievements = true
 end

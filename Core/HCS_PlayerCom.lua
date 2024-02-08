@@ -112,9 +112,9 @@ f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
     if not C_ChatInfo.IsAddonMessagePrefixRegistered(PREFIX) then
         -- If not, try to register it
         if C_ChatInfo.RegisterAddonMessagePrefix(PREFIX) then
-            print("Successfully connected to network: " .. PREFIX)
+            print("Successfully connected to the Classic Score network")
         else
-            print("Failed to connect: " .. PREFIX)
+            print("Failed to connect to the Classic Score network")
         end
     else
         --print("Addon prefix already registered: " .. PREFIX)

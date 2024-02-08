@@ -62,7 +62,7 @@ local tabLabel = HCS_AllInfoUI.frame:CreateFontString(nil, "OVERLAY", "GameFontH
 --tabLabel:SetPoint("TOP", HCS_AllInfoUI.frame, "TOP", 0, -10) -- Adjust the Y-offset if needed for precise positioning
 tabLabel:SetPoint("TOPLEFT", HCS_AllInfoUI.frame, "TOPLEFT", 10, -10)  -- This sets the text to the top left
 local _, _, classid = UnitClass("player")
-tabLabel:SetText("Hardcore Score - This is "..HCS_Utils:GetTextWithClassColor(classid, UnitName("player").."'s"))
+tabLabel:SetText("Classic Score - This is "..HCS_Utils:GetTextWithClassColor(classid, UnitName("player").."'s"))
 
 local frameContainer = AceGUI:Create("SimpleGroup")
 frameContainer:SetLayout("Fill") -- So child elements can take up the whole space
