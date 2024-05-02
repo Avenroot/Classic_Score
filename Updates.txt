@@ -161,3 +161,6 @@ Version 1.1.6
 1. Added support for Season of Discovery phase 2 (1.15.1).
 2. NEW Runes along with new Achievements.
 3. NEW name of addon. Addon is now Classic Score and is no longer named Hardcore Score. This is because the add-on supports all versions of Classic.    
+
+Version 1.1.7
+1. Updated for Season of Discovery phase 2 (1.15.2) NEW Runes!

@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.6" 
+HCS_Version = "1.1.7" 
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -305,7 +305,7 @@ local options = {
             order = 21
         },
         addonInfoNote = {
-            name = "version 1.1.6 - authors: Avenroot, Caith, Fruze (level 60 testing)",
+            name = "version 1.1.7 - authors: Avenroot, Caith, Fruze (level 60 testing)",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -686,7 +686,7 @@ function Hardcore_Score:init(event, name)
         end
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v1.1.6.0  Lets GO!")
+        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v1.1.7.0  Lets GO!")
 
         
         --[[
