@@ -166,3 +166,5 @@ Version 1.1.7
 1. Updated for Season of Discovery phase 2 (1.15.2) NEW Runes!
 
 Version 1.1.8
+1. Overall update for Cataclysm to allow players to level from 80-85.
+2. Added support for Cataclysm crafting to level 525

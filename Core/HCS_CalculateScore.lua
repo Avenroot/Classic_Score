@@ -218,7 +218,7 @@ function HCS_CalculateScore:RefreshScores(desc)
     if HCS_GameVersion < 30000 then
         HCS_LevelScalePercentage = (UnitLevel("player")  / 60) -- Classic
     else
-        HCS_LevelScalePercentage = (UnitLevel("player")  / 80) -- WOTLK
+        HCS_LevelScalePercentage = (UnitLevel("player")  / 85) -- Cataclysm
     end
 
     _G["CurrentXP"] = UnitXP("player")  -- CurrentXP

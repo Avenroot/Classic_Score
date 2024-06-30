@@ -43,7 +43,6 @@ Data/HCS_MilestonesDB.lua
 Data/HCS_AchievementsDB.lua
 Data/HCS_RanksDB.lua
 
-
 UI/HCS_MainInfoFrameUI.lua
 UI/HCS_ScoreboardSummaryUI.lua
 UI/HCS_PointsLogUI.lua

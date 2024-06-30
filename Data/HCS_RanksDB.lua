@@ -1,4 +1,4 @@
-local wotlkScale = 1.33 -- 33%
+local catakScale = 1.33 -- 33%
 
 local function GetPointValue(points)
     local p = 0
@@ -6,7 +6,7 @@ local function GetPointValue(points)
     if HCS_GameVersion < 30000 then -- Classic
         p = points
     else                            
-        p = points * wotlkScale     -- Wotlk
+        p = points * catakScale     -- Cataclysm
     end
     
     return p

@@ -61,8 +61,8 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
         xpReward = math.random(50, 150)
     end
   elseif HCS_GameVersion >= 30000 then
-    -- WOTLK
-    if playerLevel == 80 then
+    -- Cataclysm
+    if playerLevel == 85 then
         xpReward = 1200
     end
   end

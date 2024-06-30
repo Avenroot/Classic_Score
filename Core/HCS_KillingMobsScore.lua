@@ -46,8 +46,8 @@ local function GetMobKillHCScore(mobLevel)
             xpGain = 0
         end
 
-    -- WOTLK
-    elseif HCS_GameVersion >= 30000 and playerLevel == 80 then  -- WOTLK
+    -- Cataclysm
+    elseif HCS_GameVersion >= 30000 and playerLevel == 85 then  -- Cataclysm
         xpGain = 400
     end
 
