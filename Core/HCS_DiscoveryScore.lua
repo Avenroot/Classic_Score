@@ -18,7 +18,7 @@ function HCS_DiscoveryScore:UpdateDiscoveryScore()
             xpGained = 150
         elseif HCS_SODVersion == true and UnitLevel("player") == 25 then  -- Current level 25 for Season of Discovery
             xpGained = math.random(10, 50)
-        elseif HCS_GameVersion >= 30000 and UnitLevel("player") == 80 then
+        elseif HCS_GameVersion >= 30000 and UnitLevel("player") == 85 then
             xpGained = 250
         end
 

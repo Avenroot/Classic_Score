@@ -31,6 +31,8 @@ local LEVEL6 = 150
 -- WOTLK
 local LEVEL7 = 175
 local LEVEL8 = 200
+-- Cataclysm
+local LEVEL9 = 225
 
 local function between(x, a, b)
     return x >= a and x <= b
@@ -47,6 +49,7 @@ local function CalcScore(skilllevel)
     if between(skilllevel, 251, 300) then score = LEVEL6 end
     if between(skilllevel, 301, 375) then score = LEVEL7 end -- WOTLK
     if between(skilllevel, 376, 450) then score = LEVEL8 end -- WOTLK
+    if between(skilllevel, 451, 525) then score = LEVEL9 end -- Cataclysm
     if between(skilllevel, 2, 450) then score = score + skilllevel end
 
     return score
