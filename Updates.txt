@@ -171,3 +171,7 @@ Version 1.1.8
 
 Version 1.1.9
 1. Update version to support latest version of Classic (11503)
+
+Version 1.1.10
+1. Update version to support latest version of Classic (11504) Season of Discovery phase 5.
+2. NEW Runes Season of Discovery Season 5 included as part of Milestones.
