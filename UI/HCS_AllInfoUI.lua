@@ -54,7 +54,8 @@ HCS_AllInfoUI.frame:SetResizable(true)
 HCS_AllInfoUI.frame:SetResizeBounds(300, 200) 
 HCS_AllInfoUI.frame:SetScript("OnSizeChanged", function(self, width, height)
     -- This callback can be used to adjust internal UI elements when the frame is resized.
-    -- For now, it does nothing, but you can use it later if needed.
+    -- For now, it does nothing, but you can use it later if needed. 
+    
 end)
 
 -- Create a basic font string for the label on top of the frame
@@ -62,7 +63,7 @@ local tabLabel = HCS_AllInfoUI.frame:CreateFontString(nil, "OVERLAY", "GameFontH
 --tabLabel:SetPoint("TOP", HCS_AllInfoUI.frame, "TOP", 0, -10) -- Adjust the Y-offset if needed for precise positioning
 tabLabel:SetPoint("TOPLEFT", HCS_AllInfoUI.frame, "TOPLEFT", 10, -10)  -- This sets the text to the top left
 local _, _, classid = UnitClass("player")
-tabLabel:SetText("Classic Score - This is "..HCS_Utils:GetTextWithClassColor(classid, UnitName("player").."'s"))
+tabLabel:SetText("Classic Score - This is "..HCS_Utils:GetTextWithClassColor(classid, UnitName("player").."'s Journey"))
 
 local frameContainer = AceGUI:Create("SimpleGroup")
 frameContainer:SetLayout("Fill") -- So child elements can take up the whole space
@@ -79,30 +80,6 @@ local paddingBottom = 20
 -- Adjust the anchoring of the frameContainer using the separate padding values
 frameContainer.frame:SetPoint("TOPLEFT", paddingLeft, -paddingTop)
 frameContainer.frame:SetPoint("BOTTOMRIGHT", -paddingRight, paddingBottom)
-
-
--- NO RESIZE FOR NOW
---[[
--- Create a resize button
-local resizeButton = CreateFrame("Button", nil, HCS_AllInfoUI.frame)
-resizeButton:SetPoint("BOTTOMRIGHT", -5, 5)
-resizeButton:SetSize(16, 16)
-resizeButton:SetNormalTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
-resizeButton:SetHighlightTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
-resizeButton:SetPushedTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
-resizeButton:SetScript("OnMouseDown", function(self, button)
-    if button == "LeftButton" then
-        HCS_AllInfoUI.frame:StartSizing("BOTTOMRIGHT")
-        self:SetButtonState("PUSHED", true)
-    end
-end)
-resizeButton:SetScript("OnMouseUp", function(self, button)
-    if button == "LeftButton" then
-        HCS_AllInfoUI.frame:StopMovingOrSizing()
-        self:SetButtonState("NORMAL", false)
-    end
-end)
-]]
 
 -- Add the close button
 local closeButton = CreateFrame("Button", nil, HCS_AllInfoUI.frame, "UIPanelCloseButton")
@@ -123,6 +100,7 @@ tabGroup:SetTabs({
     {text="Milestones", value="Milestones"},
     {text="Characters", value="Characters"},
     {text="Leaderboard", value="Leaderboard"},
+    {text="Mobs Killed Info", value="MobsKilledInfo"},
 
 })
 
@@ -655,16 +633,6 @@ local function PopulateLeaderboardContent(container)
     scoreHeader:SetText("Score")
     scoreHeader:SetWidth(80)  
     headerGroup:AddChild(scoreHeader)
-
-    -- Filter button
---    local filterButton = AceGUI:Create("Button")
---    filterButton:SetText("Filter")
---    filterButton:SetWidth(100)
---    filterButton:SetCallback("OnClick", function()
---        -- When the button is clicked, create and show the filter modal
---        CreateFilterModal(container)
---    end)
---    headerGroup:AddChild(filterButton)        
     
     -- Add the header to the container
     container:AddChild(headerGroup)
@@ -760,6 +728,89 @@ local function PopulateLeaderboardContent(container)
     container:AddChild(scrollframe)
 end
 
+local function PopulateMobsKilledInfoContent(container)
+    container:ReleaseChildren() -- Clear existing widgets
+
+    -- Header Group
+    local headerGroup = AceGUI:Create("SimpleGroup")
+    headerGroup:SetFullWidth(true)
+    headerGroup:SetLayout("Flow")
+
+    local mobNameHeader = AceGUI:Create("Label")
+    mobNameHeader:SetFont(fontPath, fontSize, "OUTLINE")
+    mobNameHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
+    mobNameHeader:SetText("Mob")
+    mobNameHeader:SetWidth(200)  -- Adjust this value as needed
+    headerGroup:AddChild(mobNameHeader)
+
+    local killsHeader = AceGUI:Create("Label")
+    killsHeader:SetFont(fontPath, fontSize, "OUTLINE")
+    killsHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
+    killsHeader:SetText("Kills")
+    killsHeader:SetWidth(80)  -- Adjust this value as needed
+    headerGroup:AddChild(killsHeader)
+
+    local scoreHeader = AceGUI:Create("Label")
+    scoreHeader:SetFont(fontPath, fontSize, "OUTLINE")
+    scoreHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
+    scoreHeader:SetText("Score")
+    scoreHeader:SetWidth(80)  -- Adjust this value as needed
+    headerGroup:AddChild(scoreHeader)
+    
+    local xpHeader = AceGUI:Create("Label")
+    xpHeader:SetFont(fontPath, fontSize, "OUTLINE")
+    xpHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
+    xpHeader:SetText("XP")
+    xpHeader:SetWidth(80)  -- Adjust this value as needed
+    headerGroup:AddChild(xpHeader)
+
+    -- Add the header to the container
+    container:AddChild(headerGroup)    
+
+    -- Create ScrollFrame for displaying rows
+    local scrollFrame = AceGUI:Create("ScrollFrame")
+    scrollFrame:SetLayout("List")
+    scrollFrame:SetFullWidth(true)
+    scrollFrame:SetFullHeight(true)
+
+    local mobsKilled = HCScore_Character.mobsKilled
+
+    -- Populate Rows Dynamically
+    for _, mob in ipairs(mobsKilled) do
+        local rowGroup = AceGUI:Create("SimpleGroup")
+        rowGroup:SetLayout("Flow")
+        rowGroup:SetFullWidth(true)
+   
+        local mobNameLabel = AceGUI:Create("Label")
+        mobNameLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        mobNameLabel:SetText(mob.id)
+        mobNameLabel:SetWidth(200)  -- Adjust this value as needed
+        rowGroup:AddChild(mobNameLabel)
+    
+        local killsLabel = AceGUI:Create("Label")
+        killsLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        killsLabel:SetText(mob.kills)
+        killsLabel:SetWidth(80)  -- Adjust this value as needed
+        rowGroup:AddChild(killsLabel)
+    
+        local scoreLabel = AceGUI:Create("Label")
+        scoreLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        scoreLabel:SetText(string.format("%.2f", mob.score))
+        scoreLabel:SetWidth(80)  -- Adjust this value as needed
+        rowGroup:AddChild(scoreLabel)
+        
+        local xpLabel = AceGUI:Create("Label")
+        xpLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        xpLabel:SetText(mob.xp)
+        xpLabel:SetWidth(80)  -- Adjust this value as needed
+        rowGroup:AddChild(xpLabel)
+    
+        scrollFrame:AddChild(rowGroup)
+    end
+
+    container:AddChild(scrollFrame)
+end
+
 -- Function to populate the content of each tab
 tabGroup:SetCallback("OnGroupSelected", function(container, event, group)
     container:ReleaseChildren() -- This is important. It releases the current widgets before adding new ones.
@@ -775,7 +826,10 @@ tabGroup:SetCallback("OnGroupSelected", function(container, event, group)
     elseif group == "Characters" then
         PopulateCharactersContent(container)
     elseif group == "Leaderboard" then
-        PopulateLeaderboardContent(container)
+        PopulateLeaderboardContent(container)           
+    elseif group == "MobsKilledInfo" then
+        PopulateMobsKilledInfoContent(container)           
+
     end   
 end)
 
@@ -793,6 +847,8 @@ function HCS_AllInfoUI:ToggleMyFrame()
         HCS_AllInfoUI.frame:Show()
     end
 end
+
+
 
 
 
