@@ -178,3 +178,6 @@ Version 1.1.10
 
 Version 1.1.11
 1. Update to support new Classic Refresh Servers
+
+Version 1.1.12
+1. New Content!  Mob Killed details and Mob Killed Data Map.  

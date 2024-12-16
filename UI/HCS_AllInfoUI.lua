@@ -59,7 +59,7 @@ local difficultyColors = {
 HCS_AllInfoUI.frame = CreateFrame("Frame", "LeaderBoardFrame", UIParent, "BackdropTemplate")
 HCS_AllInfoUI.frame:Hide()
 HCS_AllInfoUI.frame:SetFrameStrata("MEDIUM")
-HCS_AllInfoUI.frame:SetSize(850, 450) -- Change as needed
+HCS_AllInfoUI.frame:SetSize(850, 475) -- Change as needed
 HCS_AllInfoUI.frame:SetPoint("CENTER")
 HCS_AllInfoUI.frame:SetClampedToScreen(true)
 
@@ -774,11 +774,11 @@ local function PopulateMobsKilledInfoContent(container)
     local leftGroup = AceGUI:Create("InlineGroup")
     leftGroup:SetTitle("Mobs Killed")
     leftGroup:SetLayout("Fill")
-    leftGroup:SetWidth(400) -- Fixed width
-    leftGroup:SetHeight(300) -- Fixed height
+    leftGroup:SetWidth(452) -- Fixed width
+    leftGroup:SetHeight(335) -- Fixed height
     parentGroup:AddChild(leftGroup)
 
-    -- ScrollFrame for Left Table
+     -- ScrollFrame for Left Table
     local leftScrollFrame = AceGUI:Create("ScrollFrame")
     leftScrollFrame:SetLayout("List")
     leftGroup:AddChild(leftScrollFrame)
@@ -792,7 +792,7 @@ local function PopulateMobsKilledInfoContent(container)
     mobNameHeader:SetFont(fontPath, fontSize, "OUTLINE")
     mobNameHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
     mobNameHeader:SetText("Mob")
-    mobNameHeader:SetWidth(125)
+    mobNameHeader:SetWidth(175)
     leftHeaderGroup:AddChild(mobNameHeader)
 
     local killsHeader = AceGUI:Create("Label")
@@ -820,6 +820,13 @@ local function PopulateMobsKilledInfoContent(container)
 
     -- Left Table Data Rows
     local mobsKilled = HCScore_Character.mobsKilled or {}
+
+    -- Sort Mobs Killed table by kills in descending order
+    table.sort(mobsKilled, function(a, b)
+        return a.score > b.score
+    end)
+
+    -- Left Table Data Rows
     for _, mob in ipairs(mobsKilled) do
         local rowGroup = AceGUI:Create("SimpleGroup")
         rowGroup:SetLayout("Flow")
@@ -828,7 +835,7 @@ local function PopulateMobsKilledInfoContent(container)
         local mobNameLabel = AceGUI:Create("Label")
         mobNameLabel:SetFont(fontPath, fontSize, "OUTLINE")
         mobNameLabel:SetText(mob.id)
-        mobNameLabel:SetWidth(125)
+        mobNameLabel:SetWidth(175)
         rowGroup:AddChild(mobNameLabel)
 
         local killsLabel = AceGUI:Create("Label")
@@ -856,8 +863,8 @@ local function PopulateMobsKilledInfoContent(container)
     local rightGroup = AceGUI:Create("InlineGroup")
     rightGroup:SetTitle("Mobs Killed Map")
     rightGroup:SetLayout("Fill")
-    rightGroup:SetWidth(400) -- Fixed width
-    rightGroup:SetHeight(300) -- Fixed height
+    rightGroup:SetWidth(352) -- Fixed width
+    rightGroup:SetHeight(335) -- Fixed height
 
     -- Add a tooltip to the "Mobs Killed Map" title
     rightGroup.frame:SetScript("OnEnter", function()
@@ -910,21 +917,21 @@ local function PopulateMobsKilledInfoContent(container)
     killsHeader:SetFont(fontPath, fontSize, "OUTLINE")
     killsHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
     killsHeader:SetText("Kills")
-    killsHeader:SetWidth(80)
+    killsHeader:SetWidth(70)
     rightHeaderGroup:AddChild(killsHeader)
 
     local scoreHeader = AceGUI:Create("Label")
     scoreHeader:SetFont(fontPath, fontSize, "OUTLINE")
     scoreHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
     scoreHeader:SetText("Score")
-    scoreHeader:SetWidth(80)
+    scoreHeader:SetWidth(70)
     rightHeaderGroup:AddChild(scoreHeader)
 
     local xpHeader = AceGUI:Create("Label")
     xpHeader:SetFont(fontPath, fontSize, "OUTLINE")
     xpHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
     xpHeader:SetText("XP")
-    xpHeader:SetWidth(80)
+    xpHeader:SetWidth(70)
     rightHeaderGroup:AddChild(xpHeader)
 
     rightScrollFrame:AddChild(rightHeaderGroup)
@@ -962,28 +969,28 @@ local function PopulateMobsKilledInfoContent(container)
         local difficultyLabel = AceGUI:Create("Label")
         difficultyLabel:SetFont(fontPath, fontSize, "OUTLINE")
         difficultyLabel:SetText(coloredDifficultyName)
-        difficultyLabel:SetWidth(110)
+        difficultyLabel:SetWidth(100)
         rowGroup:AddChild(difficultyLabel)
 
         -- Kills Label
         local killsLabel = AceGUI:Create("Label")
         killsLabel:SetFont(fontPath, fontSize, "OUTLINE")
         killsLabel:SetText(mob.kills)
-        killsLabel:SetWidth(80)
+        killsLabel:SetWidth(70)
         rowGroup:AddChild(killsLabel)
 
         -- Score Label
         local scoreLabel = AceGUI:Create("Label")
         scoreLabel:SetFont(fontPath, fontSize, "OUTLINE")
         scoreLabel:SetText(string.format("%.2f", mob.score))
-        scoreLabel:SetWidth(80)
+        scoreLabel:SetWidth(70)
         rowGroup:AddChild(scoreLabel)
 
         -- XP Label
         local xpLabel = AceGUI:Create("Label")
         xpLabel:SetFont(fontPath, fontSize, "OUTLINE")
         xpLabel:SetText(mob.xp)
-        xpLabel:SetWidth(80)
+        xpLabel:SetWidth(70)
         rowGroup:AddChild(xpLabel)
 
         -- Add the row to the right scroll frame
