@@ -1,8 +1,8 @@
 ## Interface: 11505
-## Title: Classic Score 1.1.12
+## Title: Classic Score 1.1.14
 ## Notes: Your Classic score for your character
 ## Author: Avenroot, Caith
-## Version: 1.1.12
+## Version: 1.1.14
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character

@@ -181,7 +181,7 @@ local function PopulateMilestonesContent(container)
     scrollframe:SetLayout("List")
     scrollframe:SetFullWidth(true)
     scrollframe:SetFullHeight(false)
-    scrollframe:SetHeight(275)
+    scrollframe:SetHeight(308)
 
     local startIndex = (currentPage - 1) * itemsPerPage + 1
     local endIndex = math.min(startIndex + itemsPerPage - 1, #HCS_MilestonesDB)
@@ -276,11 +276,21 @@ local function PopulateMilestonesContent(container)
             PopulateMilestonesContent(container)
         end
     end)
-    nextButton:SetDisabled(currentPage * itemsPerPage >= #HCS_MilestonesDB) -- Disables "Next" button on the last page
-   
-    navGroup:AddChild(nextButton)
+    nextButton:SetDisabled(currentPage * itemsPerPage >= #HCS_MilestonesDB) -- Disables "Next" button on the last page  
+
+    navGroup:AddChild(nextButton)  
+
+    -- Add a spacer at the bottom
+    local spacer = AceGUI:Create("Label")
+    spacer:SetText("") -- Empty text
+    spacer:SetHeight(20) -- Acts as bottom padding
+    spacer:SetFullWidth(true)
+    container:AddChild(spacer)   
+
 
     container:AddChild(navGroup)
+
+
 end
 
 
@@ -761,6 +771,9 @@ local function PopulateLeaderboardContent(container)
     container:AddChild(scrollframe)
 end
 
+local currentPageMobs = 1
+local itemsPerPageMobs = 25 -- Display 20 rows per page
+
 local function PopulateMobsKilledInfoContent(container)
     container:ReleaseChildren() -- Clear existing widgets
 
@@ -773,15 +786,10 @@ local function PopulateMobsKilledInfoContent(container)
     -- ==== LEFT TABLE: Mobs Killed ====
     local leftGroup = AceGUI:Create("InlineGroup")
     leftGroup:SetTitle("Mobs Killed")
-    leftGroup:SetLayout("Fill")
-    leftGroup:SetWidth(452) -- Fixed width
-    leftGroup:SetHeight(335) -- Fixed height
+    leftGroup:SetLayout("Flow") -- Use Flow to keep the scroll and nav buttons aligned
+    leftGroup:SetWidth(452)
+    leftGroup:SetHeight(425)
     parentGroup:AddChild(leftGroup)
-
-     -- ScrollFrame for Left Table
-    local leftScrollFrame = AceGUI:Create("ScrollFrame")
-    leftScrollFrame:SetLayout("List")
-    leftGroup:AddChild(leftScrollFrame)
 
     -- Left Table Header Group
     local leftHeaderGroup = AceGUI:Create("SimpleGroup")
@@ -816,18 +824,31 @@ local function PopulateMobsKilledInfoContent(container)
     xpHeader:SetWidth(70)
     leftHeaderGroup:AddChild(xpHeader)
 
-    leftScrollFrame:AddChild(leftHeaderGroup)
+    leftGroup:AddChild(leftHeaderGroup)
 
-    -- Left Table Data Rows
+    -- Left Table Data with Pagination
     local mobsKilled = HCScore_Character.mobsKilled or {}
 
     -- Sort Mobs Killed table by kills in descending order
     table.sort(mobsKilled, function(a, b)
-        return a.score > b.score
+        return a.kills > b.kills
     end)
 
-    -- Left Table Data Rows
-    for _, mob in ipairs(mobsKilled) do
+    -- ScrollFrame for Left Table Rows
+    local leftScrollFrame = AceGUI:Create("ScrollFrame")
+    leftScrollFrame:SetLayout("List")
+    leftScrollFrame:SetFullWidth(true)
+    leftScrollFrame:SetHeight(270) -- Adjust height to leave space for buttons
+    leftGroup:AddChild(leftScrollFrame)
+
+    -- Pagination Logic
+    local startIndex = (currentPageMobs - 1) * itemsPerPageMobs + 1
+    local endIndex = math.min(startIndex + itemsPerPageMobs - 1, #mobsKilled)
+
+    for i = startIndex, endIndex do
+        local mob = mobsKilled[i]
+        if not mob then break end
+
         local rowGroup = AceGUI:Create("SimpleGroup")
         rowGroup:SetLayout("Flow")
         rowGroup:SetFullWidth(true)
@@ -859,147 +880,178 @@ local function PopulateMobsKilledInfoContent(container)
         leftScrollFrame:AddChild(rowGroup)
     end
 
-    -- ==== RIGHT TABLE: Mobs Killed Map ====
-    local rightGroup = AceGUI:Create("InlineGroup")
-    rightGroup:SetTitle("Mobs Killed Map")
-    rightGroup:SetLayout("Fill")
-    rightGroup:SetWidth(352) -- Fixed width
-    rightGroup:SetHeight(335) -- Fixed height
+    -- Navigation Buttons (Below ScrollFrame)
+    local navGroup = AceGUI:Create("SimpleGroup")
+    navGroup:SetFullWidth(true)
+    navGroup:SetLayout("Flow")
 
-    -- Add a tooltip to the "Mobs Killed Map" title
-    rightGroup.frame:SetScript("OnEnter", function()
-        GameTooltip:SetOwner(rightGroup.frame, "ANCHOR_TOP")
-        GameTooltip:ClearLines()
-        GameTooltip:AddLine("Difficulty Legend (Levels above your character)", 1, 1, 0) -- Gold text
-        -- Color-coded difficulty lines
-        GameTooltip:AddLine("|cffFF0000+6|r - Legendary (Incredibly Hard)", 1, 1, 1) -- Red
-        GameTooltip:AddLine("|cffFF4500+5|r - Heroic (Very Hard)", 1, 1, 1)          -- Red-Orange
-        GameTooltip:AddLine("|cffFF4500+4|r - Deadly (Hard)", 1, 1, 1)                -- Orange-Red
-        GameTooltip:AddLine("|cffFFA500+3|r - Formidable (Challenging)", 1, 1, 1)    -- Orange
-        GameTooltip:AddLine("|cffFFA500+2|r - Dangerous (Slightly Tough)", 1, 1, 1)  -- Orange
-        GameTooltip:AddLine("|cffFFD700+1|r - Challenging (Moderate)", 1, 1, 1)      -- Yellow
-        GameTooltip:AddLine("|cffFFD700  0|r  - Standard (Default Difficulty)", 1, 1, 1) -- Yellow
-        GameTooltip:AddLine("|cffFFD700-1|r - Slightly Tough (Easy)", 1, 1, 1)       -- Yellow
-        GameTooltip:AddLine("|cffFFD700-2|r - Unchallenging (Easier)", 1, 1, 1)      -- Yellow
-        GameTooltip:AddLine("|cff32CD32-3|r - Routine (Very Easy)", 1, 1, 1)         -- Green
-        GameTooltip:AddLine("|cff32CD32-4|r - Easy (Trivial)", 1, 1, 1)              -- Green
-        GameTooltip:AddLine("|cffA9A9A9-5|r - Laughable (Extremely Easy)", 1, 1, 1)  -- Grey
-        GameTooltip:AddLine("|cffA9A9A9-6|r - Trivial (No Challenge)", 1, 1, 1)      -- Grey
-
-        GameTooltip:Show()
+    local prevButton = AceGUI:Create("Button")
+    prevButton:SetText("< Previous")
+    prevButton:SetWidth(80)
+    prevButton:SetCallback("OnClick", function()
+        if currentPageMobs > 1 then
+            currentPageMobs = currentPageMobs - 1
+            PopulateMobsKilledInfoContent(container)
+        end
     end)
+    prevButton:SetDisabled(currentPageMobs == 1)
+    navGroup:AddChild(prevButton)
 
-    rightGroup.frame:SetScript("OnLeave", function()
-        GameTooltip:Hide()
+    local nextButton = AceGUI:Create("Button")
+    nextButton:SetText("Next >")
+    nextButton:SetWidth(80)
+    nextButton:SetCallback("OnClick", function()
+        if currentPageMobs * itemsPerPageMobs < #mobsKilled then
+            currentPageMobs = currentPageMobs + 1
+            PopulateMobsKilledInfoContent(container)
+        end
     end)
+    nextButton:SetDisabled(currentPageMobs * itemsPerPageMobs >= #mobsKilled)
+    navGroup:AddChild(nextButton)
 
-    parentGroup:AddChild(rightGroup)
+    leftGroup:AddChild(navGroup)
 
+  -- ==== RIGHT TABLE: Mobs Killed Map ====
+  local rightGroup = AceGUI:Create("InlineGroup")
+  rightGroup:SetTitle("Mobs Killed Map")
+  rightGroup:SetLayout("Fill")
+  rightGroup:SetWidth(352) -- Fixed width
+  rightGroup:SetHeight(340) -- Fixed height
 
-    -- ScrollFrame for Right Table
-    local rightScrollFrame = AceGUI:Create("ScrollFrame")
-    rightScrollFrame:SetLayout("List")
-    rightGroup:AddChild(rightScrollFrame)
+  -- Add a tooltip to the "Mobs Killed Map" title
+  rightGroup.frame:SetScript("OnEnter", function()
+      GameTooltip:SetOwner(rightGroup.frame, "ANCHOR_TOP")
+      GameTooltip:ClearLines()
+      GameTooltip:AddLine("Difficulty Legend (Levels above your character)", 1, 1, 0) -- Gold text
+      -- Color-coded difficulty lines
+      GameTooltip:AddLine("|cffFF0000+6|r - Legendary (Incredibly Hard)", 1, 1, 1) -- Red
+      GameTooltip:AddLine("|cffFF4500+5|r - Heroic (Very Hard)", 1, 1, 1)          -- Red-Orange
+      GameTooltip:AddLine("|cffFF4500+4|r - Deadly (Hard)", 1, 1, 1)                -- Orange-Red
+      GameTooltip:AddLine("|cffFFA500+3|r - Formidable (Challenging)", 1, 1, 1)    -- Orange
+      GameTooltip:AddLine("|cffFFA500+2|r - Dangerous (Slightly Tough)", 1, 1, 1)  -- Orange
+      GameTooltip:AddLine("|cffFFD700+1|r - Challenging (Moderate)", 1, 1, 1)      -- Yellow
+      GameTooltip:AddLine("|cffFFD700  0|r  - Standard (Default Difficulty)", 1, 1, 1) -- Yellow
+      GameTooltip:AddLine("|cffFFD700-1|r - Slightly Tough (Easy)", 1, 1, 1)       -- Yellow
+      GameTooltip:AddLine("|cffFFD700-2|r - Unchallenging (Easier)", 1, 1, 1)      -- Yellow
+      GameTooltip:AddLine("|cff32CD32-3|r - Routine (Very Easy)", 1, 1, 1)         -- Green
+      GameTooltip:AddLine("|cff32CD32-4|r - Easy (Trivial)", 1, 1, 1)              -- Green
+      GameTooltip:AddLine("|cffA9A9A9-5|r - Laughable (Extremely Easy)", 1, 1, 1)  -- Grey
+      GameTooltip:AddLine("|cffA9A9A9-6|r - Trivial (No Challenge)", 1, 1, 1)      -- Grey
 
-    -- Right Table Header Group
-    local rightHeaderGroup = AceGUI:Create("SimpleGroup")
-    rightHeaderGroup:SetFullWidth(true)
-    rightHeaderGroup:SetLayout("Flow")
+      GameTooltip:Show()
+  end)
 
-    local difficultyHeader = AceGUI:Create("Label")
-    difficultyHeader:SetFont(fontPath, fontSize, "OUTLINE")
-    difficultyHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
-    difficultyHeader:SetText("Difficulty")
-    difficultyHeader:SetWidth(100)
-    rightHeaderGroup:AddChild(difficultyHeader)
+  rightGroup.frame:SetScript("OnLeave", function()
+      GameTooltip:Hide()
+  end)
 
-    local killsHeader = AceGUI:Create("Label")
-    killsHeader:SetFont(fontPath, fontSize, "OUTLINE")
-    killsHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
-    killsHeader:SetText("Kills")
-    killsHeader:SetWidth(70)
-    rightHeaderGroup:AddChild(killsHeader)
-
-    local scoreHeader = AceGUI:Create("Label")
-    scoreHeader:SetFont(fontPath, fontSize, "OUTLINE")
-    scoreHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
-    scoreHeader:SetText("Score")
-    scoreHeader:SetWidth(70)
-    rightHeaderGroup:AddChild(scoreHeader)
-
-    local xpHeader = AceGUI:Create("Label")
-    xpHeader:SetFont(fontPath, fontSize, "OUTLINE")
-    xpHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
-    xpHeader:SetText("XP")
-    xpHeader:SetWidth(70)
-    rightHeaderGroup:AddChild(xpHeader)
-
-    rightScrollFrame:AddChild(rightHeaderGroup)
-
-    -- Right Table Data Rows
-    local mobsKilledMap = HCScore_Character.mobsKilledMap or {}
+  parentGroup:AddChild(rightGroup)
 
 
-    -- Sort the mobsKilledMap by difficulty in descending order
-    table.sort(mobsKilledMap, function(a, b)
-        return a.difficulty > b.difficulty
-    end)
+  -- ScrollFrame for Right Table
+  local rightScrollFrame = AceGUI:Create("ScrollFrame")
+  rightScrollFrame:SetLayout("List")
+  rightGroup:AddChild(rightScrollFrame)
 
-    -- Create a lookup table for existing difficulties
-    local difficultyLookup = {}
-    for _, mob in ipairs(mobsKilledMap) do
-        difficultyLookup[mob.difficulty] = mob
-    end
+  -- Right Table Header Group
+  local rightHeaderGroup = AceGUI:Create("SimpleGroup")
+  rightHeaderGroup:SetFullWidth(true)
+  rightHeaderGroup:SetLayout("Flow")
 
-    -- Iterate over all difficulty levels from +6 to -6
-    for difficulty = 6, -6, -1 do
-        local rowGroup = AceGUI:Create("SimpleGroup")
-        rowGroup:SetLayout("Flow")
-        rowGroup:SetFullWidth(true)
+  local difficultyHeader = AceGUI:Create("Label")
+  difficultyHeader:SetFont(fontPath, fontSize, "OUTLINE")
+  difficultyHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
+  difficultyHeader:SetText("Difficulty")
+  difficultyHeader:SetWidth(100)
+  rightHeaderGroup:AddChild(difficultyHeader)
 
-        -- Get mob data if it exists; otherwise, use default values
-        local mob = difficultyLookup[difficulty] or { kills = 0, score = 0, xp = 0 }
-        local difficultyName = difficultyNames[difficulty] or "Unknown"
+  local killsHeader = AceGUI:Create("Label")
+  killsHeader:SetFont(fontPath, fontSize, "OUTLINE")
+  killsHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
+  killsHeader:SetText("Kills")
+  killsHeader:SetWidth(70)
+  rightHeaderGroup:AddChild(killsHeader)
 
-        -- Determine the color for the difficulty
-        local colorCode = difficultyColors[difficulty] or "|cffFFFFFF"  -- Default to white if not found
-        local coloredDifficultyName = colorCode .. difficultyName .. "|r"
+  local scoreHeader = AceGUI:Create("Label")
+  scoreHeader:SetFont(fontPath, fontSize, "OUTLINE")
+  scoreHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
+  scoreHeader:SetText("Score")
+  scoreHeader:SetWidth(70)
+  rightHeaderGroup:AddChild(scoreHeader)
 
-        -- Difficulty Label
-        local difficultyLabel = AceGUI:Create("Label")
-        difficultyLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        difficultyLabel:SetText(coloredDifficultyName)
-        difficultyLabel:SetWidth(100)
-        rowGroup:AddChild(difficultyLabel)
+  local xpHeader = AceGUI:Create("Label")
+  xpHeader:SetFont(fontPath, fontSize, "OUTLINE")
+  xpHeader:SetColor(txtColumnColor.red, txtColumnColor.green, txtColumnColor.blue)
+  xpHeader:SetText("XP")
+  xpHeader:SetWidth(70)
+  rightHeaderGroup:AddChild(xpHeader)
 
-        -- Kills Label
-        local killsLabel = AceGUI:Create("Label")
-        killsLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        killsLabel:SetText(mob.kills)
-        killsLabel:SetWidth(70)
-        rowGroup:AddChild(killsLabel)
+  rightScrollFrame:AddChild(rightHeaderGroup)
 
-        -- Score Label
-        local scoreLabel = AceGUI:Create("Label")
-        scoreLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        scoreLabel:SetText(string.format("%.2f", mob.score))
-        scoreLabel:SetWidth(70)
-        rowGroup:AddChild(scoreLabel)
-
-        -- XP Label
-        local xpLabel = AceGUI:Create("Label")
-        xpLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        xpLabel:SetText(mob.xp)
-        xpLabel:SetWidth(70)
-        rowGroup:AddChild(xpLabel)
-
-        -- Add the row to the right scroll frame
-        rightScrollFrame:AddChild(rowGroup)
-    end
+  -- Right Table Data Rows
+  local mobsKilledMap = HCScore_Character.mobsKilledMap or {}
 
 
-    -- Add Parent Group to Container
-    container:AddChild(parentGroup)
+  -- Sort the mobsKilledMap by difficulty in descending order
+  table.sort(mobsKilledMap, function(a, b)
+      return a.difficulty > b.difficulty
+  end)
+
+  -- Create a lookup table for existing difficulties
+  local difficultyLookup = {}
+  for _, mob in ipairs(mobsKilledMap) do
+      difficultyLookup[mob.difficulty] = mob
+  end
+
+  -- Iterate over all difficulty levels from +6 to -6
+  for difficulty = 6, -6, -1 do
+      local rowGroup = AceGUI:Create("SimpleGroup")
+      rowGroup:SetLayout("Flow")
+      rowGroup:SetFullWidth(true)
+
+      -- Get mob data if it exists; otherwise, use default values
+      local mob = difficultyLookup[difficulty] or { kills = 0, score = 0, xp = 0 }
+      local difficultyName = difficultyNames[difficulty] or "Unknown"
+
+      -- Determine the color for the difficulty
+      local colorCode = difficultyColors[difficulty] or "|cffFFFFFF"  -- Default to white if not found
+      local coloredDifficultyName = colorCode .. difficultyName .. "|r"
+
+      -- Difficulty Label
+      local difficultyLabel = AceGUI:Create("Label")
+      difficultyLabel:SetFont(fontPath, fontSize, "OUTLINE")
+      difficultyLabel:SetText(coloredDifficultyName)
+      difficultyLabel:SetWidth(100)
+      rowGroup:AddChild(difficultyLabel)
+
+      -- Kills Label
+      local killsLabel = AceGUI:Create("Label")
+      killsLabel:SetFont(fontPath, fontSize, "OUTLINE")
+      killsLabel:SetText(mob.kills)
+      killsLabel:SetWidth(70)
+      rowGroup:AddChild(killsLabel)
+
+      -- Score Label
+      local scoreLabel = AceGUI:Create("Label")
+      scoreLabel:SetFont(fontPath, fontSize, "OUTLINE")
+      scoreLabel:SetText(string.format("%.2f", mob.score))
+      scoreLabel:SetWidth(70)
+      rowGroup:AddChild(scoreLabel)
+
+      -- XP Label
+      local xpLabel = AceGUI:Create("Label")
+      xpLabel:SetFont(fontPath, fontSize, "OUTLINE")
+      xpLabel:SetText(mob.xp)
+      xpLabel:SetWidth(70)
+      rowGroup:AddChild(xpLabel)
+
+      -- Add the row to the right scroll frame
+      rightScrollFrame:AddChild(rowGroup)
+  end
+
+
+  -- Add Parent Group to Container
+  container:AddChild(parentGroup)
 end
 
 -- Function to populate the content of each tab
