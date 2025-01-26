@@ -177,7 +177,15 @@ Version 1.1.10
 2. NEW Runes Season of Discovery Season 5 included as part of Milestones.
 
 Version 1.1.11
-1. Update to support new Classic Refresh Servers
+1. Update to support new Classic Refresh Servers (11505)
 
 Version 1.1.12
-1. New Content!  Mob Killed details and Mob Killed Data Map.  
+1. New Content!  Mob Killed details and Mob Killed Data Map. 
+
+Version 1.1.13
+1. Hotfix for version 1.1.12
+
+Version 1.1.14
+1. Fixed the Killed Mobs data map
+2. Polished the UI for the Killed Mobs
+3. Fixed some UI issues with the Milestone tab
