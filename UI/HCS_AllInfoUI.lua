@@ -138,7 +138,7 @@ tabGroup:SetTabs({
 })
 
 local currentPage = 1
-local itemsPerPage = 10  -- or whatever number works best for your dataset
+local itemsPerPage = 10  -- or whatever number works best 
 
 -- Function to populate the Milestones content
 local function PopulateMilestonesContent(container)
@@ -290,9 +290,7 @@ local function PopulateMilestonesContent(container)
 
     container:AddChild(navGroup)
 
-
 end
-
 
 local function PopulateAchievementsContent(container)
    
@@ -334,7 +332,6 @@ local function PopulateAchievementsContent(container)
     scrollframe:SetFullWidth(true)
     scrollframe:SetFullHeight(true)    
 
-    
     
     -- Function to process each achievement and add it to the scroll frame
     local function ProcessAchievement(achievement, scrollframe, lastHeader)
