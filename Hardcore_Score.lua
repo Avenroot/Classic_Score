@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.14" 
+HCS_Version = "1.1.15" 
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -686,7 +686,7 @@ function Hardcore_Score:init(event, name)
         end
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v1.1.14  Lets GO!")
+        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v1.1.15  Lets GO!")
 
         
         --[[

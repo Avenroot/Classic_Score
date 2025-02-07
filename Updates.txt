@@ -189,3 +189,6 @@ Version 1.1.14
 1. Fixed the Killed Mobs data map
 2. Polished the UI for the Killed Mobs
 3. Fixed some UI issues with the Milestone tab
+
+Version 1.1.15
+1. Maintainence update for 11506
