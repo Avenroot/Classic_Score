@@ -192,3 +192,9 @@ Version 1.1.14
 
 Version 1.1.15
 1. Maintainence update for 11506
+
+Version 1.1.15.1
+1. Maintainence update for 11507
+
+Version 1.1.15.2
+1. /hcs slash command now opens the Classic Score options panel directly using AceConfigDialog (Classic Era/SoD compatibility).

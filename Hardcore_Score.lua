@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.15" 
+HCS_Version = "1.1.15.2" 
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -590,7 +590,19 @@ function Hardcore_Score:init(event, name)
             resetConfirmationOpen = true
         end
 
-
+        -- Slash command to open the Classic Score options screen (Classic Era/SoD compatible)
+        SLASH_HCS1 = "/hcs"
+        SlashCmdList["HCS"] = function()
+            if LibStub and LibStub("AceConfigDialog-3.0") then
+                local ACD = LibStub("AceConfigDialog-3.0")
+                ACD:Open("Hardcore_Score")
+                print("|cff81b7e9Classic Score:|r Options panel opened.")
+            else
+                print("|cffff0000Classic Score: Could not load AceConfigDialog.|r")
+            end
+        end
+        
+        
         -- initalization Hardcore_Score_Settings
         if Hardcore_Score_Settings == nil then Hardcore_Score_Settings = {} end
 
@@ -686,7 +698,7 @@ function Hardcore_Score:init(event, name)
         end
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v1.1.15  Lets GO!")
+        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v.1.1.15.2  Lets GO!")
 
         
         --[[
