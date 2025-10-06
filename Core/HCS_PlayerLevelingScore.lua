@@ -45,6 +45,8 @@ function HCS_PlayerLevelingScore:SaveLevelScore()
         local newLevel = {
             level = playerLevel,
             points = HCScore_Character.scores.coreScore,
+            timestamp = date("%Y-%m-%d %H:%M:%S"),
+            zone = GetZoneText() or "",
         }
         table.insert(HCScore_Character.levelScores, newLevel)
     end
