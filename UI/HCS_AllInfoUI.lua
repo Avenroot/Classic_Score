@@ -1257,7 +1257,7 @@ local function PopulateMobsKilledInfoContent(container)
 
 	local clearBtn = AceGUI:Create("Button")
 	clearBtn:SetText("Clear")
-	clearBtn:SetWidth(60)
+	clearBtn:SetWidth(80)
 	clearBtn:SetCallback("OnClick", function()
 		if currentMobFilter ~= "" then
 			currentMobFilter = ""
