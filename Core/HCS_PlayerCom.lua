@@ -50,8 +50,16 @@ function HCS_PlayerCom:UpdatePublicChannelSubscription()
     local channelName = GetPublicChannelName()
     if enabled then
         JoinChannelByName(channelName)
+        local id = GetChannelName(channelName)
+        if id and id > 0 then
+            if not HCS_PublicAnnounced then
+                print("|cff81b7e9Classic Score:|r Public channel '"..channelName.."' active ("..id..").")
+                HCS_PublicAnnounced = true
+            end
+        end
     else
         LeaveChannelByName(channelName)
+        HCS_PublicAnnounced = false
     end
 end
 
@@ -214,6 +222,12 @@ f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
                             scoreReveived.guildName = scoreReveived.guildName or ''
                     
                             HCScore_Character.leaderboard[scoreReveived.charName] = scoreReveived
+                        end
+                        -- Mark sender as present on public channel
+                        if Hardcore_Score and Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
+                            if sender then
+                                HCS_PublicOnline[sender] = time()
+                            end
                         end
                         HCS_LeaderBoardUI:RefreshData() -- Refresh or load data to UI
                     end

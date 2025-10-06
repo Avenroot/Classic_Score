@@ -140,6 +140,35 @@ local options = {
                     end,
                     get = function(info) return Hardcore_Score.db.profile.publicChannelName end,
                 },
+                onlyLive = {
+                    order = 3.5,
+                    name = "Only live (public channel)",
+                    desc = "Show only players active in the public channel",
+                    type = "toggle",
+                    disabled = function() return not Hardcore_Score.db.profile.sharePublic end,
+                    set = function(info,val) Hardcore_Score.db.profile.onlyLive = val; HCS_LeaderBoardUI:RefreshData() end,
+                    get = function(info) return Hardcore_Score.db.profile.onlyLive end,
+                },
+                keepHistory = {
+                    order = 3.6,
+                    name = "Keep saved history",
+                    desc = "Persist leaderboard entries between sessions",
+                    type = "toggle",
+                    set = function(info,val) Hardcore_Score.db.profile.keepHistory = val end,
+                    get = function(info) return Hardcore_Score.db.profile.keepHistory end,
+                },
+                historyDays = {
+                    order = 3.7,
+                    name = "History retention (days)",
+                    desc = "Hide entries older than this many days (0 = never)",
+                    type = "range",
+                    min = 0,
+                    max = 90,
+                    step = 1,
+                    disabled = function() return not Hardcore_Score.db.profile.keepHistory end,
+                    set = function(info,val) Hardcore_Score.db.profile.historyDays = val; HCS_LeaderBoardUI:RefreshData() end,
+                    get = function(info) return Hardcore_Score.db.profile.historyDays end,
+                },
                 shareMilestones = {
                     order = 4,
                     name = "Milestones",
@@ -464,6 +493,9 @@ function Hardcore_Score:CreateDB()
             shareDetails = true,
             sharePublic = false,
             publicChannelName = "ClassicScore",
+            onlyLive = false,
+            keepHistory = true,
+            historyDays = 30,
             shareMilestones = true,
             shareAchievements = true,
             shareRankProgression = true,
@@ -739,6 +771,32 @@ function Hardcore_Score:init(event, name)
         if Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
             if HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
                 HCS_PlayerCom:UpdatePublicChannelSubscription()
+            end
+        end
+
+        -- Purge old leaderboard entries if retention is set, or clear if disabled
+        local profile = Hardcore_Score.db and Hardcore_Score.db.profile
+        if profile then
+            if not profile.keepHistory then
+                HCScore_Character.leaderboard = {}
+            else
+                local days = profile.historyDays or 0
+                if days > 0 then
+                    local cutoff = time() - (days * 24 * 60 * 60)
+                    for name, info in pairs(HCScore_Character.leaderboard or {}) do
+                        local last = info.lastOnline
+                        local ts = 0
+                        if type(last) == "string" then
+                            local y, m, d, H, M, S = last:match("(%d%d%d%d)%-(%d%d)%-(%d%d) (%d%d):(%d%d):(%d%d)")
+                            if y then ts = time({year=tonumber(y), month=tonumber(m), day=tonumber(d), hour=tonumber(H), min=tonumber(M), sec=tonumber(S)}) or 0 end
+                        elseif type(last) == "number" then
+                            ts = last
+                        end
+                        if ts > 0 and ts < cutoff then
+                            HCScore_Character.leaderboard[name] = nil
+                        end
+                    end
+                end
             end
         end
 

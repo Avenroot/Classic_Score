@@ -242,8 +242,55 @@ function HCS_LeaderBoardUI:LoadData()
         table.insert(leaderboardArray, info)
     end
     
-    -- Sort the array
+    -- Filter by history retention if configured
+    local profile = Hardcore_Score.db and Hardcore_Score.db.profile
+    local now = time()
+    if profile then
+        local days = profile.keepHistory and (profile.historyDays or 0) or 0
+        if days > 0 then
+            local cutoff = now - (days * 24 * 60 * 60)
+            local filtered = {}
+            for _, info in ipairs(leaderboardArray) do
+                local last = info.lastOnline
+                local ts = 0
+                if type(last) == "string" then
+                    local y, m, d, H, M, S = last:match("(%d%d%d%d)%-(%d%d)%-(%d%d) (%d%d):(%d%d):(%d%d)")
+                    if y then ts = time({year=tonumber(y), month=tonumber(m), day=tonumber(d), hour=tonumber(H), min=tonumber(M), sec=tonumber(S)}) or 0 end
+                elseif type(last) == "number" then
+                    ts = last
+                end
+                if days == 0 or ts == 0 or ts >= cutoff then
+                    table.insert(filtered, info)
+                end
+            end
+            leaderboardArray = filtered
+        elseif not profile.keepHistory then
+            leaderboardArray = {}
+        end
+    end
+
+    -- Only-live filter and online-first sorting
+    local function isOnlineNow(name)
+        if not HCS_PublicOnline or not profile or not profile.sharePublic then return false end
+        local seen = HCS_PublicOnline[name]
+        if not seen then return false end
+        return (now - seen) <= (HCS_PublicPresenceWindow or 180)
+    end
+
+    if profile and profile.sharePublic and profile.onlyLive then
+        local filtered = {}
+        for _, info in ipairs(leaderboardArray) do
+            if isOnlineNow(info.charName) then
+                table.insert(filtered, info)
+            end
+        end
+        leaderboardArray = filtered
+    end
+
     table.sort(leaderboardArray, function(a, b)
+        local aOnline = isOnlineNow(a.charName) and 1 or 0
+        local bOnline = isOnlineNow(b.charName) and 1 or 0
+        if aOnline ~= bOnline then return aOnline > bOnline end
         return tonumber(a.coreScore) > tonumber(b.coreScore)
     end)
 
