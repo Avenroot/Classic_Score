@@ -61,6 +61,33 @@ HCScore_Character = {
     leaderboard = {},
 }
 
+-- Simple URL copy popup used for clickable links in the options UI
+StaticPopupDialogs["HCS_URL_COPY"] = {
+    text = "Copy this link and paste it in your browser:",
+    button1 = OKAY,
+    hasEditBox = true,
+    editBoxWidth = 350,
+    whileDead = true,
+    hideOnEscape = true,
+    showAlert = true,
+    OnShow = function(self)
+        local editBox = _G[self:GetName().."EditBox"]
+        local url = self.data or ""
+        editBox:SetText(url)
+        editBox:SetFocus()
+        editBox:HighlightText()
+    end,
+    OnAccept = function(self)
+        -- nothing to do; user can copy from the edit box
+    end,
+    EditBoxOnEnterPressed = function(self)
+        self:HighlightText()
+    end,
+    EditBoxOnEscapePressed = function(self)
+        self:GetParent():Hide()
+    end,
+}
+
 -- Only execute if in WoW Classic, Season of Discovery
 if HCS_SODVersion then
     -- For handling engravings/runes
@@ -300,29 +327,17 @@ local options = {
             type = "header",
             order = 12
         },
-        twitterLink = {
-            name = " Follow us on Twitter at https://twitter.com//HardcoreScore",
-            desc = "https://twitter.com//HardcoreScore",
-            type = "description",
-            fontSize = "medium",
-            image = "Interface\\Addons\\Hardcore_Score\\Media\\TwitterLogo.blp",
-            order = 13
-        },
         discordLink = {
-            name = " Join our Discord server at https://discord.gg/j92hrVZU2Q",
+            name = " Join our Discord server",
             desc = "https://discord.gg/j92hrVZU2Q",
-            type = "description",
-            fontSize = "medium",
+            type = "execute",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\DiscordLogo.blp",
+            imageWidth = 48,
+            imageHeight = 48,
+            func = function()
+                StaticPopup_Show("HCS_URL_COPY", nil, nil, "https://discord.gg/j92hrVZU2Q")
+            end,
             order = 14
-        },
-        websiteLink = {
-            name = " Website  https://avenroothcs.wixsite.com/hardcore-score",
-            desc = "https://avenroothcs.wixsite.com/hardcore-score",
-            type = "description",
-            fontSize = "medium",
-            image = "Interface\\Addons\\Hardcore_Score\\Media\\www_icon.blp",
-            order = 15
         },
         Space3 = {
             name = "",
@@ -352,7 +367,7 @@ local options = {
             order = 19
         },
         addonInfo2 = {
-            name = "We have a lot of things planned for Classic Score. Look for annoucements in our Discord and on our website. Enjoy challenging yourself to get the best Classic Score possible and share your results with us. Thank you and have fun!!",
+            name = "We have a lot of things planned for Classic Score. Look for annoucements in our Discord. Enjoy challenging yourself to get the best Classic Score possible and share your results with us. Thank you and have fun!!",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -491,7 +506,7 @@ function Hardcore_Score:CreateDB()
             minimap = {},
             showDetails = false,
             shareDetails = true,
-            sharePublic = false,
+            sharePublic = true,
             publicChannelName = "ClassicScore",
             onlyLive = false,
             keepHistory = true,
@@ -772,6 +787,11 @@ function Hardcore_Score:init(event, name)
             if HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
                 HCS_PlayerCom:UpdatePublicChannelSubscription()
             end
+        end
+
+        -- Ensure we are listed on our own leaderboard
+        if HCS_PlayerCom and HCS_PlayerCom.UpsertSelfIntoLeaderboard then
+            HCS_PlayerCom:UpsertSelfIntoLeaderboard()
         end
 
         -- Purge old leaderboard entries if retention is set, or clear if disabled

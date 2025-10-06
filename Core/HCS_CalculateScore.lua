@@ -99,6 +99,9 @@ end
 local function RefreshUI()
     HCS_ScoreboardSummaryUI:UpdateUI()
     HCS_CharactersInfoUI:LoadData()
+    if HCS_PlayerCom and HCS_PlayerCom.UpsertSelfIntoLeaderboard then
+        HCS_PlayerCom:UpsertSelfIntoLeaderboard()
+    end
     HCS_LeaderBoardUI:RefreshData() --HCS_LeaderBoardUI:LoadData()
 
     if HCS_PlayerCom ~= nil then

@@ -296,10 +296,30 @@ function HCS_LeaderBoardUI:LoadData()
 
     local leaderboard = leaderboardArray
 
-    -- Display only the top 10 scores
-    for i = 1, math.min(10, #leaderboard) do
+    -- Display only the top 10 scores, always include the player if present
+    local maxRows = 10
+    local added = 0
+    for i = 1, #leaderboard do
+        if added >= maxRows then break end
         local data = leaderboard[i]
-        CreateRowForLeaderBoard(i, i, data.charName, string.format("%.2f", data.coreScore), data.charLevel, data.charClass)
+        CreateRowForLeaderBoard(added + 1, i, data.charName, string.format("%.2f", data.coreScore), data.charLevel, data.charClass)
+        added = added + 1
+    end
+    -- If the player wasn't in the displayed slice but exists, append them as the last row
+    local me = HCScore_Character and HCScore_Character.name
+    if me and HCScore_Character.leaderboard and HCScore_Character.leaderboard[me] then
+        local present = false
+        for r = 1, added do
+            local row = HCS_LeaderBoardUI.rows[r]
+            if row and row[2] and row[2]:GetText() and row[2]:GetText():find(me, 1, true) then
+                present = true
+                break
+            end
+        end
+        if not present and added < maxRows then
+            local data = HCScore_Character.leaderboard[me]
+            CreateRowForLeaderBoard(added + 1, "-", data.charName, string.format("%.2f", data.coreScore), data.charLevel, data.charClass)
+        end
     end
 end
 

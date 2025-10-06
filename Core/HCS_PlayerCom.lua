@@ -44,6 +44,27 @@ local function GetPublicChannelId()
     return id
 end
 
+-- Ensure the current player is present in the local leaderboard
+function HCS_PlayerCom:UpsertSelfIntoLeaderboard()
+    if not HCScore_Character or not HCScore_Character.name or HCScore_Character.name == '' then return end
+    if not HCScore_Character.leaderboard then HCScore_Character.leaderboard = {} end
+
+    local playerName = HCScore_Character.name
+    local entry = HCScore_Character.leaderboard[playerName] or {}
+    entry.charName = playerName
+    entry.coreScore = tonumber(HCScore_Character.scores and HCScore_Character.scores.coreScore) or 0
+    entry.hasDied = (HCScore_Character.deaths or 0) > 0
+    entry.lastOnline = date("%Y-%m-%d %H:%M:%S")
+    entry.charClass = HCScore_Character.classid or 0
+    entry.charLevel = tonumber(HCScore_Character.level) or UnitLevel("player") or 1
+    entry.guildName = HCScore_Character.guildName or ''
+    HCScore_Character.leaderboard[playerName] = entry
+
+    if HCS_LeaderBoardUI and HCS_LeaderBoardUI.RefreshData then
+        HCS_LeaderBoardUI:RefreshData()
+    end
+end
+
 function HCS_PlayerCom:UpdatePublicChannelSubscription()
     if not Hardcore_Score or not Hardcore_Score.db or not Hardcore_Score.db.profile then return end
     local enabled = Hardcore_Score.db.profile.sharePublic
@@ -61,6 +82,8 @@ function HCS_PlayerCom:UpdatePublicChannelSubscription()
         LeaveChannelByName(channelName)
         HCS_PublicAnnounced = false
     end
+    -- Always ensure our own character is present in the leaderboard
+    HCS_PlayerCom:UpsertSelfIntoLeaderboard()
 end
 
 local function padString(str, len)
