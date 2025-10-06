@@ -770,6 +770,88 @@ end
 
 local currentPageMobs = 1
 local itemsPerPageMobs = 25 -- Display 20 rows per page
+local currentMobFilter = ""
+local shouldRefocusMobSearch = false
+local mobSearchCursor = 0
+local mobsLeftScrollFrame = nil
+local mobsNavPrevButton = nil
+local mobsNavNextButton = nil
+
+-- Helpers for Mobs Killed tab
+local function GetFilteredSortedMobs()
+    local mobsKilled = HCScore_Character.mobsKilled or {}
+    local filteredMobs = {}
+    if currentMobFilter ~= nil and currentMobFilter ~= "" then
+        local needle = string.lower(currentMobFilter)
+        for _, mob in ipairs(mobsKilled) do
+            local nameLower = string.lower(tostring(mob.id or ""))
+            if string.find(nameLower, needle, 1, true) then
+                table.insert(filteredMobs, mob)
+            end
+        end
+    else
+        filteredMobs = mobsKilled
+    end
+
+    table.sort(filteredMobs, function(a, b)
+        return a.kills > b.kills
+    end)
+
+    return filteredMobs
+end
+
+local function RebuildMobsKilledRows()
+    if not mobsLeftScrollFrame then return end
+
+    mobsLeftScrollFrame:ReleaseChildren()
+
+    local filteredMobs = GetFilteredSortedMobs()
+
+    local startIndex = (currentPageMobs - 1) * itemsPerPageMobs + 1
+    local endIndex = math.min(startIndex + itemsPerPageMobs - 1, #filteredMobs)
+
+    for i = startIndex, endIndex do
+        local mob = filteredMobs[i]
+        if not mob then break end
+
+        local rowGroup = AceGUI:Create("SimpleGroup")
+        rowGroup:SetLayout("Flow")
+        rowGroup:SetFullWidth(true)
+
+        local mobNameLabel = AceGUI:Create("Label")
+        mobNameLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        mobNameLabel:SetText(mob.id)
+        mobNameLabel:SetWidth(175)
+        rowGroup:AddChild(mobNameLabel)
+
+        local killsLabel = AceGUI:Create("Label")
+        killsLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        killsLabel:SetText(mob.kills)
+        killsLabel:SetWidth(70)
+        rowGroup:AddChild(killsLabel)
+
+        local scoreLabel = AceGUI:Create("Label")
+        scoreLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        scoreLabel:SetText(string.format("%.2f", mob.score))
+        scoreLabel:SetWidth(70)
+        rowGroup:AddChild(scoreLabel)
+
+        local xpLabel = AceGUI:Create("Label")
+        xpLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        xpLabel:SetText(mob.xp)
+        xpLabel:SetWidth(70)
+        rowGroup:AddChild(xpLabel)
+
+        mobsLeftScrollFrame:AddChild(rowGroup)
+    end
+
+    if mobsNavPrevButton then
+        mobsNavPrevButton:SetDisabled(currentPageMobs == 1)
+    end
+    if mobsNavNextButton then
+        mobsNavNextButton:SetDisabled(currentPageMobs * itemsPerPageMobs >= #filteredMobs)
+    end
+end
 
 local function PopulateMobsKilledInfoContent(container)
     container:ReleaseChildren() -- Clear existing widgets
@@ -787,6 +869,45 @@ local function PopulateMobsKilledInfoContent(container)
     leftGroup:SetWidth(452)
     leftGroup:SetHeight(425)
     parentGroup:AddChild(leftGroup)
+
+	-- Search/filter row for left table
+	local leftSearchGroup = AceGUI:Create("SimpleGroup")
+	leftSearchGroup:SetFullWidth(true)
+	leftSearchGroup:SetLayout("Flow")
+
+	local searchLabel = AceGUI:Create("Label")
+	searchLabel:SetFont(fontPath, fontSize, "OUTLINE")
+	searchLabel:SetText("Search")
+	searchLabel:SetWidth(60)
+	leftSearchGroup:AddChild(searchLabel)
+
+	local searchBox = AceGUI:Create("EditBox")
+	searchBox:SetLabel("")
+	searchBox:SetText(currentMobFilter or "")
+	searchBox:SetWidth(250)
+	searchBox:DisableButton(true)
+	searchBox:SetCallback("OnTextChanged", function(widget, event, text)
+		currentMobFilter = text or ""
+		currentPageMobs = 1
+		RebuildMobsKilledRows()
+	end)
+	leftSearchGroup:AddChild(searchBox)
+
+	local clearBtn = AceGUI:Create("Button")
+	clearBtn:SetText("Clear")
+	clearBtn:SetWidth(60)
+	clearBtn:SetCallback("OnClick", function()
+		if currentMobFilter ~= "" then
+			currentMobFilter = ""
+			currentPageMobs = 1
+			searchBox:SetText("")
+			RebuildMobsKilledRows()
+		end
+	end)
+	leftSearchGroup:AddChild(clearBtn)
+
+	leftGroup:AddChild(leftSearchGroup)
+
 
     -- Left Table Header Group
     local leftHeaderGroup = AceGUI:Create("SimpleGroup")
@@ -823,88 +944,48 @@ local function PopulateMobsKilledInfoContent(container)
 
     leftGroup:AddChild(leftHeaderGroup)
 
-    -- Left Table Data with Pagination
-    local mobsKilled = HCScore_Character.mobsKilled or {}
-
-    -- Sort Mobs Killed table by kills in descending order
-    table.sort(mobsKilled, function(a, b)
-        return a.kills > b.kills
-    end)
-
     -- ScrollFrame for Left Table Rows
     local leftScrollFrame = AceGUI:Create("ScrollFrame")
     leftScrollFrame:SetLayout("List")
     leftScrollFrame:SetFullWidth(true)
     leftScrollFrame:SetHeight(270) -- Adjust height to leave space for buttons
     leftGroup:AddChild(leftScrollFrame)
+	mobsLeftScrollFrame = leftScrollFrame
 
-    -- Pagination Logic
-    local startIndex = (currentPageMobs - 1) * itemsPerPageMobs + 1
-    local endIndex = math.min(startIndex + itemsPerPageMobs - 1, #mobsKilled)
-
-    for i = startIndex, endIndex do
-        local mob = mobsKilled[i]
-        if not mob then break end
-
-        local rowGroup = AceGUI:Create("SimpleGroup")
-        rowGroup:SetLayout("Flow")
-        rowGroup:SetFullWidth(true)
-
-        local mobNameLabel = AceGUI:Create("Label")
-        mobNameLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        mobNameLabel:SetText(mob.id)
-        mobNameLabel:SetWidth(175)
-        rowGroup:AddChild(mobNameLabel)
-
-        local killsLabel = AceGUI:Create("Label")
-        killsLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        killsLabel:SetText(mob.kills)
-        killsLabel:SetWidth(70)
-        rowGroup:AddChild(killsLabel)
-
-        local scoreLabel = AceGUI:Create("Label")
-        scoreLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        scoreLabel:SetText(string.format("%.2f", mob.score))
-        scoreLabel:SetWidth(70)
-        rowGroup:AddChild(scoreLabel)
-
-        local xpLabel = AceGUI:Create("Label")
-        xpLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        xpLabel:SetText(mob.xp)
-        xpLabel:SetWidth(70)
-        rowGroup:AddChild(xpLabel)
-
-        leftScrollFrame:AddChild(rowGroup)
-    end
+	-- Initial build of rows
+	RebuildMobsKilledRows()
 
     -- Navigation Buttons (Below ScrollFrame)
     local navGroup = AceGUI:Create("SimpleGroup")
     navGroup:SetFullWidth(true)
     navGroup:SetLayout("Flow")
 
-    local prevButton = AceGUI:Create("Button")
+	local prevButton = AceGUI:Create("Button")
     prevButton:SetText("< Previous")
     prevButton:SetWidth(80)
     prevButton:SetCallback("OnClick", function()
         if currentPageMobs > 1 then
             currentPageMobs = currentPageMobs - 1
-            PopulateMobsKilledInfoContent(container)
+			RebuildMobsKilledRows()
         end
     end)
     prevButton:SetDisabled(currentPageMobs == 1)
     navGroup:AddChild(prevButton)
+	mobsNavPrevButton = prevButton
 
-    local nextButton = AceGUI:Create("Button")
+	local nextButton = AceGUI:Create("Button")
     nextButton:SetText("Next >")
     nextButton:SetWidth(80)
     nextButton:SetCallback("OnClick", function()
-        if currentPageMobs * itemsPerPageMobs < #mobsKilled then
+		local filteredMobs = GetFilteredSortedMobs()
+		if currentPageMobs * itemsPerPageMobs < #filteredMobs then
             currentPageMobs = currentPageMobs + 1
-            PopulateMobsKilledInfoContent(container)
+			RebuildMobsKilledRows()
         end
     end)
-    nextButton:SetDisabled(currentPageMobs * itemsPerPageMobs >= #mobsKilled)
+	nextButton:SetDisabled(false)
     navGroup:AddChild(nextButton)
+	mobsNavNextButton = nextButton
 
     leftGroup:AddChild(navGroup)
 
