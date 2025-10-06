@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.15.2" 
+HCS_Version = "1.2.0.0" 
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -107,8 +107,41 @@ local options = {
                     set = function(info,val) Hardcore_Score.db.profile.shareDetails = val end,
                     get = function(info) return Hardcore_Score.db.profile.shareDetails end,
                 },
-                shareMilestones = {
+                sharePublic = {
                     order = 2,
+                    name = "Public Network (channel)",
+                    desc = "Share with anyone in the Classic Score public channel",
+                    type = "toggle",
+                    set = function(info,val)
+                        Hardcore_Score.db.profile.sharePublic = val
+                        if HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
+                            HCS_PlayerCom:UpdatePublicChannelSubscription()
+                        end
+                    end,
+                    get = function(info) return Hardcore_Score.db.profile.sharePublic end,
+                },
+                publicChannelName = {
+                    order = 3,
+                    name = "Public Channel Name",
+                    desc = "Channel to use for the public Classic Score network",
+                    type = "input",
+                    disabled = function() return not Hardcore_Score.db.profile.sharePublic end,
+                    set = function(info, val)
+                        local trimmed = (val or ""):gsub("^%s+", ""):gsub("%s+$", "")
+                        if trimmed == "" then trimmed = "ClassicScore" end
+                        local old = Hardcore_Score.db.profile.publicChannelName or "ClassicScore"
+                        if old ~= trimmed then
+                            LeaveChannelByName(old)
+                        end
+                        Hardcore_Score.db.profile.publicChannelName = trimmed
+                        if Hardcore_Score.db.profile.sharePublic and HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
+                            HCS_PlayerCom:UpdatePublicChannelSubscription()
+                        end
+                    end,
+                    get = function(info) return Hardcore_Score.db.profile.publicChannelName end,
+                },
+                shareMilestones = {
+                    order = 4,
                     name = "Milestones",
                     desc = "Enables / disables sharing Milestones with others",
                     type = "toggle",
@@ -117,7 +150,7 @@ local options = {
                     get = function(info) return Hardcore_Score.db.profile.shareMilestones end,
                 },
                 shareAchievements = {
-                    order = 3,
+                    order = 5,
                     name = "Achievements",
                     desc = "Enables / disables sharing Achievements with others",
                     type = "toggle",
@@ -126,7 +159,7 @@ local options = {
                     get = function(info) return Hardcore_Score.db.profile.shareAchievements end,
                 },
                 shareRankProgression = {
-                    order = 4,
+                    order = 6,
                     name = "Rank Progression",
                     desc = "Enables / disables sharing Rank Progression with others",
                     type = "toggle",
@@ -135,7 +168,7 @@ local options = {
                     get = function(info) return Hardcore_Score.db.profile.shareRankProgression end,
                 },
                 shareLevelProgression = {
-                    order = 5,
+                    order = 7,
                     name = "Level Progression",
                     desc = "Enables / disables sharing Level Progression with others",
                     type = "toggle",
@@ -429,6 +462,8 @@ function Hardcore_Score:CreateDB()
             minimap = {},
             showDetails = false,
             shareDetails = true,
+            sharePublic = false,
+            publicChannelName = "ClassicScore",
             shareMilestones = true,
             shareAchievements = true,
             shareRankProgression = true,
@@ -698,7 +733,14 @@ function Hardcore_Score:init(event, name)
         end
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v.1.1.15.2  Lets GO!")
+        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v.1.2.0.0  Lets GO!")
+
+        -- Ensure public channel subscription if enabled
+        if Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
+            if HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
+                HCS_PlayerCom:UpdatePublicChannelSubscription()
+            end
+        end
 
         
         --[[

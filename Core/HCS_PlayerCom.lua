@@ -1,4 +1,5 @@
 local AceSerializer = LibStub("AceSerializer-3.0")
+local AceComm = LibStub("AceComm-3.0")
 
 HCS_PlayerCom = {}
 
@@ -27,6 +28,32 @@ end
 
 -- The prefix for your addon's messages. This should be a unique string that other addons are not likely to use.
 local PREFIX = HCS_PREFIX  
+
+-- Public channel helpers
+local function GetPublicChannelName()
+    local name = "ClassicScore"
+    if Hardcore_Score and Hardcore_Score.db and Hardcore_Score.db.profile then
+        name = Hardcore_Score.db.profile.publicChannelName or name
+    end
+    return name
+end
+
+local function GetPublicChannelId()
+    local channelName = GetPublicChannelName()
+    local id = GetChannelName(channelName)
+    return id
+end
+
+function HCS_PlayerCom:UpdatePublicChannelSubscription()
+    if not Hardcore_Score or not Hardcore_Score.db or not Hardcore_Score.db.profile then return end
+    local enabled = Hardcore_Score.db.profile.sharePublic
+    local channelName = GetPublicChannelName()
+    if enabled then
+        JoinChannelByName(channelName)
+    else
+        LeaveChannelByName(channelName)
+    end
+end
 
 local function padString(str, len)
     local length = string.len(str)
@@ -60,6 +87,14 @@ function HCS_PlayerCom:SendTopScores()
             C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, channel)
         elseif IsInGuild() then
             C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, "GUILD")
+        end
+
+        -- Also send to public channel if enabled
+        if Hardcore_Score and Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
+            local chanId = GetPublicChannelId()
+            if chanId and chanId > 0 then
+                AceComm:SendCommMessage(PREFIX, serializedScore, "CHANNEL", chanId, "NORMAL")
+            end
         end
     end
 end
@@ -103,6 +138,14 @@ function HCS_PlayerCom:SendScore()
         --print("Sending to Guild")        
         C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, "GUILD")
     end
+
+    -- Also send to public channel if enabled
+    if Hardcore_Score and Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
+        local chanId = GetPublicChannelId()
+        if chanId and chanId > 0 then
+            AceComm:SendCommMessage(PREFIX, serializedScore, "CHANNEL", chanId, "NORMAL")
+        end
+    end
 end
 
 local f = CreateFrame("Frame")
@@ -132,7 +175,10 @@ f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
             if event == "PLAYER_ENTERING_WORLD" or event == "GROUP_ROSTER_UPDATE" or event == "GROUP_JOINED" then
                 -- Player has entered the world or group roster has been updated, send our score
                 HCS_PlayerCom:SendTopScores()   --HCS_PlayerCom:SendScore()
-
+                -- Ensure public channel is joined if enabled
+                if Hardcore_Score.db.profile.sharePublic then
+                    HCS_PlayerCom:UpdatePublicChannelSubscription()
+                end
             elseif event == "CHAT_MSG_ADDON" and prefix == PREFIX then
 
                 local success, scoreReveived = AceSerializer:Deserialize(message)         
