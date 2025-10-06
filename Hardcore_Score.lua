@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.1.15.2" 
+HCS_Version = "1.2.0.0" 
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -61,6 +61,33 @@ HCScore_Character = {
     leaderboard = {},
 }
 
+-- Simple URL copy popup used for clickable links in the options UI
+StaticPopupDialogs["HCS_URL_COPY"] = {
+    text = "Copy this link and paste it in your browser:",
+    button1 = OKAY,
+    hasEditBox = true,
+    editBoxWidth = 350,
+    whileDead = true,
+    hideOnEscape = true,
+    showAlert = true,
+    OnShow = function(self)
+        local editBox = _G[self:GetName().."EditBox"]
+        local url = self.data or ""
+        editBox:SetText(url)
+        editBox:SetFocus()
+        editBox:HighlightText()
+    end,
+    OnAccept = function(self)
+        -- nothing to do; user can copy from the edit box
+    end,
+    EditBoxOnEnterPressed = function(self)
+        self:HighlightText()
+    end,
+    EditBoxOnEscapePressed = function(self)
+        self:GetParent():Hide()
+    end,
+}
+
 -- Only execute if in WoW Classic, Season of Discovery
 if HCS_SODVersion then
     -- For handling engravings/runes
@@ -107,8 +134,70 @@ local options = {
                     set = function(info,val) Hardcore_Score.db.profile.shareDetails = val end,
                     get = function(info) return Hardcore_Score.db.profile.shareDetails end,
                 },
-                shareMilestones = {
+                sharePublic = {
                     order = 2,
+                    name = "Public Network (channel)",
+                    desc = "Share with anyone in the Classic Score public channel",
+                    type = "toggle",
+                    set = function(info,val)
+                        Hardcore_Score.db.profile.sharePublic = val
+                        if HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
+                            HCS_PlayerCom:UpdatePublicChannelSubscription()
+                        end
+                    end,
+                    get = function(info) return Hardcore_Score.db.profile.sharePublic end,
+                },
+                publicChannelName = {
+                    order = 3,
+                    name = "Public Channel Name",
+                    desc = "Channel to use for the public Classic Score network",
+                    type = "input",
+                    disabled = function() return not Hardcore_Score.db.profile.sharePublic end,
+                    set = function(info, val)
+                        local trimmed = (val or ""):gsub("^%s+", ""):gsub("%s+$", "")
+                        if trimmed == "" then trimmed = "ClassicScore" end
+                        local old = Hardcore_Score.db.profile.publicChannelName or "ClassicScore"
+                        if old ~= trimmed then
+                            LeaveChannelByName(old)
+                        end
+                        Hardcore_Score.db.profile.publicChannelName = trimmed
+                        if Hardcore_Score.db.profile.sharePublic and HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
+                            HCS_PlayerCom:UpdatePublicChannelSubscription()
+                        end
+                    end,
+                    get = function(info) return Hardcore_Score.db.profile.publicChannelName end,
+                },
+                onlyLive = {
+                    order = 3.5,
+                    name = "Only live (public channel)",
+                    desc = "Show only players active in the public channel",
+                    type = "toggle",
+                    disabled = function() return not Hardcore_Score.db.profile.sharePublic end,
+                    set = function(info,val) Hardcore_Score.db.profile.onlyLive = val; HCS_LeaderBoardUI:RefreshData() end,
+                    get = function(info) return Hardcore_Score.db.profile.onlyLive end,
+                },
+                keepHistory = {
+                    order = 3.6,
+                    name = "Keep saved history",
+                    desc = "Persist leaderboard entries between sessions",
+                    type = "toggle",
+                    set = function(info,val) Hardcore_Score.db.profile.keepHistory = val end,
+                    get = function(info) return Hardcore_Score.db.profile.keepHistory end,
+                },
+                historyDays = {
+                    order = 3.7,
+                    name = "History retention (days)",
+                    desc = "Hide entries older than this many days (0 = never)",
+                    type = "range",
+                    min = 0,
+                    max = 90,
+                    step = 1,
+                    disabled = function() return not Hardcore_Score.db.profile.keepHistory end,
+                    set = function(info,val) Hardcore_Score.db.profile.historyDays = val; HCS_LeaderBoardUI:RefreshData() end,
+                    get = function(info) return Hardcore_Score.db.profile.historyDays end,
+                },
+                shareMilestones = {
+                    order = 4,
                     name = "Milestones",
                     desc = "Enables / disables sharing Milestones with others",
                     type = "toggle",
@@ -117,7 +206,7 @@ local options = {
                     get = function(info) return Hardcore_Score.db.profile.shareMilestones end,
                 },
                 shareAchievements = {
-                    order = 3,
+                    order = 5,
                     name = "Achievements",
                     desc = "Enables / disables sharing Achievements with others",
                     type = "toggle",
@@ -126,7 +215,7 @@ local options = {
                     get = function(info) return Hardcore_Score.db.profile.shareAchievements end,
                 },
                 shareRankProgression = {
-                    order = 4,
+                    order = 6,
                     name = "Rank Progression",
                     desc = "Enables / disables sharing Rank Progression with others",
                     type = "toggle",
@@ -135,7 +224,7 @@ local options = {
                     get = function(info) return Hardcore_Score.db.profile.shareRankProgression end,
                 },
                 shareLevelProgression = {
-                    order = 5,
+                    order = 7,
                     name = "Level Progression",
                     desc = "Enables / disables sharing Level Progression with others",
                     type = "toggle",
@@ -238,29 +327,17 @@ local options = {
             type = "header",
             order = 12
         },
-        twitterLink = {
-            name = " Follow us on Twitter at https://twitter.com//HardcoreScore",
-            desc = "https://twitter.com//HardcoreScore",
-            type = "description",
-            fontSize = "medium",
-            image = "Interface\\Addons\\Hardcore_Score\\Media\\TwitterLogo.blp",
-            order = 13
-        },
         discordLink = {
-            name = " Join our Discord server at https://discord.gg/j92hrVZU2Q",
+            name = " Join our Discord server",
             desc = "https://discord.gg/j92hrVZU2Q",
-            type = "description",
-            fontSize = "medium",
+            type = "execute",
             image = "Interface\\Addons\\Hardcore_Score\\Media\\DiscordLogo.blp",
+            imageWidth = 48,
+            imageHeight = 48,
+            func = function()
+                StaticPopup_Show("HCS_URL_COPY", nil, nil, "https://discord.gg/j92hrVZU2Q")
+            end,
             order = 14
-        },
-        websiteLink = {
-            name = " Website  https://avenroothcs.wixsite.com/hardcore-score",
-            desc = "https://avenroothcs.wixsite.com/hardcore-score",
-            type = "description",
-            fontSize = "medium",
-            image = "Interface\\Addons\\Hardcore_Score\\Media\\www_icon.blp",
-            order = 15
         },
         Space3 = {
             name = "",
@@ -290,7 +367,7 @@ local options = {
             order = 19
         },
         addonInfo2 = {
-            name = "We have a lot of things planned for Classic Score. Look for annoucements in our Discord and on our website. Enjoy challenging yourself to get the best Classic Score possible and share your results with us. Thank you and have fun!!",
+            name = "We have a lot of things planned for Classic Score. Look for annoucements in our Discord. Enjoy challenging yourself to get the best Classic Score possible and share your results with us. Thank you and have fun!!",
             desc = "Addon Information",
             type = "description",
             fontSize = "medium",
@@ -429,6 +506,11 @@ function Hardcore_Score:CreateDB()
             minimap = {},
             showDetails = false,
             shareDetails = true,
+            sharePublic = true,
+            publicChannelName = "ClassicScore",
+            onlyLive = false,
+            keepHistory = true,
+            historyDays = 30,
             shareMilestones = true,
             shareAchievements = true,
             shareRankProgression = true,
@@ -698,7 +780,45 @@ function Hardcore_Score:init(event, name)
         end
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v.1.1.15.2  Lets GO!")
+        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v.1.2.0.0  Lets GO!")
+
+        -- Ensure public channel subscription if enabled
+        if Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
+            if HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
+                HCS_PlayerCom:UpdatePublicChannelSubscription()
+            end
+        end
+
+        -- Ensure we are listed on our own leaderboard
+        if HCS_PlayerCom and HCS_PlayerCom.UpsertSelfIntoLeaderboard then
+            HCS_PlayerCom:UpsertSelfIntoLeaderboard()
+        end
+
+        -- Purge old leaderboard entries if retention is set, or clear if disabled
+        local profile = Hardcore_Score.db and Hardcore_Score.db.profile
+        if profile then
+            if not profile.keepHistory then
+                HCScore_Character.leaderboard = {}
+            else
+                local days = profile.historyDays or 0
+                if days > 0 then
+                    local cutoff = time() - (days * 24 * 60 * 60)
+                    for name, info in pairs(HCScore_Character.leaderboard or {}) do
+                        local last = info.lastOnline
+                        local ts = 0
+                        if type(last) == "string" then
+                            local y, m, d, H, M, S = last:match("(%d%d%d%d)%-(%d%d)%-(%d%d) (%d%d):(%d%d):(%d%d)")
+                            if y then ts = time({year=tonumber(y), month=tonumber(m), day=tonumber(d), hour=tonumber(H), min=tonumber(M), sec=tonumber(S)}) or 0 end
+                        elseif type(last) == "number" then
+                            ts = last
+                        end
+                        if ts > 0 and ts < cutoff then
+                            HCScore_Character.leaderboard[name] = nil
+                        end
+                    end
+                end
+            end
+        end
 
         
         --[[

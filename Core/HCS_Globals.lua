@@ -173,3 +173,8 @@ HCS_MilestonesColors = {
 -- Filter states should be controlled by your UI checkboxes
 HCS_Leaderboard_Filters = {} 
 HCS_Leaderboard_Filtered = {}
+
+-- Public network presence tracking
+HCS_PublicOnline = {}
+HCS_PublicPresenceWindow = 180 -- seconds to consider someone "online" after last ping
+HCS_PublicAnnounced = false

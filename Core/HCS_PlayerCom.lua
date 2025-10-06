@@ -1,4 +1,5 @@
 local AceSerializer = LibStub("AceSerializer-3.0")
+local AceComm = LibStub("AceComm-3.0")
 
 HCS_PlayerCom = {}
 
@@ -27,6 +28,63 @@ end
 
 -- The prefix for your addon's messages. This should be a unique string that other addons are not likely to use.
 local PREFIX = HCS_PREFIX  
+
+-- Public channel helpers
+local function GetPublicChannelName()
+    local name = "ClassicScore"
+    if Hardcore_Score and Hardcore_Score.db and Hardcore_Score.db.profile then
+        name = Hardcore_Score.db.profile.publicChannelName or name
+    end
+    return name
+end
+
+local function GetPublicChannelId()
+    local channelName = GetPublicChannelName()
+    local id = GetChannelName(channelName)
+    return id
+end
+
+-- Ensure the current player is present in the local leaderboard
+function HCS_PlayerCom:UpsertSelfIntoLeaderboard()
+    if not HCScore_Character or not HCScore_Character.name or HCScore_Character.name == '' then return end
+    if not HCScore_Character.leaderboard then HCScore_Character.leaderboard = {} end
+
+    local playerName = HCScore_Character.name
+    local entry = HCScore_Character.leaderboard[playerName] or {}
+    entry.charName = playerName
+    entry.coreScore = tonumber(HCScore_Character.scores and HCScore_Character.scores.coreScore) or 0
+    entry.hasDied = (HCScore_Character.deaths or 0) > 0
+    entry.lastOnline = date("%Y-%m-%d %H:%M:%S")
+    entry.charClass = HCScore_Character.classid or 0
+    entry.charLevel = tonumber(HCScore_Character.level) or UnitLevel("player") or 1
+    entry.guildName = HCScore_Character.guildName or ''
+    HCScore_Character.leaderboard[playerName] = entry
+
+    if HCS_LeaderBoardUI and HCS_LeaderBoardUI.RefreshData then
+        HCS_LeaderBoardUI:RefreshData()
+    end
+end
+
+function HCS_PlayerCom:UpdatePublicChannelSubscription()
+    if not Hardcore_Score or not Hardcore_Score.db or not Hardcore_Score.db.profile then return end
+    local enabled = Hardcore_Score.db.profile.sharePublic
+    local channelName = GetPublicChannelName()
+    if enabled then
+        JoinChannelByName(channelName)
+        local id = GetChannelName(channelName)
+        if id and id > 0 then
+            if not HCS_PublicAnnounced then
+                print("|cff81b7e9Classic Score:|r Public channel '"..channelName.."' active ("..id..").")
+                HCS_PublicAnnounced = true
+            end
+        end
+    else
+        LeaveChannelByName(channelName)
+        HCS_PublicAnnounced = false
+    end
+    -- Always ensure our own character is present in the leaderboard
+    HCS_PlayerCom:UpsertSelfIntoLeaderboard()
+end
 
 local function padString(str, len)
     local length = string.len(str)
@@ -60,6 +118,14 @@ function HCS_PlayerCom:SendTopScores()
             C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, channel)
         elseif IsInGuild() then
             C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, "GUILD")
+        end
+
+        -- Also send to public channel if enabled
+        if Hardcore_Score and Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
+            local chanId = GetPublicChannelId()
+            if chanId and chanId > 0 then
+                AceComm:SendCommMessage(PREFIX, serializedScore, "CHANNEL", chanId, "NORMAL")
+            end
         end
     end
 end
@@ -103,6 +169,14 @@ function HCS_PlayerCom:SendScore()
         --print("Sending to Guild")        
         C_ChatInfo.SendAddonMessage(PREFIX, serializedScore, "GUILD")
     end
+
+    -- Also send to public channel if enabled
+    if Hardcore_Score and Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
+        local chanId = GetPublicChannelId()
+        if chanId and chanId > 0 then
+            AceComm:SendCommMessage(PREFIX, serializedScore, "CHANNEL", chanId, "NORMAL")
+        end
+    end
 end
 
 local f = CreateFrame("Frame")
@@ -132,7 +206,10 @@ f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
             if event == "PLAYER_ENTERING_WORLD" or event == "GROUP_ROSTER_UPDATE" or event == "GROUP_JOINED" then
                 -- Player has entered the world or group roster has been updated, send our score
                 HCS_PlayerCom:SendTopScores()   --HCS_PlayerCom:SendScore()
-
+                -- Ensure public channel is joined if enabled
+                if Hardcore_Score.db.profile.sharePublic then
+                    HCS_PlayerCom:UpdatePublicChannelSubscription()
+                end
             elseif event == "CHAT_MSG_ADDON" and prefix == PREFIX then
 
                 local success, scoreReveived = AceSerializer:Deserialize(message)         
@@ -168,6 +245,12 @@ f:SetScript("OnEvent", function(self, event, prefix, message, channel, sender)
                             scoreReveived.guildName = scoreReveived.guildName or ''
                     
                             HCScore_Character.leaderboard[scoreReveived.charName] = scoreReveived
+                        end
+                        -- Mark sender as present on public channel
+                        if Hardcore_Score and Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
+                            if sender then
+                                HCS_PublicOnline[sender] = time()
+                            end
                         end
                         HCS_LeaderBoardUI:RefreshData() -- Refresh or load data to UI
                     end
