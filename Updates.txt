@@ -201,3 +201,6 @@ Version 1.1.15.2
 
 Version 1.2.0.0
 1. Major update. Added public Leaderboard, Character Info, Searchable mobkills and much more.
+
+Version 1.2.0.1
+1. Fix for public Leaderboard.  Now working correctly.  Don't need to be part of a group/guild/raid to share score.

@@ -7,7 +7,7 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.2.0.0" 
+HCS_Version = "1.2.0.1" 
 HCS_Release = 20
 HCScore_Character = {
     name = "",
@@ -780,7 +780,7 @@ function Hardcore_Score:init(event, name)
         end
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v.1.2.0.0  Lets GO!")
+        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v.1.2.0.1  Lets GO!")
 
         -- Ensure public channel subscription if enabled
         if Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
