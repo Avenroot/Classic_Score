@@ -178,3 +178,4 @@ HCS_Leaderboard_Filtered = {}
 HCS_PublicOnline = {}
 HCS_PublicPresenceWindow = 180 -- seconds to consider someone "online" after last ping
 HCS_PublicAnnounced = false
+HCS_DebugCom = false -- enable verbose comm diagnostics
