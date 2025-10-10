@@ -1047,9 +1047,10 @@ local function PopulateLeaderboardContent(container)
     
     -- Load Data
     
-    -- Convert the leaderboard to an array
+    -- Convert the leaderboard to an array (guard if missing)
     local leaderboardArray = {}
-    for charName, info in pairs(HCScore_Character.leaderboard) do
+    local leaderboardTable = (HCScore_Character and HCScore_Character.leaderboard) or {}
+    for charName, info in pairs(leaderboardTable) do
         info.charName = charName -- Add charName to each entry for later
         table.insert(leaderboardArray, info)
     end
@@ -1095,22 +1096,38 @@ local function PopulateLeaderboardContent(container)
         levelLabel:SetWidth(50)  
         rowGroup:AddChild(levelLabel)
 
-        --TODO: This needs to be put into a seperate function
-        local function between(x, a, b)
-            return x >= a and x <= b
+        -- look up player's Rank in HCS_RanksDB with safe fallbacks
+        local scoreNum = tonumber(info.coreScore) or 0
+        local playerRank = nil
+        if HCS_RanksDB then
+            -- Try direct range match first
+            for _, Rank in pairs(HCS_RanksDB) do
+                if scoreNum >= Rank.MinPoints and scoreNum <= Rank.MaxPoints then
+                    playerRank = Rank
+                    break
+                end
+            end
+            -- If no direct match (score outside defined ranges), clamp to nearest bound
+            if not playerRank then
+                local highest, lowest
+                for _, Rank in pairs(HCS_RanksDB) do
+                    if not highest or Rank.MaxPoints > highest.MaxPoints then highest = Rank end
+                    if not lowest or Rank.MinPoints < lowest.MinPoints then lowest = Rank end
+                end
+                if highest and scoreNum > highest.MaxPoints then
+                    playerRank = highest
+                elseif lowest and scoreNum < lowest.MinPoints then
+                    playerRank = lowest
+                end
+            end
         end
 
-        -- look up players Rank in HCS_RanksDB
-        local playerRank
-        for _, Rank in pairs(HCS_RanksDB) do
-            if between(tonumber(info.coreScore), Rank.MinPoints, Rank.MaxPoints) then
-                playerRank = Rank
-                break
-            end
-        end        
-
         local rankLabel = AceGUI:Create("Label")
-        rankLabel:SetText(HCS_Utils:GetRankLevelText(playerRank.Rank, playerRank.Level))
+        if playerRank then
+            rankLabel:SetText(HCS_Utils:GetRankLevelText(playerRank.Rank, playerRank.Level))
+        else
+            rankLabel:SetText("-")
+        end
         rankLabel:SetFont(fontPath, fontSize, "OUTLINE")
         rankLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
         rankLabel:SetWidth(120)  

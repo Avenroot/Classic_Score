@@ -8,6 +8,10 @@ local function GetMobKillHCScore(mobLevel)
     local playerLevel = UnitLevel("player")
     local xpGain = 0
     local score = 0    
+    -- Treat skull-level (??) mobs where UnitLevel returned -1 as +3 difficulty
+    if mobLevel == -1 then
+        mobLevel = playerLevel + 3
+    end
     local mobDifficulty = mobLevel - playerLevel
 
     -- xp amounts for SOD classic level 25
