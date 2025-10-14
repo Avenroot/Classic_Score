@@ -190,6 +190,34 @@ local function PopulateInfoContent(container)
 	coreScoreLabel:SetWidth(220)
 	summaryGroup:AddChild(coreScoreLabel)
 
+    -- Lowest Health (Session) and (All-Time)
+    local sessionLowLabel = AceGUI:Create("Label")
+    sessionLowLabel:SetFont(fontPath, fontSize, "OUTLINE")
+    local sessionLowText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestPctText and HCS_HealthTracking:GetSessionLowestPctText()) or "N/A"
+    sessionLowLabel:SetText("Lowest HP (session): " .. sessionLowText)
+    sessionLowLabel:SetWidth(220)
+    summaryGroup:AddChild(sessionLowLabel)
+    AttachTooltip(sessionLowLabel, {
+        "Your lowest recorded health percentage during this login session.",
+        "This value resets when you reload UI or relog.",
+    })
+
+    local lifeLowLabel = AceGUI:Create("Label")
+    lifeLowLabel:SetFont(fontPath, fontSize, "OUTLINE")
+    local lifeLowText
+    if HCScore_Character and HCScore_Character.lowestHealthPct ~= nil then
+        lifeLowText = string.format("%.2f%%", HCScore_Character.lowestHealthPct)
+    else
+        lifeLowText = "N/A"
+    end
+    lifeLowLabel:SetText("Lowest HP (all-time): " .. lifeLowText)
+    lifeLowLabel:SetWidth(220)
+    summaryGroup:AddChild(lifeLowLabel)
+    AttachTooltip(lifeLowLabel, {
+        "Your lowest recorded health percentage for this character across sessions.",
+        "Stored in your character's saved data.",
+    })
+
 	-- Current level progress summary (delta since last recorded level)
 	local lastRecordedPoints = 0
 	if char.levelScores and #char.levelScores > 0 then

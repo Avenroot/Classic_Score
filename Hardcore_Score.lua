@@ -59,6 +59,8 @@ HCScore_Character = {
     dangerousMobsKilled = {},
     achievements = {},
     leaderboard = {},
+    -- All-time lowest health percent (0-100) with 2 decimals. Initialized to 100.
+    lowestHealthPct = 100.0,
 }
 
 -- Simple URL copy popup used for clickable links in the options UI
