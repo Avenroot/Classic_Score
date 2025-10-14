@@ -1,7 +1,8 @@
 HCS_HealthTracking = {}
 
--- In-memory (per-session) lowest HP percent
+-- In-memory (per-session) lowest HP percent and zone
 HCS_HealthTracking.sessionLowestPct = 100.0
+HCS_HealthTracking.sessionLowestZone = nil
 
 local function Round2(num)
     -- Round to 2 decimals safely
@@ -14,9 +15,29 @@ function HCS_HealthTracking:EnsureInit()
     if HCScore_Character.lowestHealthPct == nil then
         HCScore_Character.lowestHealthPct = 100.0
     end
+    if HCScore_Character.lowestHealthZone == nil then
+        HCScore_Character.lowestHealthZone = nil
+    end
     if self.sessionLowestPct == nil then
         self.sessionLowestPct = 100.0
     end
+    if self.sessionLowestZone == nil then
+        self.sessionLowestZone = nil
+    end
+end
+
+-- Build a readable zone string (Zone - Subzone when available)
+function HCS_HealthTracking:GetCurrentZoneText()
+    local zone = (GetRealZoneText and GetRealZoneText()) or (GetZoneText and GetZoneText()) or ""
+    local sub = (GetSubZoneText and GetSubZoneText()) or ""
+    local full = zone or ""
+    if sub ~= nil and sub ~= "" and sub ~= zone then
+        full = string.format("%s - %s", full, sub)
+    end
+    if full == nil or full == "" then
+        full = "Unknown"
+    end
+    return full
 end
 
 function HCS_HealthTracking:UpdateFromUnit(unit)
@@ -33,11 +54,13 @@ function HCS_HealthTracking:UpdateFromUnit(unit)
     -- Update session record
     if pct < (self.sessionLowestPct or 100.0) then
         self.sessionLowestPct = pct
+        self.sessionLowestZone = self:GetCurrentZoneText()
     end
 
     -- Update lifetime record in saved vars
     if HCScore_Character and pct < (HCScore_Character.lowestHealthPct or 100.0) then
         HCScore_Character.lowestHealthPct = pct
+        HCScore_Character.lowestHealthZone = self:GetCurrentZoneText()
     end
 end
 
@@ -46,9 +69,11 @@ function HCS_HealthTracking:OnPlayerDead()
     self:EnsureInit()
     if self.sessionLowestPct == nil or 0 < self.sessionLowestPct then
         self.sessionLowestPct = 0.0
+        self.sessionLowestZone = self:GetCurrentZoneText()
     end
     if HCScore_Character and (HCScore_Character.lowestHealthPct == nil or 0 < HCScore_Character.lowestHealthPct) then
         HCScore_Character.lowestHealthPct = 0.0
+        HCScore_Character.lowestHealthZone = self:GetCurrentZoneText()
     end
 end
 
@@ -69,6 +94,28 @@ end
 
 function HCS_HealthTracking:GetLifetimeLowestPctText()
     return string.format("%.2f%%", self:GetLifetimeLowestPct())
+end
+
+-- Zone getters
+function HCS_HealthTracking:GetSessionLowestZone()
+    self:EnsureInit()
+    return self.sessionLowestZone or "Unknown"
+end
+
+function HCS_HealthTracking:GetLifetimeLowestZone()
+    self:EnsureInit()
+    if HCScore_Character and HCScore_Character.lowestHealthZone and HCScore_Character.lowestHealthZone ~= "" then
+        return HCScore_Character.lowestHealthZone
+    end
+    return "Unknown"
+end
+
+function HCS_HealthTracking:GetSessionLowestZoneText()
+    return tostring(self:GetSessionLowestZone())
+end
+
+function HCS_HealthTracking:GetLifetimeLowestZoneText()
+    return tostring(self:GetLifetimeLowestZone())
 end
 
 -- Event frame to watch health changes

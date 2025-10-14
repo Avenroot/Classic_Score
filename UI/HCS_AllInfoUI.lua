@@ -171,13 +171,7 @@ local function PopulateInfoContent(container)
 	summaryGroup:SetLayout("Flow")
 	summaryGroup:SetFullWidth(true)
 
-	local nameLabel = AceGUI:Create("Label")
-	nameLabel:SetFont(fontPath, fontSize, "OUTLINE")
-	nameLabel:SetText("Name: " .. (char.name or UnitName("player") or ""))
-	nameLabel:SetWidth(220)
-	summaryGroup:AddChild(nameLabel)
-
-	local levelLabel = AceGUI:Create("Label")
+    local levelLabel = AceGUI:Create("Label")
 	levelLabel:SetFont(fontPath, fontSize, "OUTLINE")
 	levelLabel:SetText("Level: " .. (char.level or UnitLevel("player") or 1))
 	levelLabel:SetWidth(100)
@@ -194,7 +188,10 @@ local function PopulateInfoContent(container)
     local sessionLowLabel = AceGUI:Create("Label")
     sessionLowLabel:SetFont(fontPath, fontSize, "OUTLINE")
     local sessionLowText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestPctText and HCS_HealthTracking:GetSessionLowestPctText()) or "N/A"
-    sessionLowLabel:SetText("Lowest HP (session): " .. sessionLowText)
+        local sessionZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestZoneText and HCS_HealthTracking:GetSessionLowestZoneText()) or ""
+        if sessionZoneText == "Unknown" then sessionZoneText = "" end
+        local sessionZoneSuffix = (sessionZoneText ~= nil and sessionZoneText ~= "") and ("  |  Zone: " .. sessionZoneText) or ""
+        sessionLowLabel:SetText("Lowest HP (session): " .. sessionLowText .. sessionZoneSuffix)
     sessionLowLabel:SetWidth(220)
     summaryGroup:AddChild(sessionLowLabel)
     AttachTooltip(sessionLowLabel, {
@@ -211,6 +208,10 @@ local function PopulateInfoContent(container)
         lifeLowText = "N/A"
     end
     lifeLowLabel:SetText("Lowest HP (all-time): " .. lifeLowText)
+        local lifeZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetLifetimeLowestZoneText and HCS_HealthTracking:GetLifetimeLowestZoneText()) or ""
+        if lifeZoneText == "Unknown" then lifeZoneText = "" end
+        local lifeZoneSuffix = (lifeZoneText ~= nil and lifeZoneText ~= "") and ("  |  Zone: " .. lifeZoneText) or ""
+        lifeLowLabel:SetText("Lowest HP (all-time): " .. lifeLowText .. lifeZoneSuffix)
     lifeLowLabel:SetWidth(220)
     summaryGroup:AddChild(lifeLowLabel)
     AttachTooltip(lifeLowLabel, {
