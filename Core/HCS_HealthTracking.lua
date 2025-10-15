@@ -3,6 +3,8 @@ HCS_HealthTracking = {}
 -- In-memory (per-session) lowest HP percent and zone
 HCS_HealthTracking.sessionLowestPct = 100.0
 HCS_HealthTracking.sessionLowestZone = nil
+-- In-memory (per-session) deaths counter
+HCS_HealthTracking.sessionDeaths = 0
 
 local function Round2(num)
     -- Round to 2 decimals safely
@@ -23,6 +25,9 @@ function HCS_HealthTracking:EnsureInit()
     end
     if self.sessionLowestZone == nil then
         self.sessionLowestZone = nil
+    end
+    if self.sessionDeaths == nil then
+        self.sessionDeaths = 0
     end
 end
 
@@ -67,6 +72,8 @@ end
 function HCS_HealthTracking:OnPlayerDead()
     -- Death implies 0%
     self:EnsureInit()
+    -- Track per-session deaths (lifetime deaths are handled in HCS_DeathEvent)
+    self.sessionDeaths = (self.sessionDeaths or 0) + 1
     if self.sessionLowestPct == nil or 0 < self.sessionLowestPct then
         self.sessionLowestPct = 0.0
         self.sessionLowestZone = self:GetCurrentZoneText()
@@ -116,6 +123,16 @@ end
 
 function HCS_HealthTracking:GetLifetimeLowestZoneText()
     return tostring(self:GetLifetimeLowestZone())
+end
+
+-- Deaths (session)
+function HCS_HealthTracking:GetSessionDeaths()
+    self:EnsureInit()
+    return self.sessionDeaths or 0
+end
+
+function HCS_HealthTracking:GetSessionDeathsText()
+    return tostring(self:GetSessionDeaths())
 end
 
 -- Event frame to watch health changes

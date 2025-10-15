@@ -210,64 +210,91 @@ local function PopulateInfoContent(container)
 	progressLabel:SetWidth(180)
 	summaryGroup:AddChild(progressLabel)
 
-    -- Lowest Health (Session) and (All-Time) — metrics only on the first row
-    local sessionLowLabel = AceGUI:Create("Label")
-    sessionLowLabel:SetFont(fontPath, fontSize, "OUTLINE")
-    local sessionLowText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestPctText and HCS_HealthTracking:GetSessionLowestPctText()) or "N/A"
-    sessionLowLabel:SetText("Lowest HP (session): " .. sessionLowText)
-    sessionLowLabel:SetWidth(180)
-    summaryGroup:AddChild(sessionLowLabel)
-    AttachTooltip(sessionLowLabel, {
-        "Your lowest recorded health percentage during this login session.",
-        "This value resets when you reload UI or relog.",
-    })
+    -- Show Deaths vs Lowest Health
+    local lifetimeDeaths = (HCScore_Character and HCScore_Character.deaths) or 0
+    local sessionDeaths = (HCS_HealthTracking and HCS_HealthTracking.GetSessionDeaths and HCS_HealthTracking:GetSessionDeaths()) or 0
 
-    local lifeLowLabel = AceGUI:Create("Label")
-    lifeLowLabel:SetFont(fontPath, fontSize, "OUTLINE")
-    local lifeLowText
-    if HCScore_Character and HCScore_Character.lowestHealthPct ~= nil then
-        lifeLowText = string.format("%.2f%%", HCScore_Character.lowestHealthPct)
+    if (lifetimeDeaths > 0) or (sessionDeaths > 0) then
+        -- Display deaths (session and all-time)
+        local sessionDeathsLabel = AceGUI:Create("Label")
+        sessionDeathsLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        sessionDeathsLabel:SetText("Deaths (session): " .. tostring(sessionDeaths))
+        sessionDeathsLabel:SetWidth(180)
+        summaryGroup:AddChild(sessionDeathsLabel)
+        AttachTooltip(sessionDeathsLabel, {
+            "Number of times you've died during this login session.",
+            "Resets when you relog or reload UI.",
+        })
+
+        local lifetimeDeathsLabel = AceGUI:Create("Label")
+        lifetimeDeathsLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        lifetimeDeathsLabel:SetText("Deaths (all-time): " .. tostring(lifetimeDeaths))
+        lifetimeDeathsLabel:SetWidth(180)
+        summaryGroup:AddChild(lifetimeDeathsLabel)
+        AttachTooltip(lifetimeDeathsLabel, {
+            "Total number of deaths recorded for this character across sessions.",
+        })
+        -- Do not show lowest-health locations when focusing on deaths
     else
-        lifeLowText = "N/A"
+        -- Fallback: Lowest Health (Session) and (All-Time)
+        local sessionLowLabel = AceGUI:Create("Label")
+        sessionLowLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        local sessionLowText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestPctText and HCS_HealthTracking:GetSessionLowestPctText()) or "N/A"
+        sessionLowLabel:SetText("Lowest HP (session): " .. sessionLowText)
+        sessionLowLabel:SetWidth(180)
+        summaryGroup:AddChild(sessionLowLabel)
+        AttachTooltip(sessionLowLabel, {
+            "Your lowest recorded health percentage during this login session.",
+            "This value resets when you reload UI or relog.",
+        })
+
+        local lifeLowLabel = AceGUI:Create("Label")
+        lifeLowLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        local lifeLowText
+        if HCScore_Character and HCScore_Character.lowestHealthPct ~= nil then
+            lifeLowText = string.format("%.2f%%", HCScore_Character.lowestHealthPct)
+        else
+            lifeLowText = "N/A"
+        end
+        lifeLowLabel:SetText("Lowest HP (all-time): " .. lifeLowText)
+        lifeLowLabel:SetWidth(180)
+        summaryGroup:AddChild(lifeLowLabel)
+        AttachTooltip(lifeLowLabel, {
+            "Your lowest recorded health percentage for this character across sessions.",
+            "Stored in your character's saved data.",
+        })
+
+        -- Second row: show locations for lowest health values
+        local zoneRow = AceGUI:Create("SimpleGroup")
+        zoneRow:SetLayout("Flow")
+        zoneRow:SetFullWidth(true)
+
+        local sessionZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestZoneText and HCS_HealthTracking:GetSessionLowestZoneText()) or ""
+        if sessionZoneText == "Unknown" then sessionZoneText = "" end
+        local sessionZoneLabel = AceGUI:Create("Label")
+        sessionZoneLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        local sessionZoneDisplay = (sessionZoneText ~= nil and sessionZoneText ~= "") and ("Session Zone: " .. sessionZoneText) or "Session Zone: -"
+        sessionZoneLabel:SetText(sessionZoneDisplay)
+        sessionZoneLabel:SetWidth(400)
+        zoneRow:AddChild(sessionZoneLabel)
+        AttachTooltip(sessionZoneLabel, {
+            "Where you were when the session-lowest HP was recorded.",
+        })
+
+        local lifeZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetLifetimeLowestZoneText and HCS_HealthTracking:GetLifetimeLowestZoneText()) or ""
+        if lifeZoneText == "Unknown" then lifeZoneText = "" end
+        local lifeZoneLabel = AceGUI:Create("Label")
+        lifeZoneLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        local lifeZoneDisplay = (lifeZoneText ~= nil and lifeZoneText ~= "") and ("All-time Zone: " .. lifeZoneText) or "All-time Zone: -"
+        lifeZoneLabel:SetText(lifeZoneDisplay)
+        lifeZoneLabel:SetWidth(400)
+        zoneRow:AddChild(lifeZoneLabel)
+        AttachTooltip(lifeZoneLabel, {
+            "Where you were when the lifetime-lowest HP was recorded.",
+        })
+
+        summaryGroup:AddChild(zoneRow)
     end
-    lifeLowLabel:SetText("Lowest HP (all-time): " .. lifeLowText)
-    lifeLowLabel:SetWidth(180)
-    summaryGroup:AddChild(lifeLowLabel)
-    AttachTooltip(lifeLowLabel, {
-        "Your lowest recorded health percentage for this character across sessions.",
-        "Stored in your character's saved data.",
-    })
-
-    -- Second row: show locations for lowest health values
-    local zoneRow = AceGUI:Create("SimpleGroup")
-    zoneRow:SetLayout("Flow")
-    zoneRow:SetFullWidth(true)
-
-    local sessionZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestZoneText and HCS_HealthTracking:GetSessionLowestZoneText()) or ""
-    if sessionZoneText == "Unknown" then sessionZoneText = "" end
-    local sessionZoneLabel = AceGUI:Create("Label")
-    sessionZoneLabel:SetFont(fontPath, fontSize, "OUTLINE")
-    local sessionZoneDisplay = (sessionZoneText ~= nil and sessionZoneText ~= "") and ("Session Zone: " .. sessionZoneText) or "Session Zone: -"
-    sessionZoneLabel:SetText(sessionZoneDisplay)
-    sessionZoneLabel:SetWidth(400)
-    zoneRow:AddChild(sessionZoneLabel)
-    AttachTooltip(sessionZoneLabel, {
-        "Where you were when the session-lowest HP was recorded.",
-    })
-
-    local lifeZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetLifetimeLowestZoneText and HCS_HealthTracking:GetLifetimeLowestZoneText()) or ""
-    if lifeZoneText == "Unknown" then lifeZoneText = "" end
-    local lifeZoneLabel = AceGUI:Create("Label")
-    lifeZoneLabel:SetFont(fontPath, fontSize, "OUTLINE")
-    local lifeZoneDisplay = (lifeZoneText ~= nil and lifeZoneText ~= "") and ("All-time Zone: " .. lifeZoneText) or "All-time Zone: -"
-    lifeZoneLabel:SetText(lifeZoneDisplay)
-    lifeZoneLabel:SetWidth(400)
-    zoneRow:AddChild(lifeZoneLabel)
-    AttachTooltip(lifeZoneLabel, {
-        "Where you were when the lifetime-lowest HP was recorded.",
-    })
-
-    summaryGroup:AddChild(zoneRow)
 
 	container:AddChild(summaryGroup)
 
