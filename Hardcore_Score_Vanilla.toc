@@ -43,6 +43,7 @@ Events/HCS_EngravingEvent.lua
 Data/HCS_MilestonesDB.lua
 Data/HCS_AchievementsDB.lua
 Data/HCS_RanksDB.lua
+Data/HCS_Updates.lua
 
 UI/HCS_MainInfoFrameUI.lua
 UI/HCS_ScoreboardSummaryUI.lua

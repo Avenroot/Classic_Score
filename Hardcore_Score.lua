@@ -808,7 +808,13 @@ function Hardcore_Score:init(event, name)
         local seen = Hardcore_Score.db.profile.lastSeenUpdateVersion
         local current = tostring(HCS_Version)
         if seen ~= current then
-            local highlights = HCS_UpdateHighlights or "Thanks for updating Classic Score!"
+            local highlights = nil
+            if HCS_Updates and HCS_Updates.GetTopLinesFor then
+                highlights = HCS_Updates:GetTopLinesFor(current, 3)
+            end
+            if not highlights or highlights == "" then
+                highlights = HCS_UpdateHighlights or "Thanks for updating Classic Score!"
+            end
             if HCS_UpdateMessageUI and HCS_UpdateMessageUI.Show then
                 HCS_UpdateMessageUI.Show(current, highlights)
             end

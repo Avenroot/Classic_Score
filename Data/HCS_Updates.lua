@@ -1,0 +1,275 @@
+-- Auto-populated update highlights helper
+-- Note: WoW's sandbox cannot read plain text files at runtime.
+-- This module embeds the contents of Updates.txt so we can parse it in-game.
+-- Keep this in sync with Updates.txt when you release.
+
+HCS_Updates = {}
+
+HCS_Updates.Raw = [[
+Version 0.9.1
+    Initial release
+
+Version 0.9.2
+    Fixed Points log scrolling. Newest entry shows correctly.
+    Updated some text in the Points log.
+    Now see 3 digits of detail instead of 2 in the Points log.
+    Fixed Sharing Detals option.
+
+Version 0.9.3
+    Professions - No longer do you lose points when untraining a profession and re-learning it.
+
+Version 0.9.4
+    Deleting a character and creating a new one with the same name will reset points correctly.
+
+Version 0.9.5
+    Added website link to options (https://avenroothcs.wixsite.com/hardcore-score)
+    Added a new messaging system.  Milestones and gaining levels now have a reward message show on the screen. Messaging can be turned on/off in options.
+    Added Portraits.  You can get a new portrait to show on your Hardscore summary circle.  There are 7 different portraits you can unlock.
+        Portraits are Grey, Green, Blue, Purple, Orange, Diamond Ruby, Gold Crown.  Have fun unlocking them all.
+
+Version 0.9.6
+    1. Updated Messaging/Notification system significantly.
+        You should see more details in the points log.  Especially when leveling.
+    2. Points gained for completing quests have been increased significantly.
+        When logging into your character, questing points will be re-calculated to reflect these changes.  You should see a bigger score.  :slight_smile:
+    3. Points gained for killing mobs has been increased for mobs Yellow and above.
+        Unfortunately, points can't be re-calculated.  However, changes only significantly affect orange and red mobs. Slight change to Yellow and no change to Green.
+    4.  Set the Message Frame Priority to "MEDIUM" to show on top of other HCS frames.
+    5.  Addon now tracks how many points gained for each level and keeps a history of it.
+    
+Version 0.9.7
+    1. Hide the close button on the Points Log.  Can open and close it from the options or clicking on them minimap icon.
+    2. *Fixed a reported issue where Notification Message is one level behind when leveling.
+    3. Added option to now show timestamps in the points log.
+    4. Added option to change the points log font.
+    5. Minor bug fixes and code updates.        
+* This is still an issue in some cases.  We continue to investigate. It is just a display issue with Milestones. Points are calculated with the correct level.
+
+Version 0.9.8
+    1. Changes made to support the new 1.14.4 version.
+    2. Mobs Killed () now shows total kills and not just Mob Types killed.
+    3. New Character Summary where you can see all your HCS character's scores in one location. Must log in to each char to see.
+    4. Minimap button now displays options. The mini-map tip shows the score when the main score UI is off.
+    5. In the options you can now turn off the main score UI.
+    6. Lots and lots of code changes and fixes.
+
+Version 0.9.9
+    1. Added 65 new Milestones to complete.
+    2. Milestones are re-calcuated when logging in.
+    2. Removed old lua files and other cleanup.
+
+Version 0.9.10
+    1. Overhauled the visuals for Milestones.
+    2. Added support for WOTLK. Adjusted calculations to support level 80.
+    3. Fixed leveling display when leveling via turning in a quest (I hope). 
+
+Version 0.9.11
+    1. Set Milestone message popup to display 5 seconds instead of 10 seconds.
+    2. Fixed a bug when hovering over another player's portrait to see their scores.
+    3. Milestone Kill Type was showing the wrong image.  Fixed.
+
+Version 1.0.0
+    1. Dangerous enemy kills (>=3) are tracked.
+    2. Overhauled the Milestones visuals. No longer stack when showing but are put in a queue to display every 5 seconds if more than one.
+    3. Updated most of the Milestone's requirements. Added more.
+    4. Added Milestones for Dangerous Enemies killed.
+    5. New Portraits
+    6. New fitting boarders
+    7. Updated logo
+    8. NEW Category! Achievements!
+    9. Lots of code fixes and updates.
+    10. Ready for Official Hardcore Servers.
+
+Version 1.0.1
+    1. Version update to reflect new Classic update to version 1.14.4.  No other changes. 
+
+Version 1.0.2
+    1. New Rank/Leveling system added.
+    2. New UI.  It is so beautiful!  
+    3. Lots and lots of coding updates, bug fixes.
+
+Version 1.0.3
+    1. Fixed bug for getting Rogue class icon.
+    2. Fixed a bug not displaying the rank image when the new rank message was shown.
+    3. Removed PNG files from the \Media\Portraits\Default directory to lower download size.  
+
+Version 1.0.4
+    1. Fixed the image for Silver Rank 4 image.
+    2. Changed Scoring text color.  No longer Red.
+    3. Reaching levels 10, 20, 30, 40, 50, 60, and Ranks Bronze - Legendary now shows in guild chat.
+
+Version 1.0.5
+    1. Fixed for showing Rank message in Guild chat when logging in.
+    2. Added comma's to the Main Score Points total.
+
+Version 1.0.6
+    1. Character color names, class icons, and profession points now show correctly for non-English languages.
+    2. Updated Portrait and border images.. again.
+    3. Updated Guild chat message to be more personal.
+    4. Fixed the location of the Achievement message so it is NOT at the top of the screen.
+
+Version 1.0.7
+    1. Fixed professions not being calculated for non English languages.  Added support to fix this for German, French, Spanish and Portuguese.
+
+Version 1.0.8
+    1. Fixed where Achievements appear on the screen when using UI Scaling.  It should no longer cover your character.
+    2. Milestone / Leveling messages have a darker background and a new font to keep consistant with the rest of the addon.
+    3. HCS Details will now show above the main score if the details will be off the screen.
+    4. There is a sound when a Milestone is reached.
+    5. All Hardcore Score frames now have the same border (Points Log and Character Summary)
+
+Version 1.0.9
+    1. Achievement points were not included in the Hardcore Score.  Fixed.
+    2. New file sound when reaching a Milestone.
+    3. Removed Lockpicking from Professions calculations.
+    4. Overhauled the calculations for killing mobs.  It should be about 25% more.
+    5. Added tracking XP earned for killing mob types.  Important for re-calculation current score based on changed modifiers
+    6. Added a mobs-killed data map.  This is a new data category (not a score category).  It stores a table with 4 fields.  Difficulty, Kills, XP,  Score.  This will allow us to see how many kills, XP earned and score earned for each difficulty level.
+    7. Added Release property.  When a character is created it is marked which release it was created in.  
+
+Version 1.0.10
+    1. You can now lock/unlock the Main Score frame by right-clicking on the frame.
+    2. Add an option to disable all the HCS sounds.
+
+Version 1.1.0
+    1. New Scoreboard/Leaderboard (for guilds only)
+    2. New Character Journey information
+    3. New view of Milestones
+    4. New view of Achievements
+    5. Level 60 bug fixes
+    6. Overall just tons and tons of updates to the code.
+    7. Ability to reset leaderboard by using /hcsresetl
+    8. Updated for version 1.1.5 of Classic Era 
+    9. Updated for version 3.4.3 of Classic Era (WOTLK)
+
+Version 1.1.1
+    Changes to XP amounts when you reach level 25 in Season of Discovery to get points.  Before none was given.  
+        1. Level 25 Classic - Season of Discovery now gives XP for mob kills when level 25.  XP is a random number between 10-75.
+        2. Level 25 Classic - Season of Discovery now gives XP for quests when level 25.  XP is a random number between 50-150.
+        3. Level 25 Classic - Season of Discovery now gives XP for discoveries when level 25.  XP is a random number between 10-50.
+
+Version 1.1.2
+    1. Fixed detecting AU servers for Season of Discovery
+    2. Reduced the number of leaderboard updates sent when logging in from 100 to 10.
+
+Version 1.1.3
+    1. Update to Detecting SOD relams
+    2. Misc code updates
+
+Version 1.1.4
+    1. Runes! Runes! Runes!  Season of Discovery now tracks your runes and gives you a score for them.
+    2. Runes Achievements and Milestones added.  Collect them all!
+    3. Updated professions to include Inscriptions and Jewcrafting scores in WotLK. Opps, missed that one.
+    4. Fixed a bug when turning in a quest, sometimes the quest level was not detected and not giving a score. 
+
+Version 1.1.5
+    1. Quests reward points for each level instead of a range.  Thus, the earlier you turn in your quest the more points you get. Overall, this leads to more Quest points.
+
+Version 1.1.6
+1. Added support for Season of Discovery phase 2 (1.15.1).
+2. NEW Runes along with new Achievements.
+3. NEW name of addon. Addon is now Classic Score and is no longer named Hardcore Score. This is because the add-on supports all versions of Classic.    
+
+Version 1.1.7
+1. Updated for Season of Discovery phase 2 (1.15.2) NEW Runes!
+
+Version 1.1.8
+1. Overall update for Cataclysm to allow players to level from 80-85.
+2. Added support for Cataclysm crafting to level 525
+
+Version 1.1.9
+1. Update version to support latest version of Classic (11503)
+
+Version 1.1.10
+1. Update version to support latest version of Classic (11504) Season of Discovery phase 5.
+2. NEW Runes Season of Discovery Season 5 included as part of Milestones.
+
+Version 1.1.11
+1. Update to support new Classic Refresh Servers (11505)
+
+Version 1.1.12
+1. New Content!  Mob Killed details and Mob Killed Data Map. 
+
+Version 1.1.13
+1. Hotfix for version 1.1.12
+
+Version 1.1.14
+1. Fixed the Killed Mobs data map
+2. Polished the UI for the Killed Mobs
+3. Fixed some UI issues with the Milestone tab
+
+Version 1.1.15
+1. Maintainence update for 11506
+
+Version 1.1.15.1
+1. Maintainence update for 11507
+
+Version 1.1.15.2
+1. /hcs slash command now opens the Classic Score options panel directly using AceConfigDialog (Classic Era/SoD compatibility).
+
+Version 1.2.0.0
+1. Major update. Added public Leaderboard, Character Info, Searchable mobkills and much more.
+
+Version 1.2.0.1
+1. Fix for public Leaderboard.  Now working correctly.  Don't need to be part of a group/guild/raid to share score.
+
+Version 1.2.0.2
+1. Fixed bug when accessing Leaderboard Tab. If can't read character rank it will crash the Leaderboard list.
+]]
+
+local function trim(s)
+    return (s or ""):gsub("^%s+", ""):gsub("%s+$", "")
+end
+
+local function escapePattern(s)
+    return (s or ""):gsub("(%W)", "%%%1")
+end
+
+-- Returns concatenated top N update lines for the given version, or nil if not found
+function HCS_Updates:GetTopLinesFor(version, count)
+    version = tostring(version or "")
+    count = count or 3
+
+    local raw = self.Raw or ""
+    if raw == "" then return nil end
+
+    local lines = {}
+    for line in raw:gmatch("([^\r\n]+)\r?\n?") do
+        table.insert(lines, line)
+    end
+
+    local verHeader = "^Version%s+" .. escapePattern(version) .. "%s*$"
+    local found = false
+    local collected = {}
+
+    for i = 1, #lines do
+        local line = lines[i]
+        if not found then
+            if line:match(verHeader) then
+                found = true
+            end
+        else
+            -- Stop at next version header
+            if line:match("^Version%s+") then
+                break
+            end
+            -- Collect non-empty lines
+            local t = trim(line)
+            if t ~= "" then
+                -- Clean leading bullet numbering like "1. "
+                t = t:gsub("^%d+%.%s*", "")
+                -- Skip the asterisk note lines (like the warning in 0.9.7)
+                if not t:match("^%*") then
+                    table.insert(collected, t)
+                end
+                if #collected >= count then
+                    break
+                end
+            end
+        end
+    end
+
+    if #collected == 0 then return nil end
+
+    return table.concat(collected, "\n")
+end
