@@ -67,11 +67,12 @@ local function CreateFrameOnce()
     -- Backdrop
     frame:SetBackdrop({
         bgFile = "Interface/Tooltips/UI-Tooltip-Background",
-        edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+        edgeFile = "Interface\\Addons\\Hardcore_Score\\Media\\Portraits\\Default\\Border_POW.blp",
         tile = true, tileSize = 16, edgeSize = 16,
         insets = { left = 4, right = 4, top = 4, bottom = 4 }
     })
     frame:SetBackdropColor(0, 0, 0, 0.9)
+    frame:SetBackdropBorderColor(1, 1, 1)
 
     -- Title
     frame.Title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")

@@ -5,6 +5,9 @@ HCS_HealthTracking.sessionLowestPct = 100.0
 HCS_HealthTracking.sessionLowestZone = nil
 -- In-memory (per-session) deaths counter
 HCS_HealthTracking.sessionDeaths = 0
+-- Guard: suppress health updates briefly after loading to avoid pre-load low values
+HCS_HealthTracking._awaitingInitial = false
+HCS_HealthTracking._suppressUntil = 0
 
 local function Round2(num)
     -- Round to 2 decimals safely
@@ -48,6 +51,12 @@ end
 function HCS_HealthTracking:UpdateFromUnit(unit)
     if unit ~= "player" then return end
     self:EnsureInit()
+
+    -- If we're still in the initial loading window, ignore updates
+    if self._awaitingInitial then return end
+    if type(GetTime) == "function" and (self._suppressUntil or 0) > 0 and GetTime() < self._suppressUntil then
+        return
+    end
 
     local cur = UnitHealth("player") or 0
     local max = UnitHealthMax("player") or 0
@@ -146,8 +155,23 @@ f:RegisterEvent("PLAYER_DEAD")
 f:SetScript("OnEvent", function(self, event, arg1)
     if event == "PLAYER_LOGIN" or event == "PLAYER_ENTERING_WORLD" then
         HCS_HealthTracking:EnsureInit()
-        -- Initialize baselines from current health
-        HCS_HealthTracking:UpdateFromUnit("player")
+        -- Briefly delay health tracking after load screens to avoid transient low values
+        HCS_HealthTracking._awaitingInitial = true
+        if type(GetTime) == "function" then
+            HCS_HealthTracking._suppressUntil = GetTime() + 2.0
+        else
+            HCS_HealthTracking._suppressUntil = 0
+        end
+        if C_Timer and C_Timer.After then
+            C_Timer.After(2.0, function()
+                HCS_HealthTracking._awaitingInitial = false
+                HCS_HealthTracking:UpdateFromUnit("player")
+            end)
+        else
+            -- Fallback: immediately clear flag if timers not available
+            HCS_HealthTracking._awaitingInitial = false
+            HCS_HealthTracking:UpdateFromUnit("player")
+        end
     elseif event == "UNIT_HEALTH" or event == "UNIT_MAXHEALTH" then
         HCS_HealthTracking:UpdateFromUnit(arg1)
     elseif event == "PLAYER_DEAD" then
