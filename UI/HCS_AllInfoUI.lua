@@ -174,25 +174,41 @@ local function PopulateInfoContent(container)
     local levelLabel = AceGUI:Create("Label")
 	levelLabel:SetFont(fontPath, fontSize, "OUTLINE")
 	levelLabel:SetText("Level: " .. (char.level or UnitLevel("player") or 1))
-	levelLabel:SetWidth(100)
+	-- Slightly narrower to help keep everything on one row
+	levelLabel:SetWidth(80)
 	summaryGroup:AddChild(levelLabel)
 
 	local coreScoreLabel = AceGUI:Create("Label")
 	coreScoreLabel:SetFont(fontPath, fontSize, "OUTLINE")
 	local coreScoreText = tostring(string.format("%.2f", charScores.coreScore or 0))
 	coreScoreLabel:SetText("Core Score: " .. HCS_Utils:AddThousandsCommas(coreScoreText))
-	coreScoreLabel:SetWidth(220)
+	coreScoreLabel:SetWidth(130)
 	summaryGroup:AddChild(coreScoreLabel)
 
-    -- Lowest Health (Session) and (All-Time)
+    -- Progress this level (moved earlier and tightened widths so metrics fit one row)
+	local lastRecordedPoints = 0
+	if char.levelScores and #char.levelScores > 0 then
+		for _, entry in ipairs(char.levelScores) do
+			if entry.points and (entry.level or 0) >= 0 then
+				lastRecordedPoints = entry.points -- entries are appended; keep last
+			end
+		end
+	end
+	local currentDelta = (charScores.coreScore or 0) - (lastRecordedPoints or 0)
+	local progressLabel = AceGUI:Create("Label")
+	progressLabel:SetFont(fontPath, fontSize, "OUTLINE")
+	progressLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
+	local deltaText = tostring(string.format("%.2f", currentDelta))
+	progressLabel:SetText("Progress this level: " .. HCS_Utils:AddThousandsCommas(deltaText))
+	progressLabel:SetWidth(180)
+	summaryGroup:AddChild(progressLabel)
+
+    -- Lowest Health (Session) and (All-Time) — metrics only on the first row
     local sessionLowLabel = AceGUI:Create("Label")
     sessionLowLabel:SetFont(fontPath, fontSize, "OUTLINE")
     local sessionLowText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestPctText and HCS_HealthTracking:GetSessionLowestPctText()) or "N/A"
-        local sessionZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestZoneText and HCS_HealthTracking:GetSessionLowestZoneText()) or ""
-        if sessionZoneText == "Unknown" then sessionZoneText = "" end
-        local sessionZoneSuffix = (sessionZoneText ~= nil and sessionZoneText ~= "") and ("  |  Zone: " .. sessionZoneText) or ""
-        sessionLowLabel:SetText("Lowest HP (session): " .. sessionLowText .. sessionZoneSuffix)
-    sessionLowLabel:SetWidth(220)
+    sessionLowLabel:SetText("Lowest HP (session): " .. sessionLowText)
+    sessionLowLabel:SetWidth(180)
     summaryGroup:AddChild(sessionLowLabel)
     AttachTooltip(sessionLowLabel, {
         "Your lowest recorded health percentage during this login session.",
@@ -208,34 +224,43 @@ local function PopulateInfoContent(container)
         lifeLowText = "N/A"
     end
     lifeLowLabel:SetText("Lowest HP (all-time): " .. lifeLowText)
-        local lifeZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetLifetimeLowestZoneText and HCS_HealthTracking:GetLifetimeLowestZoneText()) or ""
-        if lifeZoneText == "Unknown" then lifeZoneText = "" end
-        local lifeZoneSuffix = (lifeZoneText ~= nil and lifeZoneText ~= "") and ("  |  Zone: " .. lifeZoneText) or ""
-        lifeLowLabel:SetText("Lowest HP (all-time): " .. lifeLowText .. lifeZoneSuffix)
-    lifeLowLabel:SetWidth(220)
+    lifeLowLabel:SetWidth(180)
     summaryGroup:AddChild(lifeLowLabel)
     AttachTooltip(lifeLowLabel, {
         "Your lowest recorded health percentage for this character across sessions.",
         "Stored in your character's saved data.",
     })
 
-	-- Current level progress summary (delta since last recorded level)
-	local lastRecordedPoints = 0
-	if char.levelScores and #char.levelScores > 0 then
-		for _, entry in ipairs(char.levelScores) do
-			if entry.points and (entry.level or 0) >= 0 then
-				lastRecordedPoints = entry.points -- entries are appended; keep last
-			end
-		end
-	end
-	local currentDelta = (charScores.coreScore or 0) - (lastRecordedPoints or 0)
-	local progressLabel = AceGUI:Create("Label")
-	progressLabel:SetFont(fontPath, fontSize, "OUTLINE")
-	progressLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
-	local deltaText = tostring(string.format("%.2f", currentDelta))
-	progressLabel:SetText("Progress this level: " .. HCS_Utils:AddThousandsCommas(deltaText))
-	progressLabel:SetWidth(220)
-	summaryGroup:AddChild(progressLabel)
+    -- Second row: show locations for lowest health values
+    local zoneRow = AceGUI:Create("SimpleGroup")
+    zoneRow:SetLayout("Flow")
+    zoneRow:SetFullWidth(true)
+
+    local sessionZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetSessionLowestZoneText and HCS_HealthTracking:GetSessionLowestZoneText()) or ""
+    if sessionZoneText == "Unknown" then sessionZoneText = "" end
+    local sessionZoneLabel = AceGUI:Create("Label")
+    sessionZoneLabel:SetFont(fontPath, fontSize, "OUTLINE")
+    local sessionZoneDisplay = (sessionZoneText ~= nil and sessionZoneText ~= "") and ("Session Zone: " .. sessionZoneText) or "Session Zone: -"
+    sessionZoneLabel:SetText(sessionZoneDisplay)
+    sessionZoneLabel:SetWidth(400)
+    zoneRow:AddChild(sessionZoneLabel)
+    AttachTooltip(sessionZoneLabel, {
+        "Where you were when the session-lowest HP was recorded.",
+    })
+
+    local lifeZoneText = (HCS_HealthTracking and HCS_HealthTracking.GetLifetimeLowestZoneText and HCS_HealthTracking:GetLifetimeLowestZoneText()) or ""
+    if lifeZoneText == "Unknown" then lifeZoneText = "" end
+    local lifeZoneLabel = AceGUI:Create("Label")
+    lifeZoneLabel:SetFont(fontPath, fontSize, "OUTLINE")
+    local lifeZoneDisplay = (lifeZoneText ~= nil and lifeZoneText ~= "") and ("All-time Zone: " .. lifeZoneText) or "All-time Zone: -"
+    lifeZoneLabel:SetText(lifeZoneDisplay)
+    lifeZoneLabel:SetWidth(400)
+    zoneRow:AddChild(lifeZoneLabel)
+    AttachTooltip(lifeZoneLabel, {
+        "Where you were when the lifetime-lowest HP was recorded.",
+    })
+
+    summaryGroup:AddChild(zoneRow)
 
 	container:AddChild(summaryGroup)
 
@@ -321,7 +346,7 @@ local function PopulateInfoContent(container)
 	scrollframe:SetLayout("List")
 	scrollframe:SetFullWidth(true)
 	scrollframe:SetFullHeight(false)
-	scrollframe:SetHeight(270)
+	scrollframe:SetHeight(220)
 
 	-- Prepare data: sort by level ascending
 	local levelScores = char.levelScores or {}
