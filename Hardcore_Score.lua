@@ -9,6 +9,8 @@ Hardcore_Score = {}
 -- Globals
 HCS_Version = "1.2.0.1" 
 HCS_Release = 20
+-- Short highlights shown once after updating; update per release
+HCS_UpdateHighlights = "Public Leaderboard fixes and improved sharing.\nUse /hcs to open options."
 HCScore_Character = {
     name = "",
     class = "",
@@ -459,6 +461,7 @@ function Hardcore_Score:CreateDB()
     -- Create a new database for your addon    
     self.db = AceDB:New("Hardcore_Score_Settings", {
         profile = {
+            lastSeenUpdateVersion = nil, -- Track last version that displayed update message
             framePosition = {
                 point = "CENTER",  --"CENTER",
                 relativeTo = "UIParent",
@@ -674,6 +677,16 @@ function Hardcore_Score:init(event, name)
             resetConfirmationOpen = true
         end
 
+        -- Slash command to reset the update notice (for testing)
+        SLASH_HCSRESETUPDATE1 = "/hcsresetupdate"
+        SlashCmdList.HCSRESETUPDATE = function()
+            Hardcore_Score.db.profile.lastSeenUpdateVersion = nil
+            if HCS_UpdateMessageUI and HCS_UpdateMessageUI.IsShown and HCS_UpdateMessageUI.IsShown() then
+                HCS_UpdateMessageUI.Hide()
+            end
+            print("Classic Score: Update notice has been reset. It will show on next login.")
+        end
+
         -- Slash command to open the Classic Score options screen (Classic Era/SoD compatible)
         SLASH_HCS1 = "/hcs"
         SlashCmdList["HCS"] = function()
@@ -789,6 +802,17 @@ function Hardcore_Score:init(event, name)
             if HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
                 HCS_PlayerCom:UpdatePublicChannelSubscription()
             end
+        end
+
+        -- Show one-time update banner per addon version
+        local seen = Hardcore_Score.db.profile.lastSeenUpdateVersion
+        local current = tostring(HCS_Version)
+        if seen ~= current then
+            local highlights = HCS_UpdateHighlights or "Thanks for updating Classic Score!"
+            if HCS_UpdateMessageUI and HCS_UpdateMessageUI.Show then
+                HCS_UpdateMessageUI.Show(current, highlights)
+            end
+            Hardcore_Score.db.profile.lastSeenUpdateVersion = current
         end
 
         -- Ensure we are listed on our own leaderboard
