@@ -348,7 +348,7 @@ local function PopulateInfoContent(container)
 	scrollframe:SetFullHeight(false)
 	scrollframe:SetHeight(220)
 
-	-- Prepare data: sort by level ascending
+    -- Prepare data: sort by level ascending (we will render descending)
 	local levelScores = char.levelScores or {}
 	local sorted = {}
 	for i, entry in ipairs(levelScores) do
@@ -358,201 +358,200 @@ local function PopulateInfoContent(container)
 		return (a.level or 0) < (b.level or 0)
 	end)
 
-	local prevPoints = nil
-	if #sorted == 0 then
-		local emptyLabel = AceGUI:Create("Label")
-		emptyLabel:SetFont(fontPath, fontSize, "OUTLINE")
-		emptyLabel:SetText("No leveling data recorded yet.")
-		emptyLabel:SetWidth(300)
-		scrollframe:AddChild(emptyLabel)
-	else
-		for _, entry in ipairs(sorted) do
-			local row = AceGUI:Create("SimpleGroup")
-			row:SetLayout("Flow")
-			row:SetFullWidth(true)
+    -- Append current level progress (in green) FIRST
+    local currentLevel = char.level or UnitLevel("player") or 1
+    local currentPoints = charScores.coreScore or 0
+    local lastRecordedPoints = (#sorted > 0 and (sorted[#sorted].points or 0)) or 0
+    local currentDelta = currentPoints - lastRecordedPoints
 
-			local lvlLabel = AceGUI:Create("Label")
-			lvlLabel:SetFont(fontPath, fontSize, "OUTLINE")
-			lvlLabel:SetText(tostring(entry.level))
-			lvlLabel:SetWidth(80)
-			row:AddChild(lvlLabel)
+    local currentRow = AceGUI:Create("SimpleGroup")
+    currentRow:SetLayout("Flow")
+    currentRow:SetFullWidth(true)
 
-			local pointsText = tostring(string.format("%.2f", entry.points or 0))
-			local pointsLabel = AceGUI:Create("Label")
-			pointsLabel:SetFont(fontPath, fontSize, "OUTLINE")
-			pointsLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
-			pointsLabel:SetText(HCS_Utils:AddThousandsCommas(pointsText))
-			pointsLabel:SetWidth(140)
-			row:AddChild(pointsLabel)
+    local curLvlLabel = AceGUI:Create("Label")
+    curLvlLabel:SetFont(fontPath, fontSize, "OUTLINE")
+    curLvlLabel:SetText(tostring(currentLevel))
+    curLvlLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
+    curLvlLabel:SetWidth(80)
+    currentRow:AddChild(curLvlLabel)
 
-			local deltaValue = (prevPoints ~= nil) and ((entry.points or 0) - prevPoints) or 0
-			local deltaText = tostring(string.format("%.2f", deltaValue))
-			local deltaLabel = AceGUI:Create("Label")
-			deltaLabel:SetFont(fontPath, fontSize, "OUTLINE")
-			deltaLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
-			deltaLabel:SetText(HCS_Utils:AddThousandsCommas(deltaText))
-			deltaLabel:SetWidth(100)
-			row:AddChild(deltaLabel)
+    local curPointsText = tostring(string.format("%.2f", currentPoints))
+    local curPointsLabel = AceGUI:Create("Label")
+    curPointsLabel:SetFont(fontPath, fontSize, "OUTLINE")
+    curPointsLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
+    curPointsLabel:SetText(HCS_Utils:AddThousandsCommas(curPointsText))
+    curPointsLabel:SetWidth(140)
+    currentRow:AddChild(curPointsLabel)
 
-			-- Rank at the time of this level (based on stored points)
-			local rankText = "-"
-			local pctText = "-"
-			if HCS_RanksDB then
-				local function between(x, a, b) return x >= a and x <= b end
-				for _, Rank in pairs(HCS_RanksDB) do
-					if between(entry.points or 0, Rank.MinPoints, Rank.MaxPoints) then
-						rankText = HCS_Utils:GetRankLevelText(Rank.Rank, Rank.Level)
-						local pct = 0
-						if (Rank.MaxPoints - Rank.MinPoints) > 0 then
-							pct = ((entry.points or 0) - Rank.MinPoints) / (Rank.MaxPoints - Rank.MinPoints) * 100
-						end
-						pctText = string.format("%.2f%%", pct)
-						break
-					end
-				end
-			end
+    local curDeltaText = tostring(string.format("%.2f", currentDelta))
+    local curDeltaLabel = AceGUI:Create("Label")
+    curDeltaLabel:SetFont(fontPath, fontSize, "OUTLINE")
+    curDeltaLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
+    curDeltaLabel:SetText(HCS_Utils:AddThousandsCommas(curDeltaText))
+    curDeltaLabel:SetWidth(100)
+    currentRow:AddChild(curDeltaLabel)
 
-			local rankLabel = AceGUI:Create("Label")
-			rankLabel:SetFont(fontPath, fontSize, "OUTLINE")
-			rankLabel:SetText(rankText)
-			rankLabel:SetWidth(140)
-			row:AddChild(rankLabel)
+    -- Rank and % at current points
+    local curRankText = "-"
+    local curPctText = "-"
+    if HCS_RanksDB then
+        local function between(x, a, b) return x >= a and x <= b end
+        for _, Rank in pairs(HCS_RanksDB) do
+            if between(currentPoints or 0, Rank.MinPoints, Rank.MaxPoints) then
+                curRankText = HCS_Utils:GetRankLevelText(Rank.Rank, Rank.Level)
+                local pct = 0
+                if (Rank.MaxPoints - Rank.MinPoints) > 0 then
+                    pct = ((currentPoints or 0) - Rank.MinPoints) / (Rank.MaxPoints - Rank.MinPoints) * 100
+                end
+                curPctText = string.format("%.2f%%", pct)
+                break
+            end
+        end
+    end
 
-			local pctLabel = AceGUI:Create("Label")
-			pctLabel:SetFont(fontPath, fontSize, "OUTLINE")
-			pctLabel:SetText(pctText)
-			pctLabel:SetWidth(140)
-			row:AddChild(pctLabel)
+    local curRankLabel = AceGUI:Create("Label")
+    curRankLabel:SetFont(fontPath, fontSize, "OUTLINE")
+    curRankLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
+    curRankLabel:SetText(curRankText)
+    curRankLabel:SetWidth(140)
+    currentRow:AddChild(curRankLabel)
 
-			-- Tooltips for rank/pct rows
-			if HCS_RanksDB then
-				local minPts, maxPts = nil, nil
-				for _, Rank in pairs(HCS_RanksDB) do
-					if (entry.points or 0) >= Rank.MinPoints and (entry.points or 0) <= Rank.MaxPoints then
-						minPts, maxPts = Rank.MinPoints, Rank.MaxPoints
-						break
-					end
-				end
-				if minPts and maxPts then
-					local remain = math.max(0, maxPts - (entry.points or 0))
-					AttachTooltip(rankLabel, {
-						("Points at ding: %s"):format(HCS_Utils:AddThousandsCommas(string.format("%.2f", entry.points or 0))),
-						("Rank range: %s - %s"):format(HCS_Utils:AddThousandsCommas(tostring(minPts)), HCS_Utils:AddThousandsCommas(tostring(maxPts))),
-					})
-					AttachTooltip(pctLabel, {
-						("%s to next rank"):format(HCS_Utils:AddThousandsCommas(string.format("%.2f", remain))),
-					})
-				end
-			end
+    local curPctLabel = AceGUI:Create("Label")
+    curPctLabel:SetFont(fontPath, fontSize, "OUTLINE")
+    curPctLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
+    curPctLabel:SetText(curPctText)
+    curPctLabel:SetWidth(140)
+    currentRow:AddChild(curPctLabel)
 
-			local timeLabel = AceGUI:Create("Label")
-			timeLabel:SetFont(fontPath, fontSize, "OUTLINE")
-			timeLabel:SetText(entry.timestamp or "-")
-			timeLabel:SetWidth(150)
-			row:AddChild(timeLabel)
+    -- current row leaves timestamp/zone blank; they are only recorded on level-up
 
-			local zoneLabel = AceGUI:Create("Label")
-			zoneLabel:SetFont(fontPath, fontSize, "OUTLINE")
-			zoneLabel:SetText(entry.zone or "-")
-			zoneLabel:SetWidth(180)
-			row:AddChild(zoneLabel)
+    -- Tooltip for current row rank progress
+    if HCS_RanksDB then
+        local minPts, maxPts = nil, nil
+        for _, Rank in pairs(HCS_RanksDB) do
+            if (currentPoints or 0) >= Rank.MinPoints and (currentPoints or 0) <= Rank.MaxPoints then
+                minPts, maxPts = Rank.MinPoints, Rank.MaxPoints
+                break
+            end
+        end
+        if minPts and maxPts then
+            local remain = math.max(0, maxPts - (currentPoints or 0))
+            AttachTooltip(curRankLabel, {
+                ("Current points: %s"):format(HCS_Utils:AddThousandsCommas(string.format("%.2f", currentPoints or 0))),
+                ("Rank range: %s - %s"):format(HCS_Utils:AddThousandsCommas(tostring(minPts)), HCS_Utils:AddThousandsCommas(tostring(maxPts))),
+            })
+            AttachTooltip(curPctLabel, {
+                ("%s to next rank"):format(HCS_Utils:AddThousandsCommas(string.format("%.2f", remain))),
+            })
+        end
+    end
 
-			prevPoints = entry.points or 0
-			scrollframe:AddChild(row)
-		end
+    -- Show current progress at the TOP
+    scrollframe:AddChild(currentRow)
 
-		-- Append current level progress (in green)
-		local currentLevel = char.level or UnitLevel("player") or 1
-		local currentPoints = charScores.coreScore or 0
-		local lastRecordedPoints = sorted[#sorted] and sorted[#sorted].points or 0
-		local currentDelta = currentPoints - lastRecordedPoints
+    -- Now render historical rows in DESCENDING level order
+    if #sorted == 0 then
+        -- no historical rows
+    else
+        for i = #sorted, 1, -1 do
+            local entry = sorted[i]
+            local row = AceGUI:Create("SimpleGroup")
+            row:SetLayout("Flow")
+            row:SetFullWidth(true)
 
-		local currentRow = AceGUI:Create("SimpleGroup")
-		currentRow:SetLayout("Flow")
-		currentRow:SetFullWidth(true)
+            local lvlLabel = AceGUI:Create("Label")
+            lvlLabel:SetFont(fontPath, fontSize, "OUTLINE")
+            lvlLabel:SetText(tostring(entry.level))
+            lvlLabel:SetWidth(80)
+            row:AddChild(lvlLabel)
 
-		local curLvlLabel = AceGUI:Create("Label")
-		curLvlLabel:SetFont(fontPath, fontSize, "OUTLINE")
-		curLvlLabel:SetText(tostring(currentLevel))
-		curLvlLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
-		curLvlLabel:SetWidth(80)
-		currentRow:AddChild(curLvlLabel)
+            local pointsText = tostring(string.format("%.2f", entry.points or 0))
+            local pointsLabel = AceGUI:Create("Label")
+            pointsLabel:SetFont(fontPath, fontSize, "OUTLINE")
+            pointsLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
+            pointsLabel:SetText(HCS_Utils:AddThousandsCommas(pointsText))
+            pointsLabel:SetWidth(140)
+            row:AddChild(pointsLabel)
 
-		local curPointsText = tostring(string.format("%.2f", currentPoints))
-		local curPointsLabel = AceGUI:Create("Label")
-		curPointsLabel:SetFont(fontPath, fontSize, "OUTLINE")
-		curPointsLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
-		curPointsLabel:SetText(HCS_Utils:AddThousandsCommas(curPointsText))
-		curPointsLabel:SetWidth(140)
-		currentRow:AddChild(curPointsLabel)
+            -- Delta vs the previous (lower) level
+            local lowerPoints = (i > 1) and (sorted[i-1].points or 0) or nil
+            local deltaValue = lowerPoints and ((entry.points or 0) - lowerPoints) or 0
+            local deltaText = tostring(string.format("%.2f", deltaValue))
+            local deltaLabel = AceGUI:Create("Label")
+            deltaLabel:SetFont(fontPath, fontSize, "OUTLINE")
+            deltaLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
+            deltaLabel:SetText(HCS_Utils:AddThousandsCommas(deltaText))
+            deltaLabel:SetWidth(100)
+            row:AddChild(deltaLabel)
 
-		local curDeltaText = tostring(string.format("%.2f", currentDelta))
-		local curDeltaLabel = AceGUI:Create("Label")
-		curDeltaLabel:SetFont(fontPath, fontSize, "OUTLINE")
-		curDeltaLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
-		curDeltaLabel:SetText(HCS_Utils:AddThousandsCommas(curDeltaText))
-		curDeltaLabel:SetWidth(100)
-		currentRow:AddChild(curDeltaLabel)
+            -- Rank at the time of this level (based on stored points)
+            local rankText = "-"
+            local pctText = "-"
+            if HCS_RanksDB then
+                local function between(x, a, b) return x >= a and x <= b end
+                for _, Rank in pairs(HCS_RanksDB) do
+                    if between(entry.points or 0, Rank.MinPoints, Rank.MaxPoints) then
+                        rankText = HCS_Utils:GetRankLevelText(Rank.Rank, Rank.Level)
+                        local pct = 0
+                        if (Rank.MaxPoints - Rank.MinPoints) > 0 then
+                            pct = ((entry.points or 0) - Rank.MinPoints) / (Rank.MaxPoints - Rank.MinPoints) * 100
+                        end
+                        pctText = string.format("%.2f%%", pct)
+                        break
+                    end
+                end
+            end
 
-		-- Rank and % at current points
-		local curRankText = "-"
-		local curPctText = "-"
-		if HCS_RanksDB then
-			local function between(x, a, b) return x >= a and x <= b end
-			for _, Rank in pairs(HCS_RanksDB) do
-				if between(currentPoints or 0, Rank.MinPoints, Rank.MaxPoints) then
-					curRankText = HCS_Utils:GetRankLevelText(Rank.Rank, Rank.Level)
-					local pct = 0
-					if (Rank.MaxPoints - Rank.MinPoints) > 0 then
-						pct = ((currentPoints or 0) - Rank.MinPoints) / (Rank.MaxPoints - Rank.MinPoints) * 100
-					end
-					curPctText = string.format("%.2f%%", pct)
-					break
-				end
-			end
-		end
+            local rankLabel = AceGUI:Create("Label")
+            rankLabel:SetFont(fontPath, fontSize, "OUTLINE")
+            rankLabel:SetText(rankText)
+            rankLabel:SetWidth(140)
+            row:AddChild(rankLabel)
 
-		local curRankLabel = AceGUI:Create("Label")
-		curRankLabel:SetFont(fontPath, fontSize, "OUTLINE")
-		curRankLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
-		curRankLabel:SetText(curRankText)
-		curRankLabel:SetWidth(140)
-		currentRow:AddChild(curRankLabel)
+            local pctLabel = AceGUI:Create("Label")
+            pctLabel:SetFont(fontPath, fontSize, "OUTLINE")
+            pctLabel:SetText(pctText)
+            pctLabel:SetWidth(140)
+            row:AddChild(pctLabel)
 
-		local curPctLabel = AceGUI:Create("Label")
-		curPctLabel:SetFont(fontPath, fontSize, "OUTLINE")
-		curPctLabel:SetColor(wowGreenColor.red, wowGreenColor.green, wowGreenColor.blue)
-		curPctLabel:SetText(curPctText)
-		curPctLabel:SetWidth(140)
-		currentRow:AddChild(curPctLabel)
+            -- Tooltips for rank/pct rows
+            if HCS_RanksDB then
+                local minPts, maxPts = nil, nil
+                for _, Rank in pairs(HCS_RanksDB) do
+                    if (entry.points or 0) >= Rank.MinPoints and (entry.points or 0) <= Rank.MaxPoints then
+                        minPts, maxPts = Rank.MinPoints, Rank.MaxPoints
+                        break
+                    end
+                end
+                if minPts and maxPts then
+                    local remain = math.max(0, maxPts - (entry.points or 0))
+                    AttachTooltip(rankLabel, {
+                        ("Points at ding: %s"):format(HCS_Utils:AddThousandsCommas(string.format("%.2f", entry.points or 0))),
+                        ("Rank range: %s - %s"):format(HCS_Utils:AddThousandsCommas(tostring(minPts)), HCS_Utils:AddThousandsCommas(tostring(maxPts))),
+                    })
+                    AttachTooltip(pctLabel, {
+                        ("%s to next rank"):format(HCS_Utils:AddThousandsCommas(string.format("%.2f", remain))),
+                    })
+                end
+            end
 
-		-- current row leaves timestamp/zone blank; they are only recorded on level-up
+            local timeLabel = AceGUI:Create("Label")
+            timeLabel:SetFont(fontPath, fontSize, "OUTLINE")
+            timeLabel:SetText(entry.timestamp or "-")
+            timeLabel:SetWidth(150)
+            row:AddChild(timeLabel)
 
-		-- Tooltip for current row rank progress
-		if HCS_RanksDB then
-			local minPts, maxPts = nil, nil
-			for _, Rank in pairs(HCS_RanksDB) do
-				if (currentPoints or 0) >= Rank.MinPoints and (currentPoints or 0) <= Rank.MaxPoints then
-					minPts, maxPts = Rank.MinPoints, Rank.MaxPoints
-					break
-				end
-			end
-			if minPts and maxPts then
-				local remain = math.max(0, maxPts - (currentPoints or 0))
-				AttachTooltip(curRankLabel, {
-					("Current points: %s"):format(HCS_Utils:AddThousandsCommas(string.format("%.2f", currentPoints or 0))),
-					("Rank range: %s - %s"):format(HCS_Utils:AddThousandsCommas(tostring(minPts)), HCS_Utils:AddThousandsCommas(tostring(maxPts))),
-				})
-				AttachTooltip(curPctLabel, {
-					("%s to next rank"):format(HCS_Utils:AddThousandsCommas(string.format("%.2f", remain))),
-				})
-			end
-		end
+            local zoneLabel = AceGUI:Create("Label")
+            zoneLabel:SetFont(fontPath, fontSize, "OUTLINE")
+            zoneLabel:SetText(entry.zone or "-")
+            zoneLabel:SetWidth(180)
+            row:AddChild(zoneLabel)
 
-		scrollframe:AddChild(currentRow)
-	end
+            scrollframe:AddChild(row)
+        end
+    end
 
-	historyGroup:AddChild(scrollframe)
+    historyGroup:AddChild(scrollframe)
 	container:AddChild(historyGroup)
 end
 
