@@ -8,6 +8,44 @@ HCS_UpdateMessageUI = {}
 
 local frame
 
+-- Format a string or array of strings into bullet-point text
+local function FormatHighlights(highlights)
+    local defaultMsg = "Thanks for updating Classic Score!"
+
+    -- If a list is provided, join into lines; if a string, split by newline
+    local lines = {}
+    if type(highlights) == "table" then
+        for _, v in ipairs(highlights) do
+            if type(v) == "string" then
+                table.insert(lines, v)
+            end
+        end
+    elseif type(highlights) == "string" then
+        for line in string.gmatch(highlights, "[^\r\n]+") do
+            table.insert(lines, line)
+        end
+    end
+
+    -- If we don't have multiple lines to bullet, return the original or default
+    if #lines == 0 then
+        return type(highlights) == "string" and highlights or defaultMsg
+    end
+
+    -- Build colorized solid-circle bullets (gold + text)
+    local out = {}
+    for _, line in ipairs(lines) do
+        local trimmed = string.gsub(line, "^%s+", "")
+        trimmed = string.gsub(trimmed, "%s+$", "")
+        if trimmed ~= "" then
+            -- Use a reliable inline texture bullet (yellow 'Away' status dot)
+            -- Note: In Lua source, "\\" becomes "\" at runtime. We want single backslashes in the tag.
+            local bullet = "|TInterface\\FriendsFrame\\StatusIcon-Away:12:12|t "
+            table.insert(out, bullet .. trimmed)
+        end
+    end
+    return table.concat(out, "\n")
+end
+
 local function CreateFrameOnce()
     if frame then return end
 
@@ -38,7 +76,7 @@ local function CreateFrameOnce()
     -- Title
     frame.Title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
     local tFont, _, tFlags = frame.Title:GetFont()
-    frame.Title:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 18, tFlags)
+    frame.Title:SetFont("Interface\\Addons\\Hardcore_Score\\Fonts\\Akira_Jimbo.ttf", 20, tFlags)
     frame.Title:SetPoint("TOP", frame, "TOP", 0, -18)
     frame.Title:SetTextColor(1, 0.82, 0)
 
@@ -46,6 +84,7 @@ local function CreateFrameOnce()
     frame.Text = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     local fName, _, fFlags = frame.Text:GetFont()
     frame.Text:SetFont(fName, 12, fFlags)
+    frame.Text:SetSpacing(4)
     frame.Text:SetJustifyH("LEFT")
     frame.Text:SetWidth(420)
     frame.Text:SetPoint("TOP", frame.Title, "BOTTOM", 0, -16)
@@ -77,7 +116,7 @@ function HCS_UpdateMessageUI.Show(versionText, highlights)
     local title = string.format("Classic Score Update %s", tostring(versionText or ""))
     frame.Title:SetText(title)
 
-    local msg = highlights or "Thanks for updating Classic Score!"
+    local msg = FormatHighlights(highlights)
     frame.Text:SetText(msg)
 
     frame:Show()

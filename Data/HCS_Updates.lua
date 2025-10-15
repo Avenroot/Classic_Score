@@ -214,7 +214,9 @@ Version 1.2.0.1
 1. Fix for public Leaderboard.  Now working correctly.  Don't need to be part of a group/guild/raid to share score.
 
 Version 1.2.0.2
-1. Fixed bug when accessing Leaderboard Tab. If can't read character rank it will crash the Leaderboard list.
+1. Major update!  Enhanced public Leaderboard features. Check it out!!
+2. Level 60 characters now get points for elite mob kills.  Other points enhancements for level 60.
+3. Lots of changes to the Character Journey information, including tracking lowest health/deaths.
 ]]
 
 local function trim(s)
