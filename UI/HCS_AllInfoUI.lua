@@ -141,6 +141,13 @@ tabGroup:SetTabs({
 local currentPage = 1
 local itemsPerPage = 10  -- or whatever number works best 
 
+-- Leaderboard pagination state
+local currentPageLeaderboard = 1
+local itemsPerPageLeaderboard = 25
+local leaderboardScrollFrame = nil
+local leaderboardPrevButton = nil
+local leaderboardNextButton = nil
+
 -- Function to populate the Info content
 local function PopulateInfoContent(container)
 	container:ReleaseChildren()
@@ -1041,6 +1048,108 @@ local function PopulateCharactersContent(container)
 
 end
 
+-- Helper to render leaderboard rows based on current page
+local function RebuildLeaderboardRows(leaderboardArray)
+    if not leaderboardScrollFrame then return end
+
+    leaderboardScrollFrame:ReleaseChildren()
+
+    -- Page slice
+    local startIndex = (currentPageLeaderboard - 1) * itemsPerPageLeaderboard + 1
+    local endIndex = math.min(startIndex + itemsPerPageLeaderboard - 1, #leaderboardArray)
+
+    local rankCounter = startIndex - 1
+
+    for i = startIndex, endIndex do
+        local info = leaderboardArray[i]
+        if not info then break end
+
+        rankCounter = rankCounter + 1
+
+        local rowGroup = AceGUI:Create("SimpleGroup")
+        rowGroup:SetFullWidth(true)
+        rowGroup:SetLayout("Flow")
+
+        local rankLabel = AceGUI:Create("Label")
+        rankLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        rankLabel:SetText(rankCounter)
+        rankLabel:SetWidth(30)
+        rowGroup:AddChild(rankLabel)
+
+        local nameLabel = AceGUI:Create("Label")
+        nameLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        nameLabel:SetText(info.charName)
+        nameLabel:SetWidth(100)
+        rowGroup:AddChild(nameLabel)
+
+        local classLabel = AceGUI:Create("Label")
+        classLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        classLabel:SetText(HCS_Utils:GetClassColorText(info.charClass))
+        classLabel:SetWidth(60)
+        rowGroup:AddChild(classLabel)
+
+        local levelLabel = AceGUI:Create("Label")
+        levelLabel:SetText(info.charLevel)
+        levelLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        levelLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
+        levelLabel:SetWidth(50)
+        rowGroup:AddChild(levelLabel)
+
+        -- Resolve rank safely
+        local scoreNum = tonumber(info.coreScore) or 0
+        local playerRank = nil
+        if HCS_RanksDB then
+            for _, Rank in pairs(HCS_RanksDB) do
+                if scoreNum >= Rank.MinPoints and scoreNum <= Rank.MaxPoints then
+                    playerRank = Rank
+                    break
+                end
+            end
+            if not playerRank then
+                local highest, lowest
+                for _, Rank in pairs(HCS_RanksDB) do
+                    if not highest or Rank.MaxPoints > highest.MaxPoints then highest = Rank end
+                    if not lowest or Rank.MinPoints < lowest.MinPoints then lowest = Rank end
+                end
+                if highest and scoreNum > highest.MaxPoints then
+                    playerRank = highest
+                elseif lowest and scoreNum < lowest.MinPoints then
+                    playerRank = lowest
+                end
+            end
+        end
+
+        local rankTextLabel = AceGUI:Create("Label")
+        if playerRank then
+            rankTextLabel:SetText(HCS_Utils:GetRankLevelText(playerRank.Rank, playerRank.Level))
+        else
+            rankTextLabel:SetText("-")
+        end
+        rankTextLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        rankTextLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
+        rankTextLabel:SetWidth(120)
+        rowGroup:AddChild(rankTextLabel)
+
+        local scoreLabel = AceGUI:Create("Label")
+        local formattedScore = string.format("%.2f", tonumber(info.coreScore) or 0)
+        scoreLabel:SetText(HCS_Utils:AddThousandsCommas(formattedScore))
+        scoreLabel:SetFont(fontPath, fontSize, "OUTLINE")
+        scoreLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
+        scoreLabel:SetWidth(80)
+        rowGroup:AddChild(scoreLabel)
+
+        leaderboardScrollFrame:AddChild(rowGroup)
+    end
+
+    -- Update nav button states
+    if leaderboardPrevButton then
+        leaderboardPrevButton:SetDisabled(currentPageLeaderboard == 1)
+    end
+    if leaderboardNextButton then
+        leaderboardNextButton:SetDisabled(currentPageLeaderboard * itemsPerPageLeaderboard >= #leaderboardArray)
+    end
+end
+
 local function PopulateLeaderboardContent(container)
     -- Header Group
     local headerGroup = AceGUI:Create("SimpleGroup")
@@ -1092,113 +1201,70 @@ local function PopulateLeaderboardContent(container)
     -- Add the header to the container
     container:AddChild(headerGroup)
 
-    -- Scroll Frame
+    -- Scroll Frame + pagination controls
     local scrollframe = AceGUI:Create("ScrollFrame")
     scrollframe:SetLayout("List")
     scrollframe:SetFullWidth(true)
-    scrollframe:SetFullHeight(true)   
-    
-    -- Load Data
-    
-    -- Convert the leaderboard to an array (guard if missing)
+    scrollframe:SetFullHeight(false)
+    scrollframe:SetHeight(325)
+    container:AddChild(scrollframe)
+    leaderboardScrollFrame = scrollframe
+
+    -- Load Data into array and sort
     local leaderboardArray = {}
     local leaderboardTable = (HCScore_Character and HCScore_Character.leaderboard) or {}
     for charName, info in pairs(leaderboardTable) do
-        info.charName = charName -- Add charName to each entry for later
-        table.insert(leaderboardArray, info)
+        local entry = {}
+        for k, v in pairs(info) do entry[k] = v end
+        entry.charName = charName
+        table.insert(leaderboardArray, entry)
     end
-
-    -- Sort the array
     table.sort(leaderboardArray, function(a, b)
-        return tonumber(a.coreScore) > tonumber(b.coreScore)
+        return (tonumber(a.coreScore) or 0) > (tonumber(b.coreScore) or 0)
     end)
 
-    local rankCounter = 0
-
-    for _, info in ipairs(leaderboardArray) do
-
-        rankCounter = rankCounter + 1
-
-        local rowGroup = AceGUI:Create("SimpleGroup")
-        rowGroup:SetFullWidth(true)
-        rowGroup:SetLayout("Flow")
-
-        local rankLabel = AceGUI:Create("Label")
-        rankLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        rankLabel:SetText(rankCounter)
-        rankLabel:SetWidth(30)  
-        rowGroup:AddChild(rankLabel)
-    
-        local nameLabel = AceGUI:Create("Label")
-        nameLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        --nameLabel:SetText(HCS_Utils:GetTextWithClassColor(info.charClass, charName))
-        nameLabel:SetText(info.charName)
-        nameLabel:SetWidth(100)  
-        rowGroup:AddChild(nameLabel)
-
-        local classLabel = AceGUI:Create("Label")
-        classLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        classLabel:SetText(HCS_Utils:GetClassColorText(info.charClass))
-        classLabel:SetWidth(60)  
-        rowGroup:AddChild(classLabel)
-
-        local levelLabel = AceGUI:Create("Label")
-        levelLabel:SetText(info.charLevel)
-        levelLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        levelLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
-        levelLabel:SetWidth(50)  
-        rowGroup:AddChild(levelLabel)
-
-        -- look up player's Rank in HCS_RanksDB with safe fallbacks
-        local scoreNum = tonumber(info.coreScore) or 0
-        local playerRank = nil
-        if HCS_RanksDB then
-            -- Try direct range match first
-            for _, Rank in pairs(HCS_RanksDB) do
-                if scoreNum >= Rank.MinPoints and scoreNum <= Rank.MaxPoints then
-                    playerRank = Rank
-                    break
-                end
-            end
-            -- If no direct match (score outside defined ranges), clamp to nearest bound
-            if not playerRank then
-                local highest, lowest
-                for _, Rank in pairs(HCS_RanksDB) do
-                    if not highest or Rank.MaxPoints > highest.MaxPoints then highest = Rank end
-                    if not lowest or Rank.MinPoints < lowest.MinPoints then lowest = Rank end
-                end
-                if highest and scoreNum > highest.MaxPoints then
-                    playerRank = highest
-                elseif lowest and scoreNum < lowest.MinPoints then
-                    playerRank = lowest
-                end
-            end
-        end
-
-        local rankLabel = AceGUI:Create("Label")
-        if playerRank then
-            rankLabel:SetText(HCS_Utils:GetRankLevelText(playerRank.Rank, playerRank.Level))
-        else
-            rankLabel:SetText("-")
-        end
-        rankLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        rankLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
-        rankLabel:SetWidth(120)  
-        rowGroup:AddChild(rankLabel)
-
-        local scoreLabel = AceGUI:Create("Label")
-        local formattedScore = string.format("%.2f", tonumber(info.coreScore) or 0)
-        scoreLabel:SetText(HCS_Utils:AddThousandsCommas(formattedScore))
-        scoreLabel:SetFont(fontPath, fontSize, "OUTLINE")
-        scoreLabel:SetColor(txtNumberColor.red, txtNumberColor.green, txtNumberColor.blue)
-        scoreLabel:SetWidth(80)  
-        rowGroup:AddChild(scoreLabel)
-
-        scrollframe:AddChild(rowGroup)
+    -- Clamp current page within available range
+    local totalPages = math.ceil((#leaderboardArray) / itemsPerPageLeaderboard)
+    if totalPages < 1 then totalPages = 1 end
+    if currentPageLeaderboard > totalPages then
+        currentPageLeaderboard = totalPages
+    elseif currentPageLeaderboard < 1 then
+        currentPageLeaderboard = 1
     end
-    
-    -- Add scroll frame to the container
-    container:AddChild(scrollframe)
+
+    -- Nav buttons
+    local navGroup = AceGUI:Create("SimpleGroup")
+    navGroup:SetFullWidth(true)
+    navGroup:SetLayout("Flow")
+
+    local prevButton = AceGUI:Create("Button")
+    prevButton:SetText("< Previous")
+    prevButton:SetWidth(80)
+    prevButton:SetCallback("OnClick", function()
+        if currentPageLeaderboard > 1 then
+            currentPageLeaderboard = currentPageLeaderboard - 1
+            RebuildLeaderboardRows(leaderboardArray)
+        end
+    end)
+    navGroup:AddChild(prevButton)
+    leaderboardPrevButton = prevButton
+
+    local nextButton = AceGUI:Create("Button")
+    nextButton:SetText("Next >")
+    nextButton:SetWidth(80)
+    nextButton:SetCallback("OnClick", function()
+        if currentPageLeaderboard * itemsPerPageLeaderboard < #leaderboardArray then
+            currentPageLeaderboard = currentPageLeaderboard + 1
+            RebuildLeaderboardRows(leaderboardArray)
+        end
+    end)
+    navGroup:AddChild(nextButton)
+    leaderboardNextButton = nextButton
+
+    -- Initial build
+    RebuildLeaderboardRows(leaderboardArray)
+
+    container:AddChild(navGroup)
 end
 
 local currentPageMobs = 1
