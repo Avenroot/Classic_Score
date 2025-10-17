@@ -1,8 +1,8 @@
 ## Interface: 40401
-## Title: Classic Score 1.2.0.1
+## Title: Classic Score 1.2.0.2
 ## Notes: Your Classic score for your character
 ## Author: Avenroot, Caith
-## Version: 1.2.0.1
+## Version: 1.2.0.2
 ## DefaultState: enabled
 ## SavedVariables: Hardcore_Score_Settings
 ## SavedVariablesPerCharacter: HCScore_Character
@@ -27,6 +27,7 @@ Core/HCS_DiscoveryScore.lua
 Core/HCS_PlayerCom.lua
 Core/HCS_CalculateScore.lua
 Core/HCS_MilestonesScore.lua
+Core/HCS_HealthTracking.lua
 
 Events/HCS_PlayerLevelingUpEvent.lua
 Events/HCS_PlayerEquippingItemEvent.lua
@@ -42,6 +43,7 @@ Events/HCS_EngravingEvent.lua
 Data/HCS_MilestonesDB.lua
 Data/HCS_AchievementsDB.lua
 Data/HCS_RanksDB.lua
+Data/HCS_Updates.lua
 
 UI/HCS_MainInfoFrameUI.lua
 UI/HCS_ScoreboardSummaryUI.lua
@@ -51,7 +53,11 @@ UI/HCS_LeaderBoardUI.lua
 UI/HCS_MessageFrameUI.lua
 UI/HCS_WelcomeUI.lua
 UI/HCS_AllInfoUI.lua
+UI/HCS_UpdateMessageUI.lua
 
 Hardcore_Score.lua
+
+# Dev/Test utilities (optional)
+Tests/HCS_KillingMobsTests.lua
 
 

@@ -59,6 +59,8 @@ function HCS_Playerinfo:GetHCS_Playerinfo()
     if HCScore_Character.dangerousMobsKilled == nil then HCScore_Character.dangerousMobsKilled = {} end
     if HCScore_Character.achievements == nil then HCScore_Character.achievements = {} end
     if HCScore_Character.leaderboard == nil then HCScore_Character.leaderboard = {} end
+    -- Initialize if missing; do NOT reset if it already exists
+    if HCScore_Character.lowestHealthPct == nil then HCScore_Character.lowestHealthPct = 100.0 end
 
     -- Only execute if in WoW Classic, Season of Discovery
     if HCS_SODVersion then
@@ -130,6 +132,7 @@ function ResetCharacterStats()
     if HCScore_Character.dangerousMobsKilled == nil then HCScore_Character.dangerousMobsKilled = {} end
     if HCScore_Character.achievements == nil then HCScore_Character.achievements = {} end
     if HCScore_Character.leaderboard == nil then HCScore_Character.leaderboard = {} end
+    if HCScore_Character.lowestHealthPct == nil then HCScore_Character.lowestHealthPct = 100.0 end
  
     -- Only execute if in WoW Classic, Season of Discovery
     if HCS_SODVersion then

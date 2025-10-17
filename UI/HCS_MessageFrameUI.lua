@@ -256,7 +256,7 @@ function HCS_MessageFrameUI.DisplayHCSRankLevelingMessage(delay, displayImg)
     frame.BigText:SetPoint("TOP", frame.Text, "BOTTOM", 0, -5)  -- Position it closer to the first text
     frame.BigText:SetText(HCS_Utils:GetTextWithRankColor(HCS_PlayerRank.Rank, HCS_PlayerRank.LevelText) or "")  -- The message to display
     
-    if displayImage then
+    if displayImg then
         local image1 = frame:CreateTexture(nil, "ARTWORK")
         image1:SetTexture(HCS_PlayerRank.SimplePortraitImage)
         image1:SetSize(32, 32)
@@ -281,3 +281,5 @@ function HCS_MessageFrameUI.DisplayHCSRankLevelingMessage(delay, displayImg)
 
     return frame
 end
+
+-- (Update popup moved to UI/HCS_UpdateMessageUI.lua)

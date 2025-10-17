@@ -7,8 +7,10 @@ local _;
 Hardcore_Score = {}
 
 -- Globals
-HCS_Version = "1.2.0.1" 
+HCS_Version = "1.2.0.2" 
 HCS_Release = 20
+-- Short highlights shown once after updating; update per release
+HCS_UpdateHighlights = "Public Leaderboard fixes and improved sharing.\nUse /hcs to open options."
 HCScore_Character = {
     name = "",
     class = "",
@@ -59,6 +61,8 @@ HCScore_Character = {
     dangerousMobsKilled = {},
     achievements = {},
     leaderboard = {},
+    -- All-time lowest health percent (0-100) with 2 decimals. Initialized to 100.
+    lowestHealthPct = 100.0,
 }
 
 -- Simple URL copy popup used for clickable links in the options UI
@@ -457,6 +461,7 @@ function Hardcore_Score:CreateDB()
     -- Create a new database for your addon    
     self.db = AceDB:New("Hardcore_Score_Settings", {
         profile = {
+            lastSeenUpdateVersion = nil, -- Track last version that displayed update message
             framePosition = {
                 point = "CENTER",  --"CENTER",
                 relativeTo = "UIParent",
@@ -672,6 +677,16 @@ function Hardcore_Score:init(event, name)
             resetConfirmationOpen = true
         end
 
+        -- Slash command to reset the update notice (for testing)
+        SLASH_HCSRESETUPDATE1 = "/hcsresetupdate"
+        SlashCmdList.HCSRESETUPDATE = function()
+            Hardcore_Score.db.profile.lastSeenUpdateVersion = nil
+            if HCS_UpdateMessageUI and HCS_UpdateMessageUI.IsShown and HCS_UpdateMessageUI.IsShown() then
+                HCS_UpdateMessageUI.Hide()
+            end
+            print("Classic Score: Update notice has been reset. It will show on next login.")
+        end
+
         -- Slash command to open the Classic Score options screen (Classic Era/SoD compatible)
         SLASH_HCS1 = "/hcs"
         SlashCmdList["HCS"] = function()
@@ -681,6 +696,28 @@ function Hardcore_Score:init(event, name)
                 print("|cff81b7e9Classic Score:|r Options panel opened.")
             else
                 print("|cffff0000Classic Score: Could not load AceConfigDialog.|r")
+            end
+        end
+
+        -- Slash command to list available commands
+        SLASH_HCS_HELP1 = "/hcs_help"
+        SlashCmdList["HCS_HELP"] = function()
+            local function msg(text) print("|cff81b7e9Classic Score:|r " .. text) end
+            msg("Available slash commands:")
+            msg("/hcs - Open options panel")
+            msg("/hcsresetl - Reset your leaderboard (asks for confirmation)")
+            msg("/hcsresetupdate - Reset update notice (shows next login)")
+            msg("/rl - Reload the UI")
+            msg("/fs - Toggle Blizzard FrameStack tool")
+            -- Dev/Test commands (present if Tests file is included)
+            if SlashCmdList["HCS_TESTING_ON"] then
+                msg("/hcs_testing_on - Enable test harness (this session)")
+            end
+            if SlashCmdList["HCS_TESTING_OFF"] then
+                msg("/hcs_testing_off - Disable test harness (this session)")
+            end
+            if SlashCmdList["HCS_TESTS"] then
+                msg("/hcs_tests - Run in-addon test suite (when testing is enabled)")
             end
         end
         
@@ -780,13 +817,30 @@ function Hardcore_Score:init(event, name)
         end
 
         -- Print fun stuff for the player
-        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v.1.2.0.1  Lets GO!")
+        print("|cff81b7e9".."Classic Score: ".."|r".."Welcome "..playerName.." to Classic Score v.1.2.0.2  Lets GO!")
 
         -- Ensure public channel subscription if enabled
         if Hardcore_Score.db and Hardcore_Score.db.profile and Hardcore_Score.db.profile.sharePublic then
             if HCS_PlayerCom and HCS_PlayerCom.UpdatePublicChannelSubscription then
                 HCS_PlayerCom:UpdatePublicChannelSubscription()
             end
+        end
+
+        -- Show one-time update banner per addon version
+        local seen = Hardcore_Score.db.profile.lastSeenUpdateVersion
+        local current = tostring(HCS_Version)
+        if seen ~= current then
+            local highlights = nil
+            if HCS_Updates and HCS_Updates.GetTopLinesFor then
+                highlights = HCS_Updates:GetTopLinesFor(current, 3)
+            end
+            if not highlights or highlights == "" then
+                highlights = HCS_UpdateHighlights or "Thanks for updating Classic Score!"
+            end
+            if HCS_UpdateMessageUI and HCS_UpdateMessageUI.Show then
+                HCS_UpdateMessageUI.Show(current, highlights)
+            end
+            Hardcore_Score.db.profile.lastSeenUpdateVersion = current
         end
 
         -- Ensure we are listed on our own leaderboard

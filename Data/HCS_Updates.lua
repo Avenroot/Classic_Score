@@ -1,3 +1,11 @@
+-- Auto-populated update highlights helper
+-- Note: WoW's sandbox cannot read plain text files at runtime.
+-- This module embeds the contents of Updates.txt so we can parse it in-game.
+-- Keep this in sync with Updates.txt when you release.
+
+HCS_Updates = {}
+
+HCS_Updates.Raw = [[
 Version 0.9.1
     Initial release
 
@@ -206,8 +214,64 @@ Version 1.2.0.1
 1. Fix for public Leaderboard.  Now working correctly.  Don't need to be part of a group/guild/raid to share score.
 
 Version 1.2.0.2
-1. Major update! Enhanced public Leaderboard features. Check it out!!
-2. Level 60 characters now get points for elite mob kills. Other points enhancements for level 60.
+1. Major update!  Enhanced public Leaderboard features. Open the SCORE BOARD (right click on the mini map button) and Check it out!!
+2. Level 60 characters now get points for elite mob kills.  Other points enhancements for level 60.
 3. Lots of changes to the Character Journey information, including tracking lowest health/deaths.
-4. Fixed bug when accessing the Leaderboard Tab. If you can't read the character rank, it will crash the Leaderboard list.
-5. Lots of changes to the Character Journey information, including tracking lowest health/deaths.
+]]
+
+local function trim(s)
+    return (s or ""):gsub("^%s+", ""):gsub("%s+$", "")
+end
+
+local function escapePattern(s)
+    return (s or ""):gsub("(%W)", "%%%1")
+end
+
+-- Returns concatenated top N update lines for the given version, or nil if not found
+function HCS_Updates:GetTopLinesFor(version, count)
+    version = tostring(version or "")
+    count = count or 3
+
+    local raw = self.Raw or ""
+    if raw == "" then return nil end
+
+    local lines = {}
+    for line in raw:gmatch("([^\r\n]+)\r?\n?") do
+        table.insert(lines, line)
+    end
+
+    local verHeader = "^Version%s+" .. escapePattern(version) .. "%s*$"
+    local found = false
+    local collected = {}
+
+    for i = 1, #lines do
+        local line = lines[i]
+        if not found then
+            if line:match(verHeader) then
+                found = true
+            end
+        else
+            -- Stop at next version header
+            if line:match("^Version%s+") then
+                break
+            end
+            -- Collect non-empty lines
+            local t = trim(line)
+            if t ~= "" then
+                -- Clean leading bullet numbering like "1. "
+                t = t:gsub("^%d+%.%s*", "")
+                -- Skip the asterisk note lines (like the warning in 0.9.7)
+                if not t:match("^%*") then
+                    table.insert(collected, t)
+                end
+                if #collected >= count then
+                    break
+                end
+            end
+        end
+    end
+
+    if #collected == 0 then return nil end
+
+    return table.concat(collected, "\n")
+end
