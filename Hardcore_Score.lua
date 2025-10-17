@@ -698,6 +698,28 @@ function Hardcore_Score:init(event, name)
                 print("|cffff0000Classic Score: Could not load AceConfigDialog.|r")
             end
         end
+
+        -- Slash command to list available commands
+        SLASH_HCS_HELP1 = "/hcs_help"
+        SlashCmdList["HCS_HELP"] = function()
+            local function msg(text) print("|cff81b7e9Classic Score:|r " .. text) end
+            msg("Available slash commands:")
+            msg("/hcs - Open options panel")
+            msg("/hcsresetl - Reset your leaderboard (asks for confirmation)")
+            msg("/hcsresetupdate - Reset update notice (shows next login)")
+            msg("/rl - Reload the UI")
+            msg("/fs - Toggle Blizzard FrameStack tool")
+            -- Dev/Test commands (present if Tests file is included)
+            if SlashCmdList["HCS_TESTING_ON"] then
+                msg("/hcs_testing_on - Enable test harness (this session)")
+            end
+            if SlashCmdList["HCS_TESTING_OFF"] then
+                msg("/hcs_testing_off - Disable test harness (this session)")
+            end
+            if SlashCmdList["HCS_TESTS"] then
+                msg("/hcs_tests - Run in-addon test suite (when testing is enabled)")
+            end
+        end
         
         
         -- initalization Hardcore_Score_Settings
