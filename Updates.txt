@@ -211,3 +211,6 @@ Version 1.2.0.2
 3. Lots of changes to the Character Journey information, including tracking lowest health/deaths.
 4. Fixed bug when accessing the Leaderboard Tab. If you can't read the character rank, it will crash the Leaderboard list.
 5. Lots of changes to the Character Journey information, including tracking lowest health/deaths.
+
+Version 1.2.0.3
+1. Maintainence update for 11508
