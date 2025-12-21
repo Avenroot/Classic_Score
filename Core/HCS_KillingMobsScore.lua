@@ -1,4 +1,4 @@
-HCS_KillingMobsScore = {}
+HCS_KillingMobsScore = HCS_KillingMobsScore or {}
 
 local function between(x, a, b)
     return x >= a and x <= b
@@ -49,10 +49,6 @@ local function GetMobKillHCScore(mobLevel)
         elseif mobDifficulty < -6 then
             xpGain = 0
         end
-
-    -- Cataclysm
-    elseif HCS_GameVersion >= 30000 and playerLevel == 85 then  -- Cataclysm
-        xpGain = 400
     end
 
     -- Multiplier lookup table. 
@@ -209,11 +205,14 @@ function HCS_KillingMobsScore:UpdateMobsKilled()
 end
 
 function HCS_KillingMobsScore:GetNumMobTypes()
+    if not HCScore_Character.mobsKilled then return 0 end
     return #HCScore_Character.mobsKilled
 end
 
 function HCS_KillingMobsScore:GetTotalMobsKilled()
     local totalKills = 0
+
+    if not HCScore_Character.mobsKilled then return 0 end
 
     for _, mob in pairs(HCScore_Character.mobsKilled) do
         totalKills = totalKills + mob.kills
@@ -225,6 +224,8 @@ end
 function HCS_KillingMobsScore:GetMobsKilledScore()
     local score = 0
 
+    if not HCScore_Character.mobsKilled then return 0 end
+
     for _, mob in pairs(HCScore_Character.mobsKilled) do
         score = score + mob.score
     end   
@@ -235,6 +236,8 @@ end
 
 function HCS_KillingMobsScore:GetNumberDangerousKills()
     local totalKills = 0
+
+    if not HCScore_Character.dangerousMobsKilled then return 0 end
 
     for _, mob in pairs(HCScore_Character.dangerousMobsKilled) do
         totalKills = totalKills + mob.kills
@@ -251,4 +254,3 @@ function HCS_KillingMobsScore:GetToolTip(tooltip)
     tooltip:AddLine(string.format("%.0f", (totalKilltypes)) .. " Kill Types", nil, nil, nil, true)
     tooltip:AddLine(string.format("%.0f", (totalDangerousKills)) .. " Dangerous Kills", nil, nil, nil, true)
 end
-

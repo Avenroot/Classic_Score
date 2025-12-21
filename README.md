@@ -10,7 +10,7 @@ The possibilities for this addon are endless, and the creator is excited to work
 
 ## Testing helper
 
- A lightweight in-game test harness is included to validate mob kill scoring at level caps (Classic 60, Cata 85) without needing a capped character. Testing is OFF by default on every login/reload and must be enabled via slash command per session.
+ A lightweight in-game test harness is included to validate mob kill scoring at level caps (Classic 60) without needing a capped character. Testing is OFF by default on every login/reload and must be enabled via slash command per session.
 
 - Enable tests: `/hcs_testing_on`
 - Disable tests: `/hcs_testing_off`
@@ -19,7 +19,7 @@ The possibilities for this addon are endless, and the creator is excited to work
 	- Level 60 Classic: PARTY_KILL triggers immediate scoring with XP forced to 300
 	- Skull (??) mobs are treated as +3 difficulty
 	- Unknown mob level (0) uses the default -5 multiplier
-	- Cata 85: XP forced to 400 and scoring computed accordingly
+
 - Results are printed to the chat frame as PASS/FAIL with a summary.
 
  Notes:

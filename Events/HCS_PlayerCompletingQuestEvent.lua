@@ -60,12 +60,8 @@ local function OnQuestTurnedIn(event, questEvent, questID, xpReward, moneyReward
     if playerLevel == 25 and xpReward == 0 then 
         xpReward = math.random(50, 150)
     end
-  elseif HCS_GameVersion >= 30000 then
-    -- Cataclysm
-    if playerLevel == 85 then
-        xpReward = 1200
-    end
   end
+
 
     -- Look up the multiplier and apply it to the score.
   if multipliers[levelMod] then

@@ -269,7 +269,9 @@ function HCS_ScoreboardSummaryUI:CreateFrame()
         GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
         GameTooltip:SetText("Mobs Killed", 1, 1, 1, true)
         
-        HCS_KillingMobsScore:GetToolTip(GameTooltip)
+        if HCS_KillingMobsScore and HCS_KillingMobsScore.GetToolTip then
+            HCS_KillingMobsScore:GetToolTip(GameTooltip)
+        end
         GameTooltip:Show()
     end)
 
@@ -538,7 +540,7 @@ end
 function HCS_ScoreboardSummaryUI:UpdateUI()
     local totProfessions = HCS_ProfessionsScore:GetNumberOfProfessions()
     local totReputations = HCS_ReputationScore:GetNumFactions()
-    local totMobTypesKilled = HCS_KillingMobsScore:GetTotalMobsKilled()  --HCS_KillingMobsScore:GetNumMobTypes()
+    local totMobTypesKilled = (HCS_KillingMobsScore and HCS_KillingMobsScore.GetTotalMobsKilled) and HCS_KillingMobsScore:GetTotalMobsKilled() or 0
     local totQuests = HCS_PlayerQuestingScore:GetNumberOfQuests()
     local totDiscovery = HCS_DiscoveryScore:GetNumberOfDiscovery()
     local totMilestones = HCS_MilestonesScore:GetNumberOfMilestones()

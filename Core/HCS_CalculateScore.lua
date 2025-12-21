@@ -189,7 +189,7 @@ local function CalculateScore()
     HCScore_Character.scores.milestonesScore = HCS_MilestonesScore:GetMilestonesScore() * HCS_LevelScalePercentage
     HCScore_Character.scores.achievementScore = HCS_AchievementScore:GetAchievementsScore() * HCS_LevelScalePercentage
     HCScore_Character.scores.questingScore = HCS_PlayerQuestingScore:GetQuestingScore()
-    HCScore_Character.scores.mobsKilledScore = HCS_KillingMobsScore:GetMobsKilledScore()
+    HCScore_Character.scores.mobsKilledScore = (HCS_KillingMobsScore and HCS_KillingMobsScore.GetMobsKilledScore) and HCS_KillingMobsScore:GetMobsKilledScore() or 0
 
     -- Only execute if in WoW Classic, Season of Discovery
     if HCS_SODVersion then
@@ -218,11 +218,7 @@ function HCS_CalculateScore:RefreshScores(desc)
     if HCS_OldLevel == nil or HCS_OldLevel == 0 then HCS_OldLevel = UnitLevel("player") end -- makes sure HCS_OldLevel is set correctly when logging in.
    
     -- Update Scaling Percentage
-    if HCS_GameVersion < 30000 then
-        HCS_LevelScalePercentage = (UnitLevel("player")  / 60) -- Classic
-    else
-        HCS_LevelScalePercentage = (UnitLevel("player")  / 85) -- Cataclysm
-    end
+    HCS_LevelScalePercentage = (UnitLevel("player")  / 60)
 
     _G["CurrentXP"] = UnitXP("player")  -- CurrentXP
     _G["CurrentMaxXP"] = UnitXPMax("player") -- CurrentMaxXP

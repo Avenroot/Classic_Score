@@ -1,7 +1,7 @@
 HCS_Globals = {}
 
 -- Game information
-HCS_GameVersion = select(4, GetBuildInfo())  -- if over 3000 than playing Cataclysm
+HCS_GameVersion = select(4, GetBuildInfo())
 HCS_SODVersion, HCS_SODRealm = HCS_Utils:IsSeasonOfDiscoveryServer()
 
 -- Scaling Percentage

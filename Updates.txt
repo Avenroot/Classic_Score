@@ -214,3 +214,6 @@ Version 1.2.0.2
 
 Version 1.2.0.3
 1. Maintainence update for 11508
+
+Version 1.2.0.4
+1. Removed all support for WotLK and Cataclysm.
