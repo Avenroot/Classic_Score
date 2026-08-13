@@ -185,7 +185,7 @@ local function CreateRowForLeaderBoard(row, position, name, score, level, classi
             text = HCS_LeaderBoardUI.frame:CreateFontString(nil, "OVERLAY")
             --text:SetFont("Fonts\\FRIZQT__.TTF", 12, "OUTLINE")
             local font, _, flags = text:GetFont()
-            text:SetFont(fontPath, fontSize, 14, flags) -- Set the desired font size (14 in this example)                
+            text:SetFont(fontPath, fontSize, flags) -- Set the desired font size (14 in this example)
             rowTable[i] = text
         end
         text:SetPoint("TOPLEFT", HCS_LeaderBoardUI.frame, "TOPLEFT", offset, -60 -row * 20)
