@@ -344,7 +344,7 @@ f:SetScript("OnEvent", function(self, event, ...)
                             local incomingCoreScore = tonumber(scoreReveived.coreScore) or 0
                             
                             -- Check if incoming coreScore is higher than existing coreScore
-                            if incomingCoreScore > tonumber(HCScore_Character.leaderboard[scoreReveived.charName].coreScore) then
+                            if incomingCoreScore > (tonumber(HCScore_Character.leaderboard[scoreReveived.charName].coreScore) or 0) then
                                 HCScore_Character.leaderboard[scoreReveived.charName].coreScore = scoreReveived.coreScore
                                 -- Provide default values if nil
                                 HCScore_Character.leaderboard[scoreReveived.charName].hasDied = scoreReveived.hasDied or 0
@@ -422,7 +422,7 @@ f:SetScript("OnEvent", function(self, event, ...)
                     end
                     if HCScore_Character.leaderboard[scoreReveived.charName] then
                         local incomingCoreScore = tonumber(scoreReveived.coreScore) or 0
-                        if incomingCoreScore > tonumber(HCScore_Character.leaderboard[scoreReveived.charName].coreScore) then
+                        if incomingCoreScore > (tonumber(HCScore_Character.leaderboard[scoreReveived.charName].coreScore) or 0) then
                             HCScore_Character.leaderboard[scoreReveived.charName].coreScore = scoreReveived.coreScore
                             HCScore_Character.leaderboard[scoreReveived.charName].hasDied = scoreReveived.hasDied or 0
                             HCScore_Character.leaderboard[scoreReveived.charName].lastOnline = scoreReveived.lastOnline or date("%Y-%m-%d %H:%M:%S")
