@@ -1,0 +1,13 @@
+# Files excluded from the release zip built with `git archive`.
+# Nothing here is loaded by WoW at runtime.
+#
+# Tests/ is safe to exclude: Hardcore_Score_Vanilla.toc marks it
+# "# Dev/Test utilities (optional)" and the /hcs help output guards each
+# test command on its SlashCmdList handler existing, so the addon degrades
+# cleanly when the file is not shipped. It stays in the repo for development.
+
+.gitattributes export-ignore
+.gitignore     export-ignore
+*.md           export-ignore
+Docs/          export-ignore
+Tests/         export-ignore
