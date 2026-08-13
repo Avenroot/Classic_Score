@@ -1,5 +1,9 @@
 # Hardcore Score
 
+**[Download Classic Score on CurseForge](https://www.curseforge.com/wow/addons/classic-score)** — the recommended way to install and stay updated.
+
+For World of Warcraft Classic Era. This repository is the source; releases are published to CurseForge.
+
 The Classic Score addon is an exciting new way to track and display your character's progress in WoW Classic. It provides a single number that represents all the hard work you've put into your character, from leveling to questing to professions and reputation. The addon tracks everything and assigns points based on various factors such as equipment level, quest difficulty, and mob kill XP.
 
 The scoring system is well-designed, with bonuses for hitting certain plateaus and completing levels in a certain amount of time. The addon is comprehensive, tracking every aspect of your character's journey and rewarding effort in all areas.
