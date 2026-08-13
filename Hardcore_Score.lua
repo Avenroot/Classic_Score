@@ -513,7 +513,7 @@ function Hardcore_Score:CreateDB()
             shareDetails = true,
             sharePublic = true,
             publicChannelName = "ClassicScore",
-            onlyLive = false,
+            onlyLive = true,
             keepHistory = true,
             historyDays = 30,
             shareMilestones = true,
