@@ -224,8 +224,9 @@ Version 1.2.0.3
 
 Version 1.2.0.4
 1. Removed all support for WotLK and Cataclysm.  Classic Era only from here on.
-2. Update for 11509 (Classic Era 1.15.9).
+2. Score Board live view is steadier.  Players no longer pop in and out, players who log off now clear on their own, and "Only live" is on by default.
 3. Fixed Lua errors on the Score Board, and errors that could show up when mob kill data hadn't finished loading yet.
+4. Update for 11509 (Classic Era 1.15.9).
 ]]
 
 local function trim(s)

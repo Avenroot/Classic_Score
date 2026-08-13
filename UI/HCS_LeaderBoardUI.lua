@@ -392,3 +392,18 @@ function HCS_LeaderBoardUI:LoadDataNearChar()
     end
 
 end
+
+-- Re-evaluate presence on a timer while the Score Board is open.
+-- isOnlineNow() is only computed during a redraw, and redraws are otherwise
+-- driven by incoming addon messages. Without this, once traffic stops nothing
+-- clears players who have logged off, and with onlyLive enabled they linger on
+-- the board indefinitely. Local only - this sends nothing.
+if C_Timer and C_Timer.NewTicker then
+    C_Timer.NewTicker(30, function()
+        local profile = Hardcore_Score and Hardcore_Score.db and Hardcore_Score.db.profile
+        if not profile or not profile.sharePublic then return end
+        if HCS_LeaderBoardUI.frame and HCS_LeaderBoardUI.frame:IsShown() then
+            HCS_LeaderBoardUI:RefreshData()
+        end
+    end)
+end

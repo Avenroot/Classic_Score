@@ -176,6 +176,9 @@ HCS_Leaderboard_Filtered = {}
 
 -- Public network presence tracking
 HCS_PublicOnline = {}
-HCS_PublicPresenceWindow = 180 -- seconds to consider someone "online" after last ping
+-- Seconds to consider someone "online" after last ping. The public heartbeat
+-- sends every 120s, so this allows two missed/throttled beats before a player
+-- drops off. At 180 a single delayed message made players pop in and out.
+HCS_PublicPresenceWindow = 300
 HCS_PublicAnnounced = false
 HCS_DebugCom = false -- enable verbose comm diagnostics
