@@ -217,6 +217,9 @@ Version 1.2.0.2
 1. Major update!  Enhanced public Leaderboard features. Open the SCORE BOARD (right click on the mini map button) and Check it out!!
 2. Level 60 characters now get points for elite mob kills.  Other points enhancements for level 60.
 3. Lots of changes to the Character Journey information, including tracking lowest health/deaths.
+
+Version 1.2.0.3
+1. Maintainence update for 11508
 ]]
 
 local function trim(s)

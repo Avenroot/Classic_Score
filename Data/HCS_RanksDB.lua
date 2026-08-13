@@ -1,15 +1,5 @@
-local catakScale = 1.33 -- 33%
-
 local function GetPointValue(points)
-    local p = 0
-
-    if HCS_GameVersion < 30000 then -- Classic
-        p = points
-    else                            
-        p = points * catakScale     -- Cataclysm
-    end
-    
-    return p
+    return points
 end
 
 HCS_RanksDB = {

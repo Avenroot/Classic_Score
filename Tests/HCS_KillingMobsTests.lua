@@ -235,21 +235,7 @@ function HCS_RunMobKillTests()
         assertApprox(mob.score, 0.1125, "Score should use -5 difficulty multiplier for unknown level")
     end)
 
-    -- Optional Case 4: Cataclysm level 85, equal level; xpGain forced to 400
-    runCase("Cata 85 equal-level mob", {
-        playerLevel = 85,
-        targetLevelRaw = 85,
-        subEvent = "PARTY_KILL",
-        gameVersion = 40000, -- >= 30000 => Cataclysm path
-        isSOD = false,
-        xpGainReturn = 0,
-    }, function(ctx)
-    assertTrue(HCScore_Character.mobsKilled and #HCScore_Character.mobsKilled == 1, "One mob entry expected")
-    local mob = HCScore_Character.mobsKilled[1]
-        assertEq(mob.xp, 400, "XP gain should be 400 at Cataclysm 85")
-        -- diff 0 -> 400 * 0.0010 * 1.25 = 0.5
-        assertApprox(mob.score, 0.5, "Score should match multiplier for diff 0 at Cata 85")
-    end)
+
 
     say(string.format("Completed. %d passed, %d failed.", pass, fail), fail == 0 and "|cff55ff55" or "|cffffaa00")
 

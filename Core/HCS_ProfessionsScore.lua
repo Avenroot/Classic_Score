@@ -18,9 +18,7 @@ local TAILORING = L["Tailoring"]
 local FISHING = L["Fishing"]
 local COOKING = L["Cooking"]
 local FIRSTAID = L["First Aid"]
--- WOTLK
-local JEWELCRAFTING = L["Jewelcrafting"]
-local INSCRIPTION = L["Inscription"]
+
 
 local LEVEL1 = 0
 local LEVEL2 = 25
@@ -28,11 +26,7 @@ local LEVEL3 = 50
 local LEVEL4 = 75
 local LEVEL5 = 100
 local LEVEL6 = 150
--- WOTLK
-local LEVEL7 = 175
-local LEVEL8 = 200
--- Cataclysm
-local LEVEL9 = 225
+
 
 local function between(x, a, b)
     return x >= a and x <= b
@@ -47,10 +41,7 @@ local function CalcScore(skilllevel)
     if between(skilllevel, 151, 200) then score = LEVEL4 end
     if between(skilllevel, 201, 250) then score = LEVEL5 end
     if between(skilllevel, 251, 300) then score = LEVEL6 end
-    if between(skilllevel, 301, 375) then score = LEVEL7 end -- WOTLK
-    if between(skilllevel, 376, 450) then score = LEVEL8 end -- WOTLK
-    if between(skilllevel, 451, 525) then score = LEVEL9 end -- Cataclysm
-    if between(skilllevel, 2, 450) then score = score + skilllevel end
+    if between(skilllevel, 2, 300) then score = score + skilllevel end
 
     return score
 end
@@ -106,14 +97,6 @@ function UpdateProfessionScore(professionid, skilllevel)
         if score > HCScore_Character.professions.firstaid then
             HCScore_Character.professions.firstaid = score
         end
-    elseif professionid == JEWELCRAFTING then 
-        if score > HCScore_Character.professions.jewelcrafting then
-            HCScore_Character.professions.jewelcrafting = score
-        end
-    elseif professionid == INSCRIPTION then 
-        if score > HCScore_Character.professions.inscription then
-            HCScore_Character.professions.inscription = score
-        end        
     end
 end
 
@@ -132,9 +115,7 @@ local function GetScore()
             char.leatherworking +
             char.mining +
             char.skinning +
-            char.tailoring +
-            char.jewelcrafting + -- WOTLK
-            char.inscription -- WOTLK
+            char.tailoring
 
     return score
 end
