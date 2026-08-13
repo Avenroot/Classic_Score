@@ -1,4 +1,4 @@
-## Interface: 11508
+## Interface: 11509
 ## Title: Classic Score 1.2.0.4 
 ## Notes: Your Classic score for your character
 ## Author: Avenroot, Caith
