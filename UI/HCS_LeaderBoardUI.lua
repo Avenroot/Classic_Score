@@ -232,6 +232,9 @@ function HCS_LeaderBoardUI:LoadData()
         for _, text in ipairs(row) do
             text:SetText("")
         end
+        if row[0] then
+            row[0]:SetText("") -- ipairs starts at 1, so clear the position number too
+        end
     end
 
     -- Convert the leaderboard to an array
