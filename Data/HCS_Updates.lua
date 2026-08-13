@@ -225,7 +225,7 @@ Version 1.2.0.3
 Version 1.2.0.4
 1. Removed all support for WotLK and Cataclysm.  Classic Era only from here on.
 2. Update for 11509 (Classic Era 1.15.9).
-3. Fixed some errors that could show up when mob kill data hadn't finished loading yet.
+3. Fixed Lua errors on the Score Board, and errors that could show up when mob kill data hadn't finished loading yet.
 ]]
 
 local function trim(s)
