@@ -8,9 +8,9 @@ The Classic Score addon is an exciting new way to track and display your charact
 
 The scoring system is well-designed, with bonuses for hitting certain plateaus and completing levels in a certain amount of time. The addon is comprehensive, tracking every aspect of your character's journey and rewarding effort in all areas.
 
-In addition to the addon itself, there is a client application that stores your character's data in a local database and automatically submits it to the cloud. With this data in the cloud, exciting events can be run, such as ladder systems and custom events that allow you to compete with other players or teams.
+Scores can optionally be shared with other players, which is what fills in the in-game Score Board. Sharing happens entirely in game, over WoW's own guild and addon chat channels. The addon does not send your data to any external service, and sharing can be turned off in the options.
 
-The possibilities for this addon are endless, and the creator is excited to work with the Hardcore addon community to refine the scoring formula and make it even better. With the upcoming announcement from Blizzard, the future of Classic Score addon looks bright, and it's definitely worth checking out for any WoW Classic player who wants to track and showcase their progress in a unique and engaging way.
+The scoring formula is still evolving, with input from the Hardcore community. Bug reports and suggestions are welcome in the GitHub issues.
 
 ## Testing helper
 
